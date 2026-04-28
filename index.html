@@ -4,14 +4,35 @@
 <head>
 <meta charset="UTF-8">
 <title>Salmon Rivers</title>
+<link rel="manifest" href="manifest.json">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body { font-family:Arial; background:#f0f2f5; margin:0; }
-header { background:#0f5132; color:white; padding:15px; text-align:center; }
+body { margin:0; font-family:Arial; background:#f0f2f5; }
+
+header {
+  background:#0f5132;
+  color:white;
+  padding:15px;
+  text-align:center;
+}
+
 .container { padding:15px; }
-.card { background:white; padding:15px; margin:10px 0; border-radius:10px; }
-.note { font-size:14px; color:#555; margin-top:5px; }
+
+.card {
+  background:white;
+  padding:15px;
+  margin-bottom:12px;
+  border-radius:10px;
+}
+
+.note { font-size:14px; color:#555; margin-top:6px; }
+
+.trend {
+  font-size:16px;
+  margin-top:6px;
+  font-weight:bold;
+}
 </style>
 
 </head>
@@ -19,7 +40,8 @@ header { background:#0f5132; color:white; padding:15px; text-align:center; }
 <body>
 
 <header>🎣 Salmon Rivers</header>
-<div class="container" id="list">Loading...</div>
+
+<div class="container" id="list"></div>
 
 <script>
 
@@ -29,56 +51,114 @@ const rivers = [
   "River Eden"
 ];
 
-// proxy URL
-const proxy = "https://api.allorigins.win/raw?url=";
+let sharedData = {};
 
-async function getLevel(river) {
-  try {
-    const search = river.replace("River ", "");
+// 🔥 Trend logic
+function getTrend(history) {
+  if (!history || history.length < 2) return "➖ Steady";
 
-    const res = await fetch(
-      proxy + encodeURIComponent(
-        `https://environment.data.gov.uk/flood-monitoring/id/stations?search=${search}`
-      )
-    );
+  const last = history[history.length - 1].score;
+  const prev = history[history.length - 2].score;
 
-    const data = await res.json();
-
-    if (!data.items.length) return "not found";
-
-    const station = data.items[0];
-
-    const measureURL = station.measures[0]['@id'];
-
-    const m = await fetch(proxy + encodeURIComponent(measureURL));
-    const md = await m.json();
-
-    return md.items.latestReading.value + " m";
-  } catch {
-    return "unavailable";
-  }
+  if (last > prev) return "⬆ Rising";
+  if (last < prev) return "⬇ Falling";
+  return "➖ Steady";
 }
 
-async function render() {
+// Convert text to simple score
+function scoreText(text) {
+  text = text.toLowerCase();
+
+  if (text.includes("good") || text.includes("fish")) return 2;
+  if (text.includes("ok")) return 1;
+  return 0;
+}
+
+// Add report
+function addReport(river) {
+  let user = localStorage.getItem("username");
+
+  if (!user) {
+    user = prompt("Your name:");
+    localStorage.setItem("username", user);
+  }
+
+  const text = prompt("Enter report:");
+  if (!text) return;
+
+  const entry = {
+    text,
+    user,
+    time: new Date().toISOString(),
+    score: scoreText(text)
+  };
+
+  const history = sharedData[river]?.history || [];
+  history.push(entry);
+
+  db.collection("reports").doc(river).set({
+    history
+  });
+}
+
+// Render
+function render() {
   const list = document.getElementById("list");
-  let html = "";
+  list.innerHTML = "";
 
-  for (let r of rivers) {
-    const level = await getLevel(r);
+  rivers.forEach(river => {
 
-    html += `
+    const data = sharedData[river] || {};
+    const history = data.history || [];
+    const latest = history[history.length - 1];
+
+    const trend = getTrend(history);
+
+    list.innerHTML += `
       <div class="card">
-        <b>${r}</b>
-        <div class="note">Live EA level: ${level}</div>
+        <b>${river}</b>
+
+        <div class="trend">${trend}</div>
+
+        <div class="note">
+          ${latest ? latest.text : "No report yet"}
+        </div>
+
+        ${latest ? `<div class="note">— ${latest.user}</div>` : ""}
+
+        <button onclick="addReport('${river}')">Add Report</button>
       </div>
     `;
-  }
-
-  list.innerHTML = html;
+  });
 }
 
-render();
+</script>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyCdvFvxZVAg-3YXb3XQqkCVDy2bfLbtCfs",
+  authDomain: "salmon-rivers-app.firebaseapp.com",
+  projectId: "salmon-rivers-app",
+  storageBucket: "salmon-rivers-app.firebasestorage.app",
+  messagingSenderId: "8166382021",
+  appId: "1:8166382021:web:e1164ea8ab1653ff1c93ac"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// 🔄 LIVE SYNC
+db.collection("reports").onSnapshot(snapshot => {
+  sharedData = {};
+  snapshot.forEach(doc => {
+    sharedData[doc.id] = doc.data();
+  });
+  render();
+});
 </script>
 
 </body>
