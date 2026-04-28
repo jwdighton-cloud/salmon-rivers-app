@@ -3,26 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <title>Salmon Rivers</title>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0f5132">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
 
 <style>
-body { margin:0; font-family:Arial; background:#f0f2f5; }
-header { background:#0f5132; color:white; padding:15px; text-align:center; font-size:20px; }
-.container { padding:15px; }
-input { width:100%; padding:12px; margin-bottom:15px; border-radius:8px; border:1px solid #ccc; }
-.tabs { display:flex; gap:10px; margin-bottom:15px; }
-.tab { flex:1; padding:10px; text-align:center; background:#ddd; border-radius:8px; cursor:pointer; }
-.tab.active { background:#0f5132; color:white; }
-.card { background:white; padding:15px; border-radius:10px; margin-bottom:12px; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
-.river-name { font-weight:bold; font-size:18px; }
-.status { margin-top:5px; padding:4px 8px; border-radius:6px; font-size:13px; display:inline-block; }
-.good { background:#d4edda; color:#155724; }
-.ok { background:#fff3cd; color:#856404; }
-.poor { background:#f8d7da; color:#721c24; }
-.note { margin-top:8px; font-size:14px; color:#555; }
-button { margin-top:8px; padding:6px 10px; border:none; border-radius:6px; background:#0f5132; color:white; cursor:pointer; }
+body {
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#f0f2f5;
+}
+header {
+  background:#0f5132;
+  color:white;
+  padding:15px;
+  text-align:center;
+  font-size:22px;
+}
+.container {
+  padding:15px;
+}
+.card {
+  background:white;
+  padding:15px;
+  margin-bottom:12px;
+  border-radius:10px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+.note {
+  color:#555;
+  font-size:14px;
+}
 </style>
 </head>
 
@@ -31,173 +41,24 @@ button { margin-top:8px; padding:6px 10px; border:none; border-radius:6px; backg
 <header>🎣 Salmon Rivers</header>
 
 <div class="container">
-<input type="text" id="search" placeholder="Search rivers...">
+  <div class="card">
+    <h3>River Ribble</h3>
+    <p class="note">Level: rising</p>
+    <p class="note">No report yet</p>
+  </div>
 
-<div class="tabs">
-  <div class="tab active" onclick="setRegion('UK', this)">UK</div>
-  <div class="tab" onclick="setRegion('Norway', this)">Norway</div>
-  <div class="tab" onclick="setRegion('Iceland', this)">Iceland</div>
+  <div class="card">
+    <h3>River Tyne</h3>
+    <p class="note">Level: steady</p>
+    <p class="note">No report yet</p>
+  </div>
+
+  <div class="card">
+    <h3>River Eden</h3>
+    <p class="note">Level: falling</p>
+    <p class="note">No report yet</p>
+  </div>
 </div>
-
-<div id="list"></div>
-</div>
-
-<script>
-const rivers = [
-  { name:"River Spey", region:"UK", status:"good", level:"steady" },
-  { name:"River Dee", region:"UK", status:"ok", level:"falling" },
-  { name:"River Tay", region:"UK", status:"good", level:"rising" },
-  { name:"River Tweed", region:"UK", status:"ok", level:"steady" },
-  { name:"River Don", region:"UK", status:"poor", level:"low" },
-  { name:"River Nith", region:"UK", status:"ok", level:"rising" },
-  { name:"River Tyne", region:"UK", status:"good", level:"steady" },
-  { name:"River Eden", region:"UK", status:"ok", level:"falling" },
-  { name:"River Ribble", region:"UK", status:"ok", level:"rising" },
-
-  { name:"River Alta", region:"Norway", status:"good" },
-  { name:"River Gaula", region:"Norway", status:"ok" },
-  { name:"River Orkla", region:"Norway", status:"poor" },
-  { name:"River Namsen", region:"Norway", status:"good" },
-  { name:"River Mandal", region:"Norway", status:"ok" },
-  { name:"River Driva", region:"Norway", status:"poor" },
-
-  { name:"River Laxa", region:"Iceland", status:"good" },
-  { name:"East Ranga", region:"Iceland", status:"good" },
-  { name:"West Ranga", region:"Iceland", status:"good" },
-  { name:"River Ellidaar", region:"Iceland", status:"poor" },
-  { name:"River Blanda", region:"Iceland", status:"good" },
-  { name:"River Hofsa", region:"Iceland", status:"ok" }
-];
-
-let currentRegion = "UK";
-let sharedNotes = {};
-let db = null;
-
-function getFavs() {
-  return JSON.parse(localStorage.getItem("favs") || "[]");
-}
-
-function toggleFav(name) {
-  let favs = getFavs();
-  if (favs.includes(name)) {
-    favs = favs.filter(f => f !== name);
-  } else {
-    favs.push(name);
-  }
-  localStorage.setItem("favs", JSON.stringify(favs));
-  render();
-}
-
-function saveNote(name) {
-  let user = localStorage.getItem("username");
-  if (!user) {
-    user = prompt("Your name:");
-    if (!user) return;
-    localStorage.setItem("username", user);
-  }
-
-  const val = prompt("Enter report:");
-  if (!val) return;
-
-  const payload = {
-    text: val,
-    user: user,
-    updated: new Date().toISOString()
-  };
-
-  if (db) {
-    db.collection("reports").doc(name).set(payload);
-  } else {
-    sharedNotes[name] = payload;
-    render();
-  }
-}
-
-function render() {
-  const list = document.getElementById("list");
-  const search = document.getElementById("search").value.toLowerCase();
-  const favs = getFavs();
-
-  list.innerHTML = "";
-
-  rivers
-    .filter(r => r.region === currentRegion)
-    .filter(r => r.name.toLowerCase().includes(search))
-    .forEach(r => {
-      const data = sharedNotes[r.name] || {};
-      const note = data.text || "";
-      const user = data.user || "";
-      const time = data.updated ? new Date(data.updated).toLocaleTimeString() : "";
-
-      const div = document.createElement("div");
-      div.className = "card";
-
-      div.innerHTML = `
-        <div class="river-name">
-          ${r.name}
-          <span style="float:right;cursor:pointer;" onclick="toggleFav('${r.name}')">
-            ${favs.includes(r.name) ? "★" : "☆"}
-          </span>
-        </div>
-
-        <div class="status ${r.status}">
-          ${r.status.toUpperCase()}
-        </div>
-
-        ${r.region === "UK" && r.level ? `<div class="note">Level: ${r.level}</div>` : ""}
-
-        <div class="note">
-          ${note || "No report yet"}
-          ${user ? `<br><small>— ${user}, ${time}</small>` : ""}
-        </div>
-
-        <button onclick="saveNote('${r.name}')">Add Report</button>
-      `;
-
-      list.appendChild(div);
-    });
-}
-
-function setRegion(region, el) {
-  currentRegion = region;
-  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-  el.classList.add("active");
-  render();
-}
-
-document.getElementById("search").addEventListener("input", render);
-render();
-</script>
-
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-
-<script>
-try {
-  const firebaseConfig = {
-    apiKey: "AIzaSyCdvFvxZVAg-3YXb3XQqkCVDy2bfLbtCfs",
-    authDomain: "salmon-rivers-app.firebaseapp.com",
-    projectId: "salmon-rivers-app",
-    storageBucket: "salmon-rivers-app.firebasestorage.app",
-    messagingSenderId: "8166382021",
-    appId: "1:8166382021:web:e1164ea8ab1653ff1c93ac"
-  };
-
-  firebase.initializeApp(firebaseConfig);
-  db = firebase.firestore();
-
-  db.collection("reports").onSnapshot(snapshot => {
-    sharedNotes = {};
-    snapshot.forEach(doc => {
-      sharedNotes[doc.id] = doc.data();
-    });
-    render();
-  });
-} catch (e) {
-  console.log("Firebase not available, app still works locally", e);
-  render();
-}
-</script>
 
 </body>
 </html>
