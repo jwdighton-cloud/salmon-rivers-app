@@ -4,7 +4,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Salmon Rivers</title>
-<link rel="manifest" href="manifest.json">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -20,24 +19,27 @@ header { background:#0f5132; color:white; padding:15px; text-align:center; }
 <body>
 
 <header>🎣 Salmon Rivers</header>
-<div class="container" id="list"></div>
+<div class="container" id="list">Loading...</div>
 
 <script>
 
-// Rivers
 const rivers = [
   "River Ribble",
   "River Tyne",
   "River Eden"
 ];
 
-// Fetch real EA data by river name
+// proxy URL
+const proxy = "https://api.allorigins.win/raw?url=";
+
 async function getLevel(river) {
   try {
     const search = river.replace("River ", "");
 
     const res = await fetch(
-      `https://environment.data.gov.uk/flood-monitoring/id/stations?search=${search}`
+      proxy + encodeURIComponent(
+        `https://environment.data.gov.uk/flood-monitoring/id/stations?search=${search}`
+      )
     );
 
     const data = await res.json();
@@ -48,7 +50,7 @@ async function getLevel(river) {
 
     const measureURL = station.measures[0]['@id'];
 
-    const m = await fetch(measureURL);
+    const m = await fetch(proxy + encodeURIComponent(measureURL));
     const md = await m.json();
 
     return md.items.latestReading.value + " m";
@@ -57,11 +59,8 @@ async function getLevel(river) {
   }
 }
 
-// Render
 async function render() {
   const list = document.getElementById("list");
-  list.innerHTML = "Loading...";
-
   let html = "";
 
   for (let r of rivers) {
