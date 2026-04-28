@@ -201,7 +201,17 @@ function setRegion(region, el) {
 }
 
 document.getElementById("search").addEventListener("input", render);
+let sharedNotes = {};
 
+db.collection("reports").onSnapshot(snapshot => {
+  sharedNotes = {};
+
+  snapshot.forEach(doc => {
+    sharedNotes[doc.id] = doc.data().text;
+  });
+
+  render();
+});
 render();
 
 </script>
