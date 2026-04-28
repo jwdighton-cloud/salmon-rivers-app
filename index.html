@@ -112,22 +112,41 @@ button {
 
 <script>
 
+// 🌍 FULL RIVER LIST
 const rivers = [
+
+  // 🇬🇧 UK
   { name:"River Spey", region:"UK", status:"good" },
   { name:"River Dee", region:"UK", status:"ok" },
   { name:"River Tay", region:"UK", status:"good" },
+  { name:"River Tweed", region:"UK", status:"ok" },
+  { name:"River Don", region:"UK", status:"poor" },
+  { name:"River Nith", region:"UK", status:"ok" },
+  { name:"River Tyne", region:"UK", status:"good" },
+  { name:"River Eden", region:"UK", status:"ok" },
+  { name:"River Ribble", region:"UK", status:"ok" },
 
+  // 🇳🇴 Norway
   { name:"River Alta", region:"Norway", status:"good" },
   { name:"River Gaula", region:"Norway", status:"ok" },
   { name:"River Orkla", region:"Norway", status:"poor" },
+  { name:"River Namsen", region:"Norway", status:"good" },
+  { name:"River Mandal", region:"Norway", status:"ok" },
+  { name:"River Driva", region:"Norway", status:"poor" },
 
+  // 🇮🇸 Iceland
   { name:"River Laxa", region:"Iceland", status:"good" },
-  { name:"River Ranga", region:"Iceland", status:"ok" },
-  { name:"River Ellidaar", region:"Iceland", status:"poor" }
+  { name:"East Ranga", region:"Iceland", status:"good" },
+  { name:"West Ranga", region:"Iceland", status:"good" },
+  { name:"River Ellidaar", region:"Iceland", status:"poor" },
+  { name:"River Blanda", region:"Iceland", status:"good" },
+  { name:"River Hofsa", region:"Iceland", status:"ok" }
+
 ];
 
 let currentRegion = "UK";
 
+// ⭐ favourites
 function getFavs() {
   return JSON.parse(localStorage.getItem("favs") || "[]");
 }
@@ -143,6 +162,9 @@ function toggleFav(name) {
   render();
 }
 
+// 🔄 shared notes
+let sharedNotes = {};
+
 function saveNote(name) {
   const val = prompt("Enter report:");
   if (!val) return;
@@ -153,6 +175,7 @@ function saveNote(name) {
   });
 }
 
+// 🎨 render
 function render() {
   const list = document.getElementById("list");
   const search = document.getElementById("search").value.toLowerCase();
@@ -201,36 +224,36 @@ function setRegion(region, el) {
 }
 
 document.getElementById("search").addEventListener("input", render);
-let sharedNotes = {};
 
+// 🔥 FIREBASE
+</script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyCdvFvxZVAg-3YXb3XQqkCVDy2bfLbtCfs",
+  authDomain: "salmon-rivers-app.firebaseapp.com",
+  projectId: "salmon-rivers-app",
+  storageBucket: "salmon-rivers-app.firebasestorage.app",
+  messagingSenderId: "8166382021",
+  appId: "1:8166382021:web:e1164ea8ab1653ff1c93ac"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// 🔄 LIVE SYNC
 db.collection("reports").onSnapshot(snapshot => {
   sharedNotes = {};
-
   snapshot.forEach(doc => {
     sharedNotes[doc.id] = doc.data().text;
   });
-
   render();
 });
-render();
-
 </script>
-<!-- Firebase connection test only -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyCdvFvxZVAg-3YXb3XQqkCVDy2bfLbtCfs",
-    authDomain: "salmon-rivers-app.firebaseapp.com",
-    projectId: "salmon-rivers-app",
-    storageBucket: "salmon-rivers-app.firebasestorage.app",
-    messagingSenderId: "8166382021",
-    appId: "1:8166382021:web:e1164ea8ab1653ff1c93ac"
-  };
 
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
-  console.log("Firebase connected OK");
-</script>
 </body>
 </html>
