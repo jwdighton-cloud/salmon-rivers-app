@@ -112,19 +112,19 @@ button {
 
 <script>
 
-// 🌍 FULL RIVER LIST
+// 🌍 FULL RIVER LIST WITH LEVELS
 const rivers = [
 
   // 🇬🇧 UK
-  { name:"River Spey", region:"UK", status:"good" },
-  { name:"River Dee", region:"UK", status:"ok" },
-  { name:"River Tay", region:"UK", status:"good" },
-  { name:"River Tweed", region:"UK", status:"ok" },
-  { name:"River Don", region:"UK", status:"poor" },
-  { name:"River Nith", region:"UK", status:"ok" },
-  { name:"River Tyne", region:"UK", status:"good" },
-  { name:"River Eden", region:"UK", status:"ok" },
-  { name:"River Ribble", region:"UK", status:"ok" },
+  { name:"River Spey", region:"UK", status:"good", level:"steady" },
+  { name:"River Dee", region:"UK", status:"ok", level:"falling" },
+  { name:"River Tay", region:"UK", status:"good", level:"rising" },
+  { name:"River Tweed", region:"UK", status:"ok", level:"steady" },
+  { name:"River Don", region:"UK", status:"poor", level:"low" },
+  { name:"River Nith", region:"UK", status:"ok", level:"rising" },
+  { name:"River Tyne", region:"UK", status:"good", level:"steady" },
+  { name:"River Eden", region:"UK", status:"ok", level:"falling" },
+  { name:"River Ribble", region:"UK", status:"ok", level:"rising" },
 
   // 🇳🇴 Norway
   { name:"River Alta", region:"Norway", status:"good" },
@@ -215,6 +215,12 @@ function render() {
         <div class="status ${r.status}">
           ${r.status.toUpperCase()}
         </div>
+
+        ${r.region === "UK" && r.level ? `
+          <div class="note">
+            Level: ${r.level}
+          </div>
+        ` : ""}
 
         <div class="note">
           ${note || "No report yet"}
