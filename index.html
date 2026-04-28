@@ -146,8 +146,11 @@ function toggleFav(name) {
 function saveNote(name) {
   const val = prompt("Enter report:");
   if (!val) return;
-  localStorage.setItem("note_" + name, val);
-  render();
+
+  db.collection("reports").doc(name).set({
+    text: val,
+    updated: new Date().toISOString()
+  });
 }
 
 function render() {
