@@ -58,6 +58,14 @@ input {
 }
 
 .note { margin-top:8px; font-size:14px; color:#555; }
+button {
+  margin-top:8px;
+  padding:6px 10px;
+  border:none;
+  border-radius:6px;
+  background:#0f5132;
+  color:white;
+}
 </style>
 
 </head>
@@ -84,49 +92,101 @@ input {
 
 // 🌍 rivers
 const rivers = [
+
   { name:"River Ribble", region:"UK" },
+  { name:"River Tyne", region:"UK" },
+  { name:"River Eden", region:"UK" },
+
+  { name:"River Spey", region:"UK" },
   { name:"River Dee", region:"UK" },
-  { name:"River Tay", region:"UK" }
+  { name:"River Tay", region:"UK" },
+
+  { name:"River Alta", region:"Norway" },
+  { name:"River Laxa", region:"Iceland" }
+
 ];
 
 let currentRegion = "UK";
 
-// 🔥 live EA data
-let ribbleLevel = "loading...";
+// 🔄 Firebase shared notes
+let sharedNotes = {};
 
+// 🔥 EA live data
+let levels = {
+  "River Ribble": "loading...",
+  "River Tyne": "loading...",
+  "River Eden": "loading..."
+};
+
+// fetch Ribble
 fetch("https://environment.data.gov.uk/flood-monitoring/id/stations/E70739")
-  .then(res => res.json())
-  .then(data => {
-    const val = data.items.measures[0].latestReading.value;
-    ribbleLevel = val + " m";
+  .then(r=>r.json())
+  .then(d=>{
+    levels["River Ribble"] = d.items.measures[0].latestReading.value + " m";
     render();
-  })
-  .catch(() => {
-    ribbleLevel = "unavailable";
   });
 
-// 🎨 render
+// fetch Tyne
+fetch("https://environment.data.gov.uk/flood-monitoring/id/stations/4068TH")
+  .then(r=>r.json())
+  .then(d=>{
+    levels["River Tyne"] = d.items.measures[0].latestReading.value + " m";
+    render();
+  });
+
+// fetch Eden
+fetch("https://environment.data.gov.uk/flood-monitoring/id/stations/8380TH")
+  .then(r=>r.json())
+  .then(d=>{
+    levels["River Eden"] = d.items.measures[0].latestReading.value + " m";
+    render();
+  });
+
+// save report
+function saveNote(name) {
+  let user = localStorage.getItem("username");
+  if (!user) {
+    user = prompt("Your name:");
+    localStorage.setItem("username", user);
+  }
+
+  const val = prompt("Enter report:");
+  if (!val) return;
+
+  db.collection("reports").doc(name).set({
+    text: val,
+    user: user,
+    updated: new Date().toISOString()
+  });
+}
+
+// render
 function render() {
   const list = document.getElementById("list");
   list.innerHTML = "";
 
-  rivers
-    .filter(r => r.region === currentRegion)
-    .forEach(r => {
+  rivers.filter(r => r.region === currentRegion).forEach(r => {
 
-      let extra = "";
+    const data = sharedNotes[r.name] || {};
+    const note = data.text || "";
+    const user = data.user || "";
 
-      if (r.name === "River Ribble") {
-        extra = `<div class="note">Live EA level: ${ribbleLevel}</div>`;
-      }
+    let levelHTML = "";
 
-      list.innerHTML += `
-        <div class="card">
-          <b>${r.name}</b>
-          ${extra}
-        </div>
-      `;
-    });
+    if (levels[r.name]) {
+      levelHTML = `<div class="note">Live EA level: ${levels[r.name]}</div>`;
+    }
+
+    list.innerHTML += `
+      <div class="card">
+        <b>${r.name}</b>
+        ${levelHTML}
+        <div class="note">${note || "No report yet"}</div>
+        ${user ? `<div class="note">— ${user}</div>` : ""}
+        <button onclick="saveNote('${r.name}')">Add Report</button>
+      </div>
+    `;
+  });
 }
 
 function setRegion(region, el) {
@@ -136,8 +196,33 @@ function setRegion(region, el) {
   render();
 }
 
-render();
+// 🔥 Firebase
+</script>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyCdvFvxZVAg-3YXb3XQqkCVDy2bfLbtCfs",
+  authDomain: "salmon-rivers-app.firebaseapp.com",
+  projectId: "salmon-rivers-app",
+  storageBucket: "salmon-rivers-app.firebasestorage.app",
+  messagingSenderId: "8166382021",
+  appId: "1:8166382021:web:e1164ea8ab1653ff1c93ac"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+db.collection("reports").onSnapshot(snapshot => {
+  sharedNotes = {};
+  snapshot.forEach(doc => {
+    sharedNotes[doc.id] = doc.data();
+  });
+  render();
+});
 </script>
 
 </body>
