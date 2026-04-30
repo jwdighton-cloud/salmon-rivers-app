@@ -12,16 +12,9 @@ header { background:#0f5132; color:white; padding:15px; text-align:center; font-
 .container { padding:15px; }
 .card { background:white; padding:15px; margin-bottom:12px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
 .note { color:#555; font-size:14px; }
-.links a {
-  display:block;
-  margin-top:8px;
-  padding:10px;
-  background:#0f5132;
-  color:white;
-  text-decoration:none;
-  border-radius:8px;
-  text-align:center;
-}
+.private-note { background:#eef7f1; padding:10px; border-radius:8px; margin-top:10px; }
+button { margin-top:8px; padding:10px; background:#0f5132; color:white; border:none; border-radius:8px; width:100%; }
+.links a { display:block; margin-top:8px; padding:10px; background:#0f5132; color:white; text-decoration:none; border-radius:8px; text-align:center; }
 </style>
 </head>
 
@@ -29,45 +22,78 @@ header { background:#0f5132; color:white; padding:15px; text-align:center; font-
 
 <header>🎣 Salmon Rivers</header>
 
-<div class="container">
+<div class="container" id="app"></div>
 
-  <div class="card">
-    <h3>River Ribble</h3>
-    <p class="note">Level: rising</p>
-    <p class="note">Private notes/report: No report yet</p>
+<script>
+const rivers = [
+  {
+    name: "River Ribble",
+    level: "rising",
+    links: [
+      ["Live Water Quality — RFCA", "https://www.ribblefisheriesca.co.uk/live-water-quality-monitoring/"],
+      ["Latest Ribble Catch Reports", "https://www.google.com/search?q=River+Ribble+salmon+fishing+report"],
+      ["Ribble Weather", "https://www.google.com/search?q=River+Ribble+weather"]
+    ]
+  },
+  {
+    name: "River Tyne",
+    level: "steady",
+    links: [
+      ["Latest Tyne Catch Reports", "https://www.google.com/search?q=River+Tyne+salmon+fishing+report"],
+      ["Tyne River Levels", "https://www.google.com/search?q=River+Tyne+river+levels"],
+      ["Tyne Weather", "https://www.google.com/search?q=River+Tyne+weather"]
+    ]
+  },
+  {
+    name: "River Eden",
+    level: "falling",
+    links: [
+      ["Latest Eden Catch Reports", "https://www.google.com/search?q=River+Eden+salmon+fishing+report"],
+      ["Eden River Levels", "https://www.google.com/search?q=River+Eden+river+levels"],
+      ["Eden Weather", "https://www.google.com/search?q=River+Eden+weather"]
+    ]
+  }
+];
 
-    <div class="links">
-      <a href="https://www.ribblefisheriesca.co.uk/live-water-quality-monitoring/" target="_blank">Live Water Quality — RFCA</a>
-      <a href="https://www.google.com/search?q=River+Ribble+salmon+fishing+report" target="_blank">Latest Ribble Catch Reports</a>
-      <a href="https://www.google.com/search?q=River+Ribble+weather" target="_blank">Ribble Weather</a>
-    </div>
-  </div>
+function getNote(name) {
+  return localStorage.getItem("note_" + name) || "No private note yet";
+}
 
-  <div class="card">
-    <h3>River Tyne</h3>
-    <p class="note">Level: steady</p>
-    <p class="note">Private notes/report: No report yet</p>
+function addNote(name) {
+  const current = localStorage.getItem("note_" + name) || "";
+  const note = prompt("Private note for " + name + ":", current);
+  if (note === null) return;
+  localStorage.setItem("note_" + name, note);
+  render();
+}
 
-    <div class="links">
-      <a href="https://www.google.com/search?q=River+Tyne+salmon+fishing+report" target="_blank">Latest Tyne Catch Reports</a>
-      <a href="https://www.google.com/search?q=River+Tyne+river+levels" target="_blank">Tyne River Levels</a>
-      <a href="https://www.google.com/search?q=River+Tyne+weather" target="_blank">Tyne Weather</a>
-    </div>
-  </div>
+function render() {
+  const app = document.getElementById("app");
+  app.innerHTML = "";
 
-  <div class="card">
-    <h3>River Eden</h3>
-    <p class="note">Level: falling</p>
-    <p class="note">Private notes/report: No report yet</p>
+  rivers.forEach(river => {
+    app.innerHTML += `
+      <div class="card">
+        <h3>${river.name}</h3>
+        <p class="note">Level: ${river.level}</p>
 
-    <div class="links">
-      <a href="https://www.google.com/search?q=River+Eden+salmon+fishing+report" target="_blank">Latest Eden Catch Reports</a>
-      <a href="https://www.google.com/search?q=River+Eden+river+levels" target="_blank">Eden River Levels</a>
-      <a href="https://www.google.com/search?q=River+Eden+weather" target="_blank">Eden Weather</a>
-    </div>
-  </div>
+        <div class="private-note">
+          <strong>Private note:</strong><br>
+          ${getNote(river.name)}
+        </div>
 
-</div>
+        <button onclick="addNote('${river.name}')">Add / Edit Private Note</button>
+
+        <div class="links">
+          ${river.links.map(link => `<a href="${link[1]}" target="_blank">${link[0]}</a>`).join("")}
+        </div>
+      </div>
+    `;
+  });
+}
+
+render();
+</script>
 
 </body>
 </html>
