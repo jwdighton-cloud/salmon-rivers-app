@@ -1,165 +1,211 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Salmon Rivers</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="manifest" href="manifest.json">
+<title>Salmon Rivers</title>
 
 <style>
-body { margin:0; font-family:Arial, sans-serif; background:#f0f2f5; }
-header { background:#0f5132; color:white; padding:15px; text-align:center; font-size:22px; }
-.container { padding:15px; }
-.card { background:white; padding:15px; margin-bottom:12px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.1); border-left:8px solid #ccc; }
-.good-card { border-left-color:#198754; }
-.ok-card { border-left-color:#ffc107; }
-.poor-card { border-left-color:#dc3545; }
-.note { color:#555; font-size:14px; }
-.status, .confidence { display:inline-block; margin:6px 0; padding:6px 10px; border-radius:8px; font-weight:bold; }
-.good { background:#d4edda; color:#155724; }
-.ok { background:#fff3cd; color:#856404; }
-.poor { background:#f8d7da; color:#721c24; }
-.high { background:#d4edda; color:#155724; }
-.medium { background:#fff3cd; color:#856404; }
-.low { background:#f8d7da; color:#721c24; }
-.private-note { background:#eef7f1; padding:10px; border-radius:8px; margin-top:10px; }
-button { margin-top:8px; padding:10px; background:#0f5132; color:white; border:none; border-radius:8px; width:100%; }
-.links a { display:block; margin-top:8px; padding:10px; background:#0f5132; color:white; text-decoration:none; border-radius:8px; text-align:center; }
+body {
+  font-family: Arial, sans-serif;
+  background: #eef2f5;
+  margin: 0;
+  padding: 10px;
+}
+
+h1 {
+  text-align: center;
+}
+
+.river-card {
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 12px;
+  background: white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.status {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.meta {
+  font-size: 12px;
+  color: #555;
+}
+
+textarea {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.links a {
+  margin-right: 10px;
+  font-size: 14px;
+}
+
+.river-info {
+  margin-top: 10px;
+  padding: 10px;
+  background: #f4f6f8;
+  border-radius: 8px;
+  font-size: 14px;
+}
 </style>
 </head>
 
 <body>
 
-<header>🎣 Salmon Rivers</header>
-<div class="container" id="app"></div>
+<h1>Salmon Rivers</h1>
+
+<!-- RIBBLE -->
+<div class="river-card">
+  <h2>River Ribble</h2>
+  <div class="status" onclick="cycleStatus('ribble')">🟢</div>
+  <div class="meta" id="ribble-meta"></div>
+
+  <div class="river-info">
+    <div><strong>Temp:</strong> <span id="ribble-temp"></span></div>
+    <div><strong>Conditions:</strong> <span id="ribble-conditions"></span></div>
+    <div><strong>Notes:</strong> <span id="ribble-notes"></span></div>
+  </div>
+
+  <textarea id="ribble-notes-input" placeholder="Your notes..."></textarea>
+
+  <div class="links">
+    <a href="https://www.google.com/search?q=river+ribble+fishing+report" target="_blank">Reports</a>
+    <a href="https://www.bbc.co.uk/weather" target="_blank">Weather</a>
+    <a href="https://ribbletrust.org.uk/" target="_blank">RFCA</a>
+  </div>
+</div>
+
+<!-- TYNE -->
+<div class="river-card">
+  <h2>River Tyne</h2>
+  <div class="status" onclick="cycleStatus('tyne')">🟢</div>
+  <div class="meta" id="tyne-meta"></div>
+
+  <div class="river-info">
+    <div><strong>Temp:</strong> <span id="tyne-temp"></span></div>
+    <div><strong>Conditions:</strong> <span id="tyne-conditions"></span></div>
+    <div><strong>Notes:</strong> <span id="tyne-notes"></span></div>
+  </div>
+
+  <textarea id="tyne-notes-input" placeholder="Your notes..."></textarea>
+
+  <div class="links">
+    <a href="https://www.google.com/search?q=river+tyne+fishing+report" target="_blank">Reports</a>
+    <a href="https://www.bbc.co.uk/weather" target="_blank">Weather</a>
+  </div>
+</div>
+
+<!-- EDEN -->
+<div class="river-card">
+  <h2>River Eden</h2>
+  <div class="status" onclick="cycleStatus('eden')">🟢</div>
+  <div class="meta" id="eden-meta"></div>
+
+  <div class="river-info">
+    <div><strong>Temp:</strong> <span id="eden-temp"></span></div>
+    <div><strong>Conditions:</strong> <span id="eden-conditions"></span></div>
+    <div><strong>Notes:</strong> <span id="eden-notes"></span></div>
+  </div>
+
+  <textarea id="eden-notes-input" placeholder="Your notes..."></textarea>
+
+  <div class="links">
+    <a href="https://www.google.com/search?q=river+eden+fishing+report" target="_blank">Reports</a>
+    <a href="https://www.bbc.co.uk/weather" target="_blank">Weather</a>
+  </div>
+</div>
 
 <script>
-const rivers = [
-  {
-    name: "River Ribble",
-    level: "rising",
-    defaultStatus: "ok",
-    links: [
-      ["Live Water Quality — RFCA", "https://www.ribblefisheriesca.co.uk/live-water-quality-monitoring/"],
-      ["Latest Ribble Catch Reports", "https://www.google.com/search?q=River+Ribble+salmon+fishing+report"],
-      ["Ribble Weather", "https://www.google.com/search?q=River+Ribble+weather"]
-    ]
+const statuses = ["🟢", "🟡", "🔴"];
+
+const riverInfo = {
+  ribble: {
+    temp: "8–14°C optimal",
+    conditions: "Best after a lift and drop",
+    notes: "Can colour quickly after rain"
   },
-  {
-    name: "River Tyne",
-    level: "steady",
-    defaultStatus: "ok",
-    links: [
-      ["Latest Tyne Catch Reports", "https://www.google.com/search?q=River+Tyne+salmon+fishing+report"],
-      ["Tyne River Levels", "https://www.google.com/search?q=River+Tyne+river+levels"],
-      ["Tyne Weather", "https://www.google.com/search?q=River+Tyne+weather"]
-    ]
+  tyne: {
+    temp: "7–13°C optimal",
+    conditions: "Strong runs, good in height",
+    notes: "Fish move quickly through beats"
   },
-  {
-    name: "River Eden",
-    level: "falling",
-    defaultStatus: "poor",
-    links: [
-      ["Latest Eden Catch Reports", "https://www.google.com/search?q=River+Eden+salmon+fishing+report"],
-      ["Eden River Levels", "https://www.google.com/search?q=River+Eden+river+levels"],
-      ["Eden Weather", "https://www.google.com/search?q=River+Eden+weather"]
-    ]
+  eden: {
+    temp: "8–15°C optimal",
+    conditions: "Clear water river",
+    notes: "Low water = very technical fishing"
   }
-];
+};
 
-function getNote(name) {
-  return localStorage.getItem("note_" + name) || "No private note yet";
+function cycleStatus(river) {
+  const el = document.querySelector(`#${river}-meta`).previousElementSibling;
+  let current = statuses.indexOf(el.textContent);
+  let next = (current + 1) % statuses.length;
+  el.textContent = statuses[next];
+
+  const now = new Date();
+  const timeString = now.toLocaleString();
+
+  localStorage.setItem(`${river}-status`, statuses[next]);
+  localStorage.setItem(`${river}-time`, timeString);
+
+  updateMeta(river);
 }
 
-function addNote(name) {
-  const current = localStorage.getItem("note_" + name) || "";
-  const note = prompt("Private note for " + name + ":", current);
-  if (note === null) return;
-  localStorage.setItem("note_" + name, note);
-  localStorage.setItem("time_" + name, new Date().toISOString());
-  render();
+function updateMeta(river) {
+  const time = localStorage.getItem(`${river}-time`);
+  if (!time) return;
+
+  const last = new Date(time);
+  const now = new Date();
+  const diffHours = (now - last) / (1000 * 60 * 60);
+
+  let confidence = "HIGH";
+  if (diffHours > 24) confidence = "LOW";
+  else if (diffHours > 6) confidence = "MEDIUM";
+
+  document.getElementById(`${river}-meta`).textContent =
+    `Updated: ${time} | Confidence: ${confidence}`;
 }
 
-function getStatus(river) {
-  return localStorage.getItem("status_" + river.name) || river.defaultStatus;
-}
-
-function cycleStatus(name) {
-  const current = localStorage.getItem("status_" + name) || "ok";
-  let next = "good";
-  if (current === "good") next = "ok";
-  if (current === "ok") next = "poor";
-  if (current === "poor") next = "good";
-
-  localStorage.setItem("status_" + name, next);
-  localStorage.setItem("time_" + name, new Date().toISOString());
-  render();
-}
-
-function statusLabel(status) {
-  if (status === "good") return "🟢 GOOD";
-  if (status === "poor") return "🔴 POOR";
-  return "🟡 OK";
-}
-
-function getTime(name) {
-  const t = localStorage.getItem("time_" + name);
-  if (!t) return "No updates yet";
-  return "Updated: " + new Date(t).toLocaleString();
-}
-
-function getConfidence(name) {
-  const t = localStorage.getItem("time_" + name);
-  if (!t) return { label: "LOW", className: "low" };
-
-  const updated = new Date(t).getTime();
-  const now = Date.now();
-  const hoursOld = (now - updated) / (1000 * 60 * 60);
-
-  if (hoursOld <= 6) return { label: "HIGH", className: "high" };
-  if (hoursOld <= 24) return { label: "MEDIUM", className: "medium" };
-  return { label: "LOW", className: "low" };
-}
-
-function render() {
-  const app = document.getElementById("app");
-  app.innerHTML = "";
-
-  rivers.forEach(river => {
-    const status = getStatus(river);
-    const confidence = getConfidence(river.name);
-
-    app.innerHTML += `
-      <div class="card ${status}-card">
-        <h3>${river.name}</h3>
-
-        <div class="status ${status}" onclick="cycleStatus('${river.name}')">
-          ${statusLabel(status)}
-        </div>
-
-        <div class="confidence ${confidence.className}">
-          Confidence: ${confidence.label}
-        </div>
-
-        <div class="note">${getTime(river.name)}</div>
-        <p class="note">Level: ${river.level}</p>
-
-        <div class="private-note">
-          <strong>Private note:</strong><br>
-          ${getNote(river.name)}
-        </div>
-
-        <button onclick="addNote('${river.name}')">Add / Edit Private Note</button>
-
-        <div class="links">
-          ${river.links.map(link => `<a href="${link[1]}" target="_blank">${link[0]}</a>`).join("")}
-        </div>
-      </div>
-    `;
+function loadRiverInfo() {
+  Object.keys(riverInfo).forEach(key => {
+    document.getElementById(`${key}-temp`).textContent = riverInfo[key].temp;
+    document.getElementById(`${key}-conditions`).textContent = riverInfo[key].conditions;
+    document.getElementById(`${key}-notes`).textContent = riverInfo[key].notes;
   });
 }
 
-render();
+function loadAll() {
+  ["ribble","tyne","eden"].forEach(river => {
+    const status = localStorage.getItem(`${river}-status`);
+    if (status) {
+      document.querySelector(`#${river}-meta`).previousElementSibling.textContent = status;
+    }
+
+    const notes = localStorage.getItem(`${river}-notes`);
+    if (notes) {
+      document.getElementById(`${river}-notes-input`).value = notes;
+    }
+
+    updateMeta(river);
+  });
+
+  loadRiverInfo();
+}
+
+document.querySelectorAll("textarea").forEach(el => {
+  el.addEventListener("input", e => {
+    const id = e.target.id.split("-")[0];
+    localStorage.setItem(`${id}-notes`, e.target.value);
+  });
+});
+
+loadAll();
 </script>
 
 </body>
