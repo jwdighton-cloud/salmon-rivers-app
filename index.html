@@ -10,11 +10,62 @@
 body { margin:0; font-family:Arial, sans-serif; background:#f0f2f5; }
 header { background:#0f5132; color:white; padding:15px; text-align:center; font-size:22px; }
 .container { padding:15px; }
-.card { background:white; padding:15px; margin-bottom:12px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
+
+.card {
+  background:white;
+  padding:15px;
+  margin-bottom:12px;
+  border-radius:10px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.1);
+  border-left:8px solid #ccc;
+}
+
+.good-card { border-left-color:#198754; }
+.ok-card { border-left-color:#ffc107; }
+.poor-card { border-left-color:#dc3545; }
+
 .note { color:#555; font-size:14px; }
-.private-note { background:#eef7f1; padding:10px; border-radius:8px; margin-top:10px; }
-button { margin-top:8px; padding:10px; background:#0f5132; color:white; border:none; border-radius:8px; width:100%; }
-.links a { display:block; margin-top:8px; padding:10px; background:#0f5132; color:white; text-decoration:none; border-radius:8px; text-align:center; }
+
+.status {
+  display:inline-block;
+  margin:6px 0;
+  padding:6px 10px;
+  border-radius:8px;
+  font-weight:bold;
+  font-size:14px;
+}
+
+.good { background:#d4edda; color:#155724; }
+.ok { background:#fff3cd; color:#856404; }
+.poor { background:#f8d7da; color:#721c24; }
+
+.private-note {
+  background:#eef7f1;
+  padding:10px;
+  border-radius:8px;
+  margin-top:10px;
+}
+
+button {
+  margin-top:8px;
+  padding:10px;
+  background:#0f5132;
+  color:white;
+  border:none;
+  border-radius:8px;
+  width:100%;
+}
+
+.links a {
+  display:block;
+  margin-top:8px;
+  padding:10px;
+  background:#0f5132;
+  color:white;
+  text-decoration:none;
+  border-radius:8px;
+  text-align:center;
+}
 </style>
 </head>
 
@@ -29,6 +80,7 @@ const rivers = [
   {
     name: "River Ribble",
     level: "rising",
+    defaultStatus: "ok",
     links: [
       ["Live Water Quality — RFCA", "https://www.ribblefisheriesca.co.uk/live-water-quality-monitoring/"],
       ["Latest Ribble Catch Reports", "https://www.google.com/search?q=River+Ribble+salmon+fishing+report"],
@@ -38,6 +90,7 @@ const rivers = [
   {
     name: "River Tyne",
     level: "steady",
+    defaultStatus: "ok",
     links: [
       ["Latest Tyne Catch Reports", "https://www.google.com/search?q=River+Tyne+salmon+fishing+report"],
       ["Tyne River Levels", "https://www.google.com/search?q=River+Tyne+river+levels"],
@@ -47,6 +100,7 @@ const rivers = [
   {
     name: "River Eden",
     level: "falling",
+    defaultStatus: "poor",
     links: [
       ["Latest Eden Catch Reports", "https://www.google.com/search?q=River+Eden+salmon+fishing+report"],
       ["Eden River Levels", "https://www.google.com/search?q=River+Eden+river+levels"],
@@ -67,14 +121,44 @@ function addNote(name) {
   render();
 }
 
+function getStatus(river) {
+  return localStorage.getItem("status_" + river.name) || river.defaultStatus;
+}
+
+function cycleStatus(name) {
+  const current = localStorage.getItem("status_" + name) || "ok";
+  let next = "good";
+
+  if (current === "good") next = "ok";
+  if (current === "ok") next = "poor";
+  if (current === "poor") next = "good";
+
+  localStorage.setItem("status_" + name, next);
+  render();
+}
+
+function statusLabel(status) {
+  if (status === "good") return "🟢 GOOD";
+  if (status === "poor") return "🔴 POOR";
+  return "🟡 OK";
+}
+
 function render() {
   const app = document.getElementById("app");
   app.innerHTML = "";
 
   rivers.forEach(river => {
+    const status = getStatus(river);
+
     app.innerHTML += `
-      <div class="card">
+      <div class="card ${status}-card">
         <h3>${river.name}</h3>
+
+        <div class="status ${status}" onclick="cycleStatus('${river.name}')">
+          ${statusLabel(status)}
+        </div>
+
+        <p class="note">Tap status to change it.</p>
         <p class="note">Level: ${river.level}</p>
 
         <div class="private-note">
