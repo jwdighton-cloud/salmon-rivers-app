@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Salmon Rivers</title>
+<title>Salmon Rivers Intelligence</title>
 
 <style>
 body {
@@ -25,395 +25,445 @@ h1 {
   margin-bottom: 20px;
 }
 
-.best-banner,
-.summary-panel,
+.intel-panel,
 .river-card {
+  background: white;
   border-radius: 16px;
   padding: 16px;
   margin-bottom: 18px;
-  background: white;
   box-shadow: 0 3px 10px rgba(0,0,0,0.12);
 }
 
-.best-banner {
-  font-weight: bold;
-  line-height: 1.5;
+.intel-panel {
+  border: 2px solid #4f8fca;
+  background: #eaf4ff;
 }
 
-.banner-good {
-  background: #dff8df;
-  border: 2px solid #6ac96a;
-}
-
-.banner-check {
-  background: #fff6cc;
-  border: 2px solid #e0c24a;
-}
-
-.banner-avoid {
-  background: #ffd6d6;
-  border: 2px solid #d66;
-}
-
-.summary-panel h2 {
+.intel-panel h2 {
   margin-top: 0;
 }
 
-.summary-item {
-  padding: 7px 0;
-  border-bottom: 1px solid #e2e6ea;
-  font-size: 14px;
-  line-height: 1.4;
-}
-
-.summary-item:last-child {
-  border-bottom: none;
-}
-
-.best-card {
-  border: 2px solid #6ac96a;
-}
-
-.best-label {
-  display: inline-block;
-  margin-bottom: 10px;
-  padding: 6px 10px;
-  border-radius: 999px;
-  background: #dff8df;
-  font-size: 13px;
+.country-label {
+  font-size: 12px;
   font-weight: bold;
+  color: #555;
+  margin-bottom: 4px;
 }
 
 .river-title {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
 }
 
-.status {
-  font-size: 30px;
+.river-title h2 {
+  margin: 4px 0 10px 0;
 }
 
-.buttons {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-.buttons button {
-  margin-right: 8px;
-  margin-top: 8px;
-  padding: 10px 14px;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.fish { background: #c8f7c5; }
-.check { background: #fff3b0; }
-.avoid { background: #f7c5c5; }
-
-.score,
-.trend {
-  margin-top: 10px;
-  padding: 10px;
-  border-radius: 12px;
+.source-status {
+  font-size: 12px;
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: #fff6cc;
+  border: 1px solid #e0c24a;
   font-weight: bold;
 }
 
-.trend {
-  background: #f4f6f8;
-}
-
-.score-good {
-  background: #e6f9e6;
-  border: 1px solid #6ac96a;
-}
-
-.score-check {
-  background: #fff7d9;
-  border: 1px solid #e0c24a;
-}
-
-.score-avoid {
-  background: #ffe0e0;
-  border: 1px solid #d66;
-}
-
-.score-neutral {
-  background: #f4f6f8;
-  border: 1px solid #d5dce3;
-}
-
-.meta {
-  font-size: 12px;
-  color: #555;
-  margin-top: 6px;
-}
-
-.history {
-  margin-top: 12px;
-  padding: 12px;
+.data-block {
   background: #f7f9fb;
   border-radius: 12px;
-  font-size: 13px;
+  padding: 12px;
+  margin-top: 12px;
 }
 
-.history-title {
-  font-weight: bold;
-  margin-bottom: 6px;
+.data-block h3 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-size: 15px;
 }
 
-.history-item {
-  padding: 4px 0;
+.data-row {
+  padding: 6px 0;
   border-bottom: 1px solid #e2e6ea;
+  font-size: 14px;
+  line-height: 1.4;
 }
 
-.history-item:last-child {
+.data-row:last-child {
   border-bottom: none;
+}
+
+.links {
+  margin-top: 12px;
+}
+
+.links a {
+  display: inline-block;
+  margin: 6px 6px 0 0;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: #eef2f5;
+  color: #064f8f;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.links a:hover {
+  text-decoration: underline;
+}
+
+.note-box {
+  margin-top: 12px;
+}
+
+.note-box label {
+  font-size: 13px;
+  font-weight: bold;
 }
 
 textarea {
   width: 100%;
   box-sizing: border-box;
-  min-height: 80px;
-  margin-top: 12px;
+  min-height: 70px;
+  margin-top: 6px;
   padding: 10px;
   border-radius: 10px;
   border: 1px solid #ccc;
   font-size: 14px;
   font-family: Arial, sans-serif;
 }
+
+.warning {
+  background: #fff7d9;
+  border: 1px solid #e0c24a;
+  border-radius: 12px;
+  padding: 10px;
+  margin-top: 12px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.small {
+  font-size: 12px;
+  color: #666;
+}
 </style>
 </head>
 
 <body>
 
-<h1>Salmon Rivers</h1>
-<div class="subtitle">Private river intelligence dashboard</div>
+<h1>Salmon Rivers Intelligence</h1>
+<div class="subtitle">External-data-led salmon fishing dashboard</div>
 
-<div id="summary"></div>
+<div class="intel-panel">
+  <h2>Current Build Purpose</h2>
+  <div class="data-row"><strong>Primary aim:</strong> outside river intelligence first</div>
+  <div class="data-row"><strong>Manual input:</strong> notes only, secondary</div>
+  <div class="data-row"><strong>Next technical step:</strong> connect official live feeds one source at a time</div>
+</div>
+
 <div id="app"></div>
 
 <script>
 const rivers = [
-  { id:"ribble", name:"River Ribble" },
-  { id:"tyne", name:"River Tyne" },
-  { id:"eden", name:"River Eden" },
-  { id:"tweed", name:"River Tweed" },
-  { id:"spey", name:"River Spey" },
-  { id:"dee", name:"River Dee" },
-  { id:"tay", name:"River Tay" },
-  { id:"wye", name:"River Wye" }
+  {
+    id: "ribble",
+    country: "UK — England",
+    name: "River Ribble",
+    mainIntel: "High-priority local river. Temperature, rainfall, colour and level changes matter strongly.",
+    dataSources: [
+      ["Water level", "Environment Agency station data / source mapping required"],
+      ["Water temperature", "RFCA / sonde data where available"],
+      ["Weather", "Met Office / BBC weather link"],
+      ["Rainfall", "EA / Met Office source mapping required"],
+      ["Catch reports", "Google search / local reports"]
+    ],
+    links: [
+      ["Catch reports", "https://www.google.com/search?q=river+ribble+salmon+fishing+report"],
+      ["Weather", "https://www.bbc.co.uk/weather"],
+      ["RFCA", "https://ribbletrust.org.uk/"],
+      ["EA river levels search", "https://check-for-flooding.service.gov.uk/river-and-sea-levels"]
+    ]
+  },
+  {
+    id: "tyne",
+    country: "UK — England",
+    name: "River Tyne",
+    mainIntel: "Major salmon system. Level, recent rainfall, tributary conditions and fish movement are key.",
+    dataSources: [
+      ["Water level", "Environment Agency station data / source mapping required"],
+      ["Flow", "EA hydrology source mapping required"],
+      ["Weather", "Met Office / BBC weather link"],
+      ["Rainfall", "EA / Met Office source mapping required"],
+      ["Catch reports", "Google search / fishery reports"]
+    ],
+    links: [
+      ["Catch reports", "https://www.google.com/search?q=river+tyne+salmon+fishing+report"],
+      ["Weather", "https://www.bbc.co.uk/weather"],
+      ["EA river levels search", "https://check-for-flooding.service.gov.uk/river-and-sea-levels"]
+    ]
+  },
+  {
+    id: "eden",
+    country: "UK — England",
+    name: "River Eden",
+    mainIntel: "Clear-water system. Height, clarity and recent rain are especially important.",
+    dataSources: [
+      ["Water level", "Environment Agency station data / source mapping required"],
+      ["Flow", "EA hydrology source mapping required"],
+      ["Weather", "Met Office / BBC weather link"],
+      ["Rainfall", "EA / Met Office source mapping required"],
+      ["Catch reports", "Google search / fishery reports"]
+    ],
+    links: [
+      ["Catch reports", "https://www.google.com/search?q=river+eden+salmon+fishing+report"],
+      ["Weather", "https://www.bbc.co.uk/weather"],
+      ["EA river levels search", "https://check-for-flooding.service.gov.uk/river-and-sea-levels"]
+    ]
+  },
+  {
+    id: "wye",
+    country: "UK — England/Wales",
+    name: "River Wye",
+    mainIntel: "Large river where rain, level, colour and temperature can change fishing prospects quickly.",
+    dataSources: [
+      ["Water level", "EA / Natural Resources Wales source mapping required"],
+      ["Flow", "Official hydrology source mapping required"],
+      ["Weather", "Met Office / BBC weather link"],
+      ["Rainfall", "Official rainfall source mapping required"],
+      ["Catch reports", "Google search / local reports"]
+    ],
+    links: [
+      ["Catch reports", "https://www.google.com/search?q=river+wye+salmon+fishing+report"],
+      ["Weather", "https://www.bbc.co.uk/weather"],
+      ["EA river levels search", "https://check-for-flooding.service.gov.uk/river-and-sea-levels"]
+    ]
+  },
+  {
+    id: "tweed",
+    country: "UK — Scotland",
+    name: "River Tweed",
+    mainIntel: "Major Scottish salmon river. Beat conditions, levels and recent rainfall are central.",
+    dataSources: [
+      ["Water level", "SEPA / river level source mapping required"],
+      ["Flow", "SEPA hydrometric source mapping required"],
+      ["Weather", "Met Office / BBC weather link"],
+      ["Rainfall", "SEPA / Met Office source mapping required"],
+      ["Catch reports", "Google search / beat reports"]
+    ],
+    links: [
+      ["Catch reports", "https://www.google.com/search?q=river+tweed+salmon+fishing+report"],
+      ["Weather", "https://www.bbc.co.uk/weather"],
+      ["SEPA water levels", "https://beta.sepa.scot/flooding/water-level-data/"]
+    ]
+  },
+  {
+    id: "spey",
+    country: "UK — Scotland",
+    name: "River Spey",
+    mainIntel: "Fast-flowing river. Height, clarity, temperature and recent rain are key indicators.",
+    dataSources: [
+      ["Water level", "SEPA / river level source mapping required"],
+      ["Flow", "SEPA hydrometric source mapping required"],
+      ["Weather", "Met Office / BBC weather link"],
+      ["Rainfall", "SEPA / Met Office source mapping required"],
+      ["Catch reports", "Google search / fishery reports"]
+    ],
+    links: [
+      ["Catch reports", "https://www.google.com/search?q=river+spey+salmon+fishing+report"],
+      ["Weather", "https://www.bbc.co.uk/weather"],
+      ["SEPA water levels", "https://beta.sepa.scot/flooding/water-level-data/"]
+    ]
+  },
+  {
+    id: "dee",
+    country: "UK — Scotland",
+    name: "River Dee",
+    mainIntel: "Important salmon river. Cooler conditions, river height and fresh fish movement matter.",
+    dataSources: [
+      ["Water level", "SEPA / river level source mapping required"],
+      ["Flow", "SEPA hydrometric source mapping required"],
+      ["Weather", "Met Office / BBC weather link"],
+      ["Rainfall", "SEPA / Met Office source mapping required"],
+      ["Catch reports", "Google search / fishery reports"]
+    ],
+    links: [
+      ["Catch reports", "https://www.google.com/search?q=river+dee+aberdeenshire+salmon+fishing+report"],
+      ["Weather", "https://www.bbc.co.uk/weather"],
+      ["SEPA water levels", "https://beta.sepa.scot/flooding/water-level-data/"]
+    ]
+  },
+  {
+    id: "tay",
+    country: "UK — Scotland",
+    name: "River Tay",
+    mainIntel: "Large river. Water height, flow and fish movement across beats are the main intelligence points.",
+    dataSources: [
+      ["Water level", "SEPA / river level source mapping required"],
+      ["Flow", "SEPA hydrometric source mapping required"],
+      ["Weather", "Met Office / BBC weather link"],
+      ["Rainfall", "SEPA / Met Office source mapping required"],
+      ["Catch reports", "Google search / beat reports"]
+    ],
+    links: [
+      ["Catch reports", "https://www.google.com/search?q=river+tay+salmon+fishing+report"],
+      ["Weather", "https://www.bbc.co.uk/weather"],
+      ["SEPA water levels", "https://beta.sepa.scot/flooding/water-level-data/"]
+    ]
+  },
+  {
+    id: "alta",
+    country: "Norway",
+    name: "Altaelva",
+    mainIntel: "High-value Norwegian salmon river. Future integration should prioritise NVE hydrology, temperature and local reports.",
+    dataSources: [
+      ["Water level", "NVE HydAPI source mapping required"],
+      ["Flow", "NVE HydAPI source mapping required"],
+      ["Water temperature", "NVE HydAPI where available"],
+      ["Weather", "Norwegian weather source mapping required"],
+      ["Catch reports", "Local/search reports"]
+    ],
+    links: [
+      ["Catch reports", "https://www.google.com/search?q=Altaelva+salmon+fishing+report"],
+      ["NVE HydAPI", "https://hydapi.nve.no/"],
+      ["Weather search", "https://www.google.com/search?q=Altaelva+weather"]
+    ]
+  },
+  {
+    id: "gaula",
+    country: "Norway",
+    name: "Gaula",
+    mainIntel: "Major Norwegian salmon river. Level, flow, temperature and rainfall are priority data points.",
+    dataSources: [
+      ["Water level", "NVE HydAPI source mapping required"],
+      ["Flow", "NVE HydAPI source mapping required"],
+      ["Water temperature", "NVE HydAPI where available"],
+      ["Weather", "Norwegian weather source mapping required"],
+      ["Catch reports", "Local/search reports"]
+    ],
+    links: [
+      ["Catch reports", "https://www.google.com/search?q=Gaula+Norway+salmon+fishing+report"],
+      ["NVE HydAPI", "https://hydapi.nve.no/"],
+      ["Weather search", "https://www.google.com/search?q=Gaula+Norway+weather"]
+    ]
+  },
+  {
+    id: "orkla",
+    country: "Norway",
+    name: "Orkla",
+    mainIntel: "Important Norwegian salmon river. Hydrology and temperature are central to future live integration.",
+    dataSources: [
+      ["Water level", "NVE HydAPI source mapping required"],
+      ["Flow", "NVE HydAPI source mapping required"],
+      ["Water temperature", "NVE HydAPI where available"],
+      ["Weather", "Norwegian weather source mapping required"],
+      ["Catch reports", "Local/search reports"]
+    ],
+    links: [
+      ["Catch reports", "https://www.google.com/search?q=Orkla+Norway+salmon+fishing+report"],
+      ["NVE HydAPI", "https://hydapi.nve.no/"],
+      ["Weather search", "https://www.google.com/search?q=Orkla+Norway+weather"]
+    ]
+  },
+  {
+    id: "blanda",
+    country: "Iceland",
+    name: "Blanda",
+    mainIntel: "Iceland salmon river. Needs official source mapping before live feed integration.",
+    dataSources: [
+      ["Water level", "Iceland hydrology source mapping required"],
+      ["Flow", "Iceland hydrology source mapping required"],
+      ["Weather", "Icelandic weather source mapping required"],
+      ["Catch reports", "Local/search reports"],
+      ["Data status", "Research required before live integration"]
+    ],
+    links: [
+      ["Catch reports", "https://www.google.com/search?q=Blanda+Iceland+salmon+fishing+report"],
+      ["Iceland Met Office hydrology", "https://en.vedur.is/hydrology/"],
+      ["Weather search", "https://www.google.com/search?q=Blanda+Iceland+weather"]
+    ]
+  },
+  {
+    id: "laxa",
+    country: "Iceland",
+    name: "Laxá",
+    mainIntel: "Iceland salmon/trout system. Needs careful source mapping because river names repeat in Iceland.",
+    dataSources: [
+      ["Water level", "Iceland hydrology source mapping required"],
+      ["Flow", "Iceland hydrology source mapping required"],
+      ["Weather", "Icelandic weather source mapping required"],
+      ["Catch reports", "Local/search reports"],
+      ["Data status", "Research required before live integration"]
+    ],
+    links: [
+      ["Catch reports", "https://www.google.com/search?q=Laxa+Iceland+salmon+fishing+report"],
+      ["Iceland Met Office hydrology", "https://en.vedur.is/hydrology/"],
+      ["Weather search", "https://www.google.com/search?q=Laxa+Iceland+weather"]
+    ]
+  }
 ];
 
-function confidenceFromTime(time) {
-  if (!time) return "NO UPDATE";
-
-  const diff = (new Date() - new Date(time)) / (1000 * 60 * 60);
-
-  if (diff > 24) return "LOW";
-  if (diff > 6) return "MEDIUM";
-  return "HIGH";
-}
-
-function statusValue(status) {
-  if (status === "🔴") return 1;
-  if (status === "🟡") return 2;
-  if (status === "🟢") return 3;
-  return 0;
-}
-
-function confidenceValue(confidence) {
-  if (confidence === "HIGH") return 3;
-  if (confidence === "MEDIUM") return 2;
-  if (confidence === "LOW") return 1;
-  return 0;
-}
-
-function fishability(status, confidence) {
-  if (!status) return "⚪ No decision";
-  if (status === "🔴") return "🔴 Avoid";
-  if (status === "🟡") return confidence === "HIGH" ? "🟡 Possible" : "🟠 Check";
-  if (status === "🟢") return confidence === "HIGH" ? "🟢 Good" : "🟡 Check";
-  return "⚪ No decision";
-}
-
-function scoreClass(score) {
-  if (score.includes("Good")) return "score-good";
-  if (score.includes("Possible") || score.includes("Check")) return "score-check";
-  if (score.includes("Avoid")) return "score-avoid";
-  return "score-neutral";
-}
-
-function bannerClass(score) {
-  if (score.includes("Good")) return "banner-good";
-  if (score.includes("Possible") || score.includes("Check")) return "banner-check";
-  if (score.includes("Avoid")) return "banner-avoid";
-  return "banner-check";
-}
-
-function getHistory(riverId) {
-  try {
-    return JSON.parse(localStorage.getItem(`${riverId}-history`)) || [];
-  } catch (e) {
-    return [];
-  }
-}
-
-function saveHistory(riverId, status, time) {
-  const history = getHistory(riverId);
-  history.unshift({ status: status, time: time });
-  localStorage.setItem(`${riverId}-history`, JSON.stringify(history.slice(0, 3)));
-}
-
-function trendFromHistory(riverId) {
-  const history = getHistory(riverId);
-
-  if (history.length < 2) return "⚪ Trend: not enough history";
-
-  const latest = statusValue(history[0].status);
-  const previous = statusValue(history[1].status);
-
-  if (latest > previous) return "📈 Trend: improving";
-  if (latest < previous) return "📉 Trend: worsening";
-  return "➖ Trend: stable";
-}
-
-function trendValue(trend) {
-  if (trend.includes("improving")) return 2;
-  if (trend.includes("stable")) return 1;
-  if (trend.includes("worsening")) return -1;
-  return 0;
-}
-
-function setStatus(riverId, status) {
-  const now = new Date().toLocaleString();
-
-  localStorage.setItem(`${riverId}-status`, status);
-  localStorage.setItem(`${riverId}-time`, now);
-
-  saveHistory(riverId, status, now);
-
-  render();
-}
-
-function riverSnapshot(river) {
-  const status = localStorage.getItem(`${river.id}-status`) || "";
-  const time = localStorage.getItem(`${river.id}-time`);
-  const confidence = confidenceFromTime(time);
-  const score = fishability(status, confidence);
-  const trend = trendFromHistory(river.id);
-
-  return {
-    id: river.id,
-    name: river.name,
-    status: status || "⚪",
-    time: time,
-    confidence: confidence,
-    score: score,
-    trend: trend,
-    rankScore:
-      (statusValue(status) * 10) +
-      (confidenceValue(confidence) * 3) +
-      trendValue(trend)
-  };
-}
-
-function getRankedRivers() {
-  return rivers.map(riverSnapshot).sort((a, b) => b.rankScore - a.rankScore);
-}
-
-function historyHtml(riverId) {
-  const history = getHistory(riverId);
-
-  if (!history.length) {
-    return `
-      <div class="history">
-        <div class="history-title">Last 3 updates</div>
-        <div>No history yet</div>
-      </div>
-    `;
-  }
-
-  return `
-    <div class="history">
-      <div class="history-title">Last 3 updates</div>
-      ${history.map(item => `
-        <div class="history-item">${item.status} ${item.time}</div>
-      `).join("")}
+function renderDataSources(items) {
+  return items.map(item => `
+    <div class="data-row">
+      <strong>${item[0]}:</strong> ${item[1]}
     </div>
-  `;
+  `).join("");
 }
 
-function renderSummary() {
-  const ranked = getRankedRivers();
-  const best = ranked[0];
-
-  document.getElementById("summary").innerHTML = `
-    <div class="best-banner ${bannerClass(best.score)}">
-      ⭐ Best right now: ${best.name}<br>
-      ${best.score} · ${best.trend.replace("Trend: ", "")} · Confidence: ${best.confidence}
-    </div>
-
-    <div class="summary-panel">
-      <h2>Best Rivers Right Now</h2>
-      ${ranked.slice(0, 5).map((r, index) => `
-        <div class="summary-item">
-          <strong>${index + 1}. ${r.name}</strong><br>
-          ${r.score} · ${r.trend.replace("Trend: ", "")} · Confidence: ${r.confidence}
-        </div>
-      `).join("")}
-    </div>
-  `;
+function renderLinks(links) {
+  return links.map(link => `
+    <a href="${link[1]}" target="_blank" rel="noopener">${link[0]}</a>
+  `).join("");
 }
 
 function renderApp() {
   const app = document.getElementById("app");
-  const ranked = getRankedRivers();
-  const bestId = ranked[0].id;
 
-  app.innerHTML = ranked.map(r => {
-    const notes = localStorage.getItem(`${r.id}-notes`) || "";
-    const isBest = r.id === bestId;
+  app.innerHTML = rivers.map(river => {
+    const savedNote = localStorage.getItem(`${river.id}-notes`) || "";
 
     return `
-      <div class="river-card ${isBest ? "best-card" : ""}">
-        ${isBest ? `<div class="best-label">⭐ Current #1 river</div>` : ""}
+      <div class="river-card">
+        <div class="country-label">${river.country}</div>
 
         <div class="river-title">
-          <h2>${r.name}</h2>
-          <div class="status">${r.status}</div>
+          <h2>${river.name}</h2>
+          <div class="source-status">External data first</div>
         </div>
 
-        <div class="buttons">
-          <button class="fish" onclick="setStatus('${r.id}','🟢')">🟢 Fish</button>
-          <button class="check" onclick="setStatus('${r.id}','🟡')">🟡 Check</button>
-          <button class="avoid" onclick="setStatus('${r.id}','🔴')">🔴 Avoid</button>
+        <div class="data-block">
+          <h3>River intelligence</h3>
+          <div class="data-row">${river.mainIntel}</div>
         </div>
 
-        <div class="score ${scoreClass(r.score)}">${r.score}</div>
-        <div class="trend">${r.trend}</div>
-
-        <div class="meta">
-          ${r.time ? `Updated: ${r.time} | Confidence: ${r.confidence}` : "No update yet"}
+        <div class="data-block">
+          <h3>External data targets</h3>
+          ${renderDataSources(river.dataSources)}
         </div>
 
-        ${historyHtml(r.id)}
+        <div class="data-block">
+          <h3>Source links</h3>
+          <div class="links">
+            ${renderLinks(river.links)}
+          </div>
+        </div>
 
-        <textarea placeholder="Notes..." oninput="localStorage.setItem('${r.id}-notes', this.value)">${notes}</textarea>
+        <div class="warning">
+          Live values are not yet pulled into the card. This build prepares the correct external-data structure before we connect official feeds.
+        </div>
+
+        <div class="note-box">
+          <label>Your private note — optional</label>
+          <textarea placeholder="Optional note..." oninput="localStorage.setItem('${river.id}-notes', this.value)">${savedNote}</textarea>
+        </div>
       </div>
     `;
   }).join("");
 }
 
-function render() {
-  renderSummary();
-  renderApp();
-}
-
-render();
+renderApp();
 </script>
 
 </body>
