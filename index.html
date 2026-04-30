@@ -13,7 +13,10 @@ body {
   padding: 16px;
 }
 
-h1 { text-align: center; }
+h1 {
+  text-align: center;
+  margin-bottom: 6px;
+}
 
 .subtitle {
   text-align: center;
@@ -22,6 +25,7 @@ h1 { text-align: center; }
   margin-bottom: 20px;
 }
 
+.best-banner,
 .summary-panel,
 .river-card {
   border-radius: 16px;
@@ -31,77 +35,155 @@ h1 { text-align: center; }
   box-shadow: 0 3px 10px rgba(0,0,0,0.12);
 }
 
-/* Banner */
 .best-banner {
-  border-radius: 16px;
-  padding: 14px;
-  margin-bottom: 18px;
+  font-weight: bold;
+  line-height: 1.5;
+}
+
+.banner-good {
+  background: #dff8df;
+  border: 2px solid #6ac96a;
+}
+
+.banner-check {
+  background: #fff6cc;
+  border: 2px solid #e0c24a;
+}
+
+.banner-avoid {
+  background: #ffd6d6;
+  border: 2px solid #d66;
+}
+
+.summary-panel h2 {
+  margin-top: 0;
+}
+
+.summary-item {
+  padding: 7px 0;
+  border-bottom: 1px solid #e2e6ea;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.summary-item:last-child {
+  border-bottom: none;
+}
+
+.best-card {
+  border: 2px solid #6ac96a;
+}
+
+.best-label {
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #dff8df;
+  font-size: 13px;
   font-weight: bold;
 }
 
-.banner-good { background:#dff8df; border:2px solid #6ac96a; }
-.banner-check { background:#fff6cc; border:2px solid #e0c24a; }
-.banner-avoid { background:#ffd6d6; border:2px solid #d66; }
-
-/* 🔥 NEW: score colours */
-.score-good { background:#e6f9e6; border:1px solid #6ac96a; }
-.score-check { background:#fff7d9; border:1px solid #e0c24a; }
-.score-avoid { background:#ffe0e0; border:1px solid #d66; }
-
-.best-card { border:2px solid #6ac96a; }
-
-.best-label {
-  display:inline-block;
-  margin-bottom:10px;
-  padding:6px 10px;
-  border-radius:999px;
-  background:#dff8df;
-  font-size:13px;
-  font-weight:bold;
-}
-
 .river-title {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
 }
 
-.status { font-size:30px; }
+.status {
+  font-size: 30px;
+}
+
+.buttons {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 
 .buttons button {
-  margin:6px 6px 0 0;
-  padding:10px 14px;
-  border-radius:10px;
-  border:none;
-  cursor:pointer;
+  margin-right: 8px;
+  margin-top: 8px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
 }
 
-.fish { background:#c8f7c5; }
-.check { background:#fff3b0; }
-.avoid { background:#f7c5c5; }
+.fish { background: #c8f7c5; }
+.check { background: #fff3b0; }
+.avoid { background: #f7c5c5; }
 
 .score,
 .trend {
-  margin-top:10px;
-  padding:10px;
-  border-radius:12px;
-  font-weight:bold;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 12px;
+  font-weight: bold;
+}
+
+.trend {
+  background: #f4f6f8;
+}
+
+.score-good {
+  background: #e6f9e6;
+  border: 1px solid #6ac96a;
+}
+
+.score-check {
+  background: #fff7d9;
+  border: 1px solid #e0c24a;
+}
+
+.score-avoid {
+  background: #ffe0e0;
+  border: 1px solid #d66;
+}
+
+.score-neutral {
+  background: #f4f6f8;
+  border: 1px solid #d5dce3;
 }
 
 .meta {
-  font-size:12px;
-  color:#555;
-  margin-top:6px;
+  font-size: 12px;
+  color: #555;
+  margin-top: 6px;
+}
+
+.history {
+  margin-top: 12px;
+  padding: 12px;
+  background: #f7f9fb;
+  border-radius: 12px;
+  font-size: 13px;
+}
+
+.history-title {
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.history-item {
+  padding: 4px 0;
+  border-bottom: 1px solid #e2e6ea;
+}
+
+.history-item:last-child {
+  border-bottom: none;
 }
 
 textarea {
-  width:100%;
-  min-height:80px;
-  margin-top:12px;
-  padding:10px;
-  border-radius:10px;
-  border:1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 80px;
+  margin-top: 12px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
 }
 </style>
 </head>
@@ -126,85 +208,209 @@ const rivers = [
   { id:"wye", name:"River Wye" }
 ];
 
-function confidenceFromTime(t){
-  if(!t) return "NO UPDATE";
-  const d=(new Date()-new Date(t))/(1000*60*60);
-  if(d>24) return "LOW";
-  if(d>6) return "MEDIUM";
+function confidenceFromTime(time) {
+  if (!time) return "NO UPDATE";
+
+  const diff = (new Date() - new Date(time)) / (1000 * 60 * 60);
+
+  if (diff > 24) return "LOW";
+  if (diff > 6) return "MEDIUM";
   return "HIGH";
 }
 
-function fishability(s,c){
-  if(!s) return "⚪ No decision";
-  if(s==="🔴") return "🔴 Avoid";
-  if(s==="🟡") return c==="HIGH"?"🟡 Possible":"🟠 Check";
-  if(s==="🟢") return c==="HIGH"?"🟢 Good":"🟡 Check";
+function statusValue(status) {
+  if (status === "🔴") return 1;
+  if (status === "🟡") return 2;
+  if (status === "🟢") return 3;
+  return 0;
 }
 
-function scoreClass(score){
-  if(score.includes("Good")) return "score-good";
-  if(score.includes("Possible")||score.includes("Check")) return "score-check";
-  if(score.includes("Avoid")) return "score-avoid";
+function confidenceValue(confidence) {
+  if (confidence === "HIGH") return 3;
+  if (confidence === "MEDIUM") return 2;
+  if (confidence === "LOW") return 1;
+  return 0;
 }
 
-function bannerClass(score){
-  if(score.includes("Good")) return "banner-good";
-  if(score.includes("Check")||score.includes("Possible")) return "banner-check";
-  if(score.includes("Avoid")) return "banner-avoid";
+function fishability(status, confidence) {
+  if (!status) return "⚪ No decision";
+  if (status === "🔴") return "🔴 Avoid";
+  if (status === "🟡") return confidence === "HIGH" ? "🟡 Possible" : "🟠 Check";
+  if (status === "🟢") return confidence === "HIGH" ? "🟢 Good" : "🟡 Check";
+  return "⚪ No decision";
 }
 
-function setStatus(id,s){
-  const now=new Date().toLocaleString();
-  localStorage.setItem(id+"-status",s);
-  localStorage.setItem(id+"-time",now);
+function scoreClass(score) {
+  if (score.includes("Good")) return "score-good";
+  if (score.includes("Possible") || score.includes("Check")) return "score-check";
+  if (score.includes("Avoid")) return "score-avoid";
+  return "score-neutral";
+}
+
+function bannerClass(score) {
+  if (score.includes("Good")) return "banner-good";
+  if (score.includes("Possible") || score.includes("Check")) return "banner-check";
+  if (score.includes("Avoid")) return "banner-avoid";
+  return "banner-check";
+}
+
+function getHistory(riverId) {
+  try {
+    return JSON.parse(localStorage.getItem(`${riverId}-history`)) || [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveHistory(riverId, status, time) {
+  const history = getHistory(riverId);
+  history.unshift({ status: status, time: time });
+  localStorage.setItem(`${riverId}-history`, JSON.stringify(history.slice(0, 3)));
+}
+
+function trendFromHistory(riverId) {
+  const history = getHistory(riverId);
+
+  if (history.length < 2) return "⚪ Trend: not enough history";
+
+  const latest = statusValue(history[0].status);
+  const previous = statusValue(history[1].status);
+
+  if (latest > previous) return "📈 Trend: improving";
+  if (latest < previous) return "📉 Trend: worsening";
+  return "➖ Trend: stable";
+}
+
+function trendValue(trend) {
+  if (trend.includes("improving")) return 2;
+  if (trend.includes("stable")) return 1;
+  if (trend.includes("worsening")) return -1;
+  return 0;
+}
+
+function setStatus(riverId, status) {
+  const now = new Date().toLocaleString();
+
+  localStorage.setItem(`${riverId}-status`, status);
+  localStorage.setItem(`${riverId}-time`, now);
+
+  saveHistory(riverId, status, now);
+
   render();
 }
 
-function snap(r){
-  const s=localStorage.getItem(r.id+"-status")||"";
-  const t=localStorage.getItem(r.id+"-time");
-  const c=confidenceFromTime(t);
-  const sc=fishability(s,c);
-  return {...r,status:s||"⚪",time:t,confidence:c,score:sc};
+function riverSnapshot(river) {
+  const status = localStorage.getItem(`${river.id}-status`) || "";
+  const time = localStorage.getItem(`${river.id}-time`);
+  const confidence = confidenceFromTime(time);
+  const score = fishability(status, confidence);
+  const trend = trendFromHistory(river.id);
+
+  return {
+    id: river.id,
+    name: river.name,
+    status: status || "⚪",
+    time: time,
+    confidence: confidence,
+    score: score,
+    trend: trend,
+    rankScore:
+      (statusValue(status) * 10) +
+      (confidenceValue(confidence) * 3) +
+      trendValue(trend)
+  };
 }
 
-function render(){
-  const ranked=rivers.map(snap);
+function getRankedRivers() {
+  return rivers.map(riverSnapshot).sort((a, b) => b.rankScore - a.rankScore);
+}
 
-  const best=ranked[0];
+function historyHtml(riverId) {
+  const history = getHistory(riverId);
 
-  document.getElementById("summary").innerHTML=`
-    <div class="best-banner ${bannerClass(best.score)}">
-      ⭐ Best right now: ${best.name}<br>
-      ${best.score}
+  if (!history.length) {
+    return `
+      <div class="history">
+        <div class="history-title">Last 3 updates</div>
+        <div>No history yet</div>
+      </div>
+    `;
+  }
+
+  return `
+    <div class="history">
+      <div class="history-title">Last 3 updates</div>
+      ${history.map(item => `
+        <div class="history-item">${item.status} ${item.time}</div>
+      `).join("")}
     </div>
   `;
+}
 
-  document.getElementById("app").innerHTML=ranked.map(r=>`
-    <div class="river-card">
-      <div class="river-title">
-        <h2>${r.name}</h2>
-        <div class="status">${r.status}</div>
-      </div>
+function renderSummary() {
+  const ranked = getRankedRivers();
+  const best = ranked[0];
 
-      <div class="buttons">
-        <button class="fish" onclick="setStatus('${r.id}','🟢')">🟢 Fish</button>
-        <button class="check" onclick="setStatus('${r.id}','🟡')">🟡 Check</button>
-        <button class="avoid" onclick="setStatus('${r.id}','🔴')">🔴 Avoid</button>
-      </div>
-
-      <div class="score ${scoreClass(r.score)}">${r.score}</div>
-
-      <div class="meta">
-        ${r.time?`Updated: ${r.time} | Confidence: ${r.confidence}`:"No update yet"}
-      </div>
-
-      <textarea placeholder="Notes..." 
-        oninput="localStorage.setItem('${r.id}-notes',this.value)">
-        ${localStorage.getItem(r.id+"-notes")||""}
-      </textarea>
+  document.getElementById("summary").innerHTML = `
+    <div class="best-banner ${bannerClass(best.score)}">
+      ⭐ Best right now: ${best.name}<br>
+      ${best.score} · ${best.trend.replace("Trend: ", "")} · Confidence: ${best.confidence}
     </div>
-  `).join("");
+
+    <div class="summary-panel">
+      <h2>Best Rivers Right Now</h2>
+      ${ranked.slice(0, 5).map((r, index) => `
+        <div class="summary-item">
+          <strong>${index + 1}. ${r.name}</strong><br>
+          ${r.score} · ${r.trend.replace("Trend: ", "")} · Confidence: ${r.confidence}
+        </div>
+      `).join("")}
+    </div>
+  `;
+}
+
+function renderApp() {
+  const app = document.getElementById("app");
+  const ranked = getRankedRivers();
+  const bestId = ranked[0].id;
+
+  app.innerHTML = ranked.map(r => {
+    const notes = localStorage.getItem(`${r.id}-notes`) || "";
+    const isBest = r.id === bestId;
+
+    return `
+      <div class="river-card ${isBest ? "best-card" : ""}">
+        ${isBest ? `<div class="best-label">⭐ Current #1 river</div>` : ""}
+
+        <div class="river-title">
+          <h2>${r.name}</h2>
+          <div class="status">${r.status}</div>
+        </div>
+
+        <div class="buttons">
+          <button class="fish" onclick="setStatus('${r.id}','🟢')">🟢 Fish</button>
+          <button class="check" onclick="setStatus('${r.id}','🟡')">🟡 Check</button>
+          <button class="avoid" onclick="setStatus('${r.id}','🔴')">🔴 Avoid</button>
+        </div>
+
+        <div class="score ${scoreClass(r.score)}">${r.score}</div>
+        <div class="trend">${r.trend}</div>
+
+        <div class="meta">
+          ${r.time ? `Updated: ${r.time} | Confidence: ${r.confidence}` : "No update yet"}
+        </div>
+
+        ${historyHtml(r.id)}
+
+        <textarea placeholder="Notes..." oninput="localStorage.setItem('${r.id}-notes', this.value)">${notes}</textarea>
+      </div>
+    `;
+  }).join("");
+}
+
+function render() {
+  renderSummary();
+  renderApp();
 }
 
 render();
