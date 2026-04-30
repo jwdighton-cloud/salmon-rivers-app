@@ -13,16 +13,39 @@ body {
   padding: 16px;
 }
 
-h1 {
-  text-align: center;
-  margin-bottom: 6px;
-}
+h1 { text-align: center; margin-bottom: 6px; }
 
 .subtitle {
   text-align: center;
   font-size: 13px;
   color: #555;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  position: sticky;
+  top: 0;
+  background: #eef2f5;
+  padding: 8px 0;
+  z-index: 10;
+}
+
+.tab {
+  flex: 1;
+  padding: 11px;
+  border-radius: 999px;
+  border: none;
+  font-weight: bold;
+  background: white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}
+
+.tab.active {
+  background: #dff8df;
+  border: 2px solid #6ac96a;
 }
 
 .intel-panel,
@@ -39,10 +62,6 @@ h1 {
   background: #eaf4ff;
 }
 
-.intel-panel h2 {
-  margin-top: 0;
-}
-
 .country-label {
   font-size: 12px;
   font-weight: bold;
@@ -56,16 +75,12 @@ h1 {
   align-items: center;
 }
 
-.river-title h2 {
-  margin: 4px 0 10px 0;
-}
+.river-title h2 { margin: 4px 0 10px 0; }
 
 .source-status {
   font-size: 12px;
   padding: 5px 8px;
   border-radius: 999px;
-  background: #fff6cc;
-  border: 1px solid #e0c24a;
   font-weight: bold;
 }
 
@@ -99,9 +114,7 @@ h1 {
   line-height: 1.4;
 }
 
-.data-row:last-child {
-  border-bottom: none;
-}
+.data-row:last-child { border-bottom: none; }
 
 .live-box {
   background: #eefaf0;
@@ -124,10 +137,6 @@ h1 {
   border: 1px solid #e0c24a;
 }
 
-.links {
-  margin-top: 12px;
-}
-
 .links a {
   display: inline-block;
   margin: 6px 6px 0 0;
@@ -140,13 +149,7 @@ h1 {
   font-weight: bold;
 }
 
-.links a:hover {
-  text-decoration: underline;
-}
-
-.note-box {
-  margin-top: 12px;
-}
+.note-box { margin-top: 12px; }
 
 .note-box label {
   font-size: 13px;
@@ -164,21 +167,6 @@ textarea {
   font-size: 14px;
   font-family: Arial, sans-serif;
 }
-
-.warning {
-  background: #fff7d9;
-  border: 1px solid #e0c24a;
-  border-radius: 12px;
-  padding: 10px;
-  margin-top: 12px;
-  font-size: 13px;
-  line-height: 1.4;
-}
-
-.small {
-  font-size: 12px;
-  color: #666;
-}
 </style>
 </head>
 
@@ -187,187 +175,46 @@ textarea {
 <h1>Salmon Rivers Intelligence</h1>
 <div class="subtitle">External-data-led salmon fishing dashboard</div>
 
-<div class="intel-panel">
-  <h2>Live Data Build 10023</h2>
-  <div class="data-row"><strong>Primary aim:</strong> show real outside river data inside the app</div>
-  <div class="data-row"><strong>First live source:</strong> Environment Agency river level data</div>
-  <div class="data-row"><strong>First target:</strong> England / Wales rivers where EA data is available</div>
-  <div class="data-row"><strong>Important:</strong> Scottish, Norway and Iceland live feeds are prepared as source links for now</div>
+<div class="tabs">
+  <button class="tab active" onclick="setCountry('UK')">🇬🇧 UK</button>
+  <button class="tab" onclick="setCountry('Norway')">🇳🇴 Norway</button>
+  <button class="tab" onclick="setCountry('Iceland')">🇮🇸 Iceland</button>
 </div>
 
+<div class="intel-panel" id="countryIntro"></div>
 <div id="app"></div>
 
 <script>
 const EA_API = "https://environment.data.gov.uk/flood-monitoring";
+let selectedCountry = "UK";
 
 const rivers = [
-  {
-    id: "ribble",
-    country: "UK — England",
-    name: "River Ribble",
-    liveProvider: "EA",
-    eaRiverName: "Ribble",
-    mainIntel: "High-priority local river. Temperature, rainfall, colour and level changes matter strongly.",
-    links: [
-      ["Catch reports", "https://www.google.com/search?q=river+ribble+salmon+fishing+report"],
-      ["Weather", "https://www.bbc.co.uk/weather"],
-      ["RFCA", "https://ribbletrust.org.uk/"],
-      ["EA river levels search", "https://check-for-flooding.service.gov.uk/river-and-sea-levels"]
-    ]
-  },
-  {
-    id: "tyne",
-    country: "UK — England",
-    name: "River Tyne",
-    liveProvider: "EA",
-    eaRiverName: "Tyne",
-    mainIntel: "Major salmon system. Level, recent rainfall, tributary conditions and fish movement are key.",
-    links: [
-      ["Catch reports", "https://www.google.com/search?q=river+tyne+salmon+fishing+report"],
-      ["Weather", "https://www.bbc.co.uk/weather"],
-      ["EA river levels search", "https://check-for-flooding.service.gov.uk/river-and-sea-levels"]
-    ]
-  },
-  {
-    id: "eden",
-    country: "UK — England",
-    name: "River Eden",
-    liveProvider: "EA",
-    eaRiverName: "Eden",
-    mainIntel: "Clear-water system. Height, clarity and recent rain are especially important.",
-    links: [
-      ["Catch reports", "https://www.google.com/search?q=river+eden+salmon+fishing+report"],
-      ["Weather", "https://www.bbc.co.uk/weather"],
-      ["EA river levels search", "https://check-for-flooding.service.gov.uk/river-and-sea-levels"]
-    ]
-  },
-  {
-    id: "wye",
-    country: "UK — England/Wales",
-    name: "River Wye",
-    liveProvider: "EA",
-    eaRiverName: "Wye",
-    mainIntel: "Large river where rain, level, colour and temperature can change fishing prospects quickly.",
-    links: [
-      ["Catch reports", "https://www.google.com/search?q=river+wye+salmon+fishing+report"],
-      ["Weather", "https://www.bbc.co.uk/weather"],
-      ["EA river levels search", "https://check-for-flooding.service.gov.uk/river-and-sea-levels"]
-    ]
-  },
-  {
-    id: "tweed",
-    country: "UK — Scotland",
-    name: "River Tweed",
-    liveProvider: "SEPA_PENDING",
-    mainIntel: "Major Scottish salmon river. Beat conditions, levels and recent rainfall are central.",
-    links: [
-      ["Catch reports", "https://www.google.com/search?q=river+tweed+salmon+fishing+report"],
-      ["Weather", "https://www.bbc.co.uk/weather"],
-      ["SEPA water levels", "https://beta.sepa.scot/flooding/water-level-data/"]
-    ]
-  },
-  {
-    id: "spey",
-    country: "UK — Scotland",
-    name: "River Spey",
-    liveProvider: "SEPA_PENDING",
-    mainIntel: "Fast-flowing river. Height, clarity, temperature and recent rain are key indicators.",
-    links: [
-      ["Catch reports", "https://www.google.com/search?q=river+spey+salmon+fishing+report"],
-      ["Weather", "https://www.bbc.co.uk/weather"],
-      ["SEPA water levels", "https://beta.sepa.scot/flooding/water-level-data/"]
-    ]
-  },
-  {
-    id: "dee",
-    country: "UK — Scotland",
-    name: "River Dee",
-    liveProvider: "SEPA_PENDING",
-    mainIntel: "Important salmon river. Cooler conditions, river height and fresh fish movement matter.",
-    links: [
-      ["Catch reports", "https://www.google.com/search?q=river+dee+aberdeenshire+salmon+fishing+report"],
-      ["Weather", "https://www.bbc.co.uk/weather"],
-      ["SEPA water levels", "https://beta.sepa.scot/flooding/water-level-data/"]
-    ]
-  },
-  {
-    id: "tay",
-    country: "UK — Scotland",
-    name: "River Tay",
-    liveProvider: "SEPA_PENDING",
-    mainIntel: "Large river. Water height, flow and fish movement across beats are the main intelligence points.",
-    links: [
-      ["Catch reports", "https://www.google.com/search?q=river+tay+salmon+fishing+report"],
-      ["Weather", "https://www.bbc.co.uk/weather"],
-      ["SEPA water levels", "https://beta.sepa.scot/flooding/water-level-data/"]
-    ]
-  },
-  {
-    id: "alta",
-    country: "Norway",
-    name: "Altaelva",
-    liveProvider: "NVE_PENDING",
-    mainIntel: "High-value Norwegian salmon river. Future integration should prioritise NVE hydrology, temperature and local reports.",
-    links: [
-      ["Catch reports", "https://www.google.com/search?q=Altaelva+salmon+fishing+report"],
-      ["NVE HydAPI", "https://hydapi.nve.no/"],
-      ["Weather search", "https://www.google.com/search?q=Altaelva+weather"]
-    ]
-  },
-  {
-    id: "gaula",
-    country: "Norway",
-    name: "Gaula",
-    liveProvider: "NVE_PENDING",
-    mainIntel: "Major Norwegian salmon river. Level, flow, temperature and rainfall are priority data points.",
-    links: [
-      ["Catch reports", "https://www.google.com/search?q=Gaula+Norway+salmon+fishing+report"],
-      ["NVE HydAPI", "https://hydapi.nve.no/"],
-      ["Weather search", "https://www.google.com/search?q=Gaula+Norway+weather"]
-    ]
-  },
-  {
-    id: "orkla",
-    country: "Norway",
-    name: "Orkla",
-    liveProvider: "NVE_PENDING",
-    mainIntel: "Important Norwegian salmon river. Hydrology and temperature are central to future live integration.",
-    links: [
-      ["Catch reports", "https://www.google.com/search?q=Orkla+Norway+salmon+fishing+report"],
-      ["NVE HydAPI", "https://hydapi.nve.no/"],
-      ["Weather search", "https://www.google.com/search?q=Orkla+Norway+weather"]
-    ]
-  },
-  {
-    id: "blanda",
-    country: "Iceland",
-    name: "Blanda",
-    liveProvider: "ICELAND_PENDING",
-    mainIntel: "Iceland salmon river. Needs official source mapping before live feed integration.",
-    links: [
-      ["Catch reports", "https://www.google.com/search?q=Blanda+Iceland+salmon+fishing+report"],
-      ["Iceland Met Office hydrology", "https://en.vedur.is/hydrology/"],
-      ["Weather search", "https://www.google.com/search?q=Blanda+Iceland+weather"]
-    ]
-  },
-  {
-    id: "laxa",
-    country: "Iceland",
-    name: "Laxá",
-    liveProvider: "ICELAND_PENDING",
-    mainIntel: "Iceland salmon/trout system. Needs careful source mapping because river names repeat in Iceland.",
-    links: [
-      ["Catch reports", "https://www.google.com/search?q=Laxa+Iceland+salmon+fishing+report"],
-      ["Iceland Met Office hydrology", "https://en.vedur.is/hydrology/"],
-      ["Weather search", "https://www.google.com/search?q=Laxa+Iceland+weather"]
-    ]
-  }
+  { id:"ribble", country:"UK", region:"England", name:"River Ribble", liveProvider:"EA", eaRiverName:"Ribble", mainIntel:"High-priority local river. Temperature, rainfall, colour and level changes matter strongly.", links:[["Catch reports","https://www.google.com/search?q=river+ribble+salmon+fishing+report"],["Weather","https://www.bbc.co.uk/weather"],["RFCA","https://ribbletrust.org.uk/"],["EA river levels","https://check-for-flooding.service.gov.uk/river-and-sea-levels"]] },
+  { id:"tyne", country:"UK", region:"England", name:"River Tyne", liveProvider:"EA", eaRiverName:"Tyne", mainIntel:"Major salmon system. Level, recent rainfall, tributary conditions and fish movement are key.", links:[["Catch reports","https://www.google.com/search?q=river+tyne+salmon+fishing+report"],["Weather","https://www.bbc.co.uk/weather"],["EA river levels","https://check-for-flooding.service.gov.uk/river-and-sea-levels"]] },
+  { id:"eden", country:"UK", region:"England", name:"River Eden", liveProvider:"EA", eaRiverName:"Eden", mainIntel:"Clear-water system. Height, clarity and recent rain are especially important.", links:[["Catch reports","https://www.google.com/search?q=river+eden+salmon+fishing+report"],["Weather","https://www.bbc.co.uk/weather"],["EA river levels","https://check-for-flooding.service.gov.uk/river-and-sea-levels"]] },
+  { id:"wye", country:"UK", region:"England/Wales", name:"River Wye", liveProvider:"EA", eaRiverName:"Wye", mainIntel:"Large river where rain, level, colour and temperature can change fishing prospects quickly.", links:[["Catch reports","https://www.google.com/search?q=river+wye+salmon+fishing+report"],["Weather","https://www.bbc.co.uk/weather"],["EA river levels","https://check-for-flooding.service.gov.uk/river-and-sea-levels"]] },
+  { id:"tweed", country:"UK", region:"Scotland", name:"River Tweed", liveProvider:"SEPA_PENDING", mainIntel:"Major Scottish salmon river. Beat conditions, levels and recent rainfall are central.", links:[["Catch reports","https://www.google.com/search?q=river+tweed+salmon+fishing+report"],["Weather","https://www.bbc.co.uk/weather"],["SEPA water levels","https://beta.sepa.scot/flooding/water-level-data/"]] },
+  { id:"spey", country:"UK", region:"Scotland", name:"River Spey", liveProvider:"SEPA_PENDING", mainIntel:"Fast-flowing river. Height, clarity, temperature and recent rain are key indicators.", links:[["Catch reports","https://www.google.com/search?q=river+spey+salmon+fishing+report"],["Weather","https://www.bbc.co.uk/weather"],["SEPA water levels","https://beta.sepa.scot/flooding/water-level-data/"]] },
+  { id:"dee", country:"UK", region:"Scotland", name:"River Dee", liveProvider:"SEPA_PENDING", mainIntel:"Important salmon river. Cooler conditions, river height and fresh fish movement matter.", links:[["Catch reports","https://www.google.com/search?q=river+dee+aberdeenshire+salmon+fishing+report"],["Weather","https://www.bbc.co.uk/weather"],["SEPA water levels","https://beta.sepa.scot/flooding/water-level-data/"]] },
+  { id:"tay", country:"UK", region:"Scotland", name:"River Tay", liveProvider:"SEPA_PENDING", mainIntel:"Large river. Water height, flow and fish movement across beats are the main intelligence points.", links:[["Catch reports","https://www.google.com/search?q=river+tay+salmon+fishing+report"],["Weather","https://www.bbc.co.uk/weather"],["SEPA water levels","https://beta.sepa.scot/flooding/water-level-data/"]] },
+
+  { id:"alta", country:"Norway", region:"Finnmark", name:"Altaelva", liveProvider:"NVE_PENDING", mainIntel:"High-value Norwegian salmon river. Future integration should prioritise NVE hydrology, temperature and local reports.", links:[["Catch reports","https://www.google.com/search?q=Altaelva+salmon+fishing+report"],["NVE HydAPI","https://hydapi.nve.no/"],["Weather search","https://www.google.com/search?q=Altaelva+weather"]] },
+  { id:"gaula", country:"Norway", region:"Trøndelag", name:"Gaula", liveProvider:"NVE_PENDING", mainIntel:"Major Norwegian salmon river. Level, flow, temperature and rainfall are priority data points.", links:[["Catch reports","https://www.google.com/search?q=Gaula+Norway+salmon+fishing+report"],["NVE HydAPI","https://hydapi.nve.no/"],["Weather search","https://www.google.com/search?q=Gaula+Norway+weather"]] },
+  { id:"orkla", country:"Norway", region:"Trøndelag", name:"Orkla", liveProvider:"NVE_PENDING", mainIntel:"Important Norwegian salmon river. Hydrology and temperature are central to future live integration.", links:[["Catch reports","https://www.google.com/search?q=Orkla+Norway+salmon+fishing+report"],["NVE HydAPI","https://hydapi.nve.no/"],["Weather search","https://www.google.com/search?q=Orkla+Norway+weather"]] },
+
+  { id:"blanda", country:"Iceland", region:"North Iceland", name:"Blanda", liveProvider:"ICELAND_PENDING", mainIntel:"Iceland salmon river. Needs official source mapping before live feed integration.", links:[["Catch reports","https://www.google.com/search?q=Blanda+Iceland+salmon+fishing+report"],["Iceland Met Office hydrology","https://en.vedur.is/hydrology/"],["Weather search","https://www.google.com/search?q=Blanda+Iceland+weather"]] },
+  { id:"laxa", country:"Iceland", region:"Iceland", name:"Laxá", liveProvider:"ICELAND_PENDING", mainIntel:"Iceland salmon/trout system. Needs careful source mapping because river names repeat in Iceland.", links:[["Catch reports","https://www.google.com/search?q=Laxa+Iceland+salmon+fishing+report"],["Iceland Met Office hydrology","https://en.vedur.is/hydrology/"],["Weather search","https://www.google.com/search?q=Laxa+Iceland+weather"]] }
 ];
 
+function setCountry(country) {
+  selectedCountry = country;
+  document.querySelectorAll(".tab").forEach(btn => btn.classList.remove("active"));
+  [...document.querySelectorAll(".tab")].find(btn => btn.textContent.includes(country === "UK" ? "UK" : country)).classList.add("active");
+  renderApp();
+}
+
 function renderLinks(links) {
-  return links.map(link => `
-    <a href="${link[1]}" target="_blank" rel="noopener">${link[0]}</a>
-  `).join("");
+  return links.map(link => `<a href="${link[1]}" target="_blank" rel="noopener">${link[0]}</a>`).join("");
 }
 
 function safeText(value) {
@@ -377,11 +224,31 @@ function safeText(value) {
 
 function formatDateTime(value) {
   if (!value) return "Not available";
-  try {
-    return new Date(value).toLocaleString();
-  } catch (e) {
-    return value;
+  try { return new Date(value).toLocaleString(); } catch(e) { return value; }
+}
+
+function countryIntroHtml() {
+  if (selectedCountry === "UK") {
+    return `
+      <h2>🇬🇧 UK Rivers</h2>
+      <div class="data-row"><strong>Live status:</strong> EA live river-level proof active for England/Wales rivers</div>
+      <div class="data-row"><strong>Scotland:</strong> SEPA integration pending</div>
+    `;
   }
+
+  if (selectedCountry === "Norway") {
+    return `
+      <h2>🇳🇴 Norway Rivers</h2>
+      <div class="data-row"><strong>Live status:</strong> NVE HydAPI integration pending</div>
+      <div class="data-row"><strong>Priority data:</strong> water level, flow, water temperature, rainfall and local reports</div>
+    `;
+  }
+
+  return `
+    <h2>🇮🇸 Iceland Rivers</h2>
+    <div class="data-row"><strong>Live status:</strong> Iceland hydrology source mapping pending</div>
+    <div class="data-row"><strong>Priority data:</strong> river level, flow, weather, catch reports and named-river disambiguation</div>
+  `;
 }
 
 function pendingLiveHtml(provider) {
@@ -394,36 +261,28 @@ function pendingLiveHtml(provider) {
     <div class="data-block live-error">
       <h3>Live external data</h3>
       <div class="data-row"><strong>Status:</strong> ${label}</div>
-      <div class="data-row"><strong>Next step:</strong> connect this country/source after EA river-level proof is stable</div>
+      <div class="data-row"><strong>Next step:</strong> connect this country/source after exact station mapping</div>
     </div>
   `;
 }
 
 async function fetchEaRiverLevel(riverName) {
-  const stationUrl =
-    `${EA_API}/id/stations?riverName=${encodeURIComponent(riverName)}&_limit=50`;
-
+  const stationUrl = `${EA_API}/id/stations?riverName=${encodeURIComponent(riverName)}&_limit=50`;
   const stationResponse = await fetch(stationUrl);
   if (!stationResponse.ok) throw new Error("Station lookup failed");
 
   const stationData = await stationResponse.json();
   const stations = stationData.items || [];
-
-  if (!stations.length) {
-    throw new Error("No EA stations found for this river name");
-  }
+  if (!stations.length) throw new Error("No EA stations found for this river name");
 
   let selected = null;
   let selectedMeasure = null;
 
   for (const station of stations) {
     const measures = station.measures || [];
-    const levelMeasure = measures.find(m =>
-      String(m.parameter || "").toLowerCase() === "level" &&
-      String(m.qualifier || "").toLowerCase().includes("stage")
-    ) || measures.find(m =>
-      String(m.parameter || "").toLowerCase() === "level"
-    );
+    const levelMeasure =
+      measures.find(m => String(m.parameter || "").toLowerCase() === "level" && String(m.qualifier || "").toLowerCase().includes("stage")) ||
+      measures.find(m => String(m.parameter || "").toLowerCase() === "level");
 
     if (levelMeasure) {
       selected = station;
@@ -432,31 +291,22 @@ async function fetchEaRiverLevel(riverName) {
     }
   }
 
-  if (!selected || !selectedMeasure) {
-    throw new Error("No level measure found for this river");
-  }
+  if (!selected || !selectedMeasure) throw new Error("No level measure found for this river");
 
   const latestUrl = selectedMeasure["@id"] + "/readings?_sorted&_limit=1";
   const latestResponse = await fetch(latestUrl);
-
   if (!latestResponse.ok) throw new Error("Latest reading lookup failed");
 
   const latestData = await latestResponse.json();
   const reading = latestData.items && latestData.items[0];
-
-  if (!reading) {
-    throw new Error("No latest reading returned");
-  }
+  if (!reading) throw new Error("No latest reading returned");
 
   return {
     station: selected.label || selected.notation || "EA station",
-    river: riverName,
     value: reading.value,
     unit: selectedMeasure.unitName || "m",
     dateTime: reading.dateTime,
-    measure: selectedMeasure.label || selectedMeasure.parameter || "Level",
-    sourceUrl: selected["@id"],
-    readingUrl: latestUrl
+    measure: selectedMeasure.label || selectedMeasure.parameter || "Level"
   };
 }
 
@@ -484,7 +334,6 @@ function renderEaLiveSuccess(riverId, data) {
     <div class="live-value">${safeText(data.value)} ${safeText(data.unit)}</div>
     <div class="data-row"><strong>Measure:</strong> ${safeText(data.measure)}</div>
     <div class="data-row"><strong>Reading time:</strong> ${formatDateTime(data.dateTime)}</div>
-    <div class="live-small">This uses Environment Agency flood and river level data from the real-time data API (Beta).</div>
   `;
 }
 
@@ -497,12 +346,12 @@ function renderEaLiveError(riverId, message) {
     <h3>Live external data</h3>
     <div class="data-row"><strong>Status:</strong> Could not load live EA data in browser</div>
     <div class="data-row"><strong>Reason:</strong> ${message}</div>
-    <div class="data-row"><strong>Fallback:</strong> use the EA river levels link below while we map exact stations</div>
+    <div class="data-row"><strong>Fallback:</strong> use the EA river levels link while we map exact stations</div>
   `;
 }
 
-async function loadLiveData() {
-  const eaRivers = rivers.filter(r => r.liveProvider === "EA");
+async function loadLiveData(visibleRivers) {
+  const eaRivers = visibleRivers.filter(r => r.liveProvider === "EA");
 
   for (const river of eaRivers) {
     try {
@@ -515,16 +364,18 @@ async function loadLiveData() {
 }
 
 function renderApp() {
-  const app = document.getElementById("app");
+  document.getElementById("countryIntro").innerHTML = countryIntroHtml();
 
-  app.innerHTML = rivers.map(river => {
+  const visibleRivers = rivers.filter(r => r.country === selectedCountry);
+
+  document.getElementById("app").innerHTML = visibleRivers.map(river => {
     const savedNote = localStorage.getItem(`${river.id}-notes`) || "";
     const liveClass = river.liveProvider === "EA" ? "source-live" : "source-pending";
     const liveLabel = river.liveProvider === "EA" ? "Live EA feed" : "Feed pending";
 
     return `
       <div class="river-card">
-        <div class="country-label">${river.country}</div>
+        <div class="country-label">${river.region}</div>
 
         <div class="river-title">
           <h2>${river.name}</h2>
@@ -540,9 +391,7 @@ function renderApp() {
 
         <div class="data-block">
           <h3>Source links</h3>
-          <div class="links">
-            ${renderLinks(river.links)}
-          </div>
+          <div class="links">${renderLinks(river.links)}</div>
         </div>
 
         <div class="note-box">
@@ -553,7 +402,7 @@ function renderApp() {
     `;
   }).join("");
 
-  loadLiveData();
+  loadLiveData(visibleRivers);
 }
 
 renderApp();
