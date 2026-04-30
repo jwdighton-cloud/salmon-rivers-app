@@ -10,46 +10,74 @@ body {
   font-family: Arial, sans-serif;
   background: #eef2f5;
   margin: 0;
-  padding: 10px;
+  padding: 12px;
 }
 
 h1 {
   text-align: center;
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 16px;
 }
 
 .river-card {
-  border-radius: 12px;
-  padding: 12px;
-  margin-bottom: 12px;
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 14px;
   background: white;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+
+.river-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .status {
-  font-size: 24px;
+  font-size: 30px;
   cursor: pointer;
 }
 
 .meta {
   font-size: 12px;
   color: #555;
-}
-
-textarea {
-  width: 100%;
-  margin-top: 8px;
-}
-
-.links a {
-  margin-right: 10px;
-  font-size: 14px;
+  margin-top: 4px;
 }
 
 .river-info {
   margin-top: 10px;
   padding: 10px;
   background: #f4f6f8;
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 70px;
+  margin-top: 10px;
+  padding: 8px;
   border-radius: 8px;
+  border: 1px solid #ccc;
+  font-family: Arial, sans-serif;
+}
+
+.links {
+  margin-top: 10px;
+}
+
+.links a {
+  display: inline-block;
+  margin-right: 10px;
+  margin-bottom: 6px;
   font-size: 14px;
 }
 </style>
@@ -58,154 +86,177 @@ textarea {
 <body>
 
 <h1>Salmon Rivers</h1>
+<div class="subtitle">Private river intelligence dashboard</div>
 
-<!-- RIBBLE -->
-<div class="river-card">
-  <h2>River Ribble</h2>
-  <div class="status" onclick="cycleStatus('ribble')">🟢</div>
-  <div class="meta" id="ribble-meta"></div>
-
-  <div class="river-info">
-    <div><strong>Temp:</strong> <span id="ribble-temp"></span></div>
-    <div><strong>Conditions:</strong> <span id="ribble-conditions"></span></div>
-    <div><strong>Notes:</strong> <span id="ribble-notes"></span></div>
-  </div>
-
-  <textarea id="ribble-notes-input" placeholder="Your notes..."></textarea>
-
-  <div class="links">
-    <a href="https://www.google.com/search?q=river+ribble+fishing+report" target="_blank">Reports</a>
-    <a href="https://www.bbc.co.uk/weather" target="_blank">Weather</a>
-    <a href="https://ribbletrust.org.uk/" target="_blank">RFCA</a>
-  </div>
-</div>
-
-<!-- TYNE -->
-<div class="river-card">
-  <h2>River Tyne</h2>
-  <div class="status" onclick="cycleStatus('tyne')">🟢</div>
-  <div class="meta" id="tyne-meta"></div>
-
-  <div class="river-info">
-    <div><strong>Temp:</strong> <span id="tyne-temp"></span></div>
-    <div><strong>Conditions:</strong> <span id="tyne-conditions"></span></div>
-    <div><strong>Notes:</strong> <span id="tyne-notes"></span></div>
-  </div>
-
-  <textarea id="tyne-notes-input" placeholder="Your notes..."></textarea>
-
-  <div class="links">
-    <a href="https://www.google.com/search?q=river+tyne+fishing+report" target="_blank">Reports</a>
-    <a href="https://www.bbc.co.uk/weather" target="_blank">Weather</a>
-  </div>
-</div>
-
-<!-- EDEN -->
-<div class="river-card">
-  <h2>River Eden</h2>
-  <div class="status" onclick="cycleStatus('eden')">🟢</div>
-  <div class="meta" id="eden-meta"></div>
-
-  <div class="river-info">
-    <div><strong>Temp:</strong> <span id="eden-temp"></span></div>
-    <div><strong>Conditions:</strong> <span id="eden-conditions"></span></div>
-    <div><strong>Notes:</strong> <span id="eden-notes"></span></div>
-  </div>
-
-  <textarea id="eden-notes-input" placeholder="Your notes..."></textarea>
-
-  <div class="links">
-    <a href="https://www.google.com/search?q=river+eden+fishing+report" target="_blank">Reports</a>
-    <a href="https://www.bbc.co.uk/weather" target="_blank">Weather</a>
-  </div>
-</div>
+<div id="app"></div>
 
 <script>
 const statuses = ["🟢", "🟡", "🔴"];
 
-const riverInfo = {
-  ribble: {
+const rivers = [
+  {
+    id: "ribble",
+    name: "River Ribble",
     temp: "8–14°C optimal",
     conditions: "Best after a lift and drop",
-    notes: "Can colour quickly after rain"
+    notes: "Can colour quickly after rain",
+    links: [
+      ["Reports", "https://www.google.com/search?q=river+ribble+salmon+fishing+report"],
+      ["Weather", "https://www.bbc.co.uk/weather"],
+      ["RFCA", "https://ribbletrust.org.uk/"]
+    ]
   },
-  tyne: {
+  {
+    id: "tyne",
+    name: "River Tyne",
     temp: "7–13°C optimal",
     conditions: "Strong runs, good in height",
-    notes: "Fish move quickly through beats"
+    notes: "Fish move quickly through beats",
+    links: [
+      ["Reports", "https://www.google.com/search?q=river+tyne+salmon+fishing+report"],
+      ["Weather", "https://www.bbc.co.uk/weather"]
+    ]
   },
-  eden: {
+  {
+    id: "eden",
+    name: "River Eden",
     temp: "8–15°C optimal",
     conditions: "Clear water river",
-    notes: "Low water = very technical fishing"
+    notes: "Low water can make fishing technical",
+    links: [
+      ["Reports", "https://www.google.com/search?q=river+eden+salmon+fishing+report"],
+      ["Weather", "https://www.bbc.co.uk/weather"]
+    ]
+  },
+  {
+    id: "tweed",
+    name: "River Tweed",
+    temp: "7–13°C optimal",
+    conditions: "Classic salmon river; watch levels closely",
+    notes: "Big system with beat-by-beat variation",
+    links: [
+      ["Reports", "https://www.google.com/search?q=river+tweed+salmon+fishing+report"],
+      ["Weather", "https://www.bbc.co.uk/weather"]
+    ]
+  },
+  {
+    id: "spey",
+    name: "River Spey",
+    temp: "7–13°C optimal",
+    conditions: "Fast-flowing river; height and clarity matter",
+    notes: "Traditional fly water",
+    links: [
+      ["Reports", "https://www.google.com/search?q=river+spey+salmon+fishing+report"],
+      ["Weather", "https://www.bbc.co.uk/weather"]
+    ]
+  },
+  {
+    id: "dee",
+    name: "River Dee",
+    temp: "6–12°C optimal",
+    conditions: "Often fishes well in cooler conditions",
+    notes: "Important spring salmon river",
+    links: [
+      ["Reports", "https://www.google.com/search?q=river+dee+aberdeenshire+salmon+fishing+report"],
+      ["Weather", "https://www.bbc.co.uk/weather"]
+    ]
+  },
+  {
+    id: "tay",
+    name: "River Tay",
+    temp: "7–13°C optimal",
+    conditions: "Large river; fish movement linked to water height",
+    notes: "Can hold fish across many beats",
+    links: [
+      ["Reports", "https://www.google.com/search?q=river+tay+salmon+fishing+report"],
+      ["Weather", "https://www.bbc.co.uk/weather"]
+    ]
+  },
+  {
+    id: "wye",
+    name: "River Wye",
+    temp: "8–14°C optimal",
+    conditions: "Rainfall and colour are key factors",
+    notes: "Check conditions carefully before travelling",
+    links: [
+      ["Reports", "https://www.google.com/search?q=river+wye+salmon+fishing+report"],
+      ["Weather", "https://www.bbc.co.uk/weather"]
+    ]
   }
-};
+];
 
-function cycleStatus(river) {
-  const el = document.querySelector(`#${river}-meta`).previousElementSibling;
-  let current = statuses.indexOf(el.textContent);
-  let next = (current + 1) % statuses.length;
-  el.textContent = statuses[next];
-
-  const now = new Date();
-  const timeString = now.toLocaleString();
-
-  localStorage.setItem(`${river}-status`, statuses[next]);
-  localStorage.setItem(`${river}-time`, timeString);
-
-  updateMeta(river);
-}
-
-function updateMeta(river) {
-  const time = localStorage.getItem(`${river}-time`);
-  if (!time) return;
+function confidenceFromTime(time) {
+  if (!time) return "NO UPDATE";
 
   const last = new Date(time);
   const now = new Date();
   const diffHours = (now - last) / (1000 * 60 * 60);
 
-  let confidence = "HIGH";
-  if (diffHours > 24) confidence = "LOW";
-  else if (diffHours > 6) confidence = "MEDIUM";
-
-  document.getElementById(`${river}-meta`).textContent =
-    `Updated: ${time} | Confidence: ${confidence}`;
+  if (diffHours > 24) return "LOW";
+  if (diffHours > 6) return "MEDIUM";
+  return "HIGH";
 }
 
-function loadRiverInfo() {
-  Object.keys(riverInfo).forEach(key => {
-    document.getElementById(`${key}-temp`).textContent = riverInfo[key].temp;
-    document.getElementById(`${key}-conditions`).textContent = riverInfo[key].conditions;
-    document.getElementById(`${key}-notes`).textContent = riverInfo[key].notes;
+function renderApp() {
+  const app = document.getElementById("app");
+
+  app.innerHTML = rivers.map(river => {
+    const savedStatus = localStorage.getItem(`${river.id}-status`) || "🟢";
+    const savedTime = localStorage.getItem(`${river.id}-time`) || "";
+    const savedNotes = localStorage.getItem(`${river.id}-notes`) || "";
+    const confidence = confidenceFromTime(savedTime);
+
+    const linksHtml = river.links.map(link =>
+      `<a href="${link[1]}" target="_blank">${link[0]}</a>`
+    ).join("");
+
+    return `
+      <div class="river-card">
+        <div class="river-title">
+          <h2>${river.name}</h2>
+          <div class="status" onclick="cycleStatus('${river.id}')">${savedStatus}</div>
+        </div>
+
+        <div class="meta" id="${river.id}-meta">
+          ${savedTime ? `Updated: ${savedTime} | Confidence: ${confidence}` : "Not updated yet"}
+        </div>
+
+        <div class="river-info">
+          <div><strong>Temp:</strong> ${river.temp}</div>
+          <div><strong>Conditions:</strong> ${river.conditions}</div>
+          <div><strong>Notes:</strong> ${river.notes}</div>
+        </div>
+
+        <textarea id="${river.id}-notes-input" placeholder="Your private notes...">${savedNotes}</textarea>
+
+        <div class="links">
+          ${linksHtml}
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  rivers.forEach(river => {
+    document.getElementById(`${river.id}-notes-input`).addEventListener("input", e => {
+      localStorage.setItem(`${river.id}-notes`, e.target.value);
+    });
   });
 }
 
-function loadAll() {
-  ["ribble","tyne","eden"].forEach(river => {
-    const status = localStorage.getItem(`${river}-status`);
-    if (status) {
-      document.querySelector(`#${river}-meta`).previousElementSibling.textContent = status;
-    }
+function cycleStatus(riverId) {
+  const current = localStorage.getItem(`${riverId}-status`) || "🟢";
+  const currentIndex = statuses.indexOf(current);
+  const next = statuses[(currentIndex + 1) % statuses.length];
 
-    const notes = localStorage.getItem(`${river}-notes`);
-    if (notes) {
-      document.getElementById(`${river}-notes-input`).value = notes;
-    }
+  const now = new Date().toLocaleString();
 
-    updateMeta(river);
-  });
+  localStorage.setItem(`${riverId}-status`, next);
+  localStorage.setItem(`${riverId}-time`, now);
 
-  loadRiverInfo();
+  renderApp();
 }
 
-document.querySelectorAll("textarea").forEach(el => {
-  el.addEventListener("input", e => {
-    const id = e.target.id.split("-")[0];
-    localStorage.setItem(`${id}-notes`, e.target.value);
-  });
-});
-
-loadAll();
+renderApp();
 </script>
 
 </body>
