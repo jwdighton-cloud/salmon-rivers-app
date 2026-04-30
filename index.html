@@ -24,12 +24,27 @@ h1 {
   margin-bottom: 16px;
 }
 
+.summary-panel,
 .river-card {
   border-radius: 14px;
   padding: 14px;
   margin-bottom: 14px;
   background: white;
   box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+
+.summary-panel h2 {
+  margin-top: 0;
+}
+
+.summary-item {
+  padding: 6px 0;
+  border-bottom: 1px solid #e2e6ea;
+  font-size: 14px;
+}
+
+.summary-item:last-child {
+  border-bottom: none;
 }
 
 .river-title {
@@ -115,6 +130,7 @@ textarea {
 <h1>Salmon Rivers</h1>
 <div class="subtitle">Private river intelligence dashboard</div>
 
+<div id="summary"></div>
 <div id="app"></div>
 
 <script>
@@ -139,19 +155,26 @@ function confidenceFromTime(time) {
   return "HIGH";
 }
 
+function statusValue(status) {
+  if (status === "🔴") return 1;
+  if (status === "🟡") return 2;
+  if (status === "🟢") return 3;
+  return 0;
+}
+
+function confidenceValue(confidence) {
+  if (confidence === "HIGH") return 3;
+  if (confidence === "MEDIUM") return 2;
+  if (confidence === "LOW") return 1;
+  return 0;
+}
+
 function fishability(status, confidence) {
   if (!status) return "⚪ No decision";
   if (status === "🔴") return "🔴 Avoid";
   if (status === "🟡") return confidence === "HIGH" ? "🟡 Possible" : "🟠 Check";
   if (status === "🟢") return confidence === "HIGH" ? "🟢 Good" : "🟡 Check";
   return "⚪ No decision";
-}
-
-function statusValue(status) {
-  if (status === "🔴") return 1;
-  if (status === "🟡") return 2;
-  if (status === "🟢") return 3;
-  return 0;
 }
 
 function getHistory(riverId) {
@@ -184,6 +207,13 @@ function trendFromHistory(riverId) {
   if (latest > previous) return "📈 Trend: improving";
   if (latest < previous) return "📉 Trend: worsening";
   return "➖ Trend: stable";
+}
+
+function trendValue(trend) {
+  if (trend.includes("improving")) return 2;
+  if (trend.includes("stable")) return 1;
+  if (trend.includes("worsening")) return -1;
+  return 0;
 }
 
 function setStatus(riverId, status) {
@@ -219,22 +249,63 @@ function historyHtml(riverId) {
   `;
 }
 
-function render() {
+function riverSnapshot(river) {
+  const status = localStorage.getItem(`${river.id}-status`) || "";
+  const time = localStorage.getItem(`${river.id}-time`);
+  const confidence = confidenceFromTime(time);
+  const score = fishability(status, confidence);
+  const trend = trendFromHistory(river.id);
+
+  const rankScore =
+    (statusValue(status) * 10) +
+    (confidenceValue(confidence) * 3) +
+    trendValue(trend);
+
+  return {
+    id: river.id,
+    name: river.name,
+    status: status || "⚪",
+    time: time,
+    confidence: confidence,
+    score: score,
+    trend: trend,
+    rankScore: rankScore
+  };
+}
+
+function renderSummary() {
+  const summary = document.getElementById("summary");
+
+  const ranked = rivers
+    .map(riverSnapshot)
+    .sort((a, b) => b.rankScore - a.rankScore)
+    .slice(0, 5);
+
+  summary.innerHTML = `
+    <div class="summary-panel">
+      <h2>Best Rivers Right Now</h2>
+      ${ranked.map((r, index) => `
+        <div class="summary-item">
+          <strong>${index + 1}. ${r.name}</strong><br>
+          ${r.score} · ${r.trend.replace("Trend: ", "")} · Confidence: ${r.confidence}
+        </div>
+      `).join("")}
+    </div>
+  `;
+}
+
+function renderApp() {
   const app = document.getElementById("app");
 
   app.innerHTML = rivers.map(r => {
-    const status = localStorage.getItem(`${r.id}-status`) || "";
-    const time = localStorage.getItem(`${r.id}-time`);
+    const snap = riverSnapshot(r);
     const notes = localStorage.getItem(`${r.id}-notes`) || "";
-    const conf = confidenceFromTime(time);
-    const score = fishability(status, conf);
-    const trend = trendFromHistory(r.id);
 
     return `
       <div class="river-card">
         <div class="river-title">
           <h2>${r.name}</h2>
-          <div class="status">${status || "⚪"}</div>
+          <div class="status">${snap.status}</div>
         </div>
 
         <div class="buttons">
@@ -243,11 +314,11 @@ function render() {
           <button class="avoid" onclick="setStatus('${r.id}','🔴')">🔴 Avoid</button>
         </div>
 
-        <div class="score">${score}</div>
-        <div class="trend">${trend}</div>
+        <div class="score">${snap.score}</div>
+        <div class="trend">${snap.trend}</div>
 
         <div class="meta">
-          ${time ? `Updated: ${time} | Confidence: ${conf}` : "No update yet"}
+          ${snap.time ? `Updated: ${snap.time} | Confidence: ${snap.confidence}` : "No update yet"}
         </div>
 
         ${historyHtml(r.id)}
@@ -256,6 +327,11 @@ function render() {
       </div>
     `;
   }).join("");
+}
+
+function render() {
+  renderSummary();
+  renderApp();
 }
 
 render();
