@@ -49,10 +49,11 @@ h1 {
 .buttons button {
   margin-right: 6px;
   margin-top: 6px;
-  padding: 6px 10px;
+  padding: 7px 11px;
   border-radius: 8px;
   border: none;
   cursor: pointer;
+  font-size: 14px;
 }
 
 .fish { background: #c8f7c5; }
@@ -73,26 +74,39 @@ h1 {
   margin-top: 4px;
 }
 
-.river-info {
+.history {
   margin-top: 10px;
   padding: 10px;
-  background: #f4f6f8;
+  background: #f7f9fb;
   border-radius: 10px;
-  font-size: 14px;
+  font-size: 13px;
+}
+
+.history-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.history-item {
+  padding: 3px 0;
+  border-bottom: 1px solid #e2e6ea;
+}
+
+.history-item:last-child {
+  border-bottom: none;
 }
 
 textarea {
   width: 100%;
+  box-sizing: border-box;
   min-height: 70px;
   margin-top: 10px;
   padding: 8px;
   border-radius: 8px;
   border: 1px solid #ccc;
+  font-family: Arial, sans-serif;
 }
 
-.links {
-  margin-top: 10px;
-}
 </style>
 </head>
 
@@ -117,7 +131,7 @@ const rivers = [
 
 function confidenceFromTime(time) {
   if (!time) return "NO UPDATE";
-  const diff = (new Date() - new Date(time)) / (1000*60*60);
+  const diff = (new Date() - new Date(time)) / (1000 * 60 * 60);
   if (diff > 24) return "LOW";
   if (diff > 6) return "MEDIUM";
   return "HIGH";
@@ -125,16 +139,63 @@ function confidenceFromTime(time) {
 
 function fishability(status, confidence) {
   if (!status) return "⚪ No decision";
-  if (status==="🔴") return "🔴 Avoid";
-  if (status==="🟡") return confidence==="HIGH" ? "🟡 Possible" : "🟠 Check";
-  if (status==="🟢") return confidence==="HIGH" ? "🟢 Good" : "🟡 Check";
+  if (status === "🔴") return "🔴 Avoid";
+  if (status === "🟡") return confidence === "HIGH" ? "🟡 Possible" : "🟠 Check";
+  if (status === "🟢") return confidence === "HIGH" ? "🟢 Good" : "🟡 Check";
+  return "⚪ No decision";
 }
 
-function setStatus(river, status) {
+function getHistory(riverId) {
+  try {
+    return JSON.parse(localStorage.getItem(`${riverId}-history`)) || [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveHistory(riverId, status, time) {
+  const history = getHistory(riverId);
+
+  history.unshift({
+    status: status,
+    time: time
+  });
+
+  const trimmed = history.slice(0, 3);
+  localStorage.setItem(`${riverId}-history`, JSON.stringify(trimmed));
+}
+
+function setStatus(riverId, status) {
   const now = new Date().toLocaleString();
-  localStorage.setItem(`${river}-status`, status);
-  localStorage.setItem(`${river}-time`, now);
+
+  localStorage.setItem(`${riverId}-status`, status);
+  localStorage.setItem(`${riverId}-time`, now);
+
+  saveHistory(riverId, status, now);
+
   render();
+}
+
+function historyHtml(riverId) {
+  const history = getHistory(riverId);
+
+  if (!history.length) {
+    return `
+      <div class="history">
+        <div class="history-title">Last 3 updates</div>
+        <div>No history yet</div>
+      </div>
+    `;
+  }
+
+  return `
+    <div class="history">
+      <div class="history-title">Last 3 updates</div>
+      ${history.map(item => `
+        <div class="history-item">${item.status} ${item.time}</div>
+      `).join("")}
+    </div>
+  `;
 }
 
 function render() {
@@ -148,27 +209,29 @@ function render() {
     const score = fishability(status, conf);
 
     return `
-    <div class="river-card">
-      <div class="river-title">
-        <h2>${r.name}</h2>
-        <div class="status">${status || "⚪"}</div>
+      <div class="river-card">
+        <div class="river-title">
+          <h2>${r.name}</h2>
+          <div class="status">${status || "⚪"}</div>
+        </div>
+
+        <div class="buttons">
+          <button class="fish" onclick="setStatus('${r.id}','🟢')">🟢 Fish</button>
+          <button class="check" onclick="setStatus('${r.id}','🟡')">🟡 Check</button>
+          <button class="avoid" onclick="setStatus('${r.id}','🔴')">🔴 Avoid</button>
+        </div>
+
+        <div class="score">${score}</div>
+
+        <div class="meta">
+          ${time ? `Updated: ${time} | Confidence: ${conf}` : "No update yet"}
+        </div>
+
+        ${historyHtml(r.id)}
+
+        <textarea placeholder="Notes..." oninput="localStorage.setItem('${r.id}-notes', this.value)">${notes}</textarea>
       </div>
-
-      <div class="buttons">
-        <button class="fish" onclick="setStatus('${r.id}','🟢')">🟢 Fish</button>
-        <button class="check" onclick="setStatus('${r.id}','🟡')">🟡 Check</button>
-        <button class="avoid" onclick="setStatus('${r.id}','🔴')">🔴 Avoid</button>
-      </div>
-
-      <div class="score">${score}</div>
-
-      <div class="meta">
-        ${time ? `Updated: ${time} | Confidence: ${conf}` : "No update yet"}
-      </div>
-
-      <textarea placeholder="Notes..." 
-        oninput="localStorage.setItem('${r.id}-notes',this.value)">${notes}</textarea>
-    </div>`;
+    `;
   }).join("");
 }
 
