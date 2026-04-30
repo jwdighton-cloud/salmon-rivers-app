@@ -60,7 +60,8 @@ h1 {
 .check { background: #fff3b0; }
 .avoid { background: #f7c5c5; }
 
-.score {
+.score,
+.trend {
   margin-top: 8px;
   padding: 8px;
   border-radius: 10px;
@@ -106,7 +107,6 @@ textarea {
   border: 1px solid #ccc;
   font-family: Arial, sans-serif;
 }
-
 </style>
 </head>
 
@@ -131,7 +131,9 @@ const rivers = [
 
 function confidenceFromTime(time) {
   if (!time) return "NO UPDATE";
+
   const diff = (new Date() - new Date(time)) / (1000 * 60 * 60);
+
   if (diff > 24) return "LOW";
   if (diff > 6) return "MEDIUM";
   return "HIGH";
@@ -143,6 +145,13 @@ function fishability(status, confidence) {
   if (status === "🟡") return confidence === "HIGH" ? "🟡 Possible" : "🟠 Check";
   if (status === "🟢") return confidence === "HIGH" ? "🟢 Good" : "🟡 Check";
   return "⚪ No decision";
+}
+
+function statusValue(status) {
+  if (status === "🔴") return 1;
+  if (status === "🟡") return 2;
+  if (status === "🟢") return 3;
+  return 0;
 }
 
 function getHistory(riverId) {
@@ -161,8 +170,20 @@ function saveHistory(riverId, status, time) {
     time: time
   });
 
-  const trimmed = history.slice(0, 3);
-  localStorage.setItem(`${riverId}-history`, JSON.stringify(trimmed));
+  localStorage.setItem(`${riverId}-history`, JSON.stringify(history.slice(0, 3)));
+}
+
+function trendFromHistory(riverId) {
+  const history = getHistory(riverId);
+
+  if (history.length < 2) return "⚪ Trend: not enough history";
+
+  const latest = statusValue(history[0].status);
+  const previous = statusValue(history[1].status);
+
+  if (latest > previous) return "📈 Trend: improving";
+  if (latest < previous) return "📉 Trend: worsening";
+  return "➖ Trend: stable";
 }
 
 function setStatus(riverId, status) {
@@ -207,6 +228,7 @@ function render() {
     const notes = localStorage.getItem(`${r.id}-notes`) || "";
     const conf = confidenceFromTime(time);
     const score = fishability(status, conf);
+    const trend = trendFromHistory(r.id);
 
     return `
       <div class="river-card">
@@ -222,6 +244,7 @@ function render() {
         </div>
 
         <div class="score">${score}</div>
+        <div class="trend">${trend}</div>
 
         <div class="meta">
           ${time ? `Updated: ${time} | Confidence: ${conf}` : "No update yet"}
