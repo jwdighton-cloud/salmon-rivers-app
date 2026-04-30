@@ -13,9 +13,7 @@ body {
   padding: 12px;
 }
 
-h1 {
-  text-align: center;
-}
+h1 { text-align: center; }
 
 .subtitle {
   text-align: center;
@@ -33,9 +31,30 @@ h1 {
   box-shadow: 0 2px 8px rgba(0,0,0,0.12);
 }
 
-.summary-panel h2 {
-  margin-top: 0;
+.best-banner {
+  background: #dff8df;
+  border: 2px solid #7ac77a;
+  border-radius: 14px;
+  padding: 12px;
+  margin-bottom: 14px;
+  font-weight: bold;
 }
+
+.best-card {
+  border: 2px solid #7ac77a;
+}
+
+.best-label {
+  display: inline-block;
+  margin-bottom: 8px;
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: #dff8df;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.summary-panel h2 { margin-top: 0; }
 
 .summary-item {
   padding: 6px 0;
@@ -43,9 +62,7 @@ h1 {
   font-size: 14px;
 }
 
-.summary-item:last-child {
-  border-bottom: none;
-}
+.summary-item:last-child { border-bottom: none; }
 
 .river-title {
   display: flex;
@@ -53,13 +70,9 @@ h1 {
   align-items: center;
 }
 
-.status {
-  font-size: 28px;
-}
+.status { font-size: 28px; }
 
-.buttons {
-  margin-top: 8px;
-}
+.buttons { margin-top: 8px; }
 
 .buttons button {
   margin-right: 6px;
@@ -108,9 +121,7 @@ h1 {
   border-bottom: 1px solid #e2e6ea;
 }
 
-.history-item:last-child {
-  border-bottom: none;
-}
+.history-item:last-child { border-bottom: none; }
 
 textarea {
   width: 100%;
@@ -147,9 +158,7 @@ const rivers = [
 
 function confidenceFromTime(time) {
   if (!time) return "NO UPDATE";
-
   const diff = (new Date() - new Date(time)) / (1000 * 60 * 60);
-
   if (diff > 24) return "LOW";
   if (diff > 6) return "MEDIUM";
   return "HIGH";
@@ -187,18 +196,12 @@ function getHistory(riverId) {
 
 function saveHistory(riverId, status, time) {
   const history = getHistory(riverId);
-
-  history.unshift({
-    status: status,
-    time: time
-  });
-
+  history.unshift({ status: status, time: time });
   localStorage.setItem(`${riverId}-history`, JSON.stringify(history.slice(0, 3)));
 }
 
 function trendFromHistory(riverId) {
   const history = getHistory(riverId);
-
   if (history.length < 2) return "⚪ Trend: not enough history";
 
   const latest = statusValue(history[0].status);
@@ -218,35 +221,10 @@ function trendValue(trend) {
 
 function setStatus(riverId, status) {
   const now = new Date().toLocaleString();
-
   localStorage.setItem(`${riverId}-status`, status);
   localStorage.setItem(`${riverId}-time`, now);
-
   saveHistory(riverId, status, now);
-
   render();
-}
-
-function historyHtml(riverId) {
-  const history = getHistory(riverId);
-
-  if (!history.length) {
-    return `
-      <div class="history">
-        <div class="history-title">Last 3 updates</div>
-        <div>No history yet</div>
-      </div>
-    `;
-  }
-
-  return `
-    <div class="history">
-      <div class="history-title">Last 3 updates</div>
-      ${history.map(item => `
-        <div class="history-item">${item.status} ${item.time}</div>
-      `).join("")}
-    </div>
-  `;
 }
 
 function riverSnapshot(river) {
@@ -256,35 +234,51 @@ function riverSnapshot(river) {
   const score = fishability(status, confidence);
   const trend = trendFromHistory(river.id);
 
-  const rankScore =
-    (statusValue(status) * 10) +
-    (confidenceValue(confidence) * 3) +
-    trendValue(trend);
-
   return {
     id: river.id,
     name: river.name,
     status: status || "⚪",
-    time: time,
-    confidence: confidence,
-    score: score,
-    trend: trend,
-    rankScore: rankScore
+    time,
+    confidence,
+    score,
+    trend,
+    rankScore: (statusValue(status) * 10) + (confidenceValue(confidence) * 3) + trendValue(trend)
   };
+}
+
+function getRankedRivers() {
+  return rivers.map(riverSnapshot).sort((a, b) => b.rankScore - a.rankScore);
+}
+
+function historyHtml(riverId) {
+  const history = getHistory(riverId);
+
+  if (!history.length) {
+    return `<div class="history"><div class="history-title">Last 3 updates</div><div>No history yet</div></div>`;
+  }
+
+  return `
+    <div class="history">
+      <div class="history-title">Last 3 updates</div>
+      ${history.map(item => `<div class="history-item">${item.status} ${item.time}</div>`).join("")}
+    </div>
+  `;
 }
 
 function renderSummary() {
   const summary = document.getElementById("summary");
-
-  const ranked = rivers
-    .map(riverSnapshot)
-    .sort((a, b) => b.rankScore - a.rankScore)
-    .slice(0, 5);
+  const ranked = getRankedRivers();
+  const best = ranked[0];
 
   summary.innerHTML = `
+    <div class="best-banner">
+      ⭐ Best right now: ${best.name}<br>
+      ${best.score} · ${best.trend.replace("Trend: ", "")} · Confidence: ${best.confidence}
+    </div>
+
     <div class="summary-panel">
       <h2>Best Rivers Right Now</h2>
-      ${ranked.map((r, index) => `
+      ${ranked.slice(0, 5).map((r, index) => `
         <div class="summary-item">
           <strong>${index + 1}. ${r.name}</strong><br>
           ${r.score} · ${r.trend.replace("Trend: ", "")} · Confidence: ${r.confidence}
@@ -296,13 +290,17 @@ function renderSummary() {
 
 function renderApp() {
   const app = document.getElementById("app");
+  const bestId = getRankedRivers()[0].id;
 
   app.innerHTML = rivers.map(r => {
     const snap = riverSnapshot(r);
     const notes = localStorage.getItem(`${r.id}-notes`) || "";
+    const isBest = r.id === bestId;
 
     return `
-      <div class="river-card">
+      <div class="river-card ${isBest ? "best-card" : ""}">
+        ${isBest ? `<div class="best-label">⭐ Current #1 river</div>` : ""}
+
         <div class="river-title">
           <h2>${r.name}</h2>
           <div class="status">${snap.status}</div>
