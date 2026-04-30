@@ -10,68 +10,27 @@
 body { margin:0; font-family:Arial, sans-serif; background:#f0f2f5; }
 header { background:#0f5132; color:white; padding:15px; text-align:center; font-size:22px; }
 .container { padding:15px; }
-
-.card {
-  background:white;
-  padding:15px;
-  margin-bottom:12px;
-  border-radius:10px;
-  box-shadow:0 2px 6px rgba(0,0,0,0.1);
-  border-left:8px solid #ccc;
-}
-
+.card { background:white; padding:15px; margin-bottom:12px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.1); border-left:8px solid #ccc; }
 .good-card { border-left-color:#198754; }
 .ok-card { border-left-color:#ffc107; }
 .poor-card { border-left-color:#dc3545; }
-
 .note { color:#555; font-size:14px; }
-
-.status {
-  display:inline-block;
-  margin:6px 0;
-  padding:6px 10px;
-  border-radius:8px;
-  font-weight:bold;
-}
-
+.status, .confidence { display:inline-block; margin:6px 0; padding:6px 10px; border-radius:8px; font-weight:bold; }
 .good { background:#d4edda; color:#155724; }
 .ok { background:#fff3cd; color:#856404; }
 .poor { background:#f8d7da; color:#721c24; }
-
-.private-note {
-  background:#eef7f1;
-  padding:10px;
-  border-radius:8px;
-  margin-top:10px;
-}
-
-button {
-  margin-top:8px;
-  padding:10px;
-  background:#0f5132;
-  color:white;
-  border:none;
-  border-radius:8px;
-  width:100%;
-}
-
-.links a {
-  display:block;
-  margin-top:8px;
-  padding:10px;
-  background:#0f5132;
-  color:white;
-  text-decoration:none;
-  border-radius:8px;
-  text-align:center;
-}
+.high { background:#d4edda; color:#155724; }
+.medium { background:#fff3cd; color:#856404; }
+.low { background:#f8d7da; color:#721c24; }
+.private-note { background:#eef7f1; padding:10px; border-radius:8px; margin-top:10px; }
+button { margin-top:8px; padding:10px; background:#0f5132; color:white; border:none; border-radius:8px; width:100%; }
+.links a { display:block; margin-top:8px; padding:10px; background:#0f5132; color:white; text-decoration:none; border-radius:8px; text-align:center; }
 </style>
 </head>
 
 <body>
 
 <header>🎣 Salmon Rivers</header>
-
 <div class="container" id="app"></div>
 
 <script>
@@ -108,7 +67,6 @@ const rivers = [
   }
 ];
 
-// --- NOTES ---
 function getNote(name) {
   return localStorage.getItem("note_" + name) || "No private note yet";
 }
@@ -118,14 +76,10 @@ function addNote(name) {
   const note = prompt("Private note for " + name + ":", current);
   if (note === null) return;
   localStorage.setItem("note_" + name, note);
-
-  // update timestamp
   localStorage.setItem("time_" + name, new Date().toISOString());
-
   render();
 }
 
-// --- STATUS ---
 function getStatus(river) {
   return localStorage.getItem("status_" + river.name) || river.defaultStatus;
 }
@@ -133,16 +87,12 @@ function getStatus(river) {
 function cycleStatus(name) {
   const current = localStorage.getItem("status_" + name) || "ok";
   let next = "good";
-
   if (current === "good") next = "ok";
   if (current === "ok") next = "poor";
   if (current === "poor") next = "good";
 
   localStorage.setItem("status_" + name, next);
-
-  // update timestamp
   localStorage.setItem("time_" + name, new Date().toISOString());
-
   render();
 }
 
@@ -152,22 +102,32 @@ function statusLabel(status) {
   return "🟡 OK";
 }
 
-// --- TIME ---
 function getTime(name) {
   const t = localStorage.getItem("time_" + name);
   if (!t) return "No updates yet";
-
-  const d = new Date(t);
-  return "Updated: " + d.toLocaleString();
+  return "Updated: " + new Date(t).toLocaleString();
 }
 
-// --- RENDER ---
+function getConfidence(name) {
+  const t = localStorage.getItem("time_" + name);
+  if (!t) return { label: "LOW", className: "low" };
+
+  const updated = new Date(t).getTime();
+  const now = Date.now();
+  const hoursOld = (now - updated) / (1000 * 60 * 60);
+
+  if (hoursOld <= 6) return { label: "HIGH", className: "high" };
+  if (hoursOld <= 24) return { label: "MEDIUM", className: "medium" };
+  return { label: "LOW", className: "low" };
+}
+
 function render() {
   const app = document.getElementById("app");
   app.innerHTML = "";
 
   rivers.forEach(river => {
     const status = getStatus(river);
+    const confidence = getConfidence(river.name);
 
     app.innerHTML += `
       <div class="card ${status}-card">
@@ -177,8 +137,11 @@ function render() {
           ${statusLabel(status)}
         </div>
 
-        <div class="note">${getTime(river.name)}</div>
+        <div class="confidence ${confidence.className}">
+          Confidence: ${confidence.label}
+        </div>
 
+        <div class="note">${getTime(river.name)}</div>
         <p class="note">Level: ${river.level}</p>
 
         <div class="private-note">
