@@ -25,6 +25,15 @@ h1 {
   margin-bottom: 16px;
 }
 
+.legend {
+  background: white;
+  border-radius: 14px;
+  padding: 12px;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  font-size: 14px;
+}
+
 .river-card {
   border-radius: 14px;
   padding: 14px;
@@ -42,6 +51,15 @@ h1 {
 .status {
   font-size: 30px;
   cursor: pointer;
+}
+
+.score {
+  margin-top: 8px;
+  padding: 8px;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 14px;
+  background: #f4f6f8;
 }
 
 .meta {
@@ -87,6 +105,14 @@ textarea {
 
 <h1>Salmon Rivers</h1>
 <div class="subtitle">Private river intelligence dashboard</div>
+
+<div class="legend">
+  <strong>Fishability:</strong><br>
+  🟢 Fresh green update = best confidence<br>
+  🟡 Yellow = possible but check conditions<br>
+  🔴 Red = poor / avoid / caution<br>
+  Old updates reduce confidence automatically
+</div>
 
 <div id="app"></div>
 
@@ -197,6 +223,16 @@ function confidenceFromTime(time) {
   return "HIGH";
 }
 
+function fishability(status, confidence) {
+  if (confidence === "NO UPDATE") return "⚪ No recent judgement";
+  if (status === "🔴") return "🔴 Poor";
+  if (status === "🟡" && confidence === "HIGH") return "🟡 Possible";
+  if (status === "🟡") return "🟠 Check first";
+  if (status === "🟢" && confidence === "HIGH") return "🟢 Good";
+  if (status === "🟢" && confidence === "MEDIUM") return "🟡 Worth checking";
+  return "🟠 Stale — verify first";
+}
+
 function renderApp() {
   const app = document.getElementById("app");
 
@@ -205,6 +241,7 @@ function renderApp() {
     const savedTime = localStorage.getItem(`${river.id}-time`) || "";
     const savedNotes = localStorage.getItem(`${river.id}-notes`) || "";
     const confidence = confidenceFromTime(savedTime);
+    const score = fishability(savedStatus, confidence);
 
     const linksHtml = river.links.map(link =>
       `<a href="${link[1]}" target="_blank">${link[0]}</a>`
@@ -216,6 +253,8 @@ function renderApp() {
           <h2>${river.name}</h2>
           <div class="status" onclick="cycleStatus('${river.id}')">${savedStatus}</div>
         </div>
+
+        <div class="score">${score}</div>
 
         <div class="meta" id="${river.id}-meta">
           ${savedTime ? `Updated: ${savedTime} | Confidence: ${confidence}` : "Not updated yet"}
