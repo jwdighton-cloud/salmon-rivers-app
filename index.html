@@ -7,31 +7,20 @@
 <link rel="manifest" href="manifest.json">
 
 <style>
-body {
-  margin:0;
-  font-family:Arial, sans-serif;
-  background:#f0f2f5;
-}
-header {
+body { margin:0; font-family:Arial, sans-serif; background:#f0f2f5; }
+header { background:#0f5132; color:white; padding:15px; text-align:center; font-size:22px; }
+.container { padding:15px; }
+.card { background:white; padding:15px; margin-bottom:12px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
+.note { color:#555; font-size:14px; }
+.links a {
+  display:block;
+  margin-top:8px;
+  padding:10px;
   background:#0f5132;
   color:white;
-  padding:15px;
+  text-decoration:none;
+  border-radius:8px;
   text-align:center;
-  font-size:22px;
-}
-.container {
-  padding:15px;
-}
-.card {
-  background:white;
-  padding:15px;
-  margin-bottom:12px;
-  border-radius:10px;
-  box-shadow:0 2px 6px rgba(0,0,0,0.1);
-}
-.note {
-  color:#555;
-  font-size:14px;
 }
 </style>
 </head>
@@ -41,23 +30,43 @@ header {
 <header>🎣 Salmon Rivers</header>
 
 <div class="container">
+
   <div class="card">
     <h3>River Ribble</h3>
     <p class="note">Level: rising</p>
-    <p class="note">No report yet</p>
+    <p class="note">Private notes/report: No report yet</p>
+
+    <div class="links">
+      <a href="https://www.ribblefisheriesca.co.uk/live-water-quality-monitoring/" target="_blank">Live Water Quality — RFCA</a>
+      <a href="https://www.google.com/search?q=River+Ribble+salmon+fishing+report" target="_blank">Latest Ribble Catch Reports</a>
+      <a href="https://www.google.com/search?q=River+Ribble+weather" target="_blank">Ribble Weather</a>
+    </div>
   </div>
 
   <div class="card">
     <h3>River Tyne</h3>
     <p class="note">Level: steady</p>
-    <p class="note">No report yet</p>
+    <p class="note">Private notes/report: No report yet</p>
+
+    <div class="links">
+      <a href="https://www.google.com/search?q=River+Tyne+salmon+fishing+report" target="_blank">Latest Tyne Catch Reports</a>
+      <a href="https://www.google.com/search?q=River+Tyne+river+levels" target="_blank">Tyne River Levels</a>
+      <a href="https://www.google.com/search?q=River+Tyne+weather" target="_blank">Tyne Weather</a>
+    </div>
   </div>
 
   <div class="card">
     <h3>River Eden</h3>
     <p class="note">Level: falling</p>
-    <p class="note">No report yet</p>
+    <p class="note">Private notes/report: No report yet</p>
+
+    <div class="links">
+      <a href="https://www.google.com/search?q=River+Eden+salmon+fishing+report" target="_blank">Latest Eden Catch Reports</a>
+      <a href="https://www.google.com/search?q=River+Eden+river+levels" target="_blank">Eden River Levels</a>
+      <a href="https://www.google.com/search?q=River+Eden+weather" target="_blank">Eden Weather</a>
+    </div>
   </div>
+
 </div>
 
 </body>
