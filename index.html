@@ -3,184 +3,160 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Salmon Rivers Intelligence</title>
+<title>Salmon Rivers</title>
 
 <style>
 body {
-  font-family: Arial;
-  background:#eef2f5;
-  margin:0;
-  padding:16px;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f5f5f5;
 }
 
-h1 { text-align:center; }
+header {
+  background: #1e3a5f;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  font-size: 20px;
+}
 
 .tabs {
-  display:flex;
-  gap:8px;
-  margin-bottom:16px;
+  display: flex;
+  background: #ddd;
 }
 
 .tab {
-  flex:1;
-  padding:10px;
-  border-radius:999px;
-  border:none;
-  background:white;
-  font-weight:bold;
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  background: #ccc;
 }
 
 .tab.active {
-  background:#dff8df;
-  border:2px solid #6ac96a;
+  background: #1e3a5f;
+  color: white;
+}
+
+.content {
+  display: none;
+  padding: 10px;
+}
+
+.content.active {
+  display: block;
 }
 
 .river-card {
-  background:white;
-  padding:16px;
-  border-radius:16px;
-  margin-bottom:16px;
-  box-shadow:0 3px 10px rgba(0,0,0,0.1);
+  background: white;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 8px;
 }
 
-.section {
-  background:#f7f9fb;
-  padding:12px;
-  border-radius:12px;
-  margin-top:12px;
+.status {
+  font-weight: bold;
+  margin-top: 5px;
 }
 
-.links a {
-  display:inline-block;
-  margin:6px;
-  padding:6px 10px;
-  background:#eef2f5;
-  border-radius:10px;
-  text-decoration:none;
-  font-weight:bold;
-  font-size:13px;
-}
+.good { color: green; }
+.watch { color: orange; }
+.poor { color: red; }
 
-.operator a { background:#e6f9e6; }
-.magazine a { background:#fff7d9; }
-
-textarea {
-  width:100%;
-  margin-top:10px;
-  padding:10px;
-  border-radius:10px;
+.river-links a {
+  display: block;
+  margin-top: 5px;
+  text-decoration: none;
+  color: #1e3a5f;
+  font-size: 14px;
 }
 </style>
 </head>
 
 <body>
 
-<h1>Salmon Rivers Intelligence</h1>
+<header>Salmon Rivers Intelligence</header>
 
 <div class="tabs">
-  <button class="tab active" onclick="setCountry('UK', this)">🇬🇧 UK</button>
-  <button class="tab" onclick="setCountry('Norway', this)">🇳🇴 Norway</button>
-  <button class="tab" onclick="setCountry('Iceland', this)">🇮🇸 Iceland</button>
+  <div class="tab active" onclick="openTab('uk')">🇬🇧 UK</div>
+  <div class="tab" onclick="openTab('norway')">🇳🇴 Norway</div>
+  <div class="tab" onclick="openTab('iceland')">🇮🇸 Iceland</div>
 </div>
 
-<div id="app"></div>
+<!-- UK -->
+<div id="uk" class="content active">
+
+  <div class="river-card">
+    <h3>River Ribble</h3>
+    <div class="status good">🟢 Good</div>
+
+    <div class="river-links">
+      <a href="https://environment.data.gov.uk/flood-monitoring/id/stations" target="_blank">🌊 River Levels</a>
+      <a href="https://www.metoffice.gov.uk/weather/forecast" target="_blank">🌤 Weather</a>
+      <a href="https://ribbletrust.org.uk" target="_blank">🎣 Operator</a>
+      <a href="https://troutandsalmon.com" target="_blank">📰 Reports</a>
+    </div>
+  </div>
+
+  <div class="river-card">
+    <h3>River Tyne</h3>
+    <div class="status watch">🟠 Watch</div>
+
+    <div class="river-links">
+      <a href="https://environment.data.gov.uk/flood-monitoring/id/stations" target="_blank">🌊 River Levels</a>
+      <a href="https://www.metoffice.gov.uk/weather/forecast" target="_blank">🌤 Weather</a>
+      <a href="#">🎣 Operator</a>
+      <a href="https://troutandsalmon.com" target="_blank">📰 Reports</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- Norway -->
+<div id="norway" class="content">
+
+  <div class="river-card">
+    <h3>River Gaula</h3>
+    <div class="status good">🟢 Good</div>
+
+    <div class="river-links">
+      <a href="https://www.yr.no" target="_blank">🌤 Weather</a>
+      <a href="#">🌊 River Levels</a>
+      <a href="#">🎣 Operator</a>
+      <a href="https://troutandsalmon.com" target="_blank">📰 Reports</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- Iceland -->
+<div id="iceland" class="content">
+
+  <div class="river-card">
+    <h3>East Rangá</h3>
+    <div class="status poor">🔴 Poor</div>
+
+    <div class="river-links">
+      <a href="https://en.vedur.is/weather/forecasts/areas/" target="_blank">🌤 Weather</a>
+      <a href="#">🌊 River Levels</a>
+      <a href="#">🎣 Operator</a>
+      <a href="https://troutandsalmon.com" target="_blank">📰 Reports</a>
+    </div>
+  </div>
+
+</div>
 
 <script>
-let selectedCountry = "UK";
+function openTab(tabName) {
+  const tabs = document.querySelectorAll('.tab');
+  const contents = document.querySelectorAll('.content');
 
-const rivers = [
-{
-id:"ribble",
-country:"UK",
-name:"River Ribble",
-operator:[
-["RFCA","https://ribbletrust.org.uk/"]
-]
-},
-{
-id:"tyne",
-country:"UK",
-name:"River Tyne",
-operator:[]
-},
-{
-id:"east_ranga",
-country:"Iceland",
-name:"East Rangá",
-operator:[
-["⭐ RIPP Sporting","https://www.rippsporting.com/eastranga"]
-]
-},
-{
-id:"gaula",
-country:"Norway",
-name:"Gaula",
-operator:[]
+  tabs.forEach(tab => tab.classList.remove('active'));
+  contents.forEach(content => content.classList.remove('active'));
+
+  document.querySelector(`[onclick="openTab('${tabName}')"]`).classList.add('active');
+  document.getElementById(tabName).classList.add('active');
 }
-];
-
-function setCountry(c, btn){
-  selectedCountry = c;
-  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
-  btn.classList.add("active");
-  render();
-}
-
-function magazineLinks(name){
-  const q = encodeURIComponent(name + " salmon fishing");
-  return `
-    <a href="https://www.google.com/search?q=site:troutandsalmon.com+${q}" target="_blank">Trout & Salmon</a>
-    <a href="https://www.google.com/search?q=${q}+fishing+report" target="_blank">Reports</a>
-  `;
-}
-
-function render(){
-  const list = rivers.filter(r=>r.country === selectedCountry);
-
-  document.getElementById("app").innerHTML = list.map(r=>{
-
-    const notes = localStorage.getItem(r.id + "-notes") || "";
-
-    return `
-      <div class="river-card">
-
-        <h2>${r.name}</h2>
-
-        <div class="section operator">
-          <h3>🎣 Operator Intel</h3>
-          <div class="links">
-            ${r.operator.length
-              ? r.operator.map(o=>`<a href="${o[1]}" target="_blank">${o[0]}</a>`).join("")
-              : "None added yet"}
-          </div>
-        </div>
-
-        <div class="section magazine">
-          <h3>📰 Magazine Intel</h3>
-          <div class="links">
-            ${magazineLinks(r.name)}
-          </div>
-        </div>
-
-        <div class="section">
-          <h3>🌤 General Links</h3>
-          <div class="links">
-            <a href="https://www.bbc.co.uk/weather" target="_blank">Weather</a>
-          </div>
-        </div>
-
-        <textarea placeholder="Your notes..."
-          oninput="localStorage.setItem('${r.id}-notes', this.value)">
-${notes}
-        </textarea>
-
-      </div>
-    `;
-
-  }).join("");
-}
-
-render();
 </script>
 
 </body>
