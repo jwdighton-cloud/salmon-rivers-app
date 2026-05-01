@@ -16,7 +16,7 @@ body {
 h1 {
   text-align: center;
   margin: 20px 0;
-  font-size: 32px;
+  font-size: 28px;
 }
 
 .tabs {
@@ -97,18 +97,28 @@ a {
 
 <script>
 
-// 👉 EA API (no key required)
+// 🔵 Get Ribble Level (improved)
 async function getRibbleLevel() {
   try {
-    const res = await fetch("https://environment.data.gov.uk/flood-monitoring/id/stations/068020/readings?latest");
+    const res = await fetch("https://environment.data.gov.uk/flood-monitoring/id/stations?riverName=Ribble");
     const data = await res.json();
 
-    if (data.items && data.items.length > 0) {
-      return data.items[0].value + " m";
+    if (data.items && data.items.length > 0 && data.items[0].latestReading) {
+      return data.items[0].latestReading.value;
     }
   } catch (e) {}
 
-  return "Unavailable";
+  return null;
+}
+
+// 🧠 Fishability logic
+function getFishability(level) {
+  if (!level) return {text: "Unknown", class: "ok"};
+
+  if (level < 0.6) return {text: "Low", class: "bad"};
+  if (level < 1.2) return {text: "Good", class: "good"};
+  if (level < 2.0) return {text: "High", class: "ok"};
+  return {text: "Very High", class: "bad"};
 }
 
 async function showCountry(country, el) {
@@ -120,6 +130,7 @@ async function showCountry(country, el) {
   if (country === 'uk') {
 
     const level = await getRibbleLevel();
+    const fish = getFishability(level);
 
     content.innerHTML = `
       <div class="card">
@@ -127,18 +138,17 @@ async function showCountry(country, el) {
 
         <div class="section">
           <h3>🎯 Fishability</h3>
-          <span class="pill ok">Calculating...</span>
+          <span class="pill ${fish.class}">${fish.text}</span>
+        </div>
+
+        <div class="section">
+          <h3>🌊 River Level</h3>
+          <span class="pill good">${level ? level + " m" : "Unavailable"}</span>
         </div>
 
         <div class="section">
           <h3>🌡 Temperature</h3>
           <span class="pill">Coming next</span>
-        </div>
-
-        <div class="section">
-          <h3>🌊 River Level / Flow</h3>
-          <span class="pill good">${level}</span><br>
-          <a href="https://check-for-flooding.service.gov.uk/" target="_blank">View EA Site</a>
         </div>
 
         <div class="section">
@@ -160,11 +170,21 @@ async function showCountry(country, el) {
   }
 
   if (country === 'norway') {
-    content.innerHTML = `<div class="card"><h2>River Gaula</h2><p>Data coming next</p></div>`;
+    content.innerHTML = `
+      <div class="card">
+        <h2>River Gaula</h2>
+        <div class="section"><h3>Data</h3><span class="pill">Coming next</span></div>
+      </div>
+    `;
   }
 
   if (country === 'iceland') {
-    content.innerHTML = `<div class="card"><h2>East Rangá</h2><p>Data coming next</p></div>`;
+    content.innerHTML = `
+      <div class="card">
+        <h2>East Rangá</h2>
+        <div class="section"><h3>Data</h3><span class="pill">Coming next</span></div>
+      </div>
+    `;
   }
 }
 
