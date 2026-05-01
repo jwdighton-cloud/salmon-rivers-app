@@ -82,11 +82,6 @@ h1 {
 .ok { background: #fff3cd; }
 .bad { background: #ffcdd2; }
 
-.small {
-  font-size: 12px;
-  color: #555;
-}
-
 a {
   text-decoration: none;
   color: #1a0dab;
@@ -97,7 +92,7 @@ a {
 <body>
 
 <h1>Salmon Rivers Intelligence</h1>
-<div class="version">Version 10030</div>
+<div class="version">Version 10031</div>
 
 <div class="tabs">
   <div class="tab active" onclick="showCountry('uk', this)">🇬🇧 UK</div>
@@ -109,18 +104,9 @@ a {
 
 <script>
 
-// EA LIVE DATA
-async function getRibbleLevel() {
-  try {
-    const res = await fetch("https://environment.data.gov.uk/flood-monitoring/id/stations?riverName=Ribble");
-    const data = await res.json();
-
-    if (data.items && data.items.length > 0 && data.items[0].latestReading) {
-      return data.items[0].latestReading.value;
-    }
-  } catch (e) {}
-
-  return null;
+// TEMP TEST DATA (to prove update)
+function getTestLevel() {
+  return 1.23; // hardcoded so we KNOW it updates
 }
 
 // FISHABILITY
@@ -141,17 +127,7 @@ async function showCountry(country, el) {
 
   if (country === 'uk') {
 
-    content.innerHTML = `
-      <div class="card">
-        <h2>River Ribble</h2>
-        <div class="section">
-          <h3>Loading live data...</h3>
-          <span class="pill ok">Please wait</span>
-        </div>
-      </div>
-    `;
-
-    const level = await getRibbleLevel();
+    const level = getTestLevel();
     const fish = getFishability(level);
 
     content.innerHTML = `
@@ -165,9 +141,7 @@ async function showCountry(country, el) {
 
         <div class="section">
           <h3>🌊 River Level</h3>
-          <span class="pill ${level ? 'good' : 'bad'}">
-            ${level ? level + ' m' : 'Unavailable'}
-          </span>
+          <span class="pill good">${level} m</span>
         </div>
 
         <div class="section">
@@ -179,13 +153,6 @@ async function showCountry(country, el) {
           <h3>🎣 Operator Intel</h3>
           <span class="pill good">
             <a href="https://ribblefishing.co.uk/" target="_blank">RFCA</a>
-          </span>
-        </div>
-
-        <div class="section">
-          <h3>📰 Magazine Intel</h3>
-          <span class="pill ok">
-            <a href="https://troutandsalmon.com/" target="_blank">Trout & Salmon</a>
           </span>
         </div>
 
@@ -202,7 +169,6 @@ async function showCountry(country, el) {
   }
 }
 
-// LOAD DEFAULT
 showCountry('uk', document.querySelector('.tab'));
 
 </script>
