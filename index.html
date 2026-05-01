@@ -3,160 +3,174 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Salmon Rivers</title>
+<title>Salmon Rivers Intelligence</title>
 
 <style>
 body {
-  font-family: Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   margin: 0;
-  background: #f5f5f5;
+  background: #f5f6f7;
+  color: #111;
 }
 
-header {
-  background: #1e3a5f;
-  color: white;
-  padding: 15px;
+h1 {
   text-align: center;
-  font-size: 20px;
+  margin: 20px 0;
+  font-size: 32px;
 }
 
 .tabs {
   display: flex;
-  background: #ddd;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
 .tab {
-  flex: 1;
-  padding: 10px;
-  text-align: center;
+  padding: 10px 16px;
+  border-radius: 20px;
+  background: #e5e5e5;
   cursor: pointer;
-  background: #ccc;
 }
 
 .tab.active {
-  background: #1e3a5f;
-  color: white;
+  background: #cfe8cf;
+  border: 2px solid #4caf50;
 }
 
-.content {
-  display: none;
+.container {
+  max-width: 600px;
+  margin: auto;
   padding: 10px;
 }
 
-.content.active {
-  display: block;
+.card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
-.river-card {
-  background: white;
-  padding: 15px;
-  margin: 10px 0;
-  border-radius: 8px;
+.section {
+  background: #f0f0f0;
+  border-radius: 16px;
+  padding: 12px;
+  margin-top: 12px;
 }
 
-.status {
-  font-weight: bold;
-  margin-top: 5px;
+.section h3 {
+  margin: 0 0 8px;
 }
 
-.good { color: green; }
-.watch { color: orange; }
-.poor { color: red; }
+.pill {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  background: #ddd;
+  margin: 4px;
+}
 
-.river-links a {
-  display: block;
-  margin-top: 5px;
+.good { background: #c8e6c9; }
+.ok { background: #fff3cd; }
+.bad { background: #ffcdd2; }
+
+a {
   text-decoration: none;
-  color: #1e3a5f;
-  font-size: 14px;
+  color: #1a0dab;
+  font-weight: 500;
 }
 </style>
 </head>
 
 <body>
 
-<header>Salmon Rivers Intelligence</header>
+<h1>Salmon Rivers Intelligence</h1>
 
 <div class="tabs">
-  <div class="tab active" onclick="openTab('uk')">🇬🇧 UK</div>
-  <div class="tab" onclick="openTab('norway')">🇳🇴 Norway</div>
-  <div class="tab" onclick="openTab('iceland')">🇮🇸 Iceland</div>
+  <div class="tab active" onclick="showCountry('uk', this)">🇬🇧 UK</div>
+  <div class="tab" onclick="showCountry('norway', this)">🇳🇴 Norway</div>
+  <div class="tab" onclick="showCountry('iceland', this)">🇮🇸 Iceland</div>
 </div>
 
-<!-- UK -->
-<div id="uk" class="content active">
-
-  <div class="river-card">
-    <h3>River Ribble</h3>
-    <div class="status good">🟢 Good</div>
-
-    <div class="river-links">
-      <a href="https://environment.data.gov.uk/flood-monitoring/id/stations" target="_blank">🌊 River Levels</a>
-      <a href="https://www.metoffice.gov.uk/weather/forecast" target="_blank">🌤 Weather</a>
-      <a href="https://ribbletrust.org.uk" target="_blank">🎣 Operator</a>
-      <a href="https://troutandsalmon.com" target="_blank">📰 Reports</a>
-    </div>
-  </div>
-
-  <div class="river-card">
-    <h3>River Tyne</h3>
-    <div class="status watch">🟠 Watch</div>
-
-    <div class="river-links">
-      <a href="https://environment.data.gov.uk/flood-monitoring/id/stations" target="_blank">🌊 River Levels</a>
-      <a href="https://www.metoffice.gov.uk/weather/forecast" target="_blank">🌤 Weather</a>
-      <a href="#">🎣 Operator</a>
-      <a href="https://troutandsalmon.com" target="_blank">📰 Reports</a>
-    </div>
-  </div>
-
-</div>
-
-<!-- Norway -->
-<div id="norway" class="content">
-
-  <div class="river-card">
-    <h3>River Gaula</h3>
-    <div class="status good">🟢 Good</div>
-
-    <div class="river-links">
-      <a href="https://www.yr.no" target="_blank">🌤 Weather</a>
-      <a href="#">🌊 River Levels</a>
-      <a href="#">🎣 Operator</a>
-      <a href="https://troutandsalmon.com" target="_blank">📰 Reports</a>
-    </div>
-  </div>
-
-</div>
-
-<!-- Iceland -->
-<div id="iceland" class="content">
-
-  <div class="river-card">
-    <h3>East Rangá</h3>
-    <div class="status poor">🔴 Poor</div>
-
-    <div class="river-links">
-      <a href="https://en.vedur.is/weather/forecasts/areas/" target="_blank">🌤 Weather</a>
-      <a href="#">🌊 River Levels</a>
-      <a href="#">🎣 Operator</a>
-      <a href="https://troutandsalmon.com" target="_blank">📰 Reports</a>
-    </div>
-  </div>
-
-</div>
+<div class="container" id="content"></div>
 
 <script>
-function openTab(tabName) {
-  const tabs = document.querySelectorAll('.tab');
-  const contents = document.querySelectorAll('.content');
 
-  tabs.forEach(tab => tab.classList.remove('active'));
-  contents.forEach(content => content.classList.remove('active'));
+// 👉 EA API (no key required)
+async function getRibbleLevel() {
+  try {
+    const res = await fetch("https://environment.data.gov.uk/flood-monitoring/id/stations/068020/readings?latest");
+    const data = await res.json();
 
-  document.querySelector(`[onclick="openTab('${tabName}')"]`).classList.add('active');
-  document.getElementById(tabName).classList.add('active');
+    if (data.items && data.items.length > 0) {
+      return data.items[0].value + " m";
+    }
+  } catch (e) {}
+
+  return "Unavailable";
 }
+
+async function showCountry(country, el) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+
+  const content = document.getElementById('content');
+
+  if (country === 'uk') {
+
+    const level = await getRibbleLevel();
+
+    content.innerHTML = `
+      <div class="card">
+        <h2>River Ribble</h2>
+
+        <div class="section">
+          <h3>🎯 Fishability</h3>
+          <span class="pill ok">Calculating...</span>
+        </div>
+
+        <div class="section">
+          <h3>🌡 Temperature</h3>
+          <span class="pill">Coming next</span>
+        </div>
+
+        <div class="section">
+          <h3>🌊 River Level / Flow</h3>
+          <span class="pill good">${level}</span><br>
+          <a href="https://check-for-flooding.service.gov.uk/" target="_blank">View EA Site</a>
+        </div>
+
+        <div class="section">
+          <h3>🌦 Weather</h3>
+          <a href="https://www.metoffice.gov.uk/" target="_blank">Met Office</a>
+        </div>
+
+        <div class="section">
+          <h3>🎣 Operator Intel</h3>
+          <span class="pill good"><a href="https://ribblefishing.co.uk/" target="_blank">RFCA</a></span>
+        </div>
+
+        <div class="section">
+          <h3>📰 Magazine Intel</h3>
+          <span class="pill ok"><a href="https://troutandsalmon.com/" target="_blank">Trout & Salmon</a></span>
+        </div>
+      </div>
+    `;
+  }
+
+  if (country === 'norway') {
+    content.innerHTML = `<div class="card"><h2>River Gaula</h2><p>Data coming next</p></div>`;
+  }
+
+  if (country === 'iceland') {
+    content.innerHTML = `<div class="card"><h2>East Rangá</h2><p>Data coming next</p></div>`;
+  }
+}
+
+// load default
+showCountry('uk', document.querySelector('.tab'));
+
 </script>
 
 </body>
