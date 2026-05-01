@@ -6,10 +6,20 @@
 <title>Salmon Rivers Intelligence</title>
 
 <style>
-body { font-family: Arial; background:#eef2f5; margin:0; padding:16px; }
+body {
+  font-family: Arial;
+  background:#eef2f5;
+  margin:0;
+  padding:16px;
+}
+
 h1 { text-align:center; }
 
-.tabs { display:flex; gap:8px; margin-bottom:16px; }
+.tabs {
+  display:flex;
+  gap:8px;
+  margin-bottom:16px;
+}
 
 .tab {
   flex:1;
@@ -80,29 +90,37 @@ let selectedCountry = "UK";
 
 const rivers = [
 {
-id:"ribble", country:"UK", name:"River Ribble",
+id:"ribble",
+country:"UK",
+name:"River Ribble",
 operator:[
 ["RFCA","https://ribbletrust.org.uk/"]
 ]
 },
 {
-id:"tyne", country:"UK", name:"River Tyne",
+id:"tyne",
+country:"UK",
+name:"River Tyne",
 operator:[]
 },
 {
-id:"east_ranga", country:"Iceland", name:"East Rangá",
+id:"east_ranga",
+country:"Iceland",
+name:"East Rangá",
 operator:[
 ["⭐ RIPP Sporting","https://www.rippsporting.com/eastranga"]
 ]
 },
 {
-id:"gaula", country:"Norway", name:"Gaula",
+id:"gaula",
+country:"Norway",
+name:"Gaula",
 operator:[]
 }
 ];
 
 function setCountry(c, btn){
-  selectedCountry=c;
+  selectedCountry = c;
   document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
   btn.classList.add("active");
   render();
@@ -117,11 +135,11 @@ function magazineLinks(name){
 }
 
 function render(){
-  const list = rivers.filter(r=>r.country===selectedCountry);
+  const list = rivers.filter(r=>r.country === selectedCountry);
 
   document.getElementById("app").innerHTML = list.map(r=>{
 
-    const notes = localStorage.getItem(r.id+"-notes") || "";
+    const notes = localStorage.getItem(r.id + "-notes") || "";
 
     return `
       <div class="river-card">
@@ -131,7 +149,9 @@ function render(){
         <div class="section operator">
           <h3>🎣 Operator Intel</h3>
           <div class="links">
-            ${r.operator.map(o=>`<a href="${o[1]}" target="_blank">${o[0]}</a>`).join("") || "None added yet"}
+            ${r.operator.length
+              ? r.operator.map(o=>`<a href="${o[1]}" target="_blank">${o[0]}</a>`).join("")
+              : "None added yet"}
           </div>
         </div>
 
@@ -150,7 +170,7 @@ function render(){
         </div>
 
         <textarea placeholder="Your notes..."
-          oninput="localStorage.setItem('${r.id}-notes',this.value)">
+          oninput="localStorage.setItem('${r.id}-notes', this.value)">
 ${notes}
         </textarea>
 
