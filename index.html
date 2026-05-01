@@ -7,62 +7,36 @@
 
 <style>
 body { font-family: Arial; background:#eef2f5; margin:0; padding:16px; }
-h1 { text-align:center; }
+h1 { text-align:center; margin-bottom:6px; }
+
 .tabs { display:flex; gap:8px; margin-bottom:16px; }
-
 .tab {
-  flex:1;
-  padding:10px;
-  border-radius:999px;
-  border:none;
-  background:white;
-  font-weight:bold;
+  flex:1; padding:10px; border-radius:999px;
+  border:none; background:white; font-weight:bold;
 }
-
-.tab.active {
-  background:#dff8df;
-  border:2px solid #6ac96a;
-}
+.tab.active { background:#dff8df; border:2px solid #6ac96a; }
 
 .river-card {
-  background:white;
-  padding:16px;
-  border-radius:16px;
-  margin-bottom:16px;
-  box-shadow:0 3px 10px rgba(0,0,0,0.1);
+  background:white; padding:16px; border-radius:16px;
+  margin-bottom:16px; box-shadow:0 3px 10px rgba(0,0,0,0.1);
 }
 
 .section {
-  background:#f7f9fb;
-  padding:12px;
-  border-radius:12px;
-  margin-top:12px;
+  background:#f7f9fb; padding:12px;
+  border-radius:12px; margin-top:12px;
 }
 
-.badge {
-  padding:5px 10px;
-  border-radius:999px;
-  font-weight:bold;
-}
-
-.good { background:#dff8df; }
-.check { background:#fff6cc; }
-.poor { background:#ffd6d6; }
-.unknown { background:#eee; }
-
-.live-value {
-  font-size:20px;
-  font-weight:bold;
-}
+.section h3 { margin:0 0 6px 0; }
 
 .links a {
   display:inline-block;
-  margin:6px;
+  margin:6px 6px 0 0;
   padding:6px 10px;
-  background:#eef2f5;
   border-radius:10px;
+  background:#eef2f5;
   text-decoration:none;
   font-weight:bold;
+  font-size:13px;
 }
 
 .operator a { background:#e6f9e6; }
@@ -90,21 +64,28 @@ textarea {
 <div id="app"></div>
 
 <script>
-const EA_API = "https://environment.data.gov.uk/flood-monitoring";
 let selectedCountry = "UK";
 
 const rivers = [
 {
-id:"ribble", country:"UK", name:"River Ribble", ea:"Ribble",
-operator:[["RFCA","https://ribbletrust.org.uk/"]]
+id:"ribble", country:"UK", name:"River Ribble",
+operator:[
+["RFCA","https://ribbletrust.org.uk/"]
+]
 },
 {
-id:"tyne", country:"UK", name:"River Tyne", ea:"Tyne",
+id:"tyne", country:"UK", name:"River Tyne",
 operator:[]
 },
 {
 id:"east_ranga", country:"Iceland", name:"East Rangá",
-operator:[["⭐ RIPP Sporting","https://www.rippsporting.com/eastranga"]]
+operator:[
+["⭐ RIPP Sporting","https://www.rippsporting.com/eastranga"]
+]
+},
+{
+id:"gaula", country:"Norway", name:"Gaula",
+operator:[]
 }
 ];
 
@@ -115,86 +96,56 @@ function setCountry(c, btn){
   render();
 }
 
-function fishability(value, time){
-  if(!value) return {text:"⚪ Unknown", cls:"unknown"};
-
-  const age = (new Date() - new Date(time)) / (1000*60*60);
-
-  if(age < 6) return {text:"🟢 Good", cls:"good"};
-  if(age < 24) return {text:"🟡 Check", cls:"check"};
-
-  return {text:"🔴 Poor", cls:"poor"};
+function magazineLinks(name){
+  const q = encodeURIComponent(name + " salmon fishing");
+  return `
+    <a href="https://www.google.com/search?q=site:troutandsalmon.com+${q}" target="_blank">Trout & Salmon</a>
+    <a href="https://www.google.com/search?q=${q}+fishing+report" target="_blank">General reports</a>
+  `;
 }
 
-async function fetchLevel(name){
-  const s = await fetch(`${EA_API}/id/stations?riverName=${name}&_limit=10`);
-  const d = await s.json();
-  const m = d.items?.[0]?.measures?.[0];
-  const r = await fetch(m["@id"]+"/readings?_limit=1");
-  const rd = await r.json();
-  return {
-    value: rd.items?.[0]?.value,
-    time: rd.items?.[0]?.dateTime
-  };
-}
-
-async function render(){
+function render(){
   const list = rivers.filter(r=>r.country===selectedCountry);
 
-  document.getElementById("app").innerHTML = list.map(r=>`
-    <div class="river-card" id="${r.id}">
-      <h2>${r.name}</h2>
-      <div class="section">Loading...</div>
-    </div>
-  `).join("");
+  document.getElementById("app").innerHTML = list.map(r=>{
 
-  for(const r of list){
-    let html = "";
+    const notes = localStorage.getItem(r.id+"-notes") || "";
 
-    let data=null;
-    if(r.ea){
-      try { data = await fetchLevel(r.ea); } catch(e){}
-    }
+    return `
+      <div class="river-card">
 
-    const f = fishability(data?.value, data?.time);
+        <h2>${r.name}</h2>
 
-    html += `
-      <div class="section">
-        <h3>🎯 Fishability</h3>
-        <div class="badge ${f.cls}">${f.text}</div>
-      </div>
-    `;
+        <div class="section operator">
+          <h3>🎣 Operator Intel</h3>
+          <div class="links">
+            ${r.operator.map(o=>`<a href="${o[1]}" target="_blank">${o[0]}</a>`).join("") || "None added yet"}
+          </div>
+        </div>
 
-    if(data){
-      html += `
+        <div class="section magazine">
+          <h3>📰 Magazine Intel</h3>
+          <div class="links">
+            ${magazineLinks(r.name)}
+          </div>
+        </div>
+
         <div class="section">
-          <h3>📊 Live Data</h3>
-          <div class="live-value">${data.value} m</div>
-          <div>${new Date(data.time).toLocaleString()}</div>
+          <h3>🌤 General Links</h3>
+          <div class="links">
+            <a href="https://www.bbc.co.uk/weather" target="_blank">Weather</a>
+          </div>
         </div>
-      `;
-    }
 
-    html += `
-      <div class="section operator">
-        <h3>🎣 Operator Intel</h3>
-        <div class="links">
-          ${r.operator.map(o=>`<a href="${o[1]}" target="_blank">${o[0]}</a>`).join("")}
-        </div>
+        <textarea placeholder="Your notes..."
+          oninput="localStorage.setItem('${r.id}-notes',this.value)">
+${notes}
+        </textarea>
+
       </div>
     `;
 
-    html += `
-      <div class="section magazine">
-        <h3>📰 Magazine Intel</h3>
-        <div class="links">
-          <a href="https://www.google.com/search?q=site:troutandsalmon.com+${r.name}" target="_blank">Trout & Salmon</a>
-        </div>
-      </div>
-    `;
-
-    document.getElementById(r.id).innerHTML = `<h2>${r.name}</h2>` + html;
-  }
+  }).join("");
 }
 
 render();
