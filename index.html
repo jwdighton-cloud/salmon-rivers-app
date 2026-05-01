@@ -75,6 +75,12 @@ h1 {
 .ok { background: #fff3cd; }
 .bad { background: #ffcdd2; }
 
+.small {
+  font-size: 13px;
+  color: #555;
+  line-height: 1.4;
+}
+
 a {
   text-decoration: none;
   color: #1a0dab;
@@ -96,41 +102,137 @@ a {
 <div class="container" id="content"></div>
 
 <script>
+const EA_STATION_SEARCH =
+  "https://environment.data.gov.uk/flood-monitoring/id/stations.json?search=Ribble&_view=full";
 
-// 🔵 Get Ribble Level (improved)
-async function getRibbleLevel() {
-  try {
-    const res = await fetch("https://environment.data.gov.uk/flood-monitoring/id/stations?riverName=Ribble");
-    const data = await res.json();
-
-    if (data.items && data.items.length > 0 && data.items[0].latestReading) {
-      return data.items[0].latestReading.value;
-    }
-  } catch (e) {}
-
-  return null;
+async function fetchJson(url) {
+  const response = await fetch(url, { cache: "no-store" });
+  if (!response.ok) {
+    throw new Error("HTTP " + response.status);
+  }
+  return await response.json();
 }
 
-// 🧠 Fishability logic
-function getFishability(level) {
-  if (!level) return {text: "Unknown", class: "ok"};
+async function getRibbleLevel() {
+  try {
+    const stationData = await fetchJson(EA_STATION_SEARCH);
 
-  if (level < 0.6) return {text: "Low", class: "bad"};
-  if (level < 1.2) return {text: "Good", class: "good"};
-  if (level < 2.0) return {text: "High", class: "ok"};
-  return {text: "Very High", class: "bad"};
+    if (!stationData.items || stationData.items.length === 0) {
+      return {
+        level: null,
+        station: "No Ribble station found",
+        time: "",
+        status: "EA returned no matching station"
+      };
+    }
+
+    let station = null;
+
+    for (const item of stationData.items) {
+      const label = (item.label || "").toLowerCase();
+      const river = (item.riverName || "").toLowerCase();
+
+      if (
+        river.includes("ribble") ||
+        label.includes("ribble") ||
+        label.includes("ribchester") ||
+        label.includes("samlesbury") ||
+        label.includes("clitheroe")
+      ) {
+        station = item;
+        break;
+      }
+    }
+
+    if (!station) {
+      station = stationData.items[0];
+    }
+
+    if (station.latestReading && station.latestReading.value !== undefined) {
+      return {
+        level: Number(station.latestReading.value),
+        station: station.label || station.stationReference || "Ribble station",
+        time: station.latestReading.dateTime || "",
+        status: "Live EA reading"
+      };
+    }
+
+    if (station.measures && station.measures.length > 0) {
+      const measure = Array.isArray(station.measures)
+        ? station.measures[0]
+        : station.measures;
+
+      const measureId = typeof measure === "string" ? measure : measure["@id"];
+
+      if (measureId) {
+        const readingUrl = measureId.replace("/id/measures/", "/id/measures/") + "/readings.json?latest";
+        const readingData = await fetchJson(readingUrl);
+
+        if (readingData.items && readingData.items.length > 0) {
+          return {
+            level: Number(readingData.items[0].value),
+            station: station.label || station.stationReference || "Ribble station",
+            time: readingData.items[0].dateTime || "",
+            status: "Live EA measure reading"
+          };
+        }
+      }
+    }
+
+    return {
+      level: null,
+      station: station.label || "Ribble station found",
+      time: "",
+      status: "Station found but no latest reading"
+    };
+
+  } catch (e) {
+    return {
+      level: null,
+      station: "EA connection failed",
+      time: "",
+      status: e.message || "Unknown error"
+    };
+  }
+}
+
+function getFishability(level) {
+  if (level === null || isNaN(level)) return { text: "Unknown", class: "ok" };
+
+  if (level < 0.4) return { text: "Low", class: "bad" };
+  if (level < 1.2) return { text: "Good", class: "good" };
+  if (level < 2.0) return { text: "High", class: "ok" };
+  return { text: "Very High", class: "bad" };
+}
+
+function formatTime(dateTime) {
+  if (!dateTime) return "No timestamp";
+  try {
+    return new Date(dateTime).toLocaleString("en-GB");
+  } catch (e) {
+    return dateTime;
+  }
 }
 
 async function showCountry(country, el) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
+  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+  el.classList.add("active");
 
-  const content = document.getElementById('content');
+  const content = document.getElementById("content");
 
-  if (country === 'uk') {
+  if (country === "uk") {
+    content.innerHTML = `
+      <div class="card">
+        <h2>River Ribble</h2>
+        <div class="section">
+          <h3>Loading live EA river data...</h3>
+          <span class="pill ok">Please wait</span>
+        </div>
+      </div>
+    `;
 
-    const level = await getRibbleLevel();
-    const fish = getFishability(level);
+    const reading = await getRibbleLevel();
+    const fish = getFishability(reading.level);
 
     content.innerHTML = `
       <div class="card">
@@ -143,7 +245,14 @@ async function showCountry(country, el) {
 
         <div class="section">
           <h3>🌊 River Level</h3>
-          <span class="pill good">${level ? level + " m" : "Unavailable"}</span>
+          <span class="pill ${reading.level !== null ? "good" : "bad"}">
+            ${reading.level !== null ? reading.level.toFixed(3) + " m" : "Unavailable"}
+          </span>
+          <p class="small">
+            Station: ${reading.station}<br>
+            Updated: ${formatTime(reading.time)}<br>
+            Status: ${reading.status}
+          </p>
         </div>
 
         <div class="section">
@@ -165,32 +274,43 @@ async function showCountry(country, el) {
           <h3>📰 Magazine Intel</h3>
           <span class="pill ok"><a href="https://troutandsalmon.com/" target="_blank">Trout & Salmon</a></span>
         </div>
+
+        <div class="section">
+          <h3>📡 Source</h3>
+          <p class="small">
+            Uses Environment Agency real-time flood and river level open data.
+          </p>
+        </div>
       </div>
     `;
   }
 
-  if (country === 'norway') {
+  if (country === "norway") {
     content.innerHTML = `
       <div class="card">
         <h2>River Gaula</h2>
-        <div class="section"><h3>Data</h3><span class="pill">Coming next</span></div>
+        <div class="section">
+          <h3>Data</h3>
+          <span class="pill">Coming next</span>
+        </div>
       </div>
     `;
   }
 
-  if (country === 'iceland') {
+  if (country === "iceland") {
     content.innerHTML = `
       <div class="card">
         <h2>East Rangá</h2>
-        <div class="section"><h3>Data</h3><span class="pill">Coming next</span></div>
+        <div class="section">
+          <h3>Data</h3>
+          <span class="pill">Coming next</span>
+        </div>
       </div>
     `;
   }
 }
 
-// load default
-showCountry('uk', document.querySelector('.tab'));
-
+showCountry("uk", document.querySelector(".tab"));
 </script>
 
 </body>
