@@ -3,38 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Salmon Rivers Intelligence</title>
+<title>Ribble Henthorn Intelligence</title>
 
 <style>
 body {font-family:-apple-system,BlinkMacSystemFont,sans-serif;margin:0;background:#f5f6f7;color:#111;}
-h1 {text-align:center;margin:20px 0 10px 0;font-size:26px;}
-.build {text-align:center;font-size:14px;color:#666;margin-bottom:10px;}
-.tabs {display:flex;justify-content:center;gap:10px;margin-bottom:20px;}
-.tab {padding:10px 16px;border-radius:20px;background:#e5e5e5;cursor:pointer;}
-.tab.active {background:#cfe8cf;border:2px solid #4caf50;}
-.container {max-width:600px;margin:auto;padding:10px;}
-.card {background:#fff;border-radius:20px;padding:16px;margin-bottom:20px;box-shadow:0 4px 10px rgba(0,0,0,0.05);}
+h1 {text-align:center;margin:20px 0 8px 0;font-size:26px;}
+.build {text-align:center;font-size:14px;color:#666;margin-bottom:12px;}
+.container {max-width:620px;margin:auto;padding:10px;}
+.card {background:#fff;border-radius:22px;padding:16px;margin-bottom:18px;box-shadow:0 4px 10px rgba(0,0,0,0.06);}
 .section {background:#f0f0f0;border-radius:16px;padding:12px;margin-top:12px;}
 .section h3 {margin:0 0 8px;}
-.big {font-size:34px;font-weight:700;margin:6px 0;}
-.pill {display:inline-block;padding:6px 12px;border-radius:20px;background:#ddd;margin:4px;}
+.big-level {font-size:42px;font-weight:800;margin:8px 0;}
+.pill {display:inline-block;padding:7px 12px;border-radius:20px;background:#ddd;margin:4px 4px 4px 0;}
 .good {background:#c8e6c9;}
 .ok {background:#fff3cd;}
 .bad {background:#ffcdd2;}
 .small {font-size:13px;color:#555;line-height:1.5;}
-.advice {font-size:15px;line-height:1.45;margin-top:8px;}
-a {text-decoration:none;color:#1a0dab;font-weight:500;}
+.advice {font-size:16px;line-height:1.45;margin-top:8px;}
+a {text-decoration:none;color:#1a0dab;font-weight:600;}
 </style>
 </head>
 
 <body>
 
-<h1>Salmon Rivers Intelligence</h1>
-<div class="build">Build: 10039 — Henthorn focused</div>
-
-<div class="tabs">
-  <div class="tab active">🇬🇧 UK</div>
-</div>
+<h1>Ribble @ Henthorn</h1>
+<div class="build">Build: 10040 — Henthorn-only decision screen</div>
 
 <div class="container" id="content"></div>
 
@@ -78,13 +71,66 @@ async function getHenthornData() {
 }
 
 function getDecision(level, trend) {
-  if (level === null) return {text:"Unknown",class:"ok",advice:"Data unavailable"};
+  if (level === null) {
+    return {
+      label:"Unknown",
+      cls:"ok",
+      verdict:"Live Henthorn level unavailable.",
+      advice:"Refresh the app or check the EA site."
+    };
+  }
 
-  if (level < 0.30) return {text:"Poor",class:"bad",advice:"Too low"};
-  if (level < 0.70 && trend !== "Rising") return {text:"Good",class:"good",advice:"Strong window"};
-  if (level < 0.90) return {text:"Watch",class:"ok",advice:"Check trend"};
-  if (level < 1.20) return {text:"High",class:"ok",advice:"Fishable but pushing"};
-  return {text:"Poor",class:"bad",advice:"Too high"};
+  if (level < 0.30) {
+    return {
+      label:"Poor",
+      cls:"bad",
+      verdict:"Too low.",
+      advice:"Fishing likely difficult unless very specific conditions."
+    };
+  }
+
+  if (level < 0.70) {
+    if (trend === "Rising fast") {
+      return {
+        label:"Watch",
+        cls:"ok",
+        verdict:"Good height, rising quickly.",
+        advice:"Could improve, but watch colour."
+      };
+    }
+
+    return {
+      label:"Good",
+      cls:"good",
+      verdict:"Strong window.",
+      advice:"Good Henthorn height and stable trend."
+    };
+  }
+
+  if (level < 1.20) {
+    if (trend.includes("Falling")) {
+      return {
+        label:"Improving",
+        cls:"good",
+        verdict:"High but dropping.",
+        advice:"Often a very good window."
+      };
+    }
+
+    return {
+      label:"High",
+      cls:"ok",
+      verdict:"Fishable but pushing.",
+      advice:"Proceed with care."
+    };
+  }
+
+  return {
+    label:"Poor",
+    cls:"bad",
+    verdict:"Too high.",
+    advice:"Wait for it to fall."
+  };
 }
 
 function formatTime(dt) {
@@ -93,18 +139,20 @@ function formatTime(dt) {
 }
 
 function formatChange(change) {
-  if (change === null) return "";
+  if (change === null || isNaN(change)) return "Movement unavailable";
   const sign = change > 0 ? "+" : "";
   return sign + change.toFixed(2) + " m";
 }
 
 async function render() {
-  const content = document.getElementById('content');
+  const content = document.getElementById("content");
 
   content.innerHTML = `
     <div class="card">
-      <h2>River Ribble @ Henthorn</h2>
-      <div class="section"><h3>Loading...</h3></div>
+      <h2>Loading live Henthorn data...</h2>
+      <div class="section">
+        <span class="pill ok">Please wait</span>
+      </div>
     </div>
   `;
 
@@ -113,20 +161,21 @@ async function render() {
 
   content.innerHTML = `
     <div class="card">
-      <h2>River Ribble @ Henthorn</h2>
+      <h2>Today’s Reading</h2>
 
-      <div class="section">
-        <h3>🌊 Level</h3>
-        <div class="big">
-          ${data.level !== null ? data.level.toFixed(2)+" m" : "Unavailable"}
-        </div>
-        <span class="pill ${decision.class}">${decision.text}</span>
-        <span class="pill ok">${data.trend}</span>
+      <div class="big-level">
+        ${data.level !== null ? data.level.toFixed(2) + " m" : "Unavailable"}
       </div>
 
+      <span class="pill ${decision.cls}">${decision.label}</span>
+      <span class="pill ok">${data.trend}</span>
+
       <div class="section">
-        <h3>🎯 Advice</h3>
-        <div class="advice">${decision.advice}</div>
+        <h3>🎯 Decision</h3>
+        <div class="advice">
+          <strong>${decision.verdict}</strong><br>
+          ${decision.advice}
+        </div>
       </div>
 
       <div class="section">
@@ -144,6 +193,12 @@ async function render() {
         </a>
       </div>
 
+      <div class="section">
+        <h3>🔗 Links</h3>
+        <a href="https://check-for-flooding.service.gov.uk/station/5066" target="_blank">
+          GOV.UK Henthorn Gauge
+        </a>
+      </div>
     </div>
   `;
 }
