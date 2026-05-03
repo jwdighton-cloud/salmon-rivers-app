@@ -1,145 +1,420 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ribble Henthorn Intelligence</title>
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Salmon Rivers Intelligence 10040</title>
 <style>
-body {font-family:-apple-system,BlinkMacSystemFont,sans-serif;margin:0;background:#f5f6f7;color:#111;}
-h1 {text-align:center;margin:20px 0 8px;font-size:26px;}
-.build {text-align:center;font-size:14px;color:#666;margin-bottom:12px;}
-.container {max-width:620px;margin:auto;padding:10px;}
-.card {background:#fff;border-radius:22px;padding:16px;box-shadow:0 4px 10px rgba(0,0,0,0.06);}
-.section {background:#f0f0f0;border-radius:16px;padding:12px;margin-top:12px;}
-.big-level {font-size:42px;font-weight:800;}
-.pill {display:inline-block;padding:7px 12px;border-radius:20px;margin:4px;}
-.good {background:#c8e6c9;}
-.ok {background:#fff3cd;}
-.bad {background:#ffcdd2;}
-.conf-high {background:#c8e6c9;}
-.conf-med {background:#fff3cd;}
-.conf-low {background:#ffcdd2;}
-button {padding:10px;border-radius:12px;border:0;background:#111;color:#fff;margin:4px;}
-.small {font-size:13px;color:#555;}
+:root{
+  --bg:#06110f;
+  --panel:#0f211d;
+  --panel2:#132a24;
+  --text:#eef8f4;
+  --muted:#9fb8af;
+  --line:#25483f;
+  --accent:#72e6b1;
+  --blue:#7dd3fc;
+  --warn:#ffd166;
+  --bad:#ff7b7b;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+header{
+  padding:16px 14px;
+  border-bottom:1px solid var(--line);
+  background:#071814;
+  position:sticky;
+  top:0;
+  z-index:5;
+}
+h1{font-size:22px;margin:0 0 4px}
+.sub{font-size:13px;color:var(--muted)}
+main{max-width:900px;margin:auto;padding:14px}
+.card{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:14px;
+  margin-bottom:12px;
+  box-shadow:0 8px 22px rgba(0,0,0,.25);
+}
+h2{font-size:18px;margin:0 0 12px}
+h3{font-size:15px;margin:0 0 8px}
+.small{font-size:12px;color:var(--muted);line-height:1.45}
+.status{font-size:13px;color:var(--muted);margin-top:8px}
+.gauge-list{display:flex;flex-direction:column;gap:8px}
+.gauge-row{
+  display:grid;
+  grid-template-columns:1.35fr .7fr .35fr;
+  gap:8px;
+  align-items:center;
+  background:var(--panel2);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:12px;
+}
+.gauge-name{font-weight:800;font-size:17px}
+.gauge-meta{font-size:11px;color:var(--muted);margin-top:2px}
+.gauge-level{text-align:right;font-size:22px;font-weight:900;letter-spacing:-.03em}
+.gauge-arrow{text-align:center;font-size:24px;font-weight:900}
+.up{color:var(--accent)}
+.flat{color:var(--blue)}
+.down{color:var(--warn)}
+.tidal{font-size:12px;color:var(--warn);font-weight:800;text-transform:uppercase}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.big{font-size:31px;font-weight:900;letter-spacing:-.03em}
+button,input{
+  width:100%;
+  padding:11px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:#071612;
+  color:var(--text);
+  font-size:15px;
+}
+button{background:#18362e;font-weight:800;cursor:pointer}
+.row{display:grid;grid-template-columns:1fr .75fr;gap:8px}
+.pill{
+  display:inline-block;
+  padding:5px 9px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  color:var(--muted);
+  font-size:12px;
+  margin:2px 4px 2px 0;
+}
+a{color:var(--blue);text-decoration:none}
+ul{margin:8px 0 0 18px;padding:0}
+li{margin:6px 0;color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+td,th{padding:7px;border-bottom:1px solid var(--line);text-align:left}
+th{color:var(--muted);font-weight:600}
 </style>
 </head>
 
 <body>
+<header>
+  <h1>Salmon Rivers Intelligence</h1>
+  <div class="sub">Ribble live data · data-first · no recommendations · build 10040</div>
+</header>
 
-<h1>Ribble @ Henthorn</h1>
-<div class="build">Build: 10045 — FINAL HENTHORN</div>
+<main>
 
-<div class="container" id="app"></div>
+<section class="card">
+  <h2>Ribble — Live Data</h2>
+  <div class="gauge-list" id="liveGaugeList">
+    <div class="small">Loading live Ribble gauges…</div>
+  </div>
+  <div class="status" id="screenStatus">EA live data loading…</div>
+</section>
+
+<section class="grid">
+  <div class="card">
+    <h3>Water Temperature</h3>
+    <div class="small">Manual reading until a reliable live Ribble water-temperature feed is connected.</div>
+    <div class="big" id="waterTempDisplay">—</div>
+    <div class="row">
+      <input id="waterTempInput" type="number" step="0.1" placeholder="°C">
+      <button onclick="saveWaterTemp()">Save</button>
+    </div>
+    <div class="status" id="waterTempTime">No manual reading saved.</div>
+  </div>
+
+  <div class="card">
+    <h3>Weather / Rainfall</h3>
+    <div class="small">Open-Meteo fallback near Henthorn.</div>
+    <div class="status" id="airTemp">Air temp: —</div>
+    <div class="status" id="rainNow">Rain now: —</div>
+    <div class="status" id="rain24">Rain 24h: —</div>
+    <div class="status" id="weatherTime">—</div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>EA Rainfall Gauges</h2>
+  <div class="small">Nearby catchment rainfall gauges where available from EA flood-monitoring data.</div>
+  <div id="rainGaugeTable" style="margin-top:10px">Loading rainfall gauges…</div>
+</section>
+
+<section class="card">
+  <h2>Catch / River Intel Sources</h2>
+  <div class="small">Source-linked intelligence only. No automated claims unless a feed is available.</div>
+  <ul>
+    <li><a href="https://www.ribblefisheriesca.co.uk/river-levels/" target="_blank">RFCA river levels / water data</a></li>
+    <li><a href="https://www.ribblefisheriesca.co.uk/" target="_blank">RFCA main site</a></li>
+    <li><a href="https://ribbletrust.org.uk/how-we-work/evaluation-and-project-reports/" target="_blank">Ribble Rivers Trust reports</a></li>
+    <li><a href="https://check-for-flooding.service.gov.uk/station/5066" target="_blank">GOV.UK Henthorn gauge</a></li>
+    <li><a href="https://riverlevels.uk/ribble-little-mitton-henthorn" target="_blank">RiverLevels.uk Henthorn</a></li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>Data Rules</h2>
+  <span class="pill">No fishability score</span>
+  <span class="pill">No recommendations</span>
+  <span class="pill">Live levels</span>
+  <span class="pill">Movement arrows</span>
+  <span class="pill">Tidal labelled</span>
+  <span class="pill">Manual water temp</span>
+  <p class="small">
+    Penwortham is shown as tidal/estuary-influenced and is not treated as a normal upstream Ribble gauge.
+    Movement arrows are calculated from recent readings: rising, steady, or falling.
+  </p>
+</section>
+
+</main>
 
 <script>
-const URL = "https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=12";
+const BUILD = "10040";
 
-async function getData(){
-  const r = await fetch(URL,{cache:"no-store"});
-  const d = await r.json();
+const EA = "https://environment.data.gov.uk/flood-monitoring";
+const OM = "https://api.open-meteo.com/v1/forecast";
 
-  const readings = d.items.map(x=>({
-    v:Number(x.value),
-    t:new Date(x.dateTime)
-  })).sort((a,b)=>b.t-a.t);
+const HENTHORN_LOCATION = { lat: 53.865, lon: -2.405 };
 
-  return readings;
+const RIBBLE_GAUGES = [
+  { name:"Henthorn",   id:"710305", role:"Upper / Clitheroe area", tidal:false },
+  { name:"Low Moor",   id:"710301", role:"Clitheroe / Calder influence", tidal:false },
+  { name:"Ribchester", id:"713040", role:"Middle Ribble", tidal:false },
+  { name:"Samlesbury", id:"713019", role:"Lower Ribble", tidal:false },
+  { name:"Penwortham", id:"713354", role:"Tidal / estuary-influenced", tidal:true }
+];
+
+function safeNumber(v){
+  const n = Number(v);
+  return Number.isFinite(n) ? n : null;
 }
 
-function smoothTrend(readings){
-  if(readings.length < 4) return {trend:"Unknown",rate:0};
+function formatLevel(v){
+  const n = safeNumber(v);
+  return n === null ? "—" : n.toFixed(2) + "m";
+}
 
-  let changes = [];
-  for(let i=0;i<readings.length-1;i++){
-    changes.push(readings[i].v - readings[i+1].v);
+function formatTime(s){
+  if(!s) return "—";
+  return new Date(s).toLocaleString("en-GB", {
+    day:"2-digit", month:"short", hour:"2-digit", minute:"2-digit"
+  });
+}
+
+async function getJSON(url){
+  const res = await fetch(url, { cache:"no-store" });
+  if(!res.ok) throw new Error(res.status + " " + url);
+  return res.json();
+}
+
+function movement(items){
+  if(!items || items.length < 2){
+    return { arrow:"·", word:"insufficient data", cls:"flat" };
   }
 
-  const avg = changes.reduce((a,b)=>a+b,0)/changes.length;
+  const latest = safeNumber(items[0].value);
+  const compareIndex = Math.min(4, items.length - 1);
+  const previous = safeNumber(items[compareIndex].value);
 
-  if(avg > 0.02) return {trend:"Rising",rate:avg};
-  if(avg < -0.02) return {trend:"Falling",rate:avg};
-
-  return {trend:"Steady",rate:avg};
-}
-
-function getConfidence(readings, trend){
-  if(!readings.length) return {label:"Low",cls:"conf-low"};
-
-  const ageMin = (Date.now() - readings[0].t)/60000;
-
-  let score = 0;
-
-  if(ageMin < 20) score += 2;
-  else if(ageMin < 60) score += 1;
-
-  if(Math.abs(trend.rate) < 0.03) score += 2;
-  else if(Math.abs(trend.rate) < 0.06) score += 1;
-
-  if(score >= 4) return {label:"High confidence",cls:"conf-high"};
-  if(score >= 2) return {label:"Medium confidence",cls:"conf-med"};
-
-  return {label:"Low confidence",cls:"conf-low"};
-}
-
-function decision(level, trend, confidence){
-  if(level < 0.30) return {label:"Poor",cls:"bad",text:"Too low"};
-
-  if(level < 0.65){
-    if(trend.trend === "Rising") return {label:"Watch",cls:"ok",text:"Good but rising"};
-
-    return {label:"Good",cls:"good",text:"Strong window"};
+  if(latest === null || previous === null){
+    return { arrow:"·", word:"unavailable", cls:"flat" };
   }
 
-  if(level < 1.1){
-    if(trend.trend === "Falling") return {label:"Improving",cls:"good",text:"Dropping into condition"};
+  const diff = latest - previous;
 
-    return {label:"High",cls:"ok",text:"Fishable but pushing"};
+  if(Math.abs(diff) < 0.015){
+    return { arrow:"→", word:"steady", cls:"flat" };
   }
 
-  return {label:"Poor",cls:"bad",text:"Too high"};
+  if(diff > 0){
+    return { arrow:"↑", word:"rising", cls:"up" };
+  }
+
+  return { arrow:"↓", word:"falling", cls:"down" };
 }
 
-function render(readings){
-  const latest = readings[0];
-  const level = latest.v;
+async function loadGauge(gauge){
+  const url = `${EA}/id/stations/${gauge.id}/readings?_sorted&_limit=12`;
+  const data = await getJSON(url);
+  const items = data.items || [];
+  const latest = items[0] || null;
+  const mv = movement(items);
 
-  const trend = smoothTrend(readings);
-  const conf = getConfidence(readings, trend);
-  const dec = decision(level, trend, conf);
+  return {
+    ...gauge,
+    level: latest ? latest.value : null,
+    time: latest ? latest.dateTime : null,
+    arrow: gauge.tidal ? "tidal" : mv.arrow,
+    movementWord: gauge.tidal ? "tidal / estuary-influenced" : mv.word,
+    arrowClass: gauge.tidal ? "tidal" : mv.cls
+  };
+}
 
-  document.getElementById("app").innerHTML = `
-    <div class="card">
+function renderGaugeRows(rows){
+  const box = document.getElementById("liveGaugeList");
 
-      <button onclick="init()">🔄 Refresh</button>
+  box.innerHTML = rows.map(g => {
+    const arrowHTML = g.tidal
+      ? `<div class="gauge-arrow tidal">tidal</div>`
+      : `<div class="gauge-arrow ${g.arrowClass}">${g.arrow}</div>`;
 
-      <div class="big-level">${level.toFixed(2)} m</div>
-
-      <div>
-        <span class="pill ${dec.cls}">${dec.label}</span>
-        <span class="pill ok">${trend.trend}</span>
-        <span class="pill ${conf.cls}">${conf.label}</span>
+    return `
+      <div class="gauge-row">
+        <div>
+          <div class="gauge-name">${g.name}</div>
+          <div class="gauge-meta">${g.role} · ${g.id} · ${g.movementWord} · ${formatTime(g.time)}</div>
+        </div>
+        <div class="gauge-level">${formatLevel(g.level)}</div>
+        ${arrowHTML}
       </div>
+    `;
+  }).join("");
+}
 
-      <div class="section">
-        <strong>${dec.text}</strong>
-      </div>
+async function loadLiveGauges(){
+  const settled = await Promise.allSettled(RIBBLE_GAUGES.map(loadGauge));
 
-      <div class="section small">
-        Updated: ${latest.t.toLocaleString("en-GB")}
-      </div>
+  const rows = settled.map((r, i) => {
+    if(r.status === "fulfilled") return r.value;
+    const g = RIBBLE_GAUGES[i];
+    return {
+      ...g,
+      level:null,
+      time:null,
+      arrow:g.tidal ? "tidal" : "·",
+      movementWord:"unavailable",
+      arrowClass:g.tidal ? "tidal" : "flat"
+    };
+  });
 
-    </div>
-  `;
+  renderGaugeRows(rows);
+
+  const okCount = settled.filter(x => x.status === "fulfilled").length;
+  document.getElementById("screenStatus").textContent =
+    `Build ${BUILD} · ${okCount}/${RIBBLE_GAUGES.length} gauges loaded · refreshed ${new Date().toLocaleString("en-GB")}`;
+}
+
+async function loadWeather(){
+  try{
+    const url =
+      `${OM}?latitude=${HENTHORN_LOCATION.lat}&longitude=${HENTHORN_LOCATION.lon}` +
+      `&current=temperature_2m,precipitation,rain` +
+      `&hourly=precipitation,rain,temperature_2m` +
+      `&past_hours=24&forecast_hours=1&timezone=Europe%2FLondon`;
+
+    const data = await getJSON(url);
+    const c = data.current || {};
+    const h = data.hourly || {};
+    const rainSeries = h.rain || h.precipitation || [];
+    const rain24 = rainSeries.slice(-24).reduce((sum, x) => sum + (Number(x) || 0), 0);
+
+    document.getElementById("airTemp").textContent = `Air temp: ${c.temperature_2m ?? "—"}°C`;
+    document.getElementById("rainNow").textContent = `Rain now: ${c.rain ?? c.precipitation ?? "—"}mm`;
+    document.getElementById("rain24").textContent = `Rain 24h: ${rain24.toFixed(1)}mm`;
+    document.getElementById("weatherTime").textContent = `Weather time: ${formatTime(c.time)}`;
+  }catch(e){
+    document.getElementById("airTemp").textContent = "Air temp: unavailable";
+    document.getElementById("rainNow").textContent = "Rain now: unavailable";
+    document.getElementById("rain24").textContent = "Rain 24h: unavailable";
+    document.getElementById("weatherTime").textContent = "Weather source unavailable.";
+  }
+}
+
+async function loadRainGauges(){
+  const box = document.getElementById("rainGaugeTable");
+
+  try{
+    const url =
+      `${EA}/id/stations?parameter=rainfall` +
+      `&lat=${HENTHORN_LOCATION.lat}&long=${HENTHORN_LOCATION.lon}` +
+      `&dist=25&_limit=10`;
+
+    const data = await getJSON(url);
+    const stations = data.items || [];
+
+    if(!stations.length){
+      box.innerHTML = `<div class="small">No nearby EA rainfall gauges returned.</div>`;
+      return;
+    }
+
+    const rows = await Promise.all(stations.map(async st => {
+      const id = st.stationReference || st.notation || "";
+      try{
+        const rd = await getJSON(`${EA}/id/stations/${id}/readings?_sorted&_limit=24`);
+        const items = rd.items || [];
+        const latest = items[0] || null;
+        const total = items.reduce((sum,x) => sum + (Number(x.value) || 0), 0);
+
+        return `
+          <tr>
+            <td>${st.label || id}<br><span class="small">${id}</span></td>
+            <td>${latest ? Number(latest.value).toFixed(1) + "mm" : "—"}</td>
+            <td>${total.toFixed(1)}mm</td>
+            <td>${formatTime(latest && latest.dateTime)}</td>
+          </tr>
+        `;
+      }catch(e){
+        return `
+          <tr>
+            <td>${st.label || id}<br><span class="small">${id}</span></td>
+            <td>—</td><td>—</td><td>—</td>
+          </tr>
+        `;
+      }
+    }));
+
+    box.innerHTML = `
+      <table>
+        <thead>
+          <tr><th>Gauge</th><th>Latest</th><th>Recent total</th><th>Time</th></tr>
+        </thead>
+        <tbody>${rows.join("")}</tbody>
+      </table>
+    `;
+  }catch(e){
+    box.innerHTML = `<div class="small">EA rainfall gauge search unavailable. Weather rainfall fallback remains above.</div>`;
+  }
+}
+
+function saveWaterTemp(){
+  const v = Number(document.getElementById("waterTempInput").value);
+  if(!Number.isFinite(v)) return;
+
+  const rec = { value:v, time:new Date().toISOString() };
+  localStorage.setItem("sr_water_temp", JSON.stringify(rec));
+  renderWaterTemp();
+}
+
+function renderWaterTemp(){
+  const raw = localStorage.getItem("sr_water_temp");
+
+  if(!raw){
+    document.getElementById("waterTempDisplay").textContent = "—";
+    document.getElementById("waterTempTime").textContent = "No manual reading saved.";
+    return;
+  }
+
+  try{
+    const rec = JSON.parse(raw);
+    document.getElementById("waterTempDisplay").textContent = Number(rec.value).toFixed(1) + "°C";
+    document.getElementById("waterTempTime").textContent = "Manual reading saved: " + formatTime(rec.time);
+  }catch(e){
+    document.getElementById("waterTempDisplay").textContent = "—";
+    document.getElementById("waterTempTime").textContent = "Manual reading unreadable.";
+  }
 }
 
 async function init(){
-  const r = await getData();
-  render(r);
+  renderWaterTemp();
+  await Promise.allSettled([
+    loadLiveGauges(),
+    loadWeather(),
+    loadRainGauges()
+  ]);
 }
 
 init();
 </script>
-
 </body>
 </html>
