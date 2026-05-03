@@ -1,118 +1,149 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Salmon Rivers Intelligence 10042</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salmon Rivers Intelligence</title>
+
 <style>
-body{margin:0;font-family:system-ui;background:#06110f;color:#eef8f4}
-header{padding:14px;border-bottom:1px solid #25483f;background:#071814}
-h1{margin:0;font-size:20px}
-.sub{font-size:12px;color:#9fb8af}
-main{padding:14px;max-width:800px;margin:auto}
-.card{background:#0f211d;border:1px solid #25483f;border-radius:14px;padding:12px}
-.row{display:flex;justify-content:space-between;align-items:center;padding:10px;margin-bottom:8px;background:#132a24;border-radius:10px}
-.name{font-weight:800;font-size:16px}
-.meta{font-size:11px;color:#9fb8af}
-.level{font-size:20px;font-weight:900}
-.arrow{font-size:20px;font-weight:900}
-.up{color:#72e6b1}.flat{color:#7dd3fc}.down{color:#ffd166}
-.tidal{color:#ffd166;font-size:11px;font-weight:800}
-.status{font-size:12px;color:#9fb8af;margin-top:8px}
+body {font-family:-apple-system,BlinkMacSystemFont,sans-serif;margin:0;background:#f5f6f7;color:#111;}
+h1 {text-align:center;margin:20px 0;font-size:28px;}
+.tabs {display:flex;justify-content:center;gap:10px;margin-bottom:20px;}
+.tab {padding:10px 16px;border-radius:20px;background:#e5e5e5;cursor:pointer;}
+.tab.active {background:#cfe8cf;border:2px solid #4caf50;}
+.container {max-width:600px;margin:auto;padding:10px;}
+.card {background:#fff;border-radius:20px;padding:16px;margin-bottom:20px;box-shadow:0 4px 10px rgba(0,0,0,0.05);}
+.section {background:#f0f0f0;border-radius:16px;padding:12px;margin-top:12px;}
+.section h3 {margin:0 0 8px;}
+.pill {display:inline-block;padding:6px 12px;border-radius:20px;background:#ddd;margin:4px;}
+.good {background:#c8e6c9;}
+.ok {background:#fff3cd;}
+.bad {background:#ffcdd2;}
+.small {font-size:13px;color:#555;}
+a {text-decoration:none;color:#1a0dab;font-weight:500;}
 </style>
 </head>
+
 <body>
-<header>
-  <h1>Ribble — Live Data</h1>
-  <div class="sub">build 10042 · data only · no recommendations</div>
-</header>
 
-<main>
-<div class="card">
+<h1>Salmon Rivers Intelligence</h1>
 
-<div class="row">
-  <div><div class="name">Henthorn</div><div class="meta">710305</div></div>
-  <div class="level" id="l1">—</div>
-  <div class="arrow" id="a1">·</div>
+<div class="tabs">
+  <div class="tab active" onclick="showCountry('uk', this)">🇬🇧 UK</div>
+  <div class="tab" onclick="showCountry('norway', this)">🇳🇴 Norway</div>
+  <div class="tab" onclick="showCountry('iceland', this)">🇮🇸 Iceland</div>
 </div>
 
-<div class="row">
-  <div><div class="name">Low Moor</div><div class="meta">710301</div></div>
-  <div class="level" id="l2">—</div>
-  <div class="arrow" id="a2">·</div>
-</div>
-
-<div class="row">
-  <div><div class="name">Ribchester</div><div class="meta">713040</div></div>
-  <div class="level" id="l3">—</div>
-  <div class="arrow" id="a3">·</div>
-</div>
-
-<div class="row">
-  <div><div class="name">Samlesbury</div><div class="meta">713019</div></div>
-  <div class="level" id="l4">—</div>
-  <div class="arrow" id="a4">·</div>
-</div>
-
-<div class="row">
-  <div><div class="name">Penwortham</div><div class="meta">713354 · tidal</div></div>
-  <div class="level" id="l5">—</div>
-  <div class="arrow tidal">tidal</div>
-</div>
-
-<div class="status" id="status">Loading…</div>
-
-</div>
-</main>
+<div class="container" id="content"></div>
 
 <script>
-const EA = "https://environment.data.gov.uk/flood-monitoring";
 
-const gauges = [
-  {id:"710305", level:"l1", arrow:"a1"},
-  {id:"710301", level:"l2", arrow:"a2"},
-  {id:"713040", level:"l3", arrow:"a3"},
-  {id:"713019", level:"l4", arrow:"a4"},
-  {id:"713354", level:"l5", arrow:null}
-];
+// 🔵 HENTHORN GAUGE (CORRECT RIBBLE DATA)
+async function getHenthornLevel() {
+  try {
+    const res = await fetch("https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?latest");
+    const data = await res.json();
 
-function arrow(diff){
-  if(diff === null) return "·";
-  if(Math.abs(diff) < 0.01) return "→";
-  return diff > 0 ? "↑" : "↓";
+    if (data.items && data.items.length > 0) {
+      return {
+        level: data.items[0].value,
+        time: data.items[0].dateTime
+      };
+    }
+  } catch (e) {}
+
+  return { level: null, time: null };
 }
 
-async function loadGauge(g){
-  try{
-    const r = await fetch(`${EA}/id/stations/${g.id}/readings?_sorted&_limit=5`, {cache:"no-store"});
-    const d = await r.json();
-    const items = d.items || [];
-    if(!items.length) return;
+// 🧠 FISHABILITY (RIBBLE-SPECIFIC)
+function getFishability(level) {
+  if (level === null) return {text:"Unknown",class:"ok"};
 
-    const now = Number(items[0].value);
-    const prev = Number(items[items.length-1].value);
-    const diff = now - prev;
+  if (level < 0.3) return {text:"Too Low",class:"bad"};
+  if (level < 0.7) return {text:"Good",class:"good"};
+  if (level < 1.2) return {text:"High but Fishable",class:"ok"};
+  return {text:"Too High",class:"bad"};
+}
 
-    document.getElementById(g.level).textContent = now.toFixed(2) + "m";
+// 📈 TREND (basic version placeholder)
+function getTrend() {
+  return "Trend coming next";
+}
 
-    if(g.arrow){
-      const el = document.getElementById(g.arrow);
-      const ar = arrow(diff);
-      el.textContent = ar;
-      el.className = "arrow " + (ar==="↑" ? "up" : ar==="↓" ? "down" : "flat");
-    }
-  }catch(e){
-    document.getElementById(g.level).textContent = "—";
+function formatTime(dt) {
+  if (!dt) return "No timestamp";
+  return new Date(dt).toLocaleString("en-GB");
+}
+
+async function showCountry(country, el) {
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+
+  const content = document.getElementById('content');
+
+  if (country === 'uk') {
+
+    content.innerHTML = `
+      <div class="card">
+        <h2>River Ribble @ Henthorn</h2>
+        <div class="section"><h3>Loading live data...</h3></div>
+      </div>
+    `;
+
+    const data = await getHenthornLevel();
+    const fish = getFishability(data.level);
+
+    content.innerHTML = `
+      <div class="card">
+        <h2>River Ribble @ Henthorn</h2>
+
+        <div class="section">
+          <h3>🎯 Fishability</h3>
+          <span class="pill ${fish.class}">${fish.text}</span>
+        </div>
+
+        <div class="section">
+          <h3>🌊 River Level</h3>
+          <span class="pill ${data.level?"good":"bad"}">
+            ${data.level ? data.level.toFixed(2)+" m" : "Unavailable"}
+          </span>
+          <div class="small">
+            Updated: ${formatTime(data.time)}<br>
+            ${getTrend()}
+          </div>
+        </div>
+
+        <div class="section">
+          <h3>🌡 Temperature</h3>
+          <span class="pill">Next step</span>
+        </div>
+
+        <div class="section">
+          <h3>🌦 Weather</h3>
+          <a href="https://www.metoffice.gov.uk/" target="_blank">Met Office</a>
+        </div>
+
+        <div class="section">
+          <h3>🎣 Operator Intel</h3>
+          <span class="pill good"><a href="https://ribblefishing.co.uk/" target="_blank">RFCA</a></span>
+        </div>
+
+      </div>
+    `;
+  }
+
+  if (country === 'norway') {
+    content.innerHTML = `<div class="card"><h2>River Gaula</h2><p>Next step</p></div>`;
+  }
+
+  if (country === 'iceland') {
+    content.innerHTML = `<div class="card"><h2>East Rangá</h2><p>Next step</p></div>`;
   }
 }
 
-function init(){
-  gauges.forEach(loadGauge);
-  document.getElementById("status").textContent =
-    "Live EA data · refreshed " + new Date().toLocaleTimeString();
-}
+showCountry('uk', document.querySelector('.tab'));
 
-init();
 </script>
+
 </body>
 </html>
