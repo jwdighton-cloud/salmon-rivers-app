@@ -7,7 +7,8 @@
 
 <style>
 body {font-family:-apple-system,BlinkMacSystemFont,sans-serif;margin:0;background:#f5f6f7;color:#111;}
-h1 {text-align:center;margin:20px 0;font-size:28px;}
+h1 {text-align:center;margin:20px 0 10px 0;font-size:26px;}
+.build {text-align:center;font-size:14px;color:#666;margin-bottom:10px;}
 .tabs {display:flex;justify-content:center;gap:10px;margin-bottom:20px;}
 .tab {padding:10px 16px;border-radius:20px;background:#e5e5e5;cursor:pointer;}
 .tab.active {background:#cfe8cf;border:2px solid #4caf50;}
@@ -28,11 +29,10 @@ a {text-decoration:none;color:#1a0dab;font-weight:500;}
 <body>
 
 <h1>Salmon Rivers Intelligence</h1>
+<div class="build">Build: 10038 — Henthorn only</div>
 
 <div class="tabs">
   <div class="tab active" onclick="showCountry('uk', this)">🇬🇧 UK</div>
-  <div class="tab" onclick="showCountry('norway', this)">🇳🇴 Norway</div>
-  <div class="tab" onclick="showCountry('iceland', this)">🇮🇸 Iceland</div>
 </div>
 
 <div class="container" id="content"></div>
@@ -77,59 +77,13 @@ async function getHenthornData() {
 }
 
 function getFishability(level, trend) {
-  if (level === null) {
-    return {
-      text:"Unknown",
-      class:"ok",
-      advice:"Live Henthorn data is unavailable. Use the EA link or try refreshing."
-    };
-  }
+  if (level === null) return {text:"Unknown",class:"ok",advice:"Data unavailable"};
 
-  if (level < 0.30) {
-    return {
-      text:"Poor",
-      class:"bad",
-      advice:"Too low at Henthorn. Fishing likely difficult unless fresh fish are present or conditions are exceptional."
-    };
-  }
-
-  if (level >= 0.30 && level < 0.70) {
-    if (trend === "Rising fast") {
-      return {
-        text:"Watch",
-        class:"ok",
-        advice:"Good height range, but rising quickly. Could improve, but colour and debris may become an issue."
-      };
-    }
-
-    return {
-      text:"Good",
-      class:"good",
-      advice:"Good Henthorn height. Stable or gentle movement makes this a strong fishing window."
-    };
-  }
-
-  if (level >= 0.70 && level < 1.20) {
-    if (trend === "Falling" || trend === "Falling fast") {
-      return {
-        text:"Improving",
-        class:"good",
-        advice:"High but dropping. This can be a very good window as the river settles."
-      };
-    }
-
-    return {
-      text:"High but fishable",
-      class:"ok",
-      advice:"Fishable, but likely pushing. Choose safer lies and keep an eye on trend."
-    };
-  }
-
-  return {
-    text:"Poor",
-    class:"bad",
-    advice:"Too high at Henthorn for normal fishing. Wait for the river to drop and settle."
-  };
+  if (level < 0.30) return {text:"Poor",class:"bad",advice:"Too low"};
+  if (level < 0.70 && trend !== "Rising") return {text:"Good",class:"good",advice:"Strong window"};
+  if (level < 0.90) return {text:"Watch",class:"ok",advice:"Check trend"};
+  if (level < 1.20) return {text:"High",class:"ok",advice:"Fishable but pushing"};
+  return {text:"Poor",class:"bad",advice:"Too high"};
 }
 
 function formatTime(dt) {
@@ -138,95 +92,57 @@ function formatTime(dt) {
 }
 
 function formatChange(change) {
-  if (change === null || isNaN(change)) return "Change unavailable";
+  if (change === null) return "";
   const sign = change > 0 ? "+" : "";
-  return sign + change.toFixed(2) + " m over recent readings";
+  return sign + change.toFixed(2) + " m";
 }
 
 async function showCountry(country, el) {
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  el.classList.add('active');
-
   const content = document.getElementById('content');
 
-  if (country === 'uk') {
-    content.innerHTML = `
-      <div class="card">
-        <h2>River Ribble @ Henthorn</h2>
-        <div class="section"><h3>Loading live Henthorn data...</h3></div>
+  content.innerHTML = `
+    <div class="card">
+      <h2>River Ribble @ Henthorn</h2>
+      <div class="section"><h3>Loading...</h3></div>
+    </div>
+  `;
+
+  const data = await getHenthornData();
+  const fish = getFishability(data.level, data.trend);
+
+  content.innerHTML = `
+    <div class="card">
+      <h2>River Ribble @ Henthorn</h2>
+
+      <div class="section">
+        <h3>🎯 Fishability</h3>
+        <span class="pill ${fish.class}">${fish.text}</span>
+        <div class="advice">${fish.advice}</div>
       </div>
-    `;
 
-    const data = await getHenthornData();
-    const fish = getFishability(data.level, data.trend);
-
-    content.innerHTML = `
-      <div class="card">
-        <h2>River Ribble @ Henthorn</h2>
-
-        <div class="section">
-          <h3>🎯 Fishability</h3>
-          <span class="pill ${fish.class}">${fish.text}</span>
-          <div class="advice">${fish.advice}</div>
-        </div>
-
-        <div class="section">
-          <h3>🌊 Henthorn Level</h3>
-          <span class="pill ${data.level !== null ? "good" : "bad"}">
-            ${data.level !== null ? data.level.toFixed(2)+" m" : "Unavailable"}
-          </span>
-          <span class="pill ok">${data.trend}</span>
-          <div class="small">
-            Gauge: Ribble @ Henthorn<br>
-            Updated: ${formatTime(data.time)}<br>
-            Recent movement: ${formatChange(data.change)}<br>
-            Source: Environment Agency live river level data
-          </div>
-        </div>
-
-        <div class="section">
-          <h3>🌡 Water Temperature</h3>
-          <span class="pill ok">Live source available</span>
-          <div class="small">
-            Use RFCA live water quality monitoring for current temperature readings.
-          </div>
-          <a href="https://www.ribblefisheriesca.co.uk/live-water-quality-monitoring/" target="_blank">
-            Open RFCA live water quality dashboard
-          </a>
-        </div>
-
-        <div class="section">
-          <h3>🌦 Weather</h3>
-          <a href="https://www.metoffice.gov.uk/" target="_blank">Met Office</a>
-        </div>
-
-        <div class="section">
-          <h3>🎣 Operator Intel</h3>
-          <span class="pill good">
-            <a href="https://ribblefishing.co.uk/" target="_blank">RFCA</a>
-          </span>
-        </div>
-
-        <div class="section">
-          <h3>📰 Magazine Intel</h3>
-          <span class="pill ok">
-            <a href="https://troutandsalmon.com/" target="_blank">Trout & Salmon</a>
-          </span>
+      <div class="section">
+        <h3>🌊 Henthorn Level</h3>
+        <span class="pill ${data.level?"good":"bad"}">
+          ${data.level ? data.level.toFixed(2)+" m" : "Unavailable"}
+        </span>
+        <span class="pill ok">${data.trend}</span>
+        <div class="small">
+          Updated: ${formatTime(data.time)}<br>
+          Movement: ${formatChange(data.change)}
         </div>
       </div>
-    `;
-  }
 
-  if (country === 'norway') {
-    content.innerHTML = `<div class="card"><h2>Norway</h2><p>Henthorn-only mode active.</p></div>`;
-  }
-
-  if (country === 'iceland') {
-    content.innerHTML = `<div class="card"><h2>Iceland</h2><p>Henthorn-only mode active.</p></div>`;
-  }
+      <div class="section">
+        <h3>🌡 Temperature</h3>
+        <a href="https://www.ribblefisheriesca.co.uk/live-water-quality-monitoring/" target="_blank">
+          RFCA Live Water Data
+        </a>
+      </div>
+    </div>
+  `;
 }
 
-showCountry('uk', document.querySelector('.tab'));
+showCountry('uk');
 </script>
 
 </body>
