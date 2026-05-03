@@ -20,6 +20,7 @@ h1 {text-align:center;margin:20px 0;font-size:28px;}
 .ok {background:#fff3cd;}
 .bad {background:#ffcdd2;}
 .small {font-size:13px;color:#555;line-height:1.5;}
+.advice {font-size:15px;line-height:1.45;margin-top:8px;}
 a {text-decoration:none;color:#1a0dab;font-weight:500;}
 </style>
 </head>
@@ -37,7 +38,7 @@ a {text-decoration:none;color:#1a0dab;font-weight:500;}
 <div class="container" id="content"></div>
 
 <script>
-const HENTHORN_URL = "https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=8";
+const HENTHORN_URL = "https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=12";
 
 async function getHenthornData() {
   try {
@@ -45,7 +46,7 @@ async function getHenthornData() {
     const data = await res.json();
 
     if (!data.items || data.items.length === 0) {
-      return { level:null, time:null, trend:"Unavailable" };
+      return { level:null, time:null, trend:"Unavailable", change:null };
     }
 
     const readings = data.items
@@ -55,38 +56,91 @@ async function getHenthornData() {
 
     const latest = readings[0];
     const oldest = readings[readings.length - 1];
+    const diff = latest.value - oldest.value;
 
     let trend = "Steady";
-    if (latest && oldest) {
-      const diff = latest.value - oldest.value;
-      if (diff > 0.03) trend = "Rising";
-      if (diff < -0.03) trend = "Falling";
-    }
+    if (diff > 0.10) trend = "Rising fast";
+    else if (diff > 0.03) trend = "Rising";
+    else if (diff < -0.10) trend = "Falling fast";
+    else if (diff < -0.03) trend = "Falling";
 
     return {
       level: latest.value,
       time: latest.time,
-      trend: trend
+      trend: trend,
+      change: diff
     };
 
   } catch (e) {
-    return { level:null, time:null, trend:"Unavailable" };
+    return { level:null, time:null, trend:"Unavailable", change:null };
   }
 }
 
 function getFishability(level, trend) {
-  if (level === null) return {text:"Unknown",class:"ok"};
+  if (level === null) {
+    return {
+      text:"Unknown",
+      class:"ok",
+      advice:"Live Henthorn data is unavailable. Use the EA link or try refreshing."
+    };
+  }
 
-  if (level < 0.30) return {text:"Too Low",class:"bad"};
-  if (level < 0.70 && trend !== "Rising") return {text:"Good",class:"good"};
-  if (level < 0.90) return {text:"Good / Watch Trend",class:"good"};
-  if (level < 1.20) return {text:"High but Fishable",class:"ok"};
-  return {text:"Too High",class:"bad"};
+  if (level < 0.30) {
+    return {
+      text:"Poor",
+      class:"bad",
+      advice:"Too low at Henthorn. Fishing likely difficult unless fresh fish are present or conditions are exceptional."
+    };
+  }
+
+  if (level >= 0.30 && level < 0.70) {
+    if (trend === "Rising fast") {
+      return {
+        text:"Watch",
+        class:"ok",
+        advice:"Good height range, but rising quickly. Could improve, but colour and debris may become an issue."
+      };
+    }
+
+    return {
+      text:"Good",
+      class:"good",
+      advice:"Good Henthorn height. Stable or gentle movement makes this a strong fishing window."
+    };
+  }
+
+  if (level >= 0.70 && level < 1.20) {
+    if (trend === "Falling" || trend === "Falling fast") {
+      return {
+        text:"Improving",
+        class:"good",
+        advice:"High but dropping. This can be a very good window as the river settles."
+      };
+    }
+
+    return {
+      text:"High but fishable",
+      class:"ok",
+      advice:"Fishable, but likely pushing. Choose safer lies and keep an eye on trend."
+    };
+  }
+
+  return {
+    text:"Poor",
+    class:"bad",
+    advice:"Too high at Henthorn for normal fishing. Wait for the river to drop and settle."
+  };
 }
 
 function formatTime(dt) {
   if (!dt) return "No timestamp";
   return new Date(dt).toLocaleString("en-GB");
+}
+
+function formatChange(change) {
+  if (change === null || isNaN(change)) return "Change unavailable";
+  const sign = change > 0 ? "+" : "";
+  return sign + change.toFixed(2) + " m over recent readings";
 }
 
 async function showCountry(country, el) {
@@ -99,7 +153,7 @@ async function showCountry(country, el) {
     content.innerHTML = `
       <div class="card">
         <h2>River Ribble @ Henthorn</h2>
-        <div class="section"><h3>Loading live data...</h3></div>
+        <div class="section"><h3>Loading live Henthorn data...</h3></div>
       </div>
     `;
 
@@ -113,10 +167,11 @@ async function showCountry(country, el) {
         <div class="section">
           <h3>🎯 Fishability</h3>
           <span class="pill ${fish.class}">${fish.text}</span>
+          <div class="advice">${fish.advice}</div>
         </div>
 
         <div class="section">
-          <h3>🌊 River Level</h3>
+          <h3>🌊 Henthorn Level</h3>
           <span class="pill ${data.level !== null ? "good" : "bad"}">
             ${data.level !== null ? data.level.toFixed(2)+" m" : "Unavailable"}
           </span>
@@ -124,6 +179,7 @@ async function showCountry(country, el) {
           <div class="small">
             Gauge: Ribble @ Henthorn<br>
             Updated: ${formatTime(data.time)}<br>
+            Recent movement: ${formatChange(data.change)}<br>
             Source: Environment Agency live river level data
           </div>
         </div>
@@ -162,27 +218,11 @@ async function showCountry(country, el) {
   }
 
   if (country === 'norway') {
-    content.innerHTML = `
-      <div class="card">
-        <h2>River Gaula</h2>
-        <div class="section">
-          <h3>Next step</h3>
-          <span class="pill">Norway live data pending</span>
-        </div>
-      </div>
-    `;
+    content.innerHTML = `<div class="card"><h2>Norway</h2><p>Henthorn-only mode active.</p></div>`;
   }
 
   if (country === 'iceland') {
-    content.innerHTML = `
-      <div class="card">
-        <h2>East Rangá</h2>
-        <div class="section">
-          <h3>Next step</h3>
-          <span class="pill">Iceland live data pending</span>
-        </div>
-      </div>
-    `;
+    content.innerHTML = `<div class="card"><h2>Iceland</h2><p>Henthorn-only mode active.</p></div>`;
   }
 }
 
