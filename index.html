@@ -20,6 +20,8 @@ h1 {text-align:center;margin:20px 0 8px 0;font-size:26px;}
 .bad {background:#ffcdd2;}
 .small {font-size:13px;color:#555;line-height:1.5;}
 .advice {font-size:16px;line-height:1.45;margin-top:8px;}
+input {font-size:18px;padding:10px;border-radius:12px;border:1px solid #ccc;width:120px;}
+button {font-size:16px;padding:10px 14px;border:0;border-radius:12px;background:#111;color:#fff;margin-left:6px;}
 a {text-decoration:none;color:#1a0dab;font-weight:600;}
 </style>
 </head>
@@ -27,12 +29,13 @@ a {text-decoration:none;color:#1a0dab;font-weight:600;}
 <body>
 
 <h1>Ribble @ Henthorn</h1>
-<div class="build">Build: 10041 — refined Henthorn logic</div>
+<div class="build">Build: 10042 — level + trend + manual temperature</div>
 
 <div class="container" id="content"></div>
 
 <script>
 const HENTHORN_URL = "https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=12";
+const TEMP_KEY = "henthorn_water_temp_c";
 
 async function getHenthornData() {
   try {
@@ -58,25 +61,92 @@ async function getHenthornData() {
     else if (diff < -0.12) trend = "Falling fast";
     else if (diff < -0.04) trend = "Falling";
 
-    return {
-      level: latest.value,
-      time: latest.time,
-      trend: trend,
-      change: diff
-    };
+    return { level:latest.value, time:latest.time, trend:trend, change:diff };
 
   } catch (e) {
     return { level:null, time:null, trend:"Unavailable", change:null };
   }
 }
 
-function getDecision(level, trend) {
+function getSavedTemp() {
+  const raw = localStorage.getItem(TEMP_KEY);
+  const temp = Number(raw);
+  return isNaN(temp) ? null : temp;
+}
+
+function saveTemp() {
+  const input = document.getElementById("tempInput");
+  const value = Number(input.value);
+
+  if (!isNaN(value) && value >= 0 && value <= 25) {
+    localStorage.setItem(TEMP_KEY, value);
+    render();
+  }
+}
+
+function clearTemp() {
+  localStorage.removeItem(TEMP_KEY);
+  render();
+}
+
+function getTempWarning(temp) {
+  if (temp === null) {
+    return {
+      label:"Temp not set",
+      cls:"ok",
+      text:"Add today’s water temperature from RFCA to sharpen the decision."
+    };
+  }
+
+  if (temp < 6) {
+    return {
+      label:"Cold",
+      cls:"ok",
+      text:"Cold water can slow fish movement. Conditions may still be worth fishing if level and trend are good."
+    };
+  }
+
+  if (temp <= 14) {
+    return {
+      label:"Good temp",
+      cls:"good",
+      text:"Water temperature is in a useful salmon fishing range."
+    };
+  }
+
+  if (temp <= 18) {
+    return {
+      label:"Warm",
+      cls:"ok",
+      text:"Warm water. Fish early/late and handle fish carefully."
+    };
+  }
+
+  return {
+    label:"Too warm",
+    cls:"bad",
+    text:"Water is too warm for comfortable salmon fishing. Fish welfare becomes the priority."
+  };
+}
+
+function getDecision(level, trend, temp) {
+  const tempWarn = getTempWarning(temp);
+
   if (level === null) {
     return {
       label:"Unknown",
       cls:"ok",
       verdict:"Live Henthorn level unavailable.",
       advice:"Refresh the app or check the GOV.UK Henthorn gauge."
+    };
+  }
+
+  if (temp !== null && temp > 18) {
+    return {
+      label:"Poor",
+      cls:"bad",
+      verdict:"Too warm.",
+      advice:"Even if the level looks useful, water temperature is now the main concern."
     };
   }
 
@@ -123,6 +193,15 @@ function getDecision(level, trend) {
         cls:"good",
         verdict:"Good height, dropping quickly.",
         advice:"A useful window, but it may not last. Fish sooner rather than later."
+      };
+    }
+
+    if (temp !== null && temp < 6) {
+      return {
+        label:"Good / Cold",
+        cls:"ok",
+        verdict:"Good height but cold water.",
+        advice:"Level is right, but fish may be slower. Fish slower and deeper."
       };
     }
 
@@ -229,7 +308,9 @@ async function render() {
   `;
 
   const data = await getHenthornData();
-  const decision = getDecision(data.level, data.trend);
+  const temp = getSavedTemp();
+  const tempWarn = getTempWarning(temp);
+  const decision = getDecision(data.level, data.trend, temp);
 
   content.innerHTML = `
     <div class="card">
@@ -241,6 +322,7 @@ async function render() {
 
       <span class="pill ${decision.cls}">${decision.label}</span>
       <span class="pill ok">${data.trend}</span>
+      <span class="pill ${tempWarn.cls}">${temp !== null ? temp.toFixed(1) + "°C" : tempWarn.label}</span>
 
       <div class="section">
         <h3>🎯 Decision</h3>
@@ -259,9 +341,16 @@ async function render() {
       </div>
 
       <div class="section">
-        <h3>🌡 Temperature</h3>
+        <h3>🌡 Water Temperature</h3>
+        <input id="tempInput" type="number" step="0.1" min="0" max="25" placeholder="°C" value="${temp !== null ? temp : ""}">
+        <button onclick="saveTemp()">Save</button>
+        <button onclick="clearTemp()">Clear</button>
+        <div class="small" style="margin-top:8px;">
+          ${tempWarn.text}<br>
+          Source suggested: RFCA live water-quality dashboard.
+        </div>
         <a href="https://www.ribblefisheriesca.co.uk/live-water-quality-monitoring/" target="_blank">
-          RFCA Live Water Data
+          Open RFCA Live Water Data
         </a>
       </div>
 
