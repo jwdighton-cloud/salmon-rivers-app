@@ -7,191 +7,138 @@
 
 <style>
 body {font-family:-apple-system,BlinkMacSystemFont,sans-serif;margin:0;background:#f5f6f7;color:#111;}
-h1 {text-align:center;margin:20px 0 8px 0;font-size:26px;}
+h1 {text-align:center;margin:20px 0 8px;font-size:26px;}
 .build {text-align:center;font-size:14px;color:#666;margin-bottom:12px;}
 .container {max-width:620px;margin:auto;padding:10px;}
-.card {background:#fff;border-radius:22px;padding:16px;margin-bottom:18px;box-shadow:0 4px 10px rgba(0,0,0,0.06);}
+.card {background:#fff;border-radius:22px;padding:16px;box-shadow:0 4px 10px rgba(0,0,0,0.06);}
 .section {background:#f0f0f0;border-radius:16px;padding:12px;margin-top:12px;}
-.section h3 {margin:0 0 8px;}
-.big-level {font-size:42px;font-weight:800;margin:8px 0;}
-.pill {display:inline-block;padding:7px 12px;border-radius:20px;background:#ddd;margin:4px;}
+.big-level {font-size:42px;font-weight:800;}
+.pill {display:inline-block;padding:7px 12px;border-radius:20px;margin:4px;}
 .good {background:#c8e6c9;}
 .ok {background:#fff3cd;}
 .bad {background:#ffcdd2;}
-.alert {background:#d7ecff;}
-.warn {background:#ffe0b2;}
-.small {font-size:13px;color:#555;line-height:1.5;}
-.advice {font-size:16px;line-height:1.45;margin-top:8px;}
-button {font-size:16px;padding:10px 14px;border:0;border-radius:12px;background:#111;color:#fff;margin:4px;}
-input {font-size:18px;padding:10px;border-radius:12px;border:1px solid #ccc;width:120px;}
-a {text-decoration:none;color:#1a0dab;font-weight:600;}
+.conf-high {background:#c8e6c9;}
+.conf-med {background:#fff3cd;}
+.conf-low {background:#ffcdd2;}
+button {padding:10px;border-radius:12px;border:0;background:#111;color:#fff;margin:4px;}
+.small {font-size:13px;color:#555;}
 </style>
 </head>
 
 <body>
 
 <h1>Ribble @ Henthorn</h1>
-<div class="build">Build: 10044 — freshness + refresh</div>
+<div class="build">Build: 10045 — FINAL HENTHORN</div>
 
-<div class="container" id="content"></div>
+<div class="container" id="app"></div>
 
 <script>
-const HENTHORN_URL = "https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=12";
-const TEMP_KEY = "henthorn_water_temp_c";
-const LAST_STATE_KEY = "henthorn_last_condition";
-const ALERT_KEY = "henthorn_alert_enabled";
+const URL = "https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=12";
 
-async function getHenthornData() {
-  try {
-    const res = await fetch(HENTHORN_URL, { cache: "no-store" });
-    const data = await res.json();
+async function getData(){
+  const r = await fetch(URL,{cache:"no-store"});
+  const d = await r.json();
 
-    if (!data.items || data.items.length === 0) {
-      return { level:null, time:null, trend:"Unavailable", change:null };
-    }
+  const readings = d.items.map(x=>({
+    v:Number(x.value),
+    t:new Date(x.dateTime)
+  })).sort((a,b)=>b.t-a.t);
 
-    const readings = data.items
-      .map(r => ({ value:Number(r.value), time:r.dateTime }))
-      .filter(r => !isNaN(r.value))
-      .sort((a,b) => new Date(b.time) - new Date(a.time));
+  return readings;
+}
 
-    const latest = readings[0];
-    const oldest = readings[readings.length - 1];
-    const diff = latest.value - oldest.value;
+function smoothTrend(readings){
+  if(readings.length < 4) return {trend:"Unknown",rate:0};
 
-    let trend = "Steady";
-    if (diff > 0.12) trend = "Rising fast";
-    else if (diff > 0.04) trend = "Rising";
-    else if (diff < -0.12) trend = "Falling fast";
-    else if (diff < -0.04) trend = "Falling";
-
-    return { level:latest.value, time:latest.time, trend:trend, change:diff };
-
-  } catch (e) {
-    return { level:null, time:null, trend:"Unavailable", change:null };
+  let changes = [];
+  for(let i=0;i<readings.length-1;i++){
+    changes.push(readings[i].v - readings[i+1].v);
   }
+
+  const avg = changes.reduce((a,b)=>a+b,0)/changes.length;
+
+  if(avg > 0.02) return {trend:"Rising",rate:avg};
+  if(avg < -0.02) return {trend:"Falling",rate:avg};
+
+  return {trend:"Steady",rate:avg};
 }
 
-function getReadingAgeMinutes(dt) {
-  if (!dt) return null;
-  const now = new Date();
-  const reading = new Date(dt);
-  return Math.round((now - reading) / 60000);
+function getConfidence(readings, trend){
+  if(!readings.length) return {label:"Low",cls:"conf-low"};
+
+  const ageMin = (Date.now() - readings[0].t)/60000;
+
+  let score = 0;
+
+  if(ageMin < 20) score += 2;
+  else if(ageMin < 60) score += 1;
+
+  if(Math.abs(trend.rate) < 0.03) score += 2;
+  else if(Math.abs(trend.rate) < 0.06) score += 1;
+
+  if(score >= 4) return {label:"High confidence",cls:"conf-high"};
+  if(score >= 2) return {label:"Medium confidence",cls:"conf-med"};
+
+  return {label:"Low confidence",cls:"conf-low"};
 }
 
-function getFreshnessStatus(minutes) {
-  if (minutes === null) return {text:"No timestamp", cls:"ok"};
+function decision(level, trend, confidence){
+  if(level < 0.30) return {label:"Poor",cls:"bad",text:"Too low"};
 
-  if (minutes <= 15) return {text:"Live ("+minutes+" min ago)", cls:"good"};
-  if (minutes <= 60) return {text:minutes+" min old", cls:"ok"};
-  return {text:"Stale ("+minutes+" min old)", cls:"warn"};
-}
+  if(level < 0.65){
+    if(trend.trend === "Rising") return {label:"Watch",cls:"ok",text:"Good but rising"};
 
-function getSavedTemp() {
-  const raw = localStorage.getItem(TEMP_KEY);
-  const temp = Number(raw);
-  return isNaN(temp) ? null : temp;
-}
-
-function saveTemp() {
-  const input = document.getElementById("tempInput");
-  const value = Number(input.value);
-  if (!isNaN(value)) {
-    localStorage.setItem(TEMP_KEY, value);
-    render();
+    return {label:"Good",cls:"good",text:"Strong window"};
   }
+
+  if(level < 1.1){
+    if(trend.trend === "Falling") return {label:"Improving",cls:"good",text:"Dropping into condition"};
+
+    return {label:"High",cls:"ok",text:"Fishable but pushing"};
+  }
+
+  return {label:"Poor",cls:"bad",text:"Too high"};
 }
 
-function clearTemp() {
-  localStorage.removeItem(TEMP_KEY);
-  render();
-}
+function render(readings){
+  const latest = readings[0];
+  const level = latest.v;
 
-function alertsEnabled() {
-  return localStorage.getItem(ALERT_KEY) === "yes";
-}
+  const trend = smoothTrend(readings);
+  const conf = getConfidence(readings, trend);
+  const dec = decision(level, trend, conf);
 
-function toggleAlerts() {
-  localStorage.setItem(ALERT_KEY, alertsEnabled() ? "no" : "yes");
-  render();
-}
-
-function getDecision(level, trend, temp) {
-  if (level === null) return {label:"Unknown",cls:"ok",verdict:"No data",advice:"Refresh"};
-
-  if (temp !== null && temp > 18) return {label:"Poor",cls:"bad",verdict:"Too warm",advice:"Fish welfare risk"};
-
-  if (level < 0.30) return {label:"Poor",cls:"bad",verdict:"Too low",advice:"Wait"};
-
-  if (level < 0.70) return {label:"Good",cls:"good",verdict:"Strong window",advice:"Fish"};
-
-  if (level < 1.20) return {label:"High",cls:"ok",verdict:"Fishable",advice:"Care needed"};
-
-  return {label:"Poor",cls:"bad",verdict:"Too high",advice:"Wait"};
-}
-
-function formatTime(dt) {
-  if (!dt) return "No timestamp";
-  return new Date(dt).toLocaleString("en-GB");
-}
-
-async function render() {
-  const content = document.getElementById("content");
-
-  const data = await getHenthornData();
-  const temp = getSavedTemp();
-  const decision = getDecision(data.level, data.trend, temp);
-
-  const ageMin = getReadingAgeMinutes(data.time);
-  const freshness = getFreshnessStatus(ageMin);
-
-  content.innerHTML = `
+  document.getElementById("app").innerHTML = `
     <div class="card">
 
-      <button onclick="render()">🔄 Refresh now</button>
+      <button onclick="init()">🔄 Refresh</button>
 
-      <div class="big-level">
-        ${data.level ? data.level.toFixed(2)+" m" : "Unavailable"}
-      </div>
+      <div class="big-level">${level.toFixed(2)} m</div>
 
-      <span class="pill ${decision.cls}">${decision.label}</span>
-      <span class="pill ok">${data.trend}</span>
-      <span class="pill ${freshness.cls}">${freshness.text}</span>
-
-      <div class="section">
-        <h3>🎯 Decision</h3>
-        <div class="advice">
-          <strong>${decision.verdict}</strong><br>${decision.advice}
-        </div>
+      <div>
+        <span class="pill ${dec.cls}">${dec.label}</span>
+        <span class="pill ok">${trend.trend}</span>
+        <span class="pill ${conf.cls}">${conf.label}</span>
       </div>
 
       <div class="section">
-        <h3>📈 Data</h3>
-        <div class="small">
-          Updated: ${formatTime(data.time)}<br>
-          Movement: ${data.change !== null ? data.change.toFixed(2)+" m" : "n/a"}
-        </div>
+        <strong>${dec.text}</strong>
       </div>
 
-      <div class="section">
-        <h3>🌡 Temperature</h3>
-        <input id="tempInput" type="number" placeholder="°C" value="${temp ?? ""}">
-        <button onclick="saveTemp()">Save</button>
-        <button onclick="clearTemp()">Clear</button>
-      </div>
-
-      <div class="section">
-        <h3>🔗</h3>
-        <a href="https://check-for-flooding.service.gov.uk/station/5066" target="_blank">
-          Open GOV.UK gauge
-        </a>
+      <div class="section small">
+        Updated: ${latest.t.toLocaleString("en-GB")}
       </div>
 
     </div>
   `;
 }
 
-render();
+async function init(){
+  const r = await getData();
+  render(r);
+}
+
+init();
 </script>
 
 </body>
