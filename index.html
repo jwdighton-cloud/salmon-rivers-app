@@ -3,474 +3,113 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Salmon Rivers Intelligence 10041</title>
+<title>Salmon Rivers Intelligence 10042</title>
 <style>
-:root{
-  --bg:#06110f;
-  --panel:#0f211d;
-  --panel2:#132a24;
-  --text:#eef8f4;
-  --muted:#9fb8af;
-  --line:#25483f;
-  --accent:#72e6b1;
-  --blue:#7dd3fc;
-  --warn:#ffd166;
-  --bad:#ff7b7b;
-}
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-  background:var(--bg);
-  color:var(--text);
-}
-header{
-  padding:16px 14px;
-  border-bottom:1px solid var(--line);
-  background:#071814;
-  position:sticky;
-  top:0;
-  z-index:5;
-}
-h1{font-size:22px;margin:0 0 4px}
-.sub{font-size:13px;color:var(--muted)}
-main{max-width:900px;margin:auto;padding:14px}
-.card{
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:14px;
-  margin-bottom:12px;
-  box-shadow:0 8px 22px rgba(0,0,0,.25);
-}
-h2{font-size:18px;margin:0 0 12px}
-h3{font-size:15px;margin:0 0 8px}
-.small{font-size:12px;color:var(--muted);line-height:1.45}
-.status{font-size:13px;color:var(--muted);margin-top:8px}
-.gauge-list{display:flex;flex-direction:column;gap:8px}
-.gauge-row{
-  display:grid;
-  grid-template-columns:1.35fr .7fr .35fr;
-  gap:8px;
-  align-items:center;
-  background:var(--panel2);
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:12px;
-}
-.gauge-name{font-weight:800;font-size:17px}
-.gauge-meta{font-size:11px;color:var(--muted);margin-top:2px}
-.gauge-level{text-align:right;font-size:22px;font-weight:900;letter-spacing:-.03em}
-.gauge-arrow{text-align:center;font-size:24px;font-weight:900}
-.up{color:var(--accent)}
-.flat{color:var(--blue)}
-.down{color:var(--warn)}
-.tidal{font-size:12px;color:var(--warn);font-weight:800;text-transform:uppercase}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-.big{font-size:31px;font-weight:900;letter-spacing:-.03em}
-button,input{
-  width:100%;
-  padding:11px;
-  border-radius:12px;
-  border:1px solid var(--line);
-  background:#071612;
-  color:var(--text);
-  font-size:15px;
-}
-button{background:#18362e;font-weight:800;cursor:pointer}
-.row{display:grid;grid-template-columns:1fr .75fr;gap:8px}
-.pill{
-  display:inline-block;
-  padding:5px 9px;
-  border:1px solid var(--line);
-  border-radius:999px;
-  color:var(--muted);
-  font-size:12px;
-  margin:2px 4px 2px 0;
-}
-.metric{
-  background:var(--panel2);
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:12px;
-}
-.metric-label{font-size:12px;color:var(--muted)}
-.metric-value{font-size:24px;font-weight:900;margin-top:3px}
-.warning{color:var(--warn)}
-.error{color:var(--bad)}
-a{color:var(--blue);text-decoration:none}
-ul{margin:8px 0 0 18px;padding:0}
-li{margin:6px 0;color:var(--muted)}
-table{width:100%;border-collapse:collapse;font-size:13px}
-td,th{padding:7px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
-th{color:var(--muted);font-weight:600}
+body{margin:0;font-family:system-ui;background:#06110f;color:#eef8f4}
+header{padding:14px;border-bottom:1px solid #25483f;background:#071814}
+h1{margin:0;font-size:20px}
+.sub{font-size:12px;color:#9fb8af}
+main{padding:14px;max-width:800px;margin:auto}
+.card{background:#0f211d;border:1px solid #25483f;border-radius:14px;padding:12px}
+.row{display:flex;justify-content:space-between;align-items:center;padding:10px;margin-bottom:8px;background:#132a24;border-radius:10px}
+.name{font-weight:800;font-size:16px}
+.meta{font-size:11px;color:#9fb8af}
+.level{font-size:20px;font-weight:900}
+.arrow{font-size:20px;font-weight:900}
+.up{color:#72e6b1}.flat{color:#7dd3fc}.down{color:#ffd166}
+.tidal{color:#ffd166;font-size:11px;font-weight:800}
+.status{font-size:12px;color:#9fb8af;margin-top:8px}
 </style>
 </head>
-
 <body>
 <header>
-  <h1>Salmon Rivers Intelligence</h1>
-  <div class="sub">Ribble live data · data-first · no recommendations · build 10041</div>
+  <h1>Ribble — Live Data</h1>
+  <div class="sub">build 10042 · data only · no recommendations</div>
 </header>
 
 <main>
+<div class="card">
 
-<section class="card">
-  <h2>Ribble — Live Data</h2>
-  <div class="gauge-list" id="liveGaugeList">
-    <div class="small">Loading live Ribble gauges…</div>
-  </div>
-  <div class="status" id="screenStatus">EA live data loading…</div>
-</section>
+<div class="row">
+  <div><div class="name">Henthorn</div><div class="meta">710305</div></div>
+  <div class="level" id="l1">—</div>
+  <div class="arrow" id="a1">·</div>
+</div>
 
-<section class="card">
-  <h2>Temperature & Rainfall</h2>
-  <div class="grid">
-    <div class="metric">
-      <div class="metric-label">Manual water temperature</div>
-      <div class="metric-value" id="waterTempDisplay">—</div>
-      <div class="row">
-        <input id="waterTempInput" type="number" step="0.1" placeholder="Water °C">
-        <button onclick="saveWaterTemp()">Save</button>
-      </div>
-      <div class="status" id="waterTempTime">No manual reading saved.</div>
-      <div class="status" id="waterTempCheck">Awaiting manual water temperature.</div>
-    </div>
+<div class="row">
+  <div><div class="name">Low Moor</div><div class="meta">710301</div></div>
+  <div class="level" id="l2">—</div>
+  <div class="arrow" id="a2">·</div>
+</div>
 
-    <div class="metric">
-      <div class="metric-label">Air temperature near Henthorn</div>
-      <div class="metric-value" id="airTempBig">—</div>
-      <div class="status" id="airTemp">Air temp loading…</div>
-      <div class="status">Air temperature is not water temperature.</div>
-    </div>
+<div class="row">
+  <div><div class="name">Ribchester</div><div class="meta">713040</div></div>
+  <div class="level" id="l3">—</div>
+  <div class="arrow" id="a3">·</div>
+</div>
 
-    <div class="metric">
-      <div class="metric-label">Rain now</div>
-      <div class="metric-value" id="rainNowBig">—</div>
-      <div class="status" id="rainNow">Rain now loading…</div>
-    </div>
+<div class="row">
+  <div><div class="name">Samlesbury</div><div class="meta">713019</div></div>
+  <div class="level" id="l4">—</div>
+  <div class="arrow" id="a4">·</div>
+</div>
 
-    <div class="metric">
-      <div class="metric-label">Rain last 24h</div>
-      <div class="metric-value" id="rain24Big">—</div>
-      <div class="status" id="rain24">Rain 24h loading…</div>
-    </div>
-  </div>
-  <div class="status" id="weatherTime">Weather source loading…</div>
-</section>
+<div class="row">
+  <div><div class="name">Penwortham</div><div class="meta">713354 · tidal</div></div>
+  <div class="level" id="l5">—</div>
+  <div class="arrow tidal">tidal</div>
+</div>
 
-<section class="card">
-  <h2>EA Rainfall Gauges</h2>
-  <div class="small">Nearby catchment rainfall gauges where available from EA flood-monitoring data.</div>
-  <div id="rainGaugeTable" style="margin-top:10px">Loading rainfall gauges…</div>
-</section>
+<div class="status" id="status">Loading…</div>
 
-<section class="card">
-  <h2>Catch / River Intel Sources</h2>
-  <div class="small">Source-linked intelligence only. No automated catch claim unless a reliable feed is available.</div>
-  <ul>
-    <li><a href="https://www.ribblefisheriesca.co.uk/river-levels/" target="_blank">RFCA river levels / water data</a></li>
-    <li><a href="https://www.ribblefisheriesca.co.uk/" target="_blank">RFCA main site</a></li>
-    <li><a href="https://ribbletrust.org.uk/how-we-work/evaluation-and-project-reports/" target="_blank">Ribble Rivers Trust reports</a></li>
-    <li><a href="https://check-for-flooding.service.gov.uk/station/5066" target="_blank">GOV.UK Henthorn gauge</a></li>
-    <li><a href="https://riverlevels.uk/ribble-little-mitton-henthorn" target="_blank">RiverLevels.uk Henthorn</a></li>
-  </ul>
-</section>
-
-<section class="card">
-  <h2>Data Rules</h2>
-  <span class="pill">No fishability score</span>
-  <span class="pill">No recommendations</span>
-  <span class="pill">Live levels</span>
-  <span class="pill">Movement arrows</span>
-  <span class="pill">Tidal labelled</span>
-  <span class="pill">Manual water temp validated</span>
-  <span class="pill">Rainfall separated</span>
-  <p class="small">
-    Penwortham is shown as tidal/estuary-influenced and is not treated as a normal upstream Ribble gauge.
-    Movement arrows are calculated from recent readings: rising, steady, or falling.
-    Temperature and rainfall are displayed as data only.
-  </p>
-</section>
-
+</div>
 </main>
 
 <script>
-const BUILD = "10041";
-
 const EA = "https://environment.data.gov.uk/flood-monitoring";
-const OM = "https://api.open-meteo.com/v1/forecast";
 
-const HENTHORN_LOCATION = { lat: 53.865, lon: -2.405 };
-
-const RIBBLE_GAUGES = [
-  { name:"Henthorn",   id:"710305", role:"Upper / Clitheroe area", tidal:false },
-  { name:"Low Moor",   id:"710301", role:"Clitheroe / Calder influence", tidal:false },
-  { name:"Ribchester", id:"713040", role:"Middle Ribble", tidal:false },
-  { name:"Samlesbury", id:"713019", role:"Lower Ribble", tidal:false },
-  { name:"Penwortham", id:"713354", role:"Tidal / estuary-influenced", tidal:true }
+const gauges = [
+  {id:"710305", level:"l1", arrow:"a1"},
+  {id:"710301", level:"l2", arrow:"a2"},
+  {id:"713040", level:"l3", arrow:"a3"},
+  {id:"713019", level:"l4", arrow:"a4"},
+  {id:"713354", level:"l5", arrow:null}
 ];
 
-function safeNumber(v){
-  const n = Number(v);
-  return Number.isFinite(n) ? n : null;
+function arrow(diff){
+  if(diff === null) return "·";
+  if(Math.abs(diff) < 0.01) return "→";
+  return diff > 0 ? "↑" : "↓";
 }
 
-function formatLevel(v){
-  const n = safeNumber(v);
-  return n === null ? "—" : n.toFixed(2) + "m";
-}
-
-function formatTime(s){
-  if(!s) return "—";
-  return new Date(s).toLocaleString("en-GB", {
-    day:"2-digit", month:"short", hour:"2-digit", minute:"2-digit"
-  });
-}
-
-async function getJSON(url){
-  const res = await fetch(url, { cache:"no-store" });
-  if(!res.ok) throw new Error(res.status + " " + url);
-  return res.json();
-}
-
-function movement(items){
-  if(!items || items.length < 2){
-    return { arrow:"·", word:"insufficient data", cls:"flat" };
-  }
-
-  const latest = safeNumber(items[0].value);
-  const compareIndex = Math.min(4, items.length - 1);
-  const previous = safeNumber(items[compareIndex].value);
-
-  if(latest === null || previous === null){
-    return { arrow:"·", word:"unavailable", cls:"flat" };
-  }
-
-  const diff = latest - previous;
-
-  if(Math.abs(diff) < 0.015){
-    return { arrow:"→", word:"steady", cls:"flat" };
-  }
-
-  if(diff > 0){
-    return { arrow:"↑", word:"rising", cls:"up" };
-  }
-
-  return { arrow:"↓", word:"falling", cls:"down" };
-}
-
-async function loadGauge(gauge){
-  const url = `${EA}/id/stations/${gauge.id}/readings?_sorted&_limit=12`;
-  const data = await getJSON(url);
-  const items = data.items || [];
-  const latest = items[0] || null;
-  const mv = movement(items);
-
-  return {
-    ...gauge,
-    level: latest ? latest.value : null,
-    time: latest ? latest.dateTime : null,
-    arrow: gauge.tidal ? "tidal" : mv.arrow,
-    movementWord: gauge.tidal ? "tidal / estuary-influenced" : mv.word,
-    arrowClass: gauge.tidal ? "tidal" : mv.cls
-  };
-}
-
-function renderGaugeRows(rows){
-  const box = document.getElementById("liveGaugeList");
-
-  box.innerHTML = rows.map(g => {
-    const arrowHTML = g.tidal
-      ? `<div class="gauge-arrow tidal">tidal</div>`
-      : `<div class="gauge-arrow ${g.arrowClass}">${g.arrow}</div>`;
-
-    return `
-      <div class="gauge-row">
-        <div>
-          <div class="gauge-name">${g.name}</div>
-          <div class="gauge-meta">${g.role} · ${g.id} · ${g.movementWord} · ${formatTime(g.time)}</div>
-        </div>
-        <div class="gauge-level">${formatLevel(g.level)}</div>
-        ${arrowHTML}
-      </div>
-    `;
-  }).join("");
-}
-
-async function loadLiveGauges(){
-  const settled = await Promise.allSettled(RIBBLE_GAUGES.map(loadGauge));
-
-  const rows = settled.map((r, i) => {
-    if(r.status === "fulfilled") return r.value;
-    const g = RIBBLE_GAUGES[i];
-    return {
-      ...g,
-      level:null,
-      time:null,
-      arrow:g.tidal ? "tidal" : "·",
-      movementWord:"unavailable",
-      arrowClass:g.tidal ? "tidal" : "flat"
-    };
-  });
-
-  renderGaugeRows(rows);
-
-  const okCount = settled.filter(x => x.status === "fulfilled").length;
-  document.getElementById("screenStatus").textContent =
-    `Build ${BUILD} · ${okCount}/${RIBBLE_GAUGES.length} gauges loaded · refreshed ${new Date().toLocaleString("en-GB")}`;
-}
-
-function waterTempStatus(v){
-  if(v < 0 || v > 30) return { text:"Check reading: outside normal river range.", cls:"error" };
-  if(v < 4) return { text:"Very cold water reading recorded.", cls:"warning" };
-  if(v > 18) return { text:"Warm water reading recorded.", cls:"warning" };
-  return { text:"Manual water temperature saved.", cls:"" };
-}
-
-function saveWaterTemp(){
-  const input = document.getElementById("waterTempInput");
-  const v = Number(input.value);
-
-  if(!Number.isFinite(v)){
-    document.getElementById("waterTempCheck").textContent = "Enter a valid number.";
-    document.getElementById("waterTempCheck").className = "status error";
-    return;
-  }
-
-  const rec = { value:v, time:new Date().toISOString() };
-  localStorage.setItem("sr_water_temp", JSON.stringify(rec));
-  input.value = "";
-  renderWaterTemp();
-}
-
-function renderWaterTemp(){
-  const raw = localStorage.getItem("sr_water_temp");
-
-  if(!raw){
-    document.getElementById("waterTempDisplay").textContent = "—";
-    document.getElementById("waterTempTime").textContent = "No manual reading saved.";
-    document.getElementById("waterTempCheck").textContent = "Awaiting manual water temperature.";
-    document.getElementById("waterTempCheck").className = "status";
-    return;
-  }
-
+async function loadGauge(g){
   try{
-    const rec = JSON.parse(raw);
-    const v = Number(rec.value);
-    const status = waterTempStatus(v);
+    const r = await fetch(`${EA}/id/stations/${g.id}/readings?_sorted&_limit=5`, {cache:"no-store"});
+    const d = await r.json();
+    const items = d.items || [];
+    if(!items.length) return;
 
-    document.getElementById("waterTempDisplay").textContent = v.toFixed(1) + "°C";
-    document.getElementById("waterTempTime").textContent = "Manual reading saved: " + formatTime(rec.time);
-    document.getElementById("waterTempCheck").textContent = status.text;
-    document.getElementById("waterTempCheck").className = "status " + status.cls;
-  }catch(e){
-    document.getElementById("waterTempDisplay").textContent = "—";
-    document.getElementById("waterTempTime").textContent = "Manual reading unreadable.";
-    document.getElementById("waterTempCheck").textContent = "Stored manual reading could not be read.";
-    document.getElementById("waterTempCheck").className = "status error";
-  }
-}
+    const now = Number(items[0].value);
+    const prev = Number(items[items.length-1].value);
+    const diff = now - prev;
 
-async function loadWeather(){
-  try{
-    const url =
-      `${OM}?latitude=${HENTHORN_LOCATION.lat}&longitude=${HENTHORN_LOCATION.lon}` +
-      `&current=temperature_2m,precipitation,rain` +
-      `&hourly=precipitation,rain,temperature_2m` +
-      `&past_hours=24&forecast_hours=1&timezone=Europe%2FLondon`;
+    document.getElementById(g.level).textContent = now.toFixed(2) + "m";
 
-    const data = await getJSON(url);
-    const c = data.current || {};
-    const h = data.hourly || {};
-    const rainSeries = h.rain || h.precipitation || [];
-    const rain24 = rainSeries.slice(-24).reduce((sum, x) => sum + (Number(x) || 0), 0);
-
-    const air = c.temperature_2m;
-    const rainNow = c.rain ?? c.precipitation;
-
-    document.getElementById("airTempBig").textContent = air === undefined ? "—" : `${air}°C`;
-    document.getElementById("rainNowBig").textContent = rainNow === undefined ? "—" : `${rainNow}mm`;
-    document.getElementById("rain24Big").textContent = `${rain24.toFixed(1)}mm`;
-
-    document.getElementById("airTemp").textContent = `Air temp: ${air ?? "—"}°C`;
-    document.getElementById("rainNow").textContent = `Rain now: ${rainNow ?? "—"}mm`;
-    document.getElementById("rain24").textContent = `Rain 24h: ${rain24.toFixed(1)}mm`;
-    document.getElementById("weatherTime").textContent = `Open-Meteo fallback · ${formatTime(c.time)}`;
-  }catch(e){
-    document.getElementById("airTempBig").textContent = "—";
-    document.getElementById("rainNowBig").textContent = "—";
-    document.getElementById("rain24Big").textContent = "—";
-    document.getElementById("airTemp").textContent = "Air temp: unavailable";
-    document.getElementById("rainNow").textContent = "Rain now: unavailable";
-    document.getElementById("rain24").textContent = "Rain 24h: unavailable";
-    document.getElementById("weatherTime").textContent = "Weather source unavailable.";
-  }
-}
-
-async function loadRainGauges(){
-  const box = document.getElementById("rainGaugeTable");
-
-  try{
-    const url =
-      `${EA}/id/stations?parameter=rainfall` +
-      `&lat=${HENTHORN_LOCATION.lat}&long=${HENTHORN_LOCATION.lon}` +
-      `&dist=25&_limit=10`;
-
-    const data = await getJSON(url);
-    const stations = data.items || [];
-
-    if(!stations.length){
-      box.innerHTML = `<div class="small">No nearby EA rainfall gauges returned.</div>`;
-      return;
+    if(g.arrow){
+      const el = document.getElementById(g.arrow);
+      const ar = arrow(diff);
+      el.textContent = ar;
+      el.className = "arrow " + (ar==="↑" ? "up" : ar==="↓" ? "down" : "flat");
     }
-
-    const rows = await Promise.all(stations.map(async st => {
-      const id = st.stationReference || st.notation || "";
-      try{
-        const rd = await getJSON(`${EA}/id/stations/${id}/readings?_sorted&_limit=24`);
-        const items = rd.items || [];
-        const latest = items[0] || null;
-        const total = items.reduce((sum,x) => sum + (Number(x.value) || 0), 0);
-
-        return `
-          <tr>
-            <td>${st.label || id}<br><span class="small">${id}</span></td>
-            <td>${latest ? Number(latest.value).toFixed(1) + "mm" : "—"}</td>
-            <td>${total.toFixed(1)}mm</td>
-            <td>${formatTime(latest && latest.dateTime)}</td>
-          </tr>
-        `;
-      }catch(e){
-        return `
-          <tr>
-            <td>${st.label || id}<br><span class="small">${id}</span></td>
-            <td>—</td><td>—</td><td>—</td>
-          </tr>
-        `;
-      }
-    }));
-
-    box.innerHTML = `
-      <table>
-        <thead>
-          <tr><th>Gauge</th><th>Latest</th><th>Recent total</th><th>Time</th></tr>
-        </thead>
-        <tbody>${rows.join("")}</tbody>
-      </table>
-    `;
   }catch(e){
-    box.innerHTML = `<div class="small">EA rainfall gauge search unavailable. Weather rainfall fallback remains above.</div>`;
+    document.getElementById(g.level).textContent = "—";
   }
 }
 
-async function init(){
-  renderWaterTemp();
-  await Promise.allSettled([
-    loadLiveGauges(),
-    loadWeather(),
-    loadRainGauges()
-  ]);
+function init(){
+  gauges.forEach(loadGauge);
+  document.getElementById("status").textContent =
+    "Live EA data · refreshed " + new Date().toLocaleTimeString();
 }
 
 init();
