@@ -14,15 +14,16 @@ h1 {text-align:center;margin:20px 0 8px 0;font-size:26px;}
 .section {background:#f0f0f0;border-radius:16px;padding:12px;margin-top:12px;}
 .section h3 {margin:0 0 8px;}
 .big-level {font-size:42px;font-weight:800;margin:8px 0;}
-.pill {display:inline-block;padding:7px 12px;border-radius:20px;background:#ddd;margin:4px 4px 4px 0;}
+.pill {display:inline-block;padding:7px 12px;border-radius:20px;background:#ddd;margin:4px;}
 .good {background:#c8e6c9;}
 .ok {background:#fff3cd;}
 .bad {background:#ffcdd2;}
 .alert {background:#d7ecff;}
+.warn {background:#ffe0b2;}
 .small {font-size:13px;color:#555;line-height:1.5;}
 .advice {font-size:16px;line-height:1.45;margin-top:8px;}
+button {font-size:16px;padding:10px 14px;border:0;border-radius:12px;background:#111;color:#fff;margin:4px;}
 input {font-size:18px;padding:10px;border-radius:12px;border:1px solid #ccc;width:120px;}
-button {font-size:16px;padding:10px 14px;border:0;border-radius:12px;background:#111;color:#fff;margin:4px 4px 4px 0;}
 a {text-decoration:none;color:#1a0dab;font-weight:600;}
 </style>
 </head>
@@ -30,7 +31,7 @@ a {text-decoration:none;color:#1a0dab;font-weight:600;}
 <body>
 
 <h1>Ribble @ Henthorn</h1>
-<div class="build">Build: 10043 — alert mode</div>
+<div class="build">Build: 10044 — freshness + refresh</div>
 
 <div class="container" id="content"></div>
 
@@ -71,6 +72,21 @@ async function getHenthornData() {
   }
 }
 
+function getReadingAgeMinutes(dt) {
+  if (!dt) return null;
+  const now = new Date();
+  const reading = new Date(dt);
+  return Math.round((now - reading) / 60000);
+}
+
+function getFreshnessStatus(minutes) {
+  if (minutes === null) return {text:"No timestamp", cls:"ok"};
+
+  if (minutes <= 15) return {text:"Live ("+minutes+" min ago)", cls:"good"};
+  if (minutes <= 60) return {text:minutes+" min old", cls:"ok"};
+  return {text:"Stale ("+minutes+" min old)", cls:"warn"};
+}
+
 function getSavedTemp() {
   const raw = localStorage.getItem(TEMP_KEY);
   const temp = Number(raw);
@@ -80,8 +96,7 @@ function getSavedTemp() {
 function saveTemp() {
   const input = document.getElementById("tempInput");
   const value = Number(input.value);
-
-  if (!isNaN(value) && value >= 0 && value <= 25) {
+  if (!isNaN(value)) {
     localStorage.setItem(TEMP_KEY, value);
     render();
   }
@@ -101,129 +116,18 @@ function toggleAlerts() {
   render();
 }
 
-function resetLastState() {
-  localStorage.removeItem(LAST_STATE_KEY);
-  render();
-}
-
-function getTempWarning(temp) {
-  if (temp === null) {
-    return { label:"Temp not set", cls:"ok", text:"Add today’s water temperature from RFCA to sharpen the decision." };
-  }
-
-  if (temp < 6) {
-    return { label:"Cold", cls:"ok", text:"Cold water can slow fish movement. Conditions may still be worth fishing if level and trend are good." };
-  }
-
-  if (temp <= 14) {
-    return { label:"Good temp", cls:"good", text:"Water temperature is in a useful salmon fishing range." };
-  }
-
-  if (temp <= 18) {
-    return { label:"Warm", cls:"ok", text:"Warm water. Fish early/late and handle fish carefully." };
-  }
-
-  return { label:"Too warm", cls:"bad", text:"Water is too warm for comfortable salmon fishing. Fish welfare becomes the priority." };
-}
-
 function getDecision(level, trend, temp) {
-  if (level === null) {
-    return { label:"Unknown", cls:"ok", verdict:"Live Henthorn level unavailable.", advice:"Refresh the app or check the GOV.UK Henthorn gauge." };
-  }
+  if (level === null) return {label:"Unknown",cls:"ok",verdict:"No data",advice:"Refresh"};
 
-  if (temp !== null && temp > 18) {
-    return { label:"Poor", cls:"bad", verdict:"Too warm.", advice:"Even if the level looks useful, water temperature is now the main concern." };
-  }
+  if (temp !== null && temp > 18) return {label:"Poor",cls:"bad",verdict:"Too warm",advice:"Fish welfare risk"};
 
-  if (level < 0.25) {
-    return { label:"Poor", cls:"bad", verdict:"Very low.", advice:"Likely thin, clear, and difficult. Better to wait for fresh water." };
-  }
+  if (level < 0.30) return {label:"Poor",cls:"bad",verdict:"Too low",advice:"Wait"};
 
-  if (level < 0.35) {
-    if (trend === "Rising" || trend === "Rising fast") {
-      return { label:"Watch", cls:"ok", verdict:"Low, but lifting.", advice:"Not ideal yet, but worth watching. If rain continues, conditions may improve." };
-    }
+  if (level < 0.70) return {label:"Good",cls:"good",verdict:"Strong window",advice:"Fish"};
 
-    return { label:"Poor", cls:"bad", verdict:"Low.", advice:"Fish may be present, but conditions are likely hard. Best with cloud, cooler water, or very fresh fish." };
-  }
+  if (level < 1.20) return {label:"High",cls:"ok",verdict:"Fishable",advice:"Care needed"};
 
-  if (level < 0.55) {
-    if (trend === "Rising fast") {
-      return { label:"Watch", cls:"ok", verdict:"Good height, but rising fast.", advice:"Potentially useful, but colour/debris may worsen. Recheck before setting off." };
-    }
-
-    if (trend === "Falling fast") {
-      return { label:"Good", cls:"good", verdict:"Good height, dropping quickly.", advice:"A useful window, but it may not last. Fish sooner rather than later." };
-    }
-
-    if (temp !== null && temp < 6) {
-      return { label:"Good / Cold", cls:"ok", verdict:"Good height but cold water.", advice:"Level is right, but fish may be slower. Fish slower and deeper." };
-    }
-
-    return { label:"Good", cls:"good", verdict:"Prime Henthorn range.", advice:"Good level and manageable movement. This is the strongest normal window." };
-  }
-
-  if (level < 0.75) {
-    if (trend === "Falling" || trend === "Falling fast") {
-      return { label:"Good", cls:"good", verdict:"Good and improving.", advice:"A little full but dropping. Often a strong window as the river settles." };
-    }
-
-    if (trend === "Rising" || trend === "Rising fast") {
-      return { label:"Watch", cls:"ok", verdict:"Useful height, but lifting.", advice:"Fishable, but watch colour and pace. Recheck trend before travel." };
-    }
-
-    return { label:"Good", cls:"good", verdict:"Good fishing height.", advice:"Slightly fuller than prime low-water height, but very usable if colour is right." };
-  }
-
-  if (level < 1.00) {
-    if (trend === "Falling" || trend === "Falling fast") {
-      return { label:"Improving", cls:"good", verdict:"High but coming right.", advice:"Could be good as it drops. Focus on slower edges, safer access, and sheltered lies." };
-    }
-
-    return { label:"High", cls:"ok", verdict:"High but possibly fishable.", advice:"Only worth it if colour and access are safe. Not a casual low-water session." };
-  }
-
-  if (level < 1.25) {
-    if (trend === "Falling" || trend === "Falling fast") {
-      return { label:"Watch", cls:"ok", verdict:"Still high, but falling.", advice:"Probably too much for normal fishing now, but keep watching. It may come good later." };
-    }
-
-    return { label:"Poor", cls:"bad", verdict:"Too high for normal fishing.", advice:"River is carrying too much water. Wait for it to fall and settle." };
-  }
-
-  return { label:"Poor", cls:"bad", verdict:"Very high.", advice:"Do not treat this as a normal fishing window. Wait for a significant drop." };
-}
-
-function isGoodCondition(label) {
-  return label === "Good" || label === "Improving";
-}
-
-function getAlertMessage(currentLabel) {
-  const enabled = alertsEnabled();
-  const last = localStorage.getItem(LAST_STATE_KEY);
-
-  if (!enabled) {
-    localStorage.setItem(LAST_STATE_KEY, currentLabel);
-    return { text:"Alerts off", cls:"ok" };
-  }
-
-  if (!last) {
-    localStorage.setItem(LAST_STATE_KEY, currentLabel);
-    return { text:"Alert mode on. Current state recorded.", cls:"alert" };
-  }
-
-  if (!isGoodCondition(last) && isGoodCondition(currentLabel)) {
-    localStorage.setItem(LAST_STATE_KEY, currentLabel);
-    return { text:"🔔 Conditions have turned GOOD at Henthorn.", cls:"good" };
-  }
-
-  localStorage.setItem(LAST_STATE_KEY, currentLabel);
-
-  if (isGoodCondition(currentLabel)) {
-    return { text:"Alert mode on. Conditions are currently GOOD.", cls:"good" };
-  }
-
-  return { text:"Alert mode on. Waiting for GOOD / IMPROVING.", cls:"alert" };
+  return {label:"Poor",cls:"bad",verdict:"Too high",advice:"Wait"};
 }
 
 function formatTime(dt) {
@@ -231,88 +135,58 @@ function formatTime(dt) {
   return new Date(dt).toLocaleString("en-GB");
 }
 
-function formatChange(change) {
-  if (change === null || isNaN(change)) return "Movement unavailable";
-  const sign = change > 0 ? "+" : "";
-  return sign + change.toFixed(2) + " m";
-}
-
 async function render() {
   const content = document.getElementById("content");
 
-  content.innerHTML = `
-    <div class="card">
-      <h2>Loading live Henthorn data...</h2>
-      <div class="section">
-        <span class="pill ok">Please wait</span>
-      </div>
-    </div>
-  `;
-
   const data = await getHenthornData();
   const temp = getSavedTemp();
-  const tempWarn = getTempWarning(temp);
   const decision = getDecision(data.level, data.trend, temp);
-  const alertMsg = getAlertMessage(decision.label);
+
+  const ageMin = getReadingAgeMinutes(data.time);
+  const freshness = getFreshnessStatus(ageMin);
 
   content.innerHTML = `
     <div class="card">
-      <h2>Today’s Reading</h2>
+
+      <button onclick="render()">🔄 Refresh now</button>
 
       <div class="big-level">
-        ${data.level !== null ? data.level.toFixed(2) + " m" : "Unavailable"}
+        ${data.level ? data.level.toFixed(2)+" m" : "Unavailable"}
       </div>
 
       <span class="pill ${decision.cls}">${decision.label}</span>
       <span class="pill ok">${data.trend}</span>
-      <span class="pill ${tempWarn.cls}">${temp !== null ? temp.toFixed(1) + "°C" : tempWarn.label}</span>
-
-      <div class="section">
-        <h3>🔔 Alert Mode</h3>
-        <span class="pill ${alertMsg.cls}">${alertMsg.text}</span><br>
-        <button onclick="toggleAlerts()">${alertsEnabled() ? "Turn alerts off" : "Turn alerts on"}</button>
-        <button onclick="resetLastState()">Reset alert state</button>
-        <div class="small">
-          This works while you open/refresh the app. Phone push notifications need a later PWA service-worker step.
-        </div>
-      </div>
+      <span class="pill ${freshness.cls}">${freshness.text}</span>
 
       <div class="section">
         <h3>🎯 Decision</h3>
         <div class="advice">
-          <strong>${decision.verdict}</strong><br>
-          ${decision.advice}
+          <strong>${decision.verdict}</strong><br>${decision.advice}
         </div>
       </div>
 
       <div class="section">
-        <h3>📈 Movement</h3>
+        <h3>📈 Data</h3>
         <div class="small">
-          ${formatChange(data.change)} across recent readings<br>
-          Updated: ${formatTime(data.time)}
+          Updated: ${formatTime(data.time)}<br>
+          Movement: ${data.change !== null ? data.change.toFixed(2)+" m" : "n/a"}
         </div>
       </div>
 
       <div class="section">
-        <h3>🌡 Water Temperature</h3>
-        <input id="tempInput" type="number" step="0.1" min="0" max="25" placeholder="°C" value="${temp !== null ? temp : ""}">
+        <h3>🌡 Temperature</h3>
+        <input id="tempInput" type="number" placeholder="°C" value="${temp ?? ""}">
         <button onclick="saveTemp()">Save</button>
         <button onclick="clearTemp()">Clear</button>
-        <div class="small" style="margin-top:8px;">
-          ${tempWarn.text}<br>
-          Source suggested: RFCA live water-quality dashboard.
-        </div>
-        <a href="https://www.ribblefisheriesca.co.uk/live-water-quality-monitoring/" target="_blank">
-          Open RFCA Live Water Data
-        </a>
       </div>
 
       <div class="section">
-        <h3>🔗 Links</h3>
+        <h3>🔗</h3>
         <a href="https://check-for-flooding.service.gov.uk/station/5066" target="_blank">
-          GOV.UK Henthorn Gauge
+          Open GOV.UK gauge
         </a>
       </div>
+
     </div>
   `;
 }
