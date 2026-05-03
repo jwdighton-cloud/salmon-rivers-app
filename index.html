@@ -77,10 +77,10 @@ async function getHenthornData() {
 function getFishability(level, trend) {
   if (level === null) return {text:"Unknown",class:"ok"};
 
-  if (level < 0.3) return {text:"Too Low",class:"bad"};
-  if (level < 0.7 && trend !== "Rising") return {text:"Good",class:"good"};
-  if (level < 0.9) return {text:"Good / Watch Trend",class:"good"};
-  if (level < 1.2) return {text:"High but Fishable",class:"ok"};
+  if (level < 0.30) return {text:"Too Low",class:"bad"};
+  if (level < 0.70 && trend !== "Rising") return {text:"Good",class:"good"};
+  if (level < 0.90) return {text:"Good / Watch Trend",class:"good"};
+  if (level < 1.20) return {text:"High but Fishable",class:"ok"};
   return {text:"Too High",class:"bad"};
 }
 
@@ -123,13 +123,20 @@ async function showCountry(country, el) {
           <span class="pill ok">${data.trend}</span>
           <div class="small">
             Gauge: Ribble @ Henthorn<br>
-            Updated: ${formatTime(data.time)}
+            Updated: ${formatTime(data.time)}<br>
+            Source: Environment Agency live river level data
           </div>
         </div>
 
         <div class="section">
-          <h3>🌡 Temperature</h3>
-          <span class="pill">Next step</span>
+          <h3>🌡 Water Temperature</h3>
+          <span class="pill ok">Live source available</span>
+          <div class="small">
+            Use RFCA live water quality monitoring for current temperature readings.
+          </div>
+          <a href="https://www.ribblefisheriesca.co.uk/live-water-quality-monitoring/" target="_blank">
+            Open RFCA live water quality dashboard
+          </a>
         </div>
 
         <div class="section">
@@ -139,18 +146,43 @@ async function showCountry(country, el) {
 
         <div class="section">
           <h3>🎣 Operator Intel</h3>
-          <span class="pill good"><a href="https://ribblefishing.co.uk/" target="_blank">RFCA</a></span>
+          <span class="pill good">
+            <a href="https://ribblefishing.co.uk/" target="_blank">RFCA</a>
+          </span>
+        </div>
+
+        <div class="section">
+          <h3>📰 Magazine Intel</h3>
+          <span class="pill ok">
+            <a href="https://troutandsalmon.com/" target="_blank">Trout & Salmon</a>
+          </span>
         </div>
       </div>
     `;
   }
 
   if (country === 'norway') {
-    content.innerHTML = `<div class="card"><h2>River Gaula</h2><p>Next step</p></div>`;
+    content.innerHTML = `
+      <div class="card">
+        <h2>River Gaula</h2>
+        <div class="section">
+          <h3>Next step</h3>
+          <span class="pill">Norway live data pending</span>
+        </div>
+      </div>
+    `;
   }
 
   if (country === 'iceland') {
-    content.innerHTML = `<div class="card"><h2>East Rangá</h2><p>Next step</p></div>`;
+    content.innerHTML = `
+      <div class="card">
+        <h2>East Rangá</h2>
+        <div class="section">
+          <h3>Next step</h3>
+          <span class="pill">Iceland live data pending</span>
+        </div>
+      </div>
+    `;
   }
 }
 
