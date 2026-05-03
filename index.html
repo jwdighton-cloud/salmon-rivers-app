@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Salmon Rivers Intelligence 10040</title>
+<title>Salmon Rivers Intelligence 10041</title>
 <style>
 :root{
   --bg:#06110f;
@@ -88,11 +88,21 @@ button{background:#18362e;font-weight:800;cursor:pointer}
   font-size:12px;
   margin:2px 4px 2px 0;
 }
+.metric{
+  background:var(--panel2);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:12px;
+}
+.metric-label{font-size:12px;color:var(--muted)}
+.metric-value{font-size:24px;font-weight:900;margin-top:3px}
+.warning{color:var(--warn)}
+.error{color:var(--bad)}
 a{color:var(--blue);text-decoration:none}
 ul{margin:8px 0 0 18px;padding:0}
 li{margin:6px 0;color:var(--muted)}
 table{width:100%;border-collapse:collapse;font-size:13px}
-td,th{padding:7px;border-bottom:1px solid var(--line);text-align:left}
+td,th{padding:7px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
 th{color:var(--muted);font-weight:600}
 </style>
 </head>
@@ -100,7 +110,7 @@ th{color:var(--muted);font-weight:600}
 <body>
 <header>
   <h1>Salmon Rivers Intelligence</h1>
-  <div class="sub">Ribble live data · data-first · no recommendations · build 10040</div>
+  <div class="sub">Ribble live data · data-first · no recommendations · build 10041</div>
 </header>
 
 <main>
@@ -113,26 +123,40 @@ th{color:var(--muted);font-weight:600}
   <div class="status" id="screenStatus">EA live data loading…</div>
 </section>
 
-<section class="grid">
-  <div class="card">
-    <h3>Water Temperature</h3>
-    <div class="small">Manual reading until a reliable live Ribble water-temperature feed is connected.</div>
-    <div class="big" id="waterTempDisplay">—</div>
-    <div class="row">
-      <input id="waterTempInput" type="number" step="0.1" placeholder="°C">
-      <button onclick="saveWaterTemp()">Save</button>
+<section class="card">
+  <h2>Temperature & Rainfall</h2>
+  <div class="grid">
+    <div class="metric">
+      <div class="metric-label">Manual water temperature</div>
+      <div class="metric-value" id="waterTempDisplay">—</div>
+      <div class="row">
+        <input id="waterTempInput" type="number" step="0.1" placeholder="Water °C">
+        <button onclick="saveWaterTemp()">Save</button>
+      </div>
+      <div class="status" id="waterTempTime">No manual reading saved.</div>
+      <div class="status" id="waterTempCheck">Awaiting manual water temperature.</div>
     </div>
-    <div class="status" id="waterTempTime">No manual reading saved.</div>
-  </div>
 
-  <div class="card">
-    <h3>Weather / Rainfall</h3>
-    <div class="small">Open-Meteo fallback near Henthorn.</div>
-    <div class="status" id="airTemp">Air temp: —</div>
-    <div class="status" id="rainNow">Rain now: —</div>
-    <div class="status" id="rain24">Rain 24h: —</div>
-    <div class="status" id="weatherTime">—</div>
+    <div class="metric">
+      <div class="metric-label">Air temperature near Henthorn</div>
+      <div class="metric-value" id="airTempBig">—</div>
+      <div class="status" id="airTemp">Air temp loading…</div>
+      <div class="status">Air temperature is not water temperature.</div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-label">Rain now</div>
+      <div class="metric-value" id="rainNowBig">—</div>
+      <div class="status" id="rainNow">Rain now loading…</div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-label">Rain last 24h</div>
+      <div class="metric-value" id="rain24Big">—</div>
+      <div class="status" id="rain24">Rain 24h loading…</div>
+    </div>
   </div>
+  <div class="status" id="weatherTime">Weather source loading…</div>
 </section>
 
 <section class="card">
@@ -143,7 +167,7 @@ th{color:var(--muted);font-weight:600}
 
 <section class="card">
   <h2>Catch / River Intel Sources</h2>
-  <div class="small">Source-linked intelligence only. No automated claims unless a feed is available.</div>
+  <div class="small">Source-linked intelligence only. No automated catch claim unless a reliable feed is available.</div>
   <ul>
     <li><a href="https://www.ribblefisheriesca.co.uk/river-levels/" target="_blank">RFCA river levels / water data</a></li>
     <li><a href="https://www.ribblefisheriesca.co.uk/" target="_blank">RFCA main site</a></li>
@@ -160,17 +184,19 @@ th{color:var(--muted);font-weight:600}
   <span class="pill">Live levels</span>
   <span class="pill">Movement arrows</span>
   <span class="pill">Tidal labelled</span>
-  <span class="pill">Manual water temp</span>
+  <span class="pill">Manual water temp validated</span>
+  <span class="pill">Rainfall separated</span>
   <p class="small">
     Penwortham is shown as tidal/estuary-influenced and is not treated as a normal upstream Ribble gauge.
     Movement arrows are calculated from recent readings: rising, steady, or falling.
+    Temperature and rainfall are displayed as data only.
   </p>
 </section>
 
 </main>
 
 <script>
-const BUILD = "10040";
+const BUILD = "10041";
 
 const EA = "https://environment.data.gov.uk/flood-monitoring";
 const OM = "https://api.open-meteo.com/v1/forecast";
@@ -295,6 +321,57 @@ async function loadLiveGauges(){
     `Build ${BUILD} · ${okCount}/${RIBBLE_GAUGES.length} gauges loaded · refreshed ${new Date().toLocaleString("en-GB")}`;
 }
 
+function waterTempStatus(v){
+  if(v < 0 || v > 30) return { text:"Check reading: outside normal river range.", cls:"error" };
+  if(v < 4) return { text:"Very cold water reading recorded.", cls:"warning" };
+  if(v > 18) return { text:"Warm water reading recorded.", cls:"warning" };
+  return { text:"Manual water temperature saved.", cls:"" };
+}
+
+function saveWaterTemp(){
+  const input = document.getElementById("waterTempInput");
+  const v = Number(input.value);
+
+  if(!Number.isFinite(v)){
+    document.getElementById("waterTempCheck").textContent = "Enter a valid number.";
+    document.getElementById("waterTempCheck").className = "status error";
+    return;
+  }
+
+  const rec = { value:v, time:new Date().toISOString() };
+  localStorage.setItem("sr_water_temp", JSON.stringify(rec));
+  input.value = "";
+  renderWaterTemp();
+}
+
+function renderWaterTemp(){
+  const raw = localStorage.getItem("sr_water_temp");
+
+  if(!raw){
+    document.getElementById("waterTempDisplay").textContent = "—";
+    document.getElementById("waterTempTime").textContent = "No manual reading saved.";
+    document.getElementById("waterTempCheck").textContent = "Awaiting manual water temperature.";
+    document.getElementById("waterTempCheck").className = "status";
+    return;
+  }
+
+  try{
+    const rec = JSON.parse(raw);
+    const v = Number(rec.value);
+    const status = waterTempStatus(v);
+
+    document.getElementById("waterTempDisplay").textContent = v.toFixed(1) + "°C";
+    document.getElementById("waterTempTime").textContent = "Manual reading saved: " + formatTime(rec.time);
+    document.getElementById("waterTempCheck").textContent = status.text;
+    document.getElementById("waterTempCheck").className = "status " + status.cls;
+  }catch(e){
+    document.getElementById("waterTempDisplay").textContent = "—";
+    document.getElementById("waterTempTime").textContent = "Manual reading unreadable.";
+    document.getElementById("waterTempCheck").textContent = "Stored manual reading could not be read.";
+    document.getElementById("waterTempCheck").className = "status error";
+  }
+}
+
 async function loadWeather(){
   try{
     const url =
@@ -309,11 +386,21 @@ async function loadWeather(){
     const rainSeries = h.rain || h.precipitation || [];
     const rain24 = rainSeries.slice(-24).reduce((sum, x) => sum + (Number(x) || 0), 0);
 
-    document.getElementById("airTemp").textContent = `Air temp: ${c.temperature_2m ?? "—"}°C`;
-    document.getElementById("rainNow").textContent = `Rain now: ${c.rain ?? c.precipitation ?? "—"}mm`;
+    const air = c.temperature_2m;
+    const rainNow = c.rain ?? c.precipitation;
+
+    document.getElementById("airTempBig").textContent = air === undefined ? "—" : `${air}°C`;
+    document.getElementById("rainNowBig").textContent = rainNow === undefined ? "—" : `${rainNow}mm`;
+    document.getElementById("rain24Big").textContent = `${rain24.toFixed(1)}mm`;
+
+    document.getElementById("airTemp").textContent = `Air temp: ${air ?? "—"}°C`;
+    document.getElementById("rainNow").textContent = `Rain now: ${rainNow ?? "—"}mm`;
     document.getElementById("rain24").textContent = `Rain 24h: ${rain24.toFixed(1)}mm`;
-    document.getElementById("weatherTime").textContent = `Weather time: ${formatTime(c.time)}`;
+    document.getElementById("weatherTime").textContent = `Open-Meteo fallback · ${formatTime(c.time)}`;
   }catch(e){
+    document.getElementById("airTempBig").textContent = "—";
+    document.getElementById("rainNowBig").textContent = "—";
+    document.getElementById("rain24Big").textContent = "—";
     document.getElementById("airTemp").textContent = "Air temp: unavailable";
     document.getElementById("rainNow").textContent = "Rain now: unavailable";
     document.getElementById("rain24").textContent = "Rain 24h: unavailable";
@@ -374,34 +461,6 @@ async function loadRainGauges(){
     `;
   }catch(e){
     box.innerHTML = `<div class="small">EA rainfall gauge search unavailable. Weather rainfall fallback remains above.</div>`;
-  }
-}
-
-function saveWaterTemp(){
-  const v = Number(document.getElementById("waterTempInput").value);
-  if(!Number.isFinite(v)) return;
-
-  const rec = { value:v, time:new Date().toISOString() };
-  localStorage.setItem("sr_water_temp", JSON.stringify(rec));
-  renderWaterTemp();
-}
-
-function renderWaterTemp(){
-  const raw = localStorage.getItem("sr_water_temp");
-
-  if(!raw){
-    document.getElementById("waterTempDisplay").textContent = "—";
-    document.getElementById("waterTempTime").textContent = "No manual reading saved.";
-    return;
-  }
-
-  try{
-    const rec = JSON.parse(raw);
-    document.getElementById("waterTempDisplay").textContent = Number(rec.value).toFixed(1) + "°C";
-    document.getElementById("waterTempTime").textContent = "Manual reading saved: " + formatTime(rec.time);
-  }catch(e){
-    document.getElementById("waterTempDisplay").textContent = "—";
-    document.getElementById("waterTempTime").textContent = "Manual reading unreadable.";
   }
 }
 
