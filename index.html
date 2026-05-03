@@ -27,7 +27,7 @@ a {text-decoration:none;color:#1a0dab;font-weight:600;}
 <body>
 
 <h1>Ribble @ Henthorn</h1>
-<div class="build">Build: 10040 — Henthorn-only decision screen</div>
+<div class="build">Build: 10041 — refined Henthorn logic</div>
 
 <div class="container" id="content"></div>
 
@@ -53,10 +53,10 @@ async function getHenthornData() {
     const diff = latest.value - oldest.value;
 
     let trend = "Steady";
-    if (diff > 0.10) trend = "Rising fast";
-    else if (diff > 0.03) trend = "Rising";
-    else if (diff < -0.10) trend = "Falling fast";
-    else if (diff < -0.03) trend = "Falling";
+    if (diff > 0.12) trend = "Rising fast";
+    else if (diff > 0.04) trend = "Rising";
+    else if (diff < -0.12) trend = "Falling fast";
+    else if (diff < -0.04) trend = "Falling";
 
     return {
       level: latest.value,
@@ -76,60 +76,132 @@ function getDecision(level, trend) {
       label:"Unknown",
       cls:"ok",
       verdict:"Live Henthorn level unavailable.",
-      advice:"Refresh the app or check the EA site."
+      advice:"Refresh the app or check the GOV.UK Henthorn gauge."
     };
   }
 
-  if (level < 0.30) {
+  if (level < 0.25) {
     return {
       label:"Poor",
       cls:"bad",
-      verdict:"Too low.",
-      advice:"Fishing likely difficult unless very specific conditions."
+      verdict:"Very low.",
+      advice:"Likely thin, clear, and difficult. Better to wait for fresh water."
     };
   }
 
-  if (level < 0.70) {
+  if (level < 0.35) {
+    if (trend === "Rising" || trend === "Rising fast") {
+      return {
+        label:"Watch",
+        cls:"ok",
+        verdict:"Low, but lifting.",
+        advice:"Not ideal yet, but worth watching. If rain continues, conditions may improve."
+      };
+    }
+
+    return {
+      label:"Poor",
+      cls:"bad",
+      verdict:"Low.",
+      advice:"Fish may be present, but conditions are likely hard. Best with cloud, cooler water, or very fresh fish."
+    };
+  }
+
+  if (level < 0.55) {
     if (trend === "Rising fast") {
       return {
         label:"Watch",
         cls:"ok",
-        verdict:"Good height, rising quickly.",
-        advice:"Could improve, but watch colour."
+        verdict:"Good height, but rising fast.",
+        advice:"Potentially useful, but colour/debris may worsen. Recheck before setting off."
+      };
+    }
+
+    if (trend === "Falling fast") {
+      return {
+        label:"Good",
+        cls:"good",
+        verdict:"Good height, dropping quickly.",
+        advice:"A useful window, but it may not last. Fish sooner rather than later."
       };
     }
 
     return {
       label:"Good",
       cls:"good",
-      verdict:"Strong window.",
-      advice:"Good Henthorn height and stable trend."
+      verdict:"Prime Henthorn range.",
+      advice:"Good level and manageable movement. This is the strongest normal window."
     };
   }
 
-  if (level < 1.20) {
-    if (trend.includes("Falling")) {
+  if (level < 0.75) {
+    if (trend === "Falling" || trend === "Falling fast") {
+      return {
+        label:"Good",
+        cls:"good",
+        verdict:"Good and improving.",
+        advice:"A little full but dropping. Often a strong window as the river settles."
+      };
+    }
+
+    if (trend === "Rising" || trend === "Rising fast") {
+      return {
+        label:"Watch",
+        cls:"ok",
+        verdict:"Useful height, but lifting.",
+        advice:"Fishable, but watch colour and pace. Recheck trend before travel."
+      };
+    }
+
+    return {
+      label:"Good",
+      cls:"good",
+      verdict:"Good fishing height.",
+      advice:"Slightly fuller than prime low-water height, but very usable if colour is right."
+    };
+  }
+
+  if (level < 1.00) {
+    if (trend === "Falling" || trend === "Falling fast") {
       return {
         label:"Improving",
         cls:"good",
-        verdict:"High but dropping.",
-        advice:"Often a very good window."
+        verdict:"High but coming right.",
+        advice:"Could be good as it drops. Focus on slower edges, safer access, and sheltered lies."
       };
     }
 
     return {
       label:"High",
       cls:"ok",
-      verdict:"Fishable but pushing.",
-      advice:"Proceed with care."
+      verdict:"High but possibly fishable.",
+      advice:"Only worth it if colour and access are safe. Not a casual low-water session."
+    };
+  }
+
+  if (level < 1.25) {
+    if (trend === "Falling" || trend === "Falling fast") {
+      return {
+        label:"Watch",
+        cls:"ok",
+        verdict:"Still high, but falling.",
+        advice:"Probably too much for normal fishing now, but keep watching. It may come good later."
+      };
+    }
+
+    return {
+      label:"Poor",
+      cls:"bad",
+      verdict:"Too high for normal fishing.",
+      advice:"River is carrying too much water. Wait for it to fall and settle."
     };
   }
 
   return {
     label:"Poor",
     cls:"bad",
-    verdict:"Too high.",
-    advice:"Wait for it to fall."
+    verdict:"Very high.",
+    advice:"Do not treat this as a normal fishing window. Wait for a significant drop."
   };
 }
 
@@ -181,7 +253,7 @@ async function render() {
       <div class="section">
         <h3>📈 Movement</h3>
         <div class="small">
-          ${formatChange(data.change)}<br>
+          ${formatChange(data.change)} across recent readings<br>
           Updated: ${formatTime(data.time)}
         </div>
       </div>
