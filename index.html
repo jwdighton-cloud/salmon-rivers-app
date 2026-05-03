@@ -18,10 +18,11 @@ h1 {text-align:center;margin:20px 0 8px 0;font-size:26px;}
 .good {background:#c8e6c9;}
 .ok {background:#fff3cd;}
 .bad {background:#ffcdd2;}
+.alert {background:#d7ecff;}
 .small {font-size:13px;color:#555;line-height:1.5;}
 .advice {font-size:16px;line-height:1.45;margin-top:8px;}
 input {font-size:18px;padding:10px;border-radius:12px;border:1px solid #ccc;width:120px;}
-button {font-size:16px;padding:10px 14px;border:0;border-radius:12px;background:#111;color:#fff;margin-left:6px;}
+button {font-size:16px;padding:10px 14px;border:0;border-radius:12px;background:#111;color:#fff;margin:4px 4px 4px 0;}
 a {text-decoration:none;color:#1a0dab;font-weight:600;}
 </style>
 </head>
@@ -29,13 +30,15 @@ a {text-decoration:none;color:#1a0dab;font-weight:600;}
 <body>
 
 <h1>Ribble @ Henthorn</h1>
-<div class="build">Build: 10042 — level + trend + manual temperature</div>
+<div class="build">Build: 10043 — alert mode</div>
 
 <div class="container" id="content"></div>
 
 <script>
 const HENTHORN_URL = "https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=12";
 const TEMP_KEY = "henthorn_water_temp_c";
+const LAST_STATE_KEY = "henthorn_last_condition";
+const ALERT_KEY = "henthorn_alert_enabled";
 
 async function getHenthornData() {
   try {
@@ -89,199 +92,138 @@ function clearTemp() {
   render();
 }
 
+function alertsEnabled() {
+  return localStorage.getItem(ALERT_KEY) === "yes";
+}
+
+function toggleAlerts() {
+  localStorage.setItem(ALERT_KEY, alertsEnabled() ? "no" : "yes");
+  render();
+}
+
+function resetLastState() {
+  localStorage.removeItem(LAST_STATE_KEY);
+  render();
+}
+
 function getTempWarning(temp) {
   if (temp === null) {
-    return {
-      label:"Temp not set",
-      cls:"ok",
-      text:"Add today’s water temperature from RFCA to sharpen the decision."
-    };
+    return { label:"Temp not set", cls:"ok", text:"Add today’s water temperature from RFCA to sharpen the decision." };
   }
 
   if (temp < 6) {
-    return {
-      label:"Cold",
-      cls:"ok",
-      text:"Cold water can slow fish movement. Conditions may still be worth fishing if level and trend are good."
-    };
+    return { label:"Cold", cls:"ok", text:"Cold water can slow fish movement. Conditions may still be worth fishing if level and trend are good." };
   }
 
   if (temp <= 14) {
-    return {
-      label:"Good temp",
-      cls:"good",
-      text:"Water temperature is in a useful salmon fishing range."
-    };
+    return { label:"Good temp", cls:"good", text:"Water temperature is in a useful salmon fishing range." };
   }
 
   if (temp <= 18) {
-    return {
-      label:"Warm",
-      cls:"ok",
-      text:"Warm water. Fish early/late and handle fish carefully."
-    };
+    return { label:"Warm", cls:"ok", text:"Warm water. Fish early/late and handle fish carefully." };
   }
 
-  return {
-    label:"Too warm",
-    cls:"bad",
-    text:"Water is too warm for comfortable salmon fishing. Fish welfare becomes the priority."
-  };
+  return { label:"Too warm", cls:"bad", text:"Water is too warm for comfortable salmon fishing. Fish welfare becomes the priority." };
 }
 
 function getDecision(level, trend, temp) {
-  const tempWarn = getTempWarning(temp);
-
   if (level === null) {
-    return {
-      label:"Unknown",
-      cls:"ok",
-      verdict:"Live Henthorn level unavailable.",
-      advice:"Refresh the app or check the GOV.UK Henthorn gauge."
-    };
+    return { label:"Unknown", cls:"ok", verdict:"Live Henthorn level unavailable.", advice:"Refresh the app or check the GOV.UK Henthorn gauge." };
   }
 
   if (temp !== null && temp > 18) {
-    return {
-      label:"Poor",
-      cls:"bad",
-      verdict:"Too warm.",
-      advice:"Even if the level looks useful, water temperature is now the main concern."
-    };
+    return { label:"Poor", cls:"bad", verdict:"Too warm.", advice:"Even if the level looks useful, water temperature is now the main concern." };
   }
 
   if (level < 0.25) {
-    return {
-      label:"Poor",
-      cls:"bad",
-      verdict:"Very low.",
-      advice:"Likely thin, clear, and difficult. Better to wait for fresh water."
-    };
+    return { label:"Poor", cls:"bad", verdict:"Very low.", advice:"Likely thin, clear, and difficult. Better to wait for fresh water." };
   }
 
   if (level < 0.35) {
     if (trend === "Rising" || trend === "Rising fast") {
-      return {
-        label:"Watch",
-        cls:"ok",
-        verdict:"Low, but lifting.",
-        advice:"Not ideal yet, but worth watching. If rain continues, conditions may improve."
-      };
+      return { label:"Watch", cls:"ok", verdict:"Low, but lifting.", advice:"Not ideal yet, but worth watching. If rain continues, conditions may improve." };
     }
 
-    return {
-      label:"Poor",
-      cls:"bad",
-      verdict:"Low.",
-      advice:"Fish may be present, but conditions are likely hard. Best with cloud, cooler water, or very fresh fish."
-    };
+    return { label:"Poor", cls:"bad", verdict:"Low.", advice:"Fish may be present, but conditions are likely hard. Best with cloud, cooler water, or very fresh fish." };
   }
 
   if (level < 0.55) {
     if (trend === "Rising fast") {
-      return {
-        label:"Watch",
-        cls:"ok",
-        verdict:"Good height, but rising fast.",
-        advice:"Potentially useful, but colour/debris may worsen. Recheck before setting off."
-      };
+      return { label:"Watch", cls:"ok", verdict:"Good height, but rising fast.", advice:"Potentially useful, but colour/debris may worsen. Recheck before setting off." };
     }
 
     if (trend === "Falling fast") {
-      return {
-        label:"Good",
-        cls:"good",
-        verdict:"Good height, dropping quickly.",
-        advice:"A useful window, but it may not last. Fish sooner rather than later."
-      };
+      return { label:"Good", cls:"good", verdict:"Good height, dropping quickly.", advice:"A useful window, but it may not last. Fish sooner rather than later." };
     }
 
     if (temp !== null && temp < 6) {
-      return {
-        label:"Good / Cold",
-        cls:"ok",
-        verdict:"Good height but cold water.",
-        advice:"Level is right, but fish may be slower. Fish slower and deeper."
-      };
+      return { label:"Good / Cold", cls:"ok", verdict:"Good height but cold water.", advice:"Level is right, but fish may be slower. Fish slower and deeper." };
     }
 
-    return {
-      label:"Good",
-      cls:"good",
-      verdict:"Prime Henthorn range.",
-      advice:"Good level and manageable movement. This is the strongest normal window."
-    };
+    return { label:"Good", cls:"good", verdict:"Prime Henthorn range.", advice:"Good level and manageable movement. This is the strongest normal window." };
   }
 
   if (level < 0.75) {
     if (trend === "Falling" || trend === "Falling fast") {
-      return {
-        label:"Good",
-        cls:"good",
-        verdict:"Good and improving.",
-        advice:"A little full but dropping. Often a strong window as the river settles."
-      };
+      return { label:"Good", cls:"good", verdict:"Good and improving.", advice:"A little full but dropping. Often a strong window as the river settles." };
     }
 
     if (trend === "Rising" || trend === "Rising fast") {
-      return {
-        label:"Watch",
-        cls:"ok",
-        verdict:"Useful height, but lifting.",
-        advice:"Fishable, but watch colour and pace. Recheck trend before travel."
-      };
+      return { label:"Watch", cls:"ok", verdict:"Useful height, but lifting.", advice:"Fishable, but watch colour and pace. Recheck trend before travel." };
     }
 
-    return {
-      label:"Good",
-      cls:"good",
-      verdict:"Good fishing height.",
-      advice:"Slightly fuller than prime low-water height, but very usable if colour is right."
-    };
+    return { label:"Good", cls:"good", verdict:"Good fishing height.", advice:"Slightly fuller than prime low-water height, but very usable if colour is right." };
   }
 
   if (level < 1.00) {
     if (trend === "Falling" || trend === "Falling fast") {
-      return {
-        label:"Improving",
-        cls:"good",
-        verdict:"High but coming right.",
-        advice:"Could be good as it drops. Focus on slower edges, safer access, and sheltered lies."
-      };
+      return { label:"Improving", cls:"good", verdict:"High but coming right.", advice:"Could be good as it drops. Focus on slower edges, safer access, and sheltered lies." };
     }
 
-    return {
-      label:"High",
-      cls:"ok",
-      verdict:"High but possibly fishable.",
-      advice:"Only worth it if colour and access are safe. Not a casual low-water session."
-    };
+    return { label:"High", cls:"ok", verdict:"High but possibly fishable.", advice:"Only worth it if colour and access are safe. Not a casual low-water session." };
   }
 
   if (level < 1.25) {
     if (trend === "Falling" || trend === "Falling fast") {
-      return {
-        label:"Watch",
-        cls:"ok",
-        verdict:"Still high, but falling.",
-        advice:"Probably too much for normal fishing now, but keep watching. It may come good later."
-      };
+      return { label:"Watch", cls:"ok", verdict:"Still high, but falling.", advice:"Probably too much for normal fishing now, but keep watching. It may come good later." };
     }
 
-    return {
-      label:"Poor",
-      cls:"bad",
-      verdict:"Too high for normal fishing.",
-      advice:"River is carrying too much water. Wait for it to fall and settle."
-    };
+    return { label:"Poor", cls:"bad", verdict:"Too high for normal fishing.", advice:"River is carrying too much water. Wait for it to fall and settle." };
   }
 
-  return {
-    label:"Poor",
-    cls:"bad",
-    verdict:"Very high.",
-    advice:"Do not treat this as a normal fishing window. Wait for a significant drop."
-  };
+  return { label:"Poor", cls:"bad", verdict:"Very high.", advice:"Do not treat this as a normal fishing window. Wait for a significant drop." };
+}
+
+function isGoodCondition(label) {
+  return label === "Good" || label === "Improving";
+}
+
+function getAlertMessage(currentLabel) {
+  const enabled = alertsEnabled();
+  const last = localStorage.getItem(LAST_STATE_KEY);
+
+  if (!enabled) {
+    localStorage.setItem(LAST_STATE_KEY, currentLabel);
+    return { text:"Alerts off", cls:"ok" };
+  }
+
+  if (!last) {
+    localStorage.setItem(LAST_STATE_KEY, currentLabel);
+    return { text:"Alert mode on. Current state recorded.", cls:"alert" };
+  }
+
+  if (!isGoodCondition(last) && isGoodCondition(currentLabel)) {
+    localStorage.setItem(LAST_STATE_KEY, currentLabel);
+    return { text:"🔔 Conditions have turned GOOD at Henthorn.", cls:"good" };
+  }
+
+  localStorage.setItem(LAST_STATE_KEY, currentLabel);
+
+  if (isGoodCondition(currentLabel)) {
+    return { text:"Alert mode on. Conditions are currently GOOD.", cls:"good" };
+  }
+
+  return { text:"Alert mode on. Waiting for GOOD / IMPROVING.", cls:"alert" };
 }
 
 function formatTime(dt) {
@@ -311,6 +253,7 @@ async function render() {
   const temp = getSavedTemp();
   const tempWarn = getTempWarning(temp);
   const decision = getDecision(data.level, data.trend, temp);
+  const alertMsg = getAlertMessage(decision.label);
 
   content.innerHTML = `
     <div class="card">
@@ -323,6 +266,16 @@ async function render() {
       <span class="pill ${decision.cls}">${decision.label}</span>
       <span class="pill ok">${data.trend}</span>
       <span class="pill ${tempWarn.cls}">${temp !== null ? temp.toFixed(1) + "°C" : tempWarn.label}</span>
+
+      <div class="section">
+        <h3>🔔 Alert Mode</h3>
+        <span class="pill ${alertMsg.cls}">${alertMsg.text}</span><br>
+        <button onclick="toggleAlerts()">${alertsEnabled() ? "Turn alerts off" : "Turn alerts on"}</button>
+        <button onclick="resetLastState()">Reset alert state</button>
+        <div class="small">
+          This works while you open/refresh the app. Phone push notifications need a later PWA service-worker step.
+        </div>
+      </div>
 
       <div class="section">
         <h3>🎯 Decision</h3>
