@@ -6,93 +6,27 @@
 <title>Salmon Rivers Intelligence</title>
 
 <style>
-body {
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  margin: 0;
-  background: #f5f6f7;
-  color: #111;
-}
-
-h1 {
-  text-align: center;
-  margin: 20px 0 5px;
-  font-size: 26px;
-}
-
-.version {
-  text-align: center;
-  font-size: 12px;
-  color: #666;
-  margin-bottom: 15px;
-}
-
-.tabs {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.tab {
-  padding: 10px 16px;
-  border-radius: 20px;
-  background: #e5e5e5;
-  cursor: pointer;
-}
-
-.tab.active {
-  background: #cfe8cf;
-  border: 2px solid #4caf50;
-}
-
-.container {
-  max-width: 600px;
-  margin: auto;
-  padding: 10px;
-}
-
-.card {
-  background: #fff;
-  border-radius: 20px;
-  padding: 16px;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-}
-
-.section {
-  background: #f0f0f0;
-  border-radius: 16px;
-  padding: 12px;
-  margin-top: 12px;
-}
-
-.section h3 {
-  margin: 0 0 8px;
-}
-
-.pill {
-  display: inline-block;
-  padding: 6px 12px;
-  border-radius: 20px;
-  background: #ddd;
-  margin: 4px;
-}
-
-.good { background: #c8e6c9; }
-.ok { background: #fff3cd; }
-.bad { background: #ffcdd2; }
-
-a {
-  text-decoration: none;
-  color: #1a0dab;
-}
+body {font-family:-apple-system,BlinkMacSystemFont,sans-serif;margin:0;background:#f5f6f7;color:#111;}
+h1 {text-align:center;margin:20px 0;font-size:28px;}
+.tabs {display:flex;justify-content:center;gap:10px;margin-bottom:20px;}
+.tab {padding:10px 16px;border-radius:20px;background:#e5e5e5;cursor:pointer;}
+.tab.active {background:#cfe8cf;border:2px solid #4caf50;}
+.container {max-width:600px;margin:auto;padding:10px;}
+.card {background:#fff;border-radius:20px;padding:16px;margin-bottom:20px;box-shadow:0 4px 10px rgba(0,0,0,0.05);}
+.section {background:#f0f0f0;border-radius:16px;padding:12px;margin-top:12px;}
+.section h3 {margin:0 0 8px;}
+.pill {display:inline-block;padding:6px 12px;border-radius:20px;background:#ddd;margin:4px;}
+.good {background:#c8e6c9;}
+.ok {background:#fff3cd;}
+.bad {background:#ffcdd2;}
+.small {font-size:13px;color:#555;}
+a {text-decoration:none;color:#1a0dab;font-weight:500;}
 </style>
 </head>
 
 <body>
 
 <h1>Salmon Rivers Intelligence</h1>
-<div class="version">Version 10031</div>
 
 <div class="tabs">
   <div class="tab active" onclick="showCountry('uk', this)">🇬🇧 UK</div>
@@ -104,35 +38,64 @@ a {
 
 <script>
 
-// TEMP TEST DATA (to prove update)
-function getTestLevel() {
-  return 1.23; // hardcoded so we KNOW it updates
+// 🔵 HENTHORN GAUGE (CORRECT RIBBLE DATA)
+async function getHenthornLevel() {
+  try {
+    const res = await fetch("https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?latest");
+    const data = await res.json();
+
+    if (data.items && data.items.length > 0) {
+      return {
+        level: data.items[0].value,
+        time: data.items[0].dateTime
+      };
+    }
+  } catch (e) {}
+
+  return { level: null, time: null };
 }
 
-// FISHABILITY
+// 🧠 FISHABILITY (RIBBLE-SPECIFIC)
 function getFishability(level) {
-  if (!level) return {text: "Unknown", class: "ok"};
+  if (level === null) return {text:"Unknown",class:"ok"};
 
-  if (level < 0.5) return {text: "Low", class: "bad"};
-  if (level < 1.2) return {text: "Good", class: "good"};
-  if (level < 2.0) return {text: "High", class: "ok"};
-  return {text: "Very High", class: "bad"};
+  if (level < 0.3) return {text:"Too Low",class:"bad"};
+  if (level < 0.7) return {text:"Good",class:"good"};
+  if (level < 1.2) return {text:"High but Fishable",class:"ok"};
+  return {text:"Too High",class:"bad"};
+}
+
+// 📈 TREND (basic version placeholder)
+function getTrend() {
+  return "Trend coming next";
+}
+
+function formatTime(dt) {
+  if (!dt) return "No timestamp";
+  return new Date(dt).toLocaleString("en-GB");
 }
 
 async function showCountry(country, el) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   el.classList.add('active');
 
   const content = document.getElementById('content');
 
   if (country === 'uk') {
 
-    const level = getTestLevel();
-    const fish = getFishability(level);
+    content.innerHTML = `
+      <div class="card">
+        <h2>River Ribble @ Henthorn</h2>
+        <div class="section"><h3>Loading live data...</h3></div>
+      </div>
+    `;
+
+    const data = await getHenthornLevel();
+    const fish = getFishability(data.level);
 
     content.innerHTML = `
       <div class="card">
-        <h2>River Ribble</h2>
+        <h2>River Ribble @ Henthorn</h2>
 
         <div class="section">
           <h3>🎯 Fishability</h3>
@@ -141,7 +104,13 @@ async function showCountry(country, el) {
 
         <div class="section">
           <h3>🌊 River Level</h3>
-          <span class="pill good">${level} m</span>
+          <span class="pill ${data.level?"good":"bad"}">
+            ${data.level ? data.level.toFixed(2)+" m" : "Unavailable"}
+          </span>
+          <div class="small">
+            Updated: ${formatTime(data.time)}<br>
+            ${getTrend()}
+          </div>
         </div>
 
         <div class="section">
@@ -150,10 +119,13 @@ async function showCountry(country, el) {
         </div>
 
         <div class="section">
+          <h3>🌦 Weather</h3>
+          <a href="https://www.metoffice.gov.uk/" target="_blank">Met Office</a>
+        </div>
+
+        <div class="section">
           <h3>🎣 Operator Intel</h3>
-          <span class="pill good">
-            <a href="https://ribblefishing.co.uk/" target="_blank">RFCA</a>
-          </span>
+          <span class="pill good"><a href="https://ribblefishing.co.uk/" target="_blank">RFCA</a></span>
         </div>
 
       </div>
@@ -161,11 +133,11 @@ async function showCountry(country, el) {
   }
 
   if (country === 'norway') {
-    content.innerHTML = `<div class="card"><h2>River Gaula</h2><p>Coming next</p></div>`;
+    content.innerHTML = `<div class="card"><h2>River Gaula</h2><p>Next step</p></div>`;
   }
 
   if (country === 'iceland') {
-    content.innerHTML = `<div class="card"><h2>East Rangá</h2><p>Coming next</p></div>`;
+    content.innerHTML = `<div class="card"><h2>East Rangá</h2><p>Next step</p></div>`;
   }
 }
 
