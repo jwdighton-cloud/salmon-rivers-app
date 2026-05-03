@@ -19,7 +19,7 @@ h1 {text-align:center;margin:20px 0;font-size:28px;}
 .good {background:#c8e6c9;}
 .ok {background:#fff3cd;}
 .bad {background:#ffcdd2;}
-.small {font-size:13px;color:#555;}
+.small {font-size:13px;color:#555;line-height:1.5;}
 a {text-decoration:none;color:#1a0dab;font-weight:500;}
 </style>
 </head>
@@ -37,37 +37,51 @@ a {text-decoration:none;color:#1a0dab;font-weight:500;}
 <div class="container" id="content"></div>
 
 <script>
+const HENTHORN_URL = "https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=8";
 
-// 🔵 HENTHORN GAUGE (CORRECT RIBBLE DATA)
-async function getHenthornLevel() {
+async function getHenthornData() {
   try {
-    const res = await fetch("https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?latest");
+    const res = await fetch(HENTHORN_URL, { cache: "no-store" });
     const data = await res.json();
 
-    if (data.items && data.items.length > 0) {
-      return {
-        level: data.items[0].value,
-        time: data.items[0].dateTime
-      };
+    if (!data.items || data.items.length === 0) {
+      return { level:null, time:null, trend:"Unavailable" };
     }
-  } catch (e) {}
 
-  return { level: null, time: null };
+    const readings = data.items
+      .map(r => ({ value:Number(r.value), time:r.dateTime }))
+      .filter(r => !isNaN(r.value))
+      .sort((a,b) => new Date(b.time) - new Date(a.time));
+
+    const latest = readings[0];
+    const oldest = readings[readings.length - 1];
+
+    let trend = "Steady";
+    if (latest && oldest) {
+      const diff = latest.value - oldest.value;
+      if (diff > 0.03) trend = "Rising";
+      if (diff < -0.03) trend = "Falling";
+    }
+
+    return {
+      level: latest.value,
+      time: latest.time,
+      trend: trend
+    };
+
+  } catch (e) {
+    return { level:null, time:null, trend:"Unavailable" };
+  }
 }
 
-// 🧠 FISHABILITY (RIBBLE-SPECIFIC)
-function getFishability(level) {
+function getFishability(level, trend) {
   if (level === null) return {text:"Unknown",class:"ok"};
 
   if (level < 0.3) return {text:"Too Low",class:"bad"};
-  if (level < 0.7) return {text:"Good",class:"good"};
+  if (level < 0.7 && trend !== "Rising") return {text:"Good",class:"good"};
+  if (level < 0.9) return {text:"Good / Watch Trend",class:"good"};
   if (level < 1.2) return {text:"High but Fishable",class:"ok"};
   return {text:"Too High",class:"bad"};
-}
-
-// 📈 TREND (basic version placeholder)
-function getTrend() {
-  return "Trend coming next";
 }
 
 function formatTime(dt) {
@@ -82,7 +96,6 @@ async function showCountry(country, el) {
   const content = document.getElementById('content');
 
   if (country === 'uk') {
-
     content.innerHTML = `
       <div class="card">
         <h2>River Ribble @ Henthorn</h2>
@@ -90,8 +103,8 @@ async function showCountry(country, el) {
       </div>
     `;
 
-    const data = await getHenthornLevel();
-    const fish = getFishability(data.level);
+    const data = await getHenthornData();
+    const fish = getFishability(data.level, data.trend);
 
     content.innerHTML = `
       <div class="card">
@@ -104,12 +117,13 @@ async function showCountry(country, el) {
 
         <div class="section">
           <h3>🌊 River Level</h3>
-          <span class="pill ${data.level?"good":"bad"}">
-            ${data.level ? data.level.toFixed(2)+" m" : "Unavailable"}
+          <span class="pill ${data.level !== null ? "good" : "bad"}">
+            ${data.level !== null ? data.level.toFixed(2)+" m" : "Unavailable"}
           </span>
+          <span class="pill ok">${data.trend}</span>
           <div class="small">
-            Updated: ${formatTime(data.time)}<br>
-            ${getTrend()}
+            Gauge: Ribble @ Henthorn<br>
+            Updated: ${formatTime(data.time)}
           </div>
         </div>
 
@@ -127,7 +141,6 @@ async function showCountry(country, el) {
           <h3>🎣 Operator Intel</h3>
           <span class="pill good"><a href="https://ribblefishing.co.uk/" target="_blank">RFCA</a></span>
         </div>
-
       </div>
     `;
   }
@@ -142,7 +155,6 @@ async function showCountry(country, el) {
 }
 
 showCountry('uk', document.querySelector('.tab'));
-
 </script>
 
 </body>
