@@ -3,36 +3,42 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ribble Henthorn Intelligence</title>
+<title>Salmon Rivers Intelligence</title>
 
 <style>
 body {font-family:-apple-system,BlinkMacSystemFont,sans-serif;margin:0;background:#f5f6f7;color:#111;}
-h1 {text-align:center;margin:20px 0 8px 0;font-size:26px;}
-.build {text-align:center;font-size:14px;color:#666;margin-bottom:12px;}
-.container {max-width:620px;margin:auto;padding:10px;}
-.card {background:#fff;border-radius:22px;padding:16px;margin-bottom:18px;box-shadow:0 4px 10px rgba(0,0,0,0.06);}
+h1 {text-align:center;margin:20px 0 10px 0;font-size:26px;}
+.build {text-align:center;font-size:14px;color:#666;margin-bottom:10px;}
+.tabs {display:flex;justify-content:center;gap:10px;margin-bottom:20px;}
+.tab {padding:10px 16px;border-radius:20px;background:#e5e5e5;cursor:pointer;}
+.tab.active {background:#cfe8cf;border:2px solid #4caf50;}
+.container {max-width:600px;margin:auto;padding:10px;}
+.card {background:#fff;border-radius:20px;padding:16px;margin-bottom:20px;box-shadow:0 4px 10px rgba(0,0,0,0.05);}
 .section {background:#f0f0f0;border-radius:16px;padding:12px;margin-top:12px;}
 .section h3 {margin:0 0 8px;}
-.big-level {font-size:42px;font-weight:800;margin:8px 0;}
-.pill {display:inline-block;padding:7px 12px;border-radius:20px;background:#ddd;margin:4px 4px 4px 0;}
+.big {font-size:34px;font-weight:700;margin:6px 0;}
+.pill {display:inline-block;padding:6px 12px;border-radius:20px;background:#ddd;margin:4px;}
 .good {background:#c8e6c9;}
 .ok {background:#fff3cd;}
 .bad {background:#ffcdd2;}
 .small {font-size:13px;color:#555;line-height:1.5;}
-.advice {font-size:16px;line-height:1.45;margin-top:8px;}
-a {text-decoration:none;color:#1a0dab;font-weight:600;}
+.advice {font-size:15px;line-height:1.45;margin-top:8px;}
+a {text-decoration:none;color:#1a0dab;font-weight:500;}
 </style>
 </head>
 
 <body>
 
-<h1>Ribble @ Henthorn</h1>
-<div class="build">Build: 10040 — Henthorn-only decision screen</div>
+<h1>Salmon Rivers Intelligence</h1>
+<div class="build">Build: 10039 — Henthorn focused</div>
+
+<div class="tabs">
+  <div class="tab active">🇬🇧 UK</div>
+</div>
 
 <div class="container" id="content"></div>
 
 <script>
-const BUILD = "10040";
 const HENTHORN_URL = "https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=12";
 
 async function getHenthornData() {
@@ -72,66 +78,13 @@ async function getHenthornData() {
 }
 
 function getDecision(level, trend) {
-  if (level === null) {
-    return {
-      label:"Unknown",
-      cls:"ok",
-      verdict:"Live Henthorn level unavailable.",
-      advice:"Refresh the app or use the Environment Agency site directly."
-    };
-  }
+  if (level === null) return {text:"Unknown",class:"ok",advice:"Data unavailable"};
 
-  if (level < 0.30) {
-    return {
-      label:"Poor",
-      cls:"bad",
-      verdict:"Too low at Henthorn.",
-      advice:"Likely skinny and difficult. Wait for fresh water unless you have a very specific reason to fish."
-    };
-  }
-
-  if (level < 0.70) {
-    if (trend === "Rising fast") {
-      return {
-        label:"Watch",
-        cls:"ok",
-        verdict:"Good height, but rising quickly.",
-        advice:"Could improve, but watch colour and debris. Best checked again shortly before travelling."
-      };
-    }
-
-    return {
-      label:"Good",
-      cls:"good",
-      verdict:"Good Henthorn window.",
-      advice:"Height is in the useful range and the trend is not a major warning."
-    };
-  }
-
-  if (level < 1.20) {
-    if (trend === "Falling" || trend === "Falling fast") {
-      return {
-        label:"Improving",
-        cls:"good",
-        verdict:"High but dropping.",
-        advice:"Often a good window as the river settles. Focus on safer, slower lies."
-      };
-    }
-
-    return {
-      label:"High",
-      cls:"ok",
-      verdict:"Fishable but pushing.",
-      advice:"Proceed carefully. River is carrying water; safer access and fishable lies matter."
-    };
-  }
-
-  return {
-    label:"Poor",
-    cls:"bad",
-    verdict:"Too high at Henthorn.",
-    advice:"Not a normal fishing window. Wait for it to fall and settle."
-  };
+  if (level < 0.30) return {text:"Poor",class:"bad",advice:"Too low"};
+  if (level < 0.70 && trend !== "Rising") return {text:"Good",class:"good",advice:"Strong window"};
+  if (level < 0.90) return {text:"Watch",class:"ok",advice:"Check trend"};
+  if (level < 1.20) return {text:"High",class:"ok",advice:"Fishable but pushing"};
+  return {text:"Poor",class:"bad",advice:"Too high"};
 }
 
 function formatTime(dt) {
@@ -140,20 +93,18 @@ function formatTime(dt) {
 }
 
 function formatChange(change) {
-  if (change === null || isNaN(change)) return "Movement unavailable";
+  if (change === null) return "";
   const sign = change > 0 ? "+" : "";
-  return sign + change.toFixed(2) + " m across recent readings";
+  return sign + change.toFixed(2) + " m";
 }
 
 async function render() {
-  const content = document.getElementById("content");
+  const content = document.getElementById('content');
 
   content.innerHTML = `
     <div class="card">
-      <h2>Loading live Henthorn data...</h2>
-      <div class="section">
-        <span class="pill ok">Please wait</span>
-      </div>
+      <h2>River Ribble @ Henthorn</h2>
+      <div class="section"><h3>Loading...</h3></div>
     </div>
   `;
 
@@ -162,48 +113,37 @@ async function render() {
 
   content.innerHTML = `
     <div class="card">
-      <h2>Today’s Henthorn Reading</h2>
-
-      <div class="big-level">
-        ${data.level !== null ? data.level.toFixed(2) + " m" : "Unavailable"}
-      </div>
-
-      <span class="pill ${decision.cls}">${decision.label}</span>
-      <span class="pill ok">${data.trend}</span>
+      <h2>River Ribble @ Henthorn</h2>
 
       <div class="section">
-        <h3>🎯 Decision</h3>
-        <div class="advice"><strong>${decision.verdict}</strong><br>${decision.advice}</div>
+        <h3>🌊 Level</h3>
+        <div class="big">
+          ${data.level !== null ? data.level.toFixed(2)+" m" : "Unavailable"}
+        </div>
+        <span class="pill ${decision.class}">${decision.text}</span>
+        <span class="pill ok">${data.trend}</span>
+      </div>
+
+      <div class="section">
+        <h3>🎯 Advice</h3>
+        <div class="advice">${decision.advice}</div>
       </div>
 
       <div class="section">
         <h3>📈 Movement</h3>
         <div class="small">
           ${formatChange(data.change)}<br>
-          Updated: ${formatTime(data.time)}<br>
-          Gauge: Environment Agency station 710305 — Ribble @ Henthorn
+          Updated: ${formatTime(data.time)}
         </div>
       </div>
 
       <div class="section">
         <h3>🌡 Temperature</h3>
-        <div class="small">
-          Water temperature is not yet pulled directly into the app.
-        </div>
         <a href="https://www.ribblefisheriesca.co.uk/live-water-quality-monitoring/" target="_blank">
-          Open RFCA live water-quality dashboard
+          RFCA Live Water Data
         </a>
       </div>
 
-      <div class="section">
-        <h3>🔗 Useful Links</h3>
-        <a href="https://check-for-flooding.service.gov.uk/station/5066" target="_blank">
-          GOV.UK Henthorn gauge
-        </a><br>
-        <a href="https://ribblefishing.co.uk/" target="_blank">
-          RFCA fishing information
-        </a>
-      </div>
     </div>
   `;
 }
