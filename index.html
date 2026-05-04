@@ -27,14 +27,14 @@ h1 {
 
 .card {
   background: #fff;
-  border-radius: 20px;
+  border-radius: 18px;
   padding: 16px;
   margin-bottom: 14px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
 .title {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
 }
 
@@ -45,9 +45,8 @@ h1 {
 }
 
 .level {
-  font-size: 48px;
+  font-size: 46px;
   font-weight: 800;
-  margin: 6px 0;
 }
 
 .unit {
@@ -62,7 +61,7 @@ h1 {
 }
 
 .pill {
-  padding: 6px 10px;
+  padding: 5px 10px;
   border-radius: 999px;
   background: #e6e6e6;
   font-size: 12px;
@@ -115,11 +114,8 @@ h1 {
 <body>
 
 <div class="app">
-
 <h1>Ribble @ Henthorn</h1>
-
 <div id="content"></div>
-
 </div>
 
 <script>
@@ -150,7 +146,7 @@ function age(dt) {
 }
 
 // ---------- DATA ----------
-async function river() {
+async function getRiver() {
   const l = await getJSON(EA_LATEST);
   const r = await getJSON(EA_RECENT);
 
@@ -173,7 +169,7 @@ async function river() {
   return { level, time, movement, trend };
 }
 
-async function weather() {
+async function getWeather() {
   const d = await getJSON(WEATHER);
 
   const temp = d.current?.temperature_2m;
@@ -249,8 +245,8 @@ function render(r, w) {
 
 // ---------- INIT ----------
 async function init() {
-  const r = await river();
-  const w = await weather();
+  const r = await getRiver();
+  const w = await getWeather();
   document.getElementById("content").innerHTML = render(r, w);
 }
 
