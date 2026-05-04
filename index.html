@@ -144,13 +144,8 @@ h1 {
 }
 
 @media (max-width: 480px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
-
-  .big-level {
-    font-size: 48px;
-  }
+  .grid { grid-template-columns: 1fr; }
+  .big-level { font-size: 48px; }
 }
 </style>
 </head>
@@ -164,34 +159,39 @@ h1 {
   <div id="content">
     <div class="card">
       <div class="title">Ribble @ Henthorn</div>
-      <div class="sub">Loading live Environment Agency data...</div>
+      <div class="sub">Loading live data...</div>
     </div>
   </div>
 
 </div>
 
 <script>
-const HENTHORN_STATION_ID = "710305";
 const HENTHORN_READINGS_URL =
   "https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?latest";
 
 const HENTHORN_RECENT_URL =
   "https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=12";
 
+/*
+ Approx Henthorn / Little Mitton / Clitheroe area.
+ Weather data is AIR temperature + rainfall, not water temperature.
+*/
+const WEATHER_URL =
+  "https://api.open-meteo.com/v1/forecast?latitude=53.84&longitude=-2.43&current=temperature_2m,precipitation,rain&hourly=precipitation,rain&past_hours=6&forecast_hours=1&timezone=Europe%2FLondon";
+
+async function fetchJson(url) {
+  const response = await fetch(url, { cache: "no-store" });
+  if (!response.ok) throw new Error("HTTP " + response.status);
+  return await response.json();
+}
+
 function ageText(dateString) {
   if (!dateString) return "Unknown age";
-
-  const then = new Date(dateString);
-  const now = new Date();
-  const diffMs = now - then;
-  const diffMin = Math.round(diffMs / 60000);
-
+  const diffMin = Math.round((new Date() - new Date(dateString)) / 60000);
   if (diffMin < 1) return "Just updated";
   if (diffMin < 60) return diffMin + " min old";
-
   const diffHr = Math.round(diffMin / 60);
   if (diffHr < 24) return diffHr + " hr old";
-
   return Math.round(diffHr / 24) + " days old";
 }
 
@@ -206,14 +206,6 @@ function formatTime(dateString) {
   });
 }
 
-async function fetchJson(url) {
-  const response = await fetch(url, { cache: "no-store" });
-  if (!response.ok) {
-    throw new Error("HTTP " + response.status);
-  }
-  return await response.json();
-}
-
 async function getHenthornData() {
   try {
     const latest = await fetchJson(HENTHORN_READINGS_URL);
@@ -222,12 +214,7 @@ async function getHenthornData() {
     const latestItem = latest.items && latest.items.length ? latest.items[0] : null;
     const recentItems = recent.items || [];
 
-    if (!latestItem) {
-      return {
-        ok: false,
-        error: "No latest reading returned"
-      };
-    }
+    if (!latestItem) return { ok: false, error: "No latest EA reading returned" };
 
     const level = Number(latestItem.value);
     const time = latestItem.dateTime;
@@ -245,31 +232,47 @@ async function getHenthornData() {
       else trend = "Steady";
     }
 
+    return { ok: true, level, time, movement, trend };
+  } catch (err) {
+    return { ok: false, error: err.message || "EA connection failed" };
+  }
+}
+
+async function getWeatherData() {
+  try {
+    const data = await fetchJson(WEATHER_URL);
+
+    const current = data.current || {};
+    const hourly = data.hourly || {};
+    const rainValues = hourly.rain || hourly.precipitation || [];
+
+    let rain6h = null;
+    if (rainValues.length) {
+      rain6h = rainValues.reduce((sum, val) => sum + Number(val || 0), 0);
+    }
+
     return {
       ok: true,
-      level,
-      time,
-      movement,
-      trend
+      airTemp: current.temperature_2m,
+      rainNow: current.rain ?? current.precipitation,
+      rain6h,
+      time: current.time
     };
-
   } catch (err) {
     return {
       ok: false,
-      error: err.message || "Connection failed"
+      error: err.message || "Weather connection failed"
     };
   }
 }
 
 function levelBand(level) {
   if (level === null || isNaN(level)) return { text: "Unknown", cls: "ok" };
-
   if (level < 0.30) return { text: "Low", cls: "bad" };
   if (level >= 0.30 && level < 0.38) return { text: "Low fishable", cls: "ok" };
   if (level >= 0.38 && level <= 0.45) return { text: "Prime Henthorn range", cls: "good" };
   if (level > 0.45 && level <= 0.70) return { text: "Good Henthorn range", cls: "good" };
   if (level > 0.70 && level <= 1.10) return { text: "High", cls: "ok" };
-
   return { text: "Very high", cls: "bad" };
 }
 
@@ -286,21 +289,26 @@ function trendClass(trend) {
   return "ok";
 }
 
-function renderHenthornCard(data) {
-  if (!data.ok) {
+function weatherText(value, suffix) {
+  if (value === null || value === undefined || isNaN(Number(value))) {
+    return "Not available";
+  }
+  return Number(value).toFixed(1) + suffix;
+}
+
+function renderHenthornCard(river, weather) {
+  if (!river.ok) {
     return `
       <div class="card">
         <div class="title">Ribble @ Henthorn</div>
         <div class="sub">EA station 710305</div>
-        <div class="row">
-          <span class="pill bad">Live data unavailable</span>
-        </div>
-        <p class="small">Status: ${data.error}</p>
+        <div class="row"><span class="pill bad">Live river data unavailable</span></div>
+        <p class="small">Status: ${river.error}</p>
       </div>
     `;
   }
 
-  const band = levelBand(data.level);
+  const band = levelBand(river.level);
 
   return `
     <div class="card">
@@ -308,36 +316,50 @@ function renderHenthornCard(data) {
       <div class="sub">Environment Agency station 710305</div>
 
       <div class="big-level">
-        ${data.level.toFixed(2)}<span class="unit"> m</span>
+        ${river.level.toFixed(2)}<span class="unit"> m</span>
       </div>
 
       <div class="row">
         <span class="pill ${band.cls}">${band.text}</span>
-        <span class="pill ${trendClass(data.trend)}">${data.trend}</span>
-        <span class="pill info">${ageText(data.time)}</span>
+        <span class="pill ${trendClass(river.trend)}">${river.trend}</span>
+        <span class="pill info">${ageText(river.time)}</span>
       </div>
 
       <div class="grid">
         <div class="stat">
           <div class="stat-label">Movement</div>
-          <div class="stat-value">${movementText(data.movement)}</div>
+          <div class="stat-value">${movementText(river.movement)}</div>
         </div>
 
         <div class="stat">
           <div class="stat-label">Updated</div>
-          <div class="stat-value">${formatTime(data.time)}</div>
+          <div class="stat-value">${formatTime(river.time)}</div>
         </div>
 
         <div class="stat">
-          <div class="stat-label">Temperature</div>
-          <div class="stat-value">Not available</div>
+          <div class="stat-label">Air temperature nearby</div>
+          <div class="stat-value">${weather.ok ? weatherText(weather.airTemp, "°C") : "Not available"}</div>
         </div>
 
         <div class="stat">
-          <div class="stat-label">Rainfall</div>
+          <div class="stat-label">Water temperature</div>
           <div class="stat-value">Not connected</div>
         </div>
+
+        <div class="stat">
+          <div class="stat-label">Rain now</div>
+          <div class="stat-value">${weather.ok ? weatherText(weather.rainNow, " mm") : "Not available"}</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-label">Rain last 6h</div>
+          <div class="stat-value">${weather.ok ? weatherText(weather.rain6h, " mm") : "Not available"}</div>
+        </div>
       </div>
+
+      <p class="small">
+        Weather is nearby modelled weather data. Water temperature is deliberately not guessed.
+      </p>
     </div>
   `;
 }
@@ -357,7 +379,7 @@ function renderRibbleIntel() {
       <div class="intel-item">
         <div class="intel-source">Catch Reports</div>
         <div class="intel-text">
-          No automated catch feed connected yet. This section is reserved for whole-river salmon reports, club notes and angler signals.
+          No automated catch feed connected yet. Reserved for whole-river salmon reports, club notes and angler signals.
         </div>
       </div>
 
@@ -380,10 +402,12 @@ function renderRibbleIntel() {
 
 async function init() {
   const content = document.getElementById("content");
-  const data = await getHenthornData();
+
+  const river = await getHenthornData();
+  const weather = await getWeatherData();
 
   content.innerHTML =
-    renderHenthornCard(data) +
+    renderHenthornCard(river, weather) +
     renderRibbleIntel();
 }
 
