@@ -3,133 +3,392 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Salmon Rivers Intelligence 10044</title>
+<title>Salmon Rivers Intelligence</title>
 
 <style>
 body {
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  margin:0;
-  background:#f5f6f7;
-  color:#111;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  margin: 0;
+  background: #f4f6f7;
+  color: #111;
 }
+
+.app {
+  max-width: 680px;
+  margin: auto;
+  padding: 14px;
+}
+
 h1 {
-  text-align:center;
-  margin:18px 0 4px;
-  font-size:27px;
+  text-align: center;
+  font-size: 26px;
+  margin: 18px 0 14px;
 }
-.build {
-  text-align:center;
-  font-size:12px;
-  color:#666;
-  margin-bottom:14px;
-}
-.tabs {
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  margin-bottom:18px;
-}
-.tab {
-  padding:10px 16px;
-  border-radius:20px;
-  background:#e5e5e5;
-  cursor:pointer;
-  font-weight:600;
-}
-.tab.active {
-  background:#cfe8cf;
-  border:2px solid #4caf50;
-}
-.container {
-  max-width:620px;
-  margin:auto;
-  padding:10px;
-}
+
 .card {
-  background:#fff;
-  border-radius:20px;
-  padding:16px;
-  margin-bottom:20px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.05);
+  background: #fff;
+  border-radius: 22px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
 }
-.section {
-  background:#f0f0f0;
-  border-radius:16px;
-  padding:12px;
-  margin-top:12px;
+
+.title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 4px;
 }
-.section h3 {
-  margin:0 0 8px;
+
+.sub {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 14px;
 }
+
 .big-level {
-  font-size:44px;
-  font-weight:900;
-  letter-spacing:-0.04em;
+  font-size: 54px;
+  font-weight: 800;
+  line-height: 1;
+  margin: 8px 0;
 }
+
+.unit {
+  font-size: 22px;
+  color: #555;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0;
+}
+
 .pill {
-  display:inline-block;
-  padding:6px 12px;
-  border-radius:20px;
-  background:#ddd;
-  margin:4px 4px 4px 0;
-  font-weight:600;
+  display: inline-block;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: #e6e6e6;
+  font-size: 14px;
+  font-weight: 600;
 }
-.good {background:#c8e6c9;}
-.ok {background:#fff3cd;}
-.bad {background:#ffcdd2;}
-.info {background:#dbeafe;}
+
+.good { background: #d7f2d8; }
+.ok { background: #fff1bd; }
+.bad { background: #ffd1d1; }
+.info { background: #dbeafe; }
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.stat {
+  background: #f1f3f4;
+  border-radius: 16px;
+  padding: 12px;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.stat-value {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 4px 0 10px;
+}
+
+.intel-item {
+  background: #f1f3f4;
+  border-radius: 16px;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+
+.intel-source {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.intel-text {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.links a {
+  display: block;
+  background: #eef2ff;
+  border-radius: 14px;
+  padding: 11px;
+  margin-top: 8px;
+  color: #1a0dab;
+  text-decoration: none;
+  font-weight: 600;
+}
+
 .small {
-  font-size:13px;
-  color:#555;
-  line-height:1.45;
+  font-size: 13px;
+  color: #666;
+  line-height: 1.4;
 }
-a {
-  text-decoration:none;
-  color:#1a0dab;
-  font-weight:600;
-}
-button {
-  width:100%;
-  margin-top:10px;
-  padding:11px;
-  border:0;
-  border-radius:14px;
-  background:#d7ead7;
-  font-weight:800;
-  font-size:15px;
-}
-input {
-  width:100%;
-  padding:10px;
-  border:1px solid #ccc;
-  border-radius:12px;
-  font-size:15px;
-  box-sizing:border-box;
-}
-.input-row {
-  display:grid;
-  grid-template-columns:1fr 90px;
-  gap:8px;
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .big-level {
+    font-size: 48px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<h1>Salmon Rivers Intelligence</h1>
-<div class="build">build 10044 · country tabs restored · Henthorn-only live UK focus</div>
+<div class="app">
 
-<div class="tabs">
-  <div class="tab active" onclick="showCountry('uk', this)">🇬🇧 UK</div>
-  <div class="tab" onclick="showCountry('norway', this)">🇳🇴 Norway</div>
-  <div class="tab" onclick="showCountry('iceland', this)">🇮🇸 Iceland</div>
+  <h1>Salmon Rivers Intelligence</h1>
+
+  <div id="content">
+    <div class="card">
+      <div class="title">Ribble @ Henthorn</div>
+      <div class="sub">Loading live Environment Agency data...</div>
+    </div>
+  </div>
+
 </div>
 
-<div class="container" id="content"></div>
-
 <script>
-const BUILD = "10044";
-const EA = "https://environment.data.gov.uk/flood-monitoring";
-const HENTHORN = "710305";
+const HENTHORN_STATION_ID = "710305";
+const HENTHORN_READINGS_URL =
+  "https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?latest";
 
-async function getHenthornReadings() {
+const HENTHORN_RECENT_URL =
+  "https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=12";
+
+function ageText(dateString) {
+  if (!dateString) return "Unknown age";
+
+  const then = new Date(dateString);
+  const now = new Date();
+  const diffMs = now - then;
+  const diffMin = Math.round(diffMs / 60000);
+
+  if (diffMin < 1) return "Just updated";
+  if (diffMin < 60) return diffMin + " min old";
+
+  const diffHr = Math.round(diffMin / 60);
+  if (diffHr < 24) return diffHr + " hr old";
+
+  return Math.round(diffHr / 24) + " days old";
+}
+
+function formatTime(dateString) {
+  if (!dateString) return "No timestamp";
+  return new Date(dateString).toLocaleString("en-GB", {
+    weekday: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+    day: "2-digit",
+    month: "short"
+  });
+}
+
+async function fetchJson(url) {
+  const response = await fetch(url, { cache: "no-store" });
+  if (!response.ok) {
+    throw new Error("HTTP " + response.status);
+  }
+  return await response.json();
+}
+
+async function getHenthornData() {
+  try {
+    const latest = await fetchJson(HENTHORN_READINGS_URL);
+    const recent = await fetchJson(HENTHORN_RECENT_URL);
+
+    const latestItem = latest.items && latest.items.length ? latest.items[0] : null;
+    const recentItems = recent.items || [];
+
+    if (!latestItem) {
+      return {
+        ok: false,
+        error: "No latest reading returned"
+      };
+    }
+
+    const level = Number(latestItem.value);
+    const time = latestItem.dateTime;
+
+    let movement = null;
+    let trend = "Unknown";
+
+    if (recentItems.length >= 2) {
+      const newest = Number(recentItems[recentItems.length - 1].value);
+      const older = Number(recentItems[0].value);
+      movement = newest - older;
+
+      if (movement > 0.02) trend = "Rising";
+      else if (movement < -0.02) trend = "Falling";
+      else trend = "Steady";
+    }
+
+    return {
+      ok: true,
+      level,
+      time,
+      movement,
+      trend
+    };
+
+  } catch (err) {
+    return {
+      ok: false,
+      error: err.message || "Connection failed"
+    };
+  }
+}
+
+function levelBand(level) {
+  if (level === null || isNaN(level)) return { text: "Unknown", cls: "ok" };
+
+  if (level < 0.30) return { text: "Low", cls: "bad" };
+  if (level >= 0.30 && level < 0.38) return { text: "Low fishable", cls: "ok" };
+  if (level >= 0.38 && level <= 0.45) return { text: "Prime Henthorn range", cls: "good" };
+  if (level > 0.45 && level <= 0.70) return { text: "Good Henthorn range", cls: "good" };
+  if (level > 0.70 && level <= 1.10) return { text: "High", cls: "ok" };
+
+  return { text: "Very high", cls: "bad" };
+}
+
+function movementText(movement) {
+  if (movement === null || isNaN(movement)) return "Unknown";
+  const sign = movement > 0 ? "+" : "";
+  return sign + movement.toFixed(2) + " m";
+}
+
+function trendClass(trend) {
+  if (trend === "Steady") return "good";
+  if (trend === "Falling") return "info";
+  if (trend === "Rising") return "ok";
+  return "ok";
+}
+
+function renderHenthornCard(data) {
+  if (!data.ok) {
+    return `
+      <div class="card">
+        <div class="title">Ribble @ Henthorn</div>
+        <div class="sub">EA station 710305</div>
+        <div class="row">
+          <span class="pill bad">Live data unavailable</span>
+        </div>
+        <p class="small">Status: ${data.error}</p>
+      </div>
+    `;
+  }
+
+  const band = levelBand(data.level);
+
+  return `
+    <div class="card">
+      <div class="title">Ribble @ Henthorn</div>
+      <div class="sub">Environment Agency station 710305</div>
+
+      <div class="big-level">
+        ${data.level.toFixed(2)}<span class="unit"> m</span>
+      </div>
+
+      <div class="row">
+        <span class="pill ${band.cls}">${band.text}</span>
+        <span class="pill ${trendClass(data.trend)}">${data.trend}</span>
+        <span class="pill info">${ageText(data.time)}</span>
+      </div>
+
+      <div class="grid">
+        <div class="stat">
+          <div class="stat-label">Movement</div>
+          <div class="stat-value">${movementText(data.movement)}</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-label">Updated</div>
+          <div class="stat-value">${formatTime(data.time)}</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-label">Temperature</div>
+          <div class="stat-value">Not available</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-label">Rainfall</div>
+          <div class="stat-value">Not connected</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderRibbleIntel() {
+  return `
+    <div class="card">
+      <div class="section-title">Ribble Salmon Intel</div>
+
+      <div class="intel-item">
+        <div class="intel-source">RFCA / Ribble Fisheries</div>
+        <div class="intel-text">
+          Main source to monitor for Ribble conditions, fishery updates, conservation news and river notices.
+        </div>
+      </div>
+
+      <div class="intel-item">
+        <div class="intel-source">Catch Reports</div>
+        <div class="intel-text">
+          No automated catch feed connected yet. This section is reserved for whole-river salmon reports, club notes and angler signals.
+        </div>
+      </div>
+
+      <div class="intel-item">
+        <div class="intel-source">Magazine / Wider Angling Intel</div>
+        <div class="intel-text">
+          Track wider salmon fishing reports from Trout & Salmon and other angling media where Ribble mentions appear.
+        </div>
+      </div>
+
+      <div class="links">
+        <a href="https://check-for-flooding.service.gov.uk/station/5066" target="_blank">EA Henthorn Gauge</a>
+        <a href="https://ribblefishing.co.uk/" target="_blank">RFCA / Ribble Fisheries</a>
+        <a href="https://troutandsalmon.com/" target="_blank">Trout & Salmon</a>
+        <a href="https://www.metoffice.gov.uk/weather/maps-and-charts/rainfall-radar-forecast-map" target="_blank">Met Office Rainfall Radar</a>
+      </div>
+    </div>
+  `;
+}
+
+async function init() {
+  const content = document.getElementById("content");
+  const data = await getHenthornData();
+
+  content.innerHTML =
+    renderHenthornCard(data) +
+    renderRibbleIntel();
+}
+
+init();
+</script>
+
+</body>
+</html>
