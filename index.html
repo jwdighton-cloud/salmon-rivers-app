@@ -6,105 +6,22 @@
 <title>Ribble @ Henthorn</title>
 
 <style>
-body {
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  margin: 0;
-  background: #f4f6f7;
-  color: #111;
-}
-
-.app {
-  max-width: 640px;
-  margin: auto;
-  padding: 14px;
-}
-
-h1 {
-  text-align: center;
-  font-size: 24px;
-  margin: 16px 0;
-}
-
-.card {
-  background: #fff;
-  border-radius: 18px;
-  padding: 16px;
-  margin-bottom: 14px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-}
-
-.title {
-  font-size: 18px;
-  font-weight: 700;
-}
-
-.sub {
-  font-size: 13px;
-  color: #666;
-  margin-bottom: 10px;
-}
-
-.level {
-  font-size: 46px;
-  font-weight: 800;
-}
-
-.row {
-  display: flex;
-  gap: 8px;
-  margin-top: 8px;
-}
-
-.pill {
-  padding: 5px 10px;
-  border-radius: 999px;
-  background: #e6e6e6;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.info {
-  background: #dbeafe;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  margin-top: 12px;
-}
-
-.stat {
-  background: #f1f3f4;
-  border-radius: 12px;
-  padding: 10px;
-}
-
-.stat-label {
-  font-size: 11px;
-  color: #666;
-}
-
-.stat-value {
-  font-size: 15px;
-  font-weight: 700;
-}
-
-.links a {
-  display: block;
-  background: #eef2ff;
-  border-radius: 12px;
-  padding: 10px;
-  margin-top: 6px;
-  text-decoration: none;
-  color: #1a0dab;
-  font-weight: 600;
-}
-
-.small {
-  font-size: 12px;
-  color: #666;
-}
+body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;margin:0;background:#f4f6f7;color:#111;}
+.app{max-width:640px;margin:auto;padding:14px;}
+h1{text-align:center;font-size:24px;margin:16px 0;}
+.card{background:#fff;border-radius:18px;padding:16px;margin-bottom:14px;box-shadow:0 4px 10px rgba(0,0,0,0.05);}
+.title{font-size:18px;font-weight:700;}
+.sub{font-size:13px;color:#666;margin-bottom:10px;}
+.level{font-size:46px;font-weight:800;}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.pill{padding:5px 10px;border-radius:999px;background:#e6e6e6;font-size:12px;font-weight:600;}
+.info{background:#dbeafe;}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;}
+.stat{background:#f1f3f4;border-radius:12px;padding:10px;}
+.stat-label{font-size:11px;color:#666;}
+.stat-value{font-size:15px;font-weight:700;}
+.links a{display:block;background:#eef2ff;border-radius:12px;padding:10px;margin-top:6px;text-decoration:none;color:#1a0dab;font-weight:600;}
+.small{font-size:12px;color:#666;line-height:1.4;margin-top:10px;}
 </style>
 </head>
 
@@ -120,10 +37,11 @@ h1 {
 const EA_LATEST = "https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?latest";
 const EA_RECENT = "https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=12";
 
-const WEATHER = "https://api.open-meteo.com/v1/forecast?latitude=53.84&longitude=-2.43&current=temperature_2m,precipitation&hourly=precipitation&past_hours=6&timezone=Europe%2FLondon";
+const WEATHER = "https://api.open-meteo.com/v1/forecast?latitude=53.84&longitude=-2.43&current=temperature_2m,precipitation&hourly=precipitation&past_days=1&forecast_days=1&timezone=Europe%2FLondon";
 
 async function getJSON(url) {
   const r = await fetch(url, { cache: "no-store" });
+  if (!r.ok) throw new Error("HTTP " + r.status);
   return await r.json();
 }
 
@@ -136,7 +54,7 @@ function age(dt) {
   if (!dt) return "—";
   const m = Math.round((Date.now() - new Date(dt)) / 60000);
   if (m < 60) return m + " min";
-  return Math.round(m/60) + " hr";
+  return Math.round(m / 60) + " hr";
 }
 
 async function getRiver() {
@@ -150,8 +68,8 @@ async function getRiver() {
   let trend = "Steady";
 
   if (r.items?.length > 1) {
-    const newest = r.items[r.items.length - 1].value;
-    const oldest = r.items[0].value;
+    const newest = Number(r.items[r.items.length - 1].value);
+    const oldest = Number(r.items[0].value);
 
     movement = newest - oldest;
 
@@ -169,8 +87,20 @@ async function getWeather() {
   const rainNow = d.current?.precipitation;
 
   let rain6h = null;
-  if (d.hourly?.precipitation) {
-    rain6h = d.hourly.precipitation.reduce((a,b)=>a+b,0);
+
+  if (d.hourly?.time && d.hourly?.precipitation) {
+    const now = new Date();
+    const sixHoursAgo = new Date(now.getTime() - 6 * 60 * 60 * 1000);
+
+    rain6h = 0;
+
+    for (let i = 0; i < d.hourly.time.length; i++) {
+      const t = new Date(d.hourly.time[i]);
+
+      if (t >= sixHoursAgo && t <= now) {
+        rain6h += Number(d.hourly.precipitation[i] || 0);
+      }
+    }
   }
 
   return { temp, rainNow, rain6h };
@@ -197,17 +127,17 @@ function render(r, w) {
       </div>
 
       <div class="stat">
-        <div class="stat-label">Air Temp</div>
+        <div class="stat-label">Air Temp Nearby</div>
         <div class="stat-value">${safe(w.temp, "°C")}</div>
       </div>
 
       <div class="stat">
-        <div class="stat-label">Rain Now</div>
+        <div class="stat-label">Rain Now Nearby</div>
         <div class="stat-value">${safe(w.rainNow, " mm")}</div>
       </div>
 
       <div class="stat">
-        <div class="stat-label">Rain 6h</div>
+        <div class="stat-label">Rain Last 6h Nearby</div>
         <div class="stat-value">${safe(w.rain6h, " mm")}</div>
       </div>
 
@@ -216,6 +146,10 @@ function render(r, w) {
         <div class="stat-value">—</div>
       </div>
 
+    </div>
+
+    <div class="small">
+      River level is live EA data for Henthorn. Rain and air temperature are nearby modelled weather values, not riverbank sensor readings. Water temperature is not guessed.
     </div>
   </div>
 
@@ -236,9 +170,14 @@ function render(r, w) {
 }
 
 async function init() {
-  const r = await getRiver();
-  const w = await getWeather();
-  document.getElementById("content").innerHTML = render(r, w);
+  try {
+    const r = await getRiver();
+    const w = await getWeather();
+    document.getElementById("content").innerHTML = render(r, w);
+  } catch (e) {
+    document.getElementById("content").innerHTML =
+      `<div class="card"><div class="title">Data unavailable</div><div class="small">${e.message}</div></div>`;
+  }
 }
 
 setInterval(init, 300000);
