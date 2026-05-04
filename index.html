@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Salmon Rivers Intelligence</title>
+<title>Ribble @ Henthorn</title>
 
 <style>
 body {
@@ -14,93 +14,84 @@ body {
 }
 
 .app {
-  max-width: 680px;
+  max-width: 640px;
   margin: auto;
   padding: 14px;
 }
 
 h1 {
   text-align: center;
-  font-size: 26px;
-  margin: 18px 0 14px;
+  font-size: 24px;
+  margin: 16px 0;
 }
 
 .card {
   background: #fff;
-  border-radius: 22px;
+  border-radius: 20px;
   padding: 16px;
-  margin-bottom: 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  margin-bottom: 14px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
 .title {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
 }
 
 .sub {
-  font-size: 14px;
-  color: #555;
-  margin-bottom: 14px;
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 10px;
 }
 
-.big-level {
-  font-size: 52px;
+.level {
+  font-size: 48px;
   font-weight: 800;
   margin: 6px 0;
 }
 
 .unit {
-  font-size: 20px;
+  font-size: 18px;
   color: #555;
 }
 
 .row {
   display: flex;
   gap: 8px;
-  flex-wrap: wrap;
-  margin: 10px 0;
+  margin-top: 8px;
 }
 
 .pill {
-  padding: 6px 12px;
+  padding: 6px 10px;
   border-radius: 999px;
   background: #e6e6e6;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
 }
 
-.good { background: #d7f2d8; }
-.ok { background: #fff1bd; }
-.bad { background: #ffd1d1; }
 .info { background: #dbeafe; }
 
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 8px;
+  margin-top: 12px;
 }
 
 .stat {
   background: #f1f3f4;
-  border-radius: 14px;
+  border-radius: 12px;
   padding: 10px;
 }
 
 .stat-label {
-  font-size: 12px;
+  font-size: 11px;
   color: #666;
 }
 
 .stat-value {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
-}
-
-.section-title {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 10px;
 }
 
 .links a {
@@ -108,7 +99,7 @@ h1 {
   background: #eef2ff;
   border-radius: 12px;
   padding: 10px;
-  margin-top: 8px;
+  margin-top: 6px;
   text-decoration: none;
   color: #1a0dab;
   font-weight: 600;
@@ -124,53 +115,56 @@ h1 {
 <body>
 
 <div class="app">
-<h1>Salmon Rivers Intelligence</h1>
+
+<h1>Ribble @ Henthorn</h1>
+
 <div id="content"></div>
+
 </div>
 
 <script>
 
 // ---------- CONFIG ----------
-const EA_URL = "https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?latest";
+const EA_LATEST = "https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?latest";
 const EA_RECENT = "https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=12";
 
-const WEATHER_URL =
+const WEATHER =
 "https://api.open-meteo.com/v1/forecast?latitude=53.84&longitude=-2.43&current=temperature_2m,precipitation&hourly=precipitation&past_hours=6&timezone=Europe%2FLondon";
 
 // ---------- HELPERS ----------
-async function fetchJSON(url) {
-  const res = await fetch(url, { cache: "no-store" });
-  return await res.json();
+async function getJSON(url) {
+  const r = await fetch(url, { cache: "no-store" });
+  return await r.json();
 }
 
-function ageText(dt) {
-  if (!dt) return "unknown";
-  const mins = Math.round((Date.now() - new Date(dt)) / 60000);
-  if (mins < 60) return mins + " min old";
-  return Math.round(mins / 60) + " hr old";
+function safe(v, suffix="") {
+  if (v === null || v === undefined || isNaN(v)) return "—";
+  return Number(v).toFixed(1) + suffix;
 }
 
-function safe(val, suffix = "") {
-  if (val === null || val === undefined || isNaN(val)) return "—";
-  return Number(val).toFixed(1) + suffix;
+function age(dt) {
+  if (!dt) return "—";
+  const m = Math.round((Date.now() - new Date(dt)) / 60000);
+  if (m < 60) return m + " min";
+  return Math.round(m/60) + " hr";
 }
 
 // ---------- DATA ----------
-async function getRiver() {
-  const latest = await fetchJSON(EA_URL);
-  const recent = await fetchJSON(EA_RECENT);
+async function river() {
+  const l = await getJSON(EA_LATEST);
+  const r = await getJSON(EA_RECENT);
 
-  const level = Number(latest.items?.[0]?.value);
-  const time = latest.items?.[0]?.dateTime;
+  const level = Number(l.items?.[0]?.value);
+  const time = l.items?.[0]?.dateTime;
 
   let movement = null;
   let trend = "Steady";
 
-  if (recent.items?.length > 1) {
-    const newest = recent.items[recent.items.length - 1].value;
-    const older = recent.items[0].value;
+  if (r.items?.length > 1) {
+    const newest = r.items[r.items.length-1].value;
+    const oldest = r.items[0].value;
 
-    movement = newest - older;
+    movement = newest - oldest;
 
     if (movement > 0.02) trend = "Rising";
     else if (movement < -0.02) trend = "Falling";
@@ -179,15 +173,15 @@ async function getRiver() {
   return { level, time, movement, trend };
 }
 
-async function getWeather() {
-  const data = await fetchJSON(WEATHER_URL);
+async function weather() {
+  const d = await getJSON(WEATHER);
 
-  const temp = data.current?.temperature_2m;
-  const rainNow = data.current?.precipitation;
+  const temp = d.current?.temperature_2m;
+  const rainNow = d.current?.precipitation;
 
   let rain6h = null;
-  if (data.hourly?.precipitation) {
-    rain6h = data.hourly.precipitation.reduce((a,b)=>a+b,0);
+  if (d.hourly?.precipitation) {
+    rain6h = d.hourly.precipitation.reduce((a,b)=>a+b,0);
   }
 
   return { temp, rainNow, rain6h };
@@ -197,16 +191,14 @@ async function getWeather() {
 function render(r, w) {
   return `
   <div class="card">
-    <div class="title">Ribble @ Henthorn</div>
+    <div class="title">Live Conditions</div>
     <div class="sub">EA station 710305</div>
 
-    <div class="big-level">
-      ${safe(r.level, " m")}
-    </div>
+    <div class="level">${safe(r.level, " m")}</div>
 
     <div class="row">
-      <span class="pill good">${r.trend}</span>
-      <span class="pill info">${ageText(r.time)}</span>
+      <span class="pill">${r.trend}</span>
+      <span class="pill info">${age(r.time)}</span>
     </div>
 
     <div class="grid">
@@ -233,17 +225,17 @@ function render(r, w) {
 
       <div class="stat">
         <div class="stat-label">Water Temp</div>
-        <div class="stat-value">Not connected</div>
+        <div class="stat-value">—</div>
       </div>
 
     </div>
   </div>
 
   <div class="card">
-    <div class="section-title">Ribble Salmon Intel</div>
+    <div class="title">Ribble Intel</div>
 
     <div class="small">
-      RFCA, club updates and wider salmon reports to be integrated here.
+      External reports and catch signals (RFCA, clubs, media).
     </div>
 
     <div class="links">
@@ -256,16 +248,16 @@ function render(r, w) {
 }
 
 // ---------- INIT ----------
-async function load() {
-  const river = await getRiver();
-  const weather = await getWeather();
-  document.getElementById("content").innerHTML = render(river, weather);
+async function init() {
+  const r = await river();
+  const w = await weather();
+  document.getElementById("content").innerHTML = render(r, w);
 }
 
-// refresh every 5 mins
-setInterval(load, 300000);
+// refresh every 5 min
+setInterval(init, 300000);
 
-load();
+init();
 
 </script>
 
