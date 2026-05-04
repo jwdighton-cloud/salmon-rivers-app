@@ -36,7 +36,6 @@ h1 {
 .title {
   font-size: 22px;
   font-weight: 700;
-  margin-bottom: 4px;
 }
 
 .sub {
@@ -46,28 +45,28 @@ h1 {
 }
 
 .big-level {
-  font-size: 54px;
+  font-size: 52px;
   font-weight: 800;
-  margin: 8px 0;
+  margin: 6px 0;
 }
 
 .unit {
-  font-size: 22px;
+  font-size: 20px;
   color: #555;
 }
 
 .row {
   display: flex;
-  flex-wrap: wrap;
   gap: 8px;
+  flex-wrap: wrap;
   margin: 10px 0;
 }
 
 .pill {
-  padding: 7px 12px;
+  padding: 6px 12px;
   border-radius: 999px;
   background: #e6e6e6;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
 }
 
@@ -84,17 +83,17 @@ h1 {
 
 .stat {
   background: #f1f3f4;
-  border-radius: 16px;
-  padding: 12px;
+  border-radius: 14px;
+  padding: 10px;
 }
 
 .stat-label {
-  font-size: 13px;
+  font-size: 12px;
   color: #666;
 }
 
 .stat-value {
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 700;
 }
 
@@ -107,16 +106,16 @@ h1 {
 .links a {
   display: block;
   background: #eef2ff;
-  border-radius: 14px;
-  padding: 11px;
+  border-radius: 12px;
+  padding: 10px;
   margin-top: 8px;
-  color: #1a0dab;
   text-decoration: none;
+  color: #1a0dab;
   font-weight: 600;
 }
 
 .small {
-  font-size: 13px;
+  font-size: 12px;
   color: #666;
 }
 </style>
@@ -125,44 +124,54 @@ h1 {
 <body>
 
 <div class="app">
-
 <h1>Salmon Rivers Intelligence</h1>
-
 <div id="content"></div>
-
 </div>
 
 <script>
 
+// ---------- CONFIG ----------
 const EA_URL = "https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?latest";
 const EA_RECENT = "https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=12";
 
 const WEATHER_URL =
 "https://api.open-meteo.com/v1/forecast?latitude=53.84&longitude=-2.43&current=temperature_2m,precipitation&hourly=precipitation&past_hours=6&timezone=Europe%2FLondon";
 
+// ---------- HELPERS ----------
 async function fetchJSON(url) {
   const res = await fetch(url, { cache: "no-store" });
   return await res.json();
 }
 
 function ageText(dt) {
+  if (!dt) return "unknown";
   const mins = Math.round((Date.now() - new Date(dt)) / 60000);
   if (mins < 60) return mins + " min old";
   return Math.round(mins / 60) + " hr old";
 }
 
+function safe(val, suffix = "") {
+  if (val === null || val === undefined || isNaN(val)) return "—";
+  return Number(val).toFixed(1) + suffix;
+}
+
+// ---------- DATA ----------
 async function getRiver() {
   const latest = await fetchJSON(EA_URL);
   const recent = await fetchJSON(EA_RECENT);
 
-  const level = latest.items[0].value;
-  const time = latest.items[0].dateTime;
+  const level = Number(latest.items?.[0]?.value);
+  const time = latest.items?.[0]?.dateTime;
 
-  let movement = 0;
+  let movement = null;
   let trend = "Steady";
 
-  if (recent.items.length > 1) {
-    movement = recent.items[recent.items.length - 1].value - recent.items[0].value;
+  if (recent.items?.length > 1) {
+    const newest = recent.items[recent.items.length - 1].value;
+    const older = recent.items[0].value;
+
+    movement = newest - older;
+
     if (movement > 0.02) trend = "Rising";
     else if (movement < -0.02) trend = "Falling";
   }
@@ -173,21 +182,27 @@ async function getRiver() {
 async function getWeather() {
   const data = await fetchJSON(WEATHER_URL);
 
-  const temp = data.current.temperature_2m;
-  const rainNow = data.current.precipitation;
+  const temp = data.current?.temperature_2m;
+  const rainNow = data.current?.precipitation;
 
-  const rain6h = data.hourly.precipitation.reduce((a, b) => a + b, 0);
+  let rain6h = null;
+  if (data.hourly?.precipitation) {
+    rain6h = data.hourly.precipitation.reduce((a,b)=>a+b,0);
+  }
 
   return { temp, rainNow, rain6h };
 }
 
+// ---------- UI ----------
 function render(r, w) {
   return `
   <div class="card">
     <div class="title">Ribble @ Henthorn</div>
     <div class="sub">EA station 710305</div>
 
-    <div class="big-level">${r.level.toFixed(2)} <span class="unit">m</span></div>
+    <div class="big-level">
+      ${safe(r.level, " m")}
+    </div>
 
     <div class="row">
       <span class="pill good">${r.trend}</span>
@@ -195,37 +210,40 @@ function render(r, w) {
     </div>
 
     <div class="grid">
+
       <div class="stat">
         <div class="stat-label">Movement</div>
-        <div class="stat-value">${r.movement.toFixed(2)} m</div>
+        <div class="stat-value">${safe(r.movement, " m")}</div>
       </div>
 
       <div class="stat">
         <div class="stat-label">Air Temp</div>
-        <div class="stat-value">${w.temp.toFixed(1)}°C</div>
+        <div class="stat-value">${safe(w.temp, "°C")}</div>
       </div>
 
       <div class="stat">
         <div class="stat-label">Rain Now</div>
-        <div class="stat-value">${w.rainNow.toFixed(1)} mm</div>
+        <div class="stat-value">${safe(w.rainNow, " mm")}</div>
       </div>
 
       <div class="stat">
         <div class="stat-label">Rain 6h</div>
-        <div class="stat-value">${w.rain6h.toFixed(1)} mm</div>
+        <div class="stat-value">${safe(w.rain6h, " mm")}</div>
       </div>
 
       <div class="stat">
         <div class="stat-label">Water Temp</div>
-        <div class="stat-value">Not available</div>
+        <div class="stat-value">Not connected</div>
       </div>
+
     </div>
   </div>
 
   <div class="card">
     <div class="section-title">Ribble Salmon Intel</div>
+
     <div class="small">
-      RFCA, clubs, and angler reports to be integrated here.
+      RFCA, club updates and wider salmon reports to be integrated here.
     </div>
 
     <div class="links">
@@ -237,13 +255,14 @@ function render(r, w) {
   `;
 }
 
+// ---------- INIT ----------
 async function load() {
   const river = await getRiver();
   const weather = await getWeather();
   document.getElementById("content").innerHTML = render(river, weather);
 }
 
-// 🔄 auto refresh every 5 mins
+// refresh every 5 mins
 setInterval(load, 300000);
 
 load();
