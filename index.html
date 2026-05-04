@@ -12,52 +12,63 @@ body {
   background: #f4f6f7;
   color: #111;
 }
+
 .app {
   max-width: 640px;
   margin: auto;
   padding: 14px;
 }
+
 h1 {
   text-align: center;
   font-size: 24px;
   margin: 16px 0;
 }
+
 .card {
   background: #fff;
-  border-radius: 18px;
+  border-radius: 20px;
   padding: 16px;
   margin-bottom: 14px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
+
 .title {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
 }
+
 .sub {
   font-size: 13px;
   color: #666;
   margin-bottom: 10px;
 }
+
 .level {
-  font-size: 46px;
+  font-size: 48px;
   font-weight: 800;
+  margin: 6px 0;
 }
+
 .unit {
   font-size: 18px;
   color: #555;
 }
+
 .row {
   display: flex;
   gap: 8px;
   margin-top: 8px;
 }
+
 .pill {
-  padding: 5px 10px;
+  padding: 6px 10px;
   border-radius: 999px;
   background: #e6e6e6;
   font-size: 12px;
   font-weight: 600;
 }
+
 .info { background: #dbeafe; }
 
 .grid {
@@ -66,19 +77,23 @@ h1 {
   gap: 8px;
   margin-top: 12px;
 }
+
 .stat {
   background: #f1f3f4;
   border-radius: 12px;
   padding: 10px;
 }
+
 .stat-label {
   font-size: 11px;
   color: #666;
 }
+
 .stat-value {
   font-size: 15px;
   font-weight: 700;
 }
+
 .links a {
   display: block;
   background: #eef2ff;
@@ -89,6 +104,7 @@ h1 {
   color: #1a0dab;
   font-weight: 600;
 }
+
 .small {
   font-size: 12px;
   color: #666;
@@ -99,19 +115,23 @@ h1 {
 <body>
 
 <div class="app">
+
 <h1>Ribble @ Henthorn</h1>
+
 <div id="content"></div>
+
 </div>
 
 <script>
 
-// CONFIG
+// ---------- CONFIG ----------
 const EA_LATEST = "https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?latest";
 const EA_RECENT = "https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=12";
 
-const WEATHER = "https://api.open-meteo.com/v1/forecast?latitude=53.84&longitude=-2.43&current=temperature_2m,precipitation&hourly=precipitation&past_hours=6&timezone=Europe%2FLondon";
+const WEATHER =
+"https://api.open-meteo.com/v1/forecast?latitude=53.84&longitude=-2.43&current=temperature_2m,precipitation&hourly=precipitation&past_hours=6&timezone=Europe%2FLondon";
 
-// HELPERS
+// ---------- HELPERS ----------
 async function getJSON(url) {
   const r = await fetch(url, { cache: "no-store" });
   return await r.json();
@@ -129,8 +149,8 @@ function age(dt) {
   return Math.round(m/60) + " hr";
 }
 
-// DATA
-async function getRiver() {
+// ---------- DATA ----------
+async function river() {
   const l = await getJSON(EA_LATEST);
   const r = await getJSON(EA_RECENT);
 
@@ -141,7 +161,7 @@ async function getRiver() {
   let trend = "Steady";
 
   if (r.items?.length > 1) {
-    const newest = r.items[r.items.length - 1].value;
+    const newest = r.items[r.items.length-1].value;
     const oldest = r.items[0].value;
 
     movement = newest - oldest;
@@ -153,7 +173,7 @@ async function getRiver() {
   return { level, time, movement, trend };
 }
 
-async function getWeather() {
+async function weather() {
   const d = await getJSON(WEATHER);
 
   const temp = d.current?.temperature_2m;
@@ -167,7 +187,7 @@ async function getWeather() {
   return { temp, rainNow, rain6h };
 }
 
-// UI
+// ---------- UI ----------
 function render(r, w) {
   return `
   <div class="card">
@@ -182,6 +202,7 @@ function render(r, w) {
     </div>
 
     <div class="grid">
+
       <div class="stat">
         <div class="stat-label">Movement</div>
         <div class="stat-value">${safe(r.movement, " m")}</div>
@@ -206,12 +227,16 @@ function render(r, w) {
         <div class="stat-label">Water Temp</div>
         <div class="stat-value">—</div>
       </div>
+
     </div>
   </div>
 
   <div class="card">
     <div class="title">Ribble Intel</div>
-    <div class="small">External reports (RFCA, clubs, media).</div>
+
+    <div class="small">
+      External reports and catch signals (RFCA, clubs, media).
+    </div>
 
     <div class="links">
       <a href="https://check-for-flooding.service.gov.uk/station/5066" target="_blank">EA Gauge</a>
@@ -222,14 +247,14 @@ function render(r, w) {
   `;
 }
 
-// INIT
+// ---------- INIT ----------
 async function init() {
-  const r = await getRiver();
-  const w = await getWeather();
+  const r = await river();
+  const w = await weather();
   document.getElementById("content").innerHTML = render(r, w);
 }
 
-// auto refresh
+// refresh every 5 min
 setInterval(init, 300000);
 
 init();
