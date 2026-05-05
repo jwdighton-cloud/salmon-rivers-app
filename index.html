@@ -10,7 +10,6 @@
   --deep:#0b2f3a;
   --river:#0f4c5c;
   --gold:#d9a441;
-  --green:#cfead6;
   --blue:#dcecf4;
   --cream:#fff8e7;
   --bg:#edf3f5;
@@ -18,14 +17,22 @@
   --text:#101820;
   --muted:#607077;
 }
+
 *{box-sizing:border-box;}
+
 body{
   margin:0;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
   background:linear-gradient(180deg,#e6f1f4 0%,#f5f7f8 100%);
   color:var(--text);
 }
-.app{max-width:680px;margin:auto;padding:16px;}
+
+.app{
+  max-width:680px;
+  margin:auto;
+  padding:16px;
+}
+
 .header{
   background:linear-gradient(135deg,var(--deep),var(--river));
   color:white;
@@ -34,6 +41,7 @@ body{
   margin:8px 0 18px;
   box-shadow:0 10px 24px rgba(15,76,92,.22);
 }
+
 .brand{
   font-size:15px;
   font-weight:800;
@@ -41,8 +49,18 @@ body{
   text-transform:uppercase;
   color:#d7edf2;
 }
-.header h1{margin:8px 0 4px;font-size:34px;line-height:1.05;}
-.subtitle{color:#cde6ec;font-size:15px;}
+
+.header h1{
+  margin:8px 0 4px;
+  font-size:34px;
+  line-height:1.05;
+}
+
+.subtitle{
+  color:#cde6ec;
+  font-size:15px;
+}
+
 .card{
   background:var(--card);
   border-radius:24px;
@@ -50,20 +68,82 @@ body{
   margin-bottom:16px;
   box-shadow:0 8px 22px rgba(0,0,0,.07);
 }
-.card-title{font-size:21px;font-weight:900;margin-bottom:4px;}
-.source{color:var(--muted);font-size:13px;margin-bottom:14px;}
-.level-wrap{display:flex;align-items:flex-end;gap:8px;margin:6px 0 10px;}
-.level{font-size:72px;font-weight:900;letter-spacing:-.05em;line-height:.95;}
-.unit{font-size:24px;font-weight:800;color:var(--muted);margin-bottom:7px;}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;}
-.chip{border-radius:999px;padding:8px 12px;font-weight:800;font-size:14px;}
-.chip-green{background:var(--green);}
+
+.card-title{
+  font-size:21px;
+  font-weight:900;
+  margin-bottom:4px;
+}
+
+.source{
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:14px;
+}
+
+.level-wrap{
+  display:flex;
+  align-items:flex-end;
+  gap:8px;
+  margin:6px 0 10px;
+}
+
+.level{
+  font-size:72px;
+  font-weight:900;
+  letter-spacing:-.05em;
+  line-height:.95;
+}
+
+.unit{
+  font-size:24px;
+  font-weight:800;
+  color:var(--muted);
+  margin-bottom:7px;
+}
+
+.chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:12px 0;
+}
+
+.chip{
+  border-radius:999px;
+  padding:8px 12px;
+  font-weight:800;
+  font-size:14px;
+}
+
 .chip-blue{background:var(--blue);}
 .chip-gold{background:var(--cream);color:#7a5600;}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;}
-.stat{background:#f2f6f7;border-radius:18px;padding:14px;min-height:82px;}
-.stat-label{color:var(--muted);font-size:13px;margin-bottom:6px;}
-.stat-value{font-size:21px;font-weight:900;}
+
+.stats{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:14px;
+}
+
+.stat{
+  background:#f2f6f7;
+  border-radius:18px;
+  padding:14px;
+  min-height:82px;
+}
+
+.stat-label{
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:6px;
+}
+
+.stat-value{
+  font-size:21px;
+  font-weight:900;
+}
+
 .notice{
   background:#fff8e7;
   border-left:5px solid var(--gold);
@@ -74,12 +154,14 @@ body{
   line-height:1.45;
   margin-top:14px;
 }
+
 .fact{
   background:#f2f6f7;
   border-radius:18px;
   padding:14px;
   margin-top:10px;
 }
+
 .fact-tag{
   display:inline-block;
   font-size:12px;
@@ -90,11 +172,38 @@ body{
   font-weight:900;
   margin-bottom:8px;
 }
-.fact-title{font-size:17px;font-weight:900;margin-bottom:6px;}
-.fact-text{font-size:14px;color:#333;line-height:1.45;}
-.fact-source{font-size:12px;color:var(--muted);font-weight:800;margin-top:8px;}
-.footer{text-align:center;color:var(--muted);font-size:12px;padding:8px 0 20px;}
-.loading{color:var(--muted);font-weight:700;}
+
+.fact-title{
+  font-size:17px;
+  font-weight:900;
+  margin-bottom:6px;
+}
+
+.fact-text{
+  font-size:14px;
+  color:#333;
+  line-height:1.45;
+}
+
+.fact-source{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+  margin-top:8px;
+}
+
+.footer{
+  text-align:center;
+  color:var(--muted);
+  font-size:12px;
+  padding:8px 0 20px;
+}
+
+.loading{
+  color:var(--muted);
+  font-weight:700;
+}
+
 @media(max-width:480px){
   .header h1{font-size:30px;}
   .level{font-size:64px;}
@@ -109,7 +218,7 @@ body{
 <section class="header">
   <div class="brand">Salmon Rivers Intelligence</div>
   <h1>Ribble at Henthorn</h1>
-  <div class="subtitle">Live Henthorn level · current Ribble catch intelligence</div>
+  <div class="subtitle">Live Henthorn level · verified current-season facts only</div>
 </section>
 
 <main id="content">
@@ -120,7 +229,7 @@ body{
   </section>
 </main>
 
-<div class="footer">Gold Build 10046</div>
+<div class="footer">Gold Build 10047</div>
 </div>
 
 <script>
@@ -166,16 +275,6 @@ function fullTime(dt){
   });
 }
 
-function henthornBand(level){
-  if(level === null || isNaN(level)) return "Unknown";
-  if(level < 0.30) return "Low";
-  if(level < 0.38) return "Low fishable";
-  if(level <= 0.45) return "Prime range";
-  if(level <= 0.70) return "Good range";
-  if(level <= 1.10) return "High";
-  return "Very high";
-}
-
 function trendFromMovement(movement){
   if(movement === null || isNaN(movement)) return "Unknown";
   if(movement > 0.02) return "Rising";
@@ -204,8 +303,7 @@ async function getRiver(){
     level,
     time,
     movement,
-    trend: trendFromMovement(movement),
-    band: henthornBand(level)
+    trend: trendFromMovement(movement)
   };
 }
 
@@ -221,7 +319,6 @@ function renderLive(r){
       </div>
 
       <div class="chips">
-        <span class="chip chip-green">${r.band}</span>
         <span class="chip chip-blue">${r.trend}</span>
         <span class="chip chip-gold">${ageText(r.time)}</span>
       </div>
@@ -249,7 +346,7 @@ function renderLive(r){
       </div>
 
       <div class="notice">
-        Water temperature and rainfall are deliberately not guessed. They will only be shown when a trusted live source is connected.
+        River-height labels such as “prime” or “good” have been removed. This panel shows measured data only unless a trusted source supports the interpretation.
       </div>
     </section>
   `;
@@ -259,7 +356,7 @@ function renderIntel(){
   return `
     <section class="card">
       <div class="card-title">Ribble Salmon Intelligence</div>
-      <div class="source">Current-season facts only. No historic returns shown here.</div>
+      <div class="source">Current-season facts only. No historic totals and no unsupported claims.</div>
 
       <div class="fact">
         <div class="fact-tag">13 Apr 2026 · Catch signal</div>
@@ -272,7 +369,7 @@ function renderIntel(){
 
       <div class="fact">
         <div class="fact-tag">30 Jan 2026 · River condition</div>
-        <div class="fact-title">Good steady height, but likely still early</div>
+        <div class="fact-title">Good steady height reported, but likely still early</div>
         <div class="fact-text">
           River Ribble 2026 angler discussion described the river as a good height and steady, while noting it was probably still too early for reliable catches.
         </div>
@@ -283,14 +380,14 @@ function renderIntel(){
         <div class="fact-tag">2026 · Current total</div>
         <div class="fact-title">No verified 2026 Ribble salmon total found</div>
         <div class="fact-text">
-          No reliable published 2026 whole-river salmon catch total was found. This app therefore does not show a current numerical total.
+          No reliable published 2026 whole-river salmon catch total has been verified. This app therefore does not show a current numerical total.
         </div>
         <div class="fact-source">Status: not published / not verified</div>
       </div>
 
       <div class="fact">
         <div class="fact-tag">Current rule · Skirbeck water</div>
-        <div class="fact-title">Salmon and sea trout catches must be reported</div>
+        <div class="fact-title">Salmon and sea-trout catches must be reported</div>
         <div class="fact-text">
           BCAA’s River Ribble Skirbeck rules state that all catches of salmon and sea trout must be reported with details via catch return.
         </div>
