@@ -127,7 +127,7 @@ body{
   </section>
 </main>
 
-<div class="footer">Gold Build 10049</div>
+<div class="footer">Gold Build 10050</div>
 </div>
 
 <script>
@@ -245,7 +245,7 @@ function renderLive(r){
       </div>
 
       <div class="notice">
-        This panel shows measured or verified data only. No inferred “fishability” ratings, no guessed water temperature, and no unverified rainfall.
+        This panel shows measured or verified data only. No inferred fishability ratings, no guessed water temperature, and no unverified rainfall.
       </div>
     </section>
   `;
@@ -258,19 +258,19 @@ function renderIntel(){
       <div class="source">Current-season Ribble salmon facts only. No sea-trout, trout, or mixed-species figures.</div>
 
       <div class="fact">
-        <div class="fact-tag">Last verified salmon signal</div>
-        <div class="fact-title">13 Apr 2026 — fish continuing to be caught across the catchment</div>
+        <div class="fact-tag">Latest verified salmon signal</div>
+        <div class="fact-title">13 Apr 2026 — salmon catches reported across the catchment</div>
         <div class="fact-text">
-          Current visible River Ribble catch-report wording states that fish were continuing to be caught across the catchment during the week commencing 13 April 2026.
+          Publicly visible River Ribble catch-report wording states that fish were continuing to be caught across the catchment during the week commencing 13 April 2026. This is the latest current-season catch signal currently held in the app.
         </div>
-        <div class="fact-source">Source: River Ribble Catch Reports</div>
+        <div class="fact-source">Source: River Ribble Catch Reports · verified public snippet</div>
       </div>
 
       <div class="fact">
         <div class="fact-tag">Current salmon total</div>
-        <div class="fact-title">No verified 2026 Ribble salmon total found</div>
+        <div class="fact-title">No verified 2026 whole-river salmon total found</div>
         <div class="fact-text">
-          No reliable published 2026 whole-river Atlantic salmon catch total has been verified. This app therefore does not display a current numerical total.
+          No reliable public 2026 River Ribble Atlantic salmon total has been verified. The app therefore does not display a current numerical total.
         </div>
         <div class="fact-source">Status: not published / not verified</div>
       </div>
@@ -279,18 +279,27 @@ function renderIntel(){
         <div class="fact-tag">Current discussion source</div>
         <div class="fact-title">River Ribble 2026 active thread</div>
         <div class="fact-text">
-          The current River Ribble 2026 thread is the active source to monitor for new angler observations, salmon catch mentions, and river-condition discussion.
+          The River Ribble 2026 discussion thread is the active public source to monitor for fresh salmon catch mentions, river-condition discussion, and angler observations.
         </div>
         <div class="fact-source">Source: Salmon Fishing Forum — River Ribble 2026</div>
       </div>
 
       <div class="fact">
-        <div class="fact-tag">30 Jan 2026 · River condition</div>
+        <div class="fact-tag">30 Jan 2026 · river condition</div>
         <div class="fact-title">Good steady height reported, but likely still early</div>
         <div class="fact-text">
           River Ribble 2026 discussion described the river as a good steady height while noting it was probably still early for reliable salmon catches.
         </div>
         <div class="fact-source">Source: Salmon Fishing Forum — River Ribble 2026</div>
+      </div>
+
+      <div class="fact">
+        <div class="fact-tag">Catch reporting status</div>
+        <div class="fact-title">No live official catch-return feed connected</div>
+        <div class="fact-text">
+          A live official salmon catch-return feed has not been found or connected. Future builds should use a backend JSON feed if automated daily catch intelligence is required.
+        </div>
+        <div class="fact-source">Status: frontend-only GitHub Pages app</div>
       </div>
     </section>
   `;
