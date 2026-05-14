@@ -218,7 +218,7 @@ body{
 <section class="header">
   <div class="brand">Salmon Rivers Intelligence</div>
   <h1>Ribble at Henthorn</h1>
-  <div class="subtitle">Live Henthorn level · verified current-season facts only</div>
+  <div class="subtitle">Atlantic salmon intelligence · verified current-season facts only</div>
 </section>
 
 <main id="content">
@@ -229,7 +229,7 @@ body{
   </section>
 </main>
 
-<div class="footer">Gold Build 10047</div>
+<div class="footer">Gold Build 10048</div>
 </div>
 
 <script>
@@ -291,6 +291,7 @@ async function getRiver(){
 
   const level = Number(latestItem.value);
   const time = latestItem.dateTime;
+
   let movement = null;
 
   if(recent.items && recent.items.length > 1){
@@ -346,7 +347,7 @@ function renderLive(r){
       </div>
 
       <div class="notice">
-        River-height labels such as “prime” or “good” have been removed. This panel shows measured data only unless a trusted source supports the interpretation.
+        This panel only shows measured or verified data. No inferred “fishability” ratings are used.
       </div>
     </section>
   `;
@@ -355,14 +356,14 @@ function renderLive(r){
 function renderIntel(){
   return `
     <section class="card">
-      <div class="card-title">Ribble Salmon Intelligence</div>
-      <div class="source">Current-season facts only. No historic totals and no unsupported claims.</div>
+      <div class="card-title">Atlantic Salmon Intelligence</div>
+      <div class="source">Current-season Ribble salmon facts only.</div>
 
       <div class="fact">
         <div class="fact-tag">13 Apr 2026 · Catch signal</div>
         <div class="fact-title">Fish continuing to be caught across the catchment</div>
         <div class="fact-text">
-          Current visible River Ribble catch-report snippet states that fish were continuing to be caught across the catchment during the week commencing 13 April 2026.
+          Current visible River Ribble catch-report snippet states that salmon were continuing to be caught across the catchment during the week commencing 13 April 2026.
         </div>
         <div class="fact-source">Source: River Ribble Catch Reports</div>
       </div>
@@ -371,28 +372,20 @@ function renderIntel(){
         <div class="fact-tag">30 Jan 2026 · River condition</div>
         <div class="fact-title">Good steady height reported, but likely still early</div>
         <div class="fact-text">
-          River Ribble 2026 angler discussion described the river as a good height and steady, while noting it was probably still too early for reliable catches.
+          River Ribble 2026 angler discussion described the river as a good steady height while noting it was probably still early for reliable salmon catches.
         </div>
         <div class="fact-source">Source: Salmon Fishing Forum — River Ribble 2026</div>
       </div>
 
       <div class="fact">
-        <div class="fact-tag">2026 · Current total</div>
-        <div class="fact-title">No verified 2026 Ribble salmon total found</div>
+        <div class="fact-tag">2026 · Published totals</div>
+        <div class="fact-title">No verified current-season salmon total found</div>
         <div class="fact-text">
-          No reliable published 2026 whole-river salmon catch total has been verified. This app therefore does not show a current numerical total.
+          No reliable published 2026 Ribble Atlantic salmon catch total has been verified. This app therefore does not display a current numerical total.
         </div>
         <div class="fact-source">Status: not published / not verified</div>
       </div>
 
-      <div class="fact">
-        <div class="fact-tag">Current rule · Skirbeck water</div>
-        <div class="fact-title">Salmon and sea-trout catches must be reported</div>
-        <div class="fact-text">
-          BCAA’s River Ribble Skirbeck rules state that all catches of salmon and sea trout must be reported with details via catch return.
-        </div>
-        <div class="fact-source">Source: Bradford City AA — River Ribble Skirbeck</div>
-      </div>
     </section>
   `;
 }
