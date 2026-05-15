@@ -41,6 +41,11 @@ body{margin:0;background:#0f1114;color:#f2f2f2;font-family:-apple-system,BlinkMa
 .statusManual{color:#87bfff}
 .statusBlocked{color:#ff8b8b}
 .statusDormant{color:#9aa4af}
+.trustRow{display:grid;grid-template-columns:34px 1fr;gap:10px;padding:11px 0;border-bottom:1px solid #232a32;align-items:start}
+.trustRow:last-child{border-bottom:none}
+.trustNumber{width:26px;height:26px;border-radius:50%;background:#101419;border:1px solid #2a333d;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#b9c2ca}
+.trustText{font-size:14px;line-height:1.45;color:#d8dee5}
+.trustSub{font-size:12px;color:#95a0ab;margin-top:3px;line-height:1.4}
 .footer{margin-top:26px;font-size:12px;line-height:1.7;color:#7e8893;text-align:center}
 .liveDot,.warnDot,.badDot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:middle}
 .liveDot{background:#37d67a}
@@ -69,7 +74,7 @@ River Ribble — Henthorn only<br>
 Environment Agency station 710305<br>
 Verified-data intelligence terminal
 </div>
-<div class="version">Build 10056</div>
+<div class="version">Build 10057</div>
 </div>
 
 <div class="card">
@@ -117,6 +122,107 @@ Verified-data intelligence terminal
 
 <div class="statusBar" id="rainStatus">
 <span class="warnDot"></span>Rainfall integration loading. No rainfall estimate will be shown.
+</div>
+</div>
+
+<div class="card">
+<div class="cardTitle">Current Intelligence Position</div>
+
+<div class="intelItem">
+<div class="intelSource">EA Henthorn</div>
+<div class="intelHeadline">Live level is the primary trusted signal</div>
+<div class="intelText" id="summaryLevel">Waiting for current Henthorn telemetry.</div>
+</div>
+
+<div class="intelItem">
+<div class="intelSource">EA Rainfall</div>
+<div class="intelHeadline">Rainfall is the secondary telemetry signal</div>
+<div class="intelText" id="summaryRain">Waiting for nearest official rainfall station reading.</div>
+</div>
+
+<div class="intelItem">
+<div class="intelSource">System Discipline</div>
+<div class="intelHeadline">No fishing-condition judgement yet</div>
+<div class="intelText">
+This build does not call the river good, poor or prime. It reports facts only until measured criteria are agreed and evidenced.
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="cardTitle">Operator / Local Intelligence</div>
+
+<div class="intelItem">
+<div class="intelDate">15 Apr 2026</div>
+<div class="intelSource">RFCA catchment update</div>
+<div class="intelHeadline">Recent rainfall created conditions for fresh fish movement</div>
+<div class="intelText">
+RFCA’s Spring 2026 catchment update says recent rainfall had put needed water into the system and created conditions for fresh fish movement. This is treated as catchment intelligence, not a current catch count.
+</div>
+<a class="sourceLink" href="https://www.ribblefisheriesca.co.uk/category/blog/" target="_blank" rel="noopener">Open RFCA blog</a>
+</div>
+
+<div class="intelItem">
+<div class="intelDate">2026 season</div>
+<div class="intelSource">Salmon Fishing Forum</div>
+<div class="intelHeadline">River Ribble 2026 discussion source identified</div>
+<div class="intelText">
+A live-season River Ribble 2026 discussion thread exists. This build links it as a manual review source only; no forum claims are scraped, summarised, or converted into app facts.
+</div>
+<a class="sourceLink" href="https://www.salmonfishingforum.com/threads/river-ribble-2026.292508/" target="_blank" rel="noopener">Open River Ribble 2026 thread</a>
+</div>
+
+<div class="intelItem">
+<div class="intelDate">Gold rule</div>
+<div class="intelSource">Manual entry standard</div>
+<div class="intelHeadline">Allowed intelligence format</div>
+<div class="intelText">
+Future local entries must be date-labelled, source-labelled and factual: water colour, level behaviour, fish movement, operator note, or confirmed report. No invented catches. No “prime” wording.
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="cardTitle">Trust Hierarchy</div>
+
+<div class="trustRow">
+<div class="trustNumber">1</div>
+<div>
+<div class="trustText">Live official API telemetry</div>
+<div class="trustSub">EA Henthorn level and EA rainfall readings where successfully returned.</div>
+</div>
+</div>
+
+<div class="trustRow">
+<div class="trustNumber">2</div>
+<div>
+<div class="trustText">Official organisation updates</div>
+<div class="trustSub">RFCA, Ribble Trust, Environment Agency and other named bodies.</div>
+</div>
+</div>
+
+<div class="trustRow">
+<div class="trustNumber">3</div>
+<div>
+<div class="trustText">Manual local intelligence</div>
+<div class="trustSub">Dated and source-labelled operator, club, or angler observations.</div>
+</div>
+</div>
+
+<div class="trustRow">
+<div class="trustNumber">4</div>
+<div>
+<div class="trustText">Forum and community reports</div>
+<div class="trustSub">Useful for awareness, but not converted into app facts without manual verification.</div>
+</div>
+</div>
+
+<div class="trustRow">
+<div class="trustNumber">5</div>
+<div>
+<div class="trustText">Unverified social chatter</div>
+<div class="trustSub">Not used for live values or condition judgement.</div>
+</div>
 </div>
 </div>
 
@@ -171,39 +277,6 @@ Verified-data intelligence terminal
 </div>
 
 <div class="card">
-<div class="cardTitle">Operator / Local Intelligence</div>
-
-<div class="intelItem">
-<div class="intelDate">15 Apr 2026</div>
-<div class="intelSource">RFCA catchment update</div>
-<div class="intelHeadline">Recent rainfall created conditions for fresh fish movement</div>
-<div class="intelText">
-RFCA’s Spring 2026 catchment update says recent rainfall had put needed water into the system and created conditions for fresh fish movement. This is treated as catchment intelligence, not a current catch count.
-</div>
-<a class="sourceLink" href="https://www.ribblefisheriesca.co.uk/category/blog/" target="_blank" rel="noopener">Open RFCA blog</a>
-</div>
-
-<div class="intelItem">
-<div class="intelDate">2026 season</div>
-<div class="intelSource">Salmon Fishing Forum</div>
-<div class="intelHeadline">River Ribble 2026 discussion source identified</div>
-<div class="intelText">
-A live-season River Ribble 2026 discussion thread exists. This build links it as a manual review source only; no forum claims are scraped, summarised, or converted into app facts.
-</div>
-<a class="sourceLink" href="https://www.salmonfishingforum.com/threads/river-ribble-2026.292508/" target="_blank" rel="noopener">Open River Ribble 2026 thread</a>
-</div>
-
-<div class="intelItem">
-<div class="intelDate">Gold rule</div>
-<div class="intelSource">Manual entry standard</div>
-<div class="intelHeadline">Allowed intelligence format</div>
-<div class="intelText">
-Future local entries must be date-labelled, source-labelled and factual: water colour, level behaviour, fish movement, operator note, or confirmed report. No invented catches. No “prime” wording.
-</div>
-</div>
-</div>
-
-<div class="card">
 <div class="cardTitle">RFCA Temperature Status</div>
 
 <div class="intelItem">
@@ -216,31 +289,7 @@ RFCA publicly confirms live water-quality monitoring for anglers, including temp
 <div class="intelItem">
 <div class="intelHeadline">Direct temperature feed not yet verified</div>
 <div class="intelText">
-Build 10056 does not display a water temperature value because no stable public JSON/API feed has yet been verified.
-</div>
-</div>
-</div>
-
-<div class="card">
-<div class="cardTitle">Current Intelligence Position</div>
-
-<div class="intelItem">
-<div class="intelSource">EA Henthorn</div>
-<div class="intelHeadline">Live level is the primary trusted signal</div>
-<div class="intelText" id="summaryLevel">Waiting for current Henthorn telemetry.</div>
-</div>
-
-<div class="intelItem">
-<div class="intelSource">EA Rainfall</div>
-<div class="intelHeadline">Rainfall is now treated as a verified telemetry target</div>
-<div class="intelText" id="summaryRain">Waiting for nearest official rainfall station reading.</div>
-</div>
-
-<div class="intelItem">
-<div class="intelSource">System Discipline</div>
-<div class="intelHeadline">No fishing-condition judgement yet</div>
-<div class="intelText">
-This build does not call the river good, poor or prime. It reports facts only until measured criteria are agreed and evidenced.
+Build 10057 does not display a water temperature value because no stable public JSON/API feed has yet been verified.
 </div>
 </div>
 </div>
