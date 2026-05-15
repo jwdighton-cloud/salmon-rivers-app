@@ -31,6 +31,16 @@ body{margin:0;background:#0f1114;color:#f2f2f2;font-family:-apple-system,BlinkMa
 .intelHeadline{font-size:16px;font-weight:700;line-height:1.45;margin-bottom:6px}
 .intelText{font-size:14px;color:#bcc5ce;line-height:1.6}
 .sourceLink{display:inline-block;margin-top:8px;font-size:13px;color:#87bfff;text-decoration:none}
+.registerRow{display:grid;grid-template-columns:1.2fr .9fr .8fr;gap:10px;padding:13px 0;border-bottom:1px solid #232a32;align-items:start}
+.registerRow:last-child{border-bottom:none}
+.registerName{font-size:14px;font-weight:700;line-height:1.4}
+.registerType{font-size:13px;color:#b9c2ca;line-height:1.4}
+.registerStatus{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;line-height:1.4}
+.statusActive{color:#37d67a}
+.statusTesting{color:#ffcf70}
+.statusManual{color:#87bfff}
+.statusBlocked{color:#ff8b8b}
+.statusDormant{color:#9aa4af}
 .footer{margin-top:26px;font-size:12px;line-height:1.7;color:#7e8893;text-align:center}
 .liveDot,.warnDot,.badDot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:middle}
 .liveDot{background:#37d67a}
@@ -43,6 +53,7 @@ body{margin:0;background:#0f1114;color:#f2f2f2;font-family:-apple-system,BlinkMa
 .container{padding:14px}
 .mainLevel{font-size:48px}
 .grid{grid-template-columns:1fr}
+.registerRow{grid-template-columns:1fr}
 .card{padding:16px;border-radius:17px}
 }
 </style>
@@ -58,7 +69,7 @@ River Ribble — Henthorn only<br>
 Environment Agency station 710305<br>
 Verified-data intelligence terminal
 </div>
-<div class="version">Build 10055</div>
+<div class="version">Build 10056</div>
 </div>
 
 <div class="card">
@@ -110,6 +121,56 @@ Verified-data intelligence terminal
 </div>
 
 <div class="card">
+<div class="cardTitle">Source Register</div>
+
+<div class="registerRow">
+<div class="registerName">EA Henthorn Level</div>
+<div class="registerType">Live API telemetry</div>
+<div class="registerStatus statusActive">Active</div>
+</div>
+
+<div class="registerRow">
+<div class="registerName">EA Rainfall</div>
+<div class="registerType">Live API telemetry</div>
+<div class="registerStatus statusTesting">Testing</div>
+</div>
+
+<div class="registerRow">
+<div class="registerName">RFCA Temperature</div>
+<div class="registerType">Public dashboard</div>
+<div class="registerStatus statusBlocked">Feed not verified</div>
+</div>
+
+<div class="registerRow">
+<div class="registerName">RFCA Blog</div>
+<div class="registerType">Manual intelligence</div>
+<div class="registerStatus statusManual">Active manual</div>
+</div>
+
+<div class="registerRow">
+<div class="registerName">Ribble Trust Blog</div>
+<div class="registerType">Manual intelligence</div>
+<div class="registerStatus statusManual">Active manual</div>
+</div>
+
+<div class="registerRow">
+<div class="registerName">Salmon Fishing Forum</div>
+<div class="registerType">Manual review only</div>
+<div class="registerStatus statusDormant">Not automated</div>
+</div>
+
+<div class="registerRow">
+<div class="registerName">Facebook Groups</div>
+<div class="registerType">Community reports</div>
+<div class="registerStatus statusDormant">Not automated</div>
+</div>
+
+<div class="statusBar">
+<span class="warnDot"></span>Only Active live API sources are allowed to display live numerical values.
+</div>
+</div>
+
+<div class="card">
 <div class="cardTitle">Operator / Local Intelligence</div>
 
 <div class="intelItem">
@@ -133,44 +194,12 @@ A live-season River Ribble 2026 discussion thread exists. This build links it as
 </div>
 
 <div class="intelItem">
-<div class="intelDate">2026 season</div>
-<div class="intelSource">Facebook catch-report groups</div>
-<div class="intelHeadline">Catch-report communities identified, not automated</div>
-<div class="intelText">
-Public Facebook Ribble catch-report groups exist, but this build does not pull values from them because posts are not yet a stable verified machine feed.
-</div>
-</div>
-
-<div class="intelItem">
 <div class="intelDate">Gold rule</div>
 <div class="intelSource">Manual entry standard</div>
 <div class="intelHeadline">Allowed intelligence format</div>
 <div class="intelText">
 Future local entries must be date-labelled, source-labelled and factual: water colour, level behaviour, fish movement, operator note, or confirmed report. No invented catches. No “prime” wording.
 </div>
-</div>
-</div>
-
-<div class="card">
-<div class="cardTitle">Current Ribble Intelligence</div>
-
-<div class="intelItem">
-<div class="intelDate">15 May 2026</div>
-<div class="intelSource">System source check</div>
-<div class="intelHeadline">No verified automated Ribble catch feed confirmed yet</div>
-<div class="intelText">
-The intelligence layer is now structured, but automated catch totals remain blocked until a stable, traceable source is confirmed.
-</div>
-</div>
-
-<div class="intelItem">
-<div class="intelDate">May 2026</div>
-<div class="intelSource">Ribble Trust / RFCA watch</div>
-<div class="intelHeadline">Catchment and salmon-conservation sources retained</div>
-<div class="intelText">
-Ribble Rivers Trust and RFCA remain useful for catchment, conservation and season-context intelligence. They are not treated as live catch telemetry.
-</div>
-<a class="sourceLink" href="https://ribbletrust.org.uk/blog/" target="_blank" rel="noopener">Open Ribble Trust blog</a>
 </div>
 </div>
 
@@ -187,7 +216,7 @@ RFCA publicly confirms live water-quality monitoring for anglers, including temp
 <div class="intelItem">
 <div class="intelHeadline">Direct temperature feed not yet verified</div>
 <div class="intelText">
-Build 10055 does not display a water temperature value because no stable public JSON/API feed has yet been verified.
+Build 10056 does not display a water temperature value because no stable public JSON/API feed has yet been verified.
 </div>
 </div>
 </div>
