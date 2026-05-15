@@ -2,338 +2,503 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
 <title>Salmon Rivers Intelligence</title>
 
+<meta name="theme-color" content="#111111">
+
 <style>
-:root{
-  --deep:#0b2f3a;
-  --river:#0f4c5c;
-  --gold:#d9a441;
-  --blue:#dcecf4;
-  --cream:#fff8e7;
-  --bg:#edf3f5;
-  --card:#ffffff;
-  --text:#101820;
-  --muted:#607077;
+
+*{
+box-sizing:border-box;
+-webkit-tap-highlight-color:transparent;
 }
-*{box-sizing:border-box;}
+
 body{
-  margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-  background:linear-gradient(180deg,#e6f1f4 0%,#f5f7f8 100%);
-  color:var(--text);
+margin:0;
+background:#0f1114;
+color:#f2f2f2;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
 }
-.app{max-width:680px;margin:auto;padding:16px;}
+
+.container{
+max-width:700px;
+margin:auto;
+padding:18px;
+}
+
 .header{
-  background:linear-gradient(135deg,var(--deep),var(--river));
-  color:white;
-  border-radius:26px;
-  padding:22px 18px;
-  margin:8px 0 18px;
-  box-shadow:0 10px 24px rgba(15,76,92,.22);
+margin-bottom:20px;
 }
-.brand{
-  font-size:15px;
-  font-weight:800;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  color:#d7edf2;
+
+.title{
+font-size:28px;
+font-weight:700;
+letter-spacing:-0.5px;
 }
-.header h1{margin:8px 0 4px;font-size:34px;line-height:1.05;}
-.subtitle{color:#cde6ec;font-size:15px;}
+
+.subtitle{
+margin-top:6px;
+font-size:14px;
+color:#9aa4af;
+line-height:1.5;
+}
+
+.version{
+margin-top:10px;
+display:inline-block;
+font-size:12px;
+padding:4px 10px;
+border-radius:999px;
+background:#1c2229;
+color:#9fb3c8;
+}
+
 .card{
-  background:var(--card);
-  border-radius:24px;
-  padding:18px;
-  margin-bottom:16px;
-  box-shadow:0 8px 22px rgba(0,0,0,.07);
+background:#171b20;
+border:1px solid #232a32;
+border-radius:18px;
+padding:18px;
+margin-bottom:16px;
 }
-.card-title{font-size:21px;font-weight:900;margin-bottom:4px;}
-.source{color:var(--muted);font-size:13px;margin-bottom:14px;}
-.level-wrap{display:flex;align-items:flex-end;gap:8px;margin:6px 0 10px;}
-.level{font-size:72px;font-weight:900;letter-spacing:-.05em;line-height:.95;}
-.unit{font-size:24px;font-weight:800;color:var(--muted);margin-bottom:7px;}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;}
-.chip{border-radius:999px;padding:8px 12px;font-weight:800;font-size:14px;}
-.chip-blue{background:var(--blue);}
-.chip-gold{background:var(--cream);color:#7a5600;}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;}
-.stat{background:#f2f6f7;border-radius:18px;padding:14px;min-height:82px;}
-.stat-label{color:var(--muted);font-size:13px;margin-bottom:6px;}
-.stat-value{font-size:21px;font-weight:900;}
-.notice{
-  background:#fff8e7;
-  border-left:5px solid var(--gold);
-  border-radius:18px;
-  padding:13px 14px;
-  color:#4c3b12;
-  font-size:14px;
-  line-height:1.45;
-  margin-top:14px;
+
+.cardTitle{
+font-size:13px;
+text-transform:uppercase;
+letter-spacing:1px;
+color:#7d8b98;
+margin-bottom:14px;
+font-weight:600;
 }
-.fact{
-  background:#f2f6f7;
-  border-radius:18px;
-  padding:14px;
-  margin-top:10px;
+
+.mainLevel{
+font-size:58px;
+font-weight:700;
+line-height:1;
+margin-bottom:8px;
 }
-.fact-tag{
-  display:inline-block;
-  font-size:12px;
-  background:#e4edf0;
-  padding:4px 8px;
-  border-radius:999px;
-  color:#31515b;
-  font-weight:900;
-  margin-bottom:8px;
+
+.mainMeta{
+font-size:16px;
+color:#b9c2ca;
 }
-.fact-title{font-size:17px;font-weight:900;margin-bottom:6px;}
-.fact-text{font-size:14px;color:#333;line-height:1.45;}
-.fact-source{font-size:12px;color:var(--muted);font-weight:800;margin-top:8px;}
-.links a{
-  display:block;
-  text-decoration:none;
-  background:#eaf2f6;
-  color:#083f50;
-  font-weight:850;
-  border-radius:16px;
-  padding:13px;
-  margin-top:8px;
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin-top:16px;
 }
-.footer{text-align:center;color:var(--muted);font-size:12px;padding:8px 0 20px;}
-.loading{color:var(--muted);font-weight:700;}
-@media(max-width:480px){
-  .header h1{font-size:30px;}
-  .level{font-size:64px;}
-  .stats{grid-template-columns:1fr 1fr;}
+
+.metric{
+background:#101419;
+border-radius:14px;
+padding:14px;
+border:1px solid #1f252d;
 }
+
+.metricLabel{
+font-size:12px;
+text-transform:uppercase;
+letter-spacing:0.8px;
+color:#7f8a96;
+margin-bottom:8px;
+}
+
+.metricValue{
+font-size:22px;
+font-weight:700;
+}
+
+.metricSub{
+margin-top:5px;
+font-size:12px;
+color:#95a0ab;
+line-height:1.4;
+}
+
+.statusBar{
+margin-top:10px;
+padding:12px;
+border-radius:12px;
+background:#11161b;
+border:1px solid #202831;
+font-size:14px;
+line-height:1.5;
+color:#d8dee5;
+}
+
+.intelItem{
+padding:14px 0;
+border-bottom:1px solid #232a32;
+}
+
+.intelItem:last-child{
+border-bottom:none;
+padding-bottom:0;
+}
+
+.intelSource{
+font-size:12px;
+text-transform:uppercase;
+letter-spacing:1px;
+color:#7f8c98;
+margin-bottom:6px;
+}
+
+.intelHeadline{
+font-size:16px;
+font-weight:600;
+line-height:1.5;
+margin-bottom:6px;
+}
+
+.intelText{
+font-size:14px;
+color:#bcc5ce;
+line-height:1.6;
+}
+
+.footer{
+margin-top:26px;
+font-size:12px;
+line-height:1.7;
+color:#7e8893;
+text-align:center;
+}
+
+a{
+color:#87bfff;
+text-decoration:none;
+}
+
+.refresh{
+margin-top:16px;
+font-size:12px;
+color:#81909d;
+}
+
+.liveDot{
+display:inline-block;
+width:8px;
+height:8px;
+background:#37d67a;
+border-radius:50%;
+margin-right:6px;
+vertical-align:middle;
+}
+
+.warning{
+color:#ffcf70;
+}
+
+@media(max-width:560px){
+
+.mainLevel{
+font-size:48px;
+}
+
+.grid{
+grid-template-columns:1fr;
+}
+
+}
+
 </style>
 </head>
 
 <body>
-<div class="app">
 
-<section class="header">
-  <div class="brand">Salmon Rivers Intelligence</div>
-  <h1>Ribble at Henthorn</h1>
-  <div class="subtitle">Live Henthorn level · verified current-season facts only</div>
-</section>
+<div class="container">
 
-<main id="content">
-  <section class="card">
-    <div class="card-title">Live Henthorn Conditions</div>
-    <div class="source">Loading Environment Agency station 710305...</div>
-    <div class="loading">Fetching latest reading</div>
-  </section>
-</main>
+<div class="header">
+<div class="title">Salmon Rivers Intelligence</div>
 
-<div class="footer">Gold Build 10051</div>
+<div class="subtitle">
+River Ribble — Henthorn only<br>
+Environment Agency station 710305<br>
+Verified-data intelligence terminal
+</div>
+
+<div class="version">
+Build 10052
+</div>
+</div>
+
+<div class="card">
+
+<div class="cardTitle">
+Live River State
+</div>
+
+<div class="mainLevel" id="riverLevel">
+--
+</div>
+
+<div class="mainMeta" id="movement">
+Loading live Environment Agency data...
+</div>
+
+<div class="grid">
+
+<div class="metric">
+<div class="metricLabel">
+Last Reading
+</div>
+<div class="metricValue" id="timestamp">
+--
+</div>
+<div class="metricSub">
+Official EA telemetry timestamp
+</div>
+</div>
+
+<div class="metric">
+<div class="metricLabel">
+Source
+</div>
+<div class="metricValue">
+EA API
+</div>
+<div class="metricSub">
+Environment Agency flood-monitoring service
+</div>
+</div>
+
+</div>
+
+<div class="statusBar" id="statusBar">
+<span class="liveDot"></span>
+Connecting to live river telemetry...
+</div>
+
+<div class="refresh">
+Auto refresh every 5 minutes
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="cardTitle">
+RFCA Water Temperature Investigation
+</div>
+
+<div class="intelItem">
+
+<div class="intelHeadline">
+RFCA live monitoring confirmed operational
+</div>
+
+<div class="intelText">
+Ribble Fisheries Conservancy Association publicly confirms live water quality monitoring including:
+temperature, dissolved oxygen, turbidity, pH, conductivity, ammonium and level.
+</div>
+
+</div>
+
+<div class="intelItem">
+
+<div class="intelHeadline">
+Direct machine-readable temperature feed not yet verified
+</div>
+
+<div class="intelText">
+Current status:
+RFCA dashboard exists and updates live, but no verified public JSON/API endpoint has yet been confirmed for direct integration.
+</div>
+
+</div>
+
+<div class="intelItem">
+
+<div class="intelHeadline">
+10052 integration policy
+</div>
+
+<div class="intelText">
+No estimated temperatures.
+No invented values.
+No unofficial scraping until stable verified source structure is confirmed.
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="cardTitle">
+Rainfall Strategy
+</div>
+
+<div class="intelItem">
+
+<div class="intelHeadline">
+Primary target source: Environment Agency rainfall network
+</div>
+
+<div class="intelText">
+Gold-standard route for rainfall integration is official Environment Agency rainfall telemetry using nearby monitored gauges and verified timestamps.
+</div>
+
+</div>
+
+<div class="intelItem">
+
+<div class="intelHeadline">
+Next engineering step
+</div>
+
+<div class="intelText">
+Map nearest relevant Ribble catchment rainfall stations and integrate direct live readings with traceable station IDs.
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="cardTitle">
+Current Intelligence
+</div>
+
+<div class="intelItem">
+
+<div class="intelSource">
+Environment Agency
+</div>
+
+<div class="intelHeadline">
+Henthorn telemetry active
+</div>
+
+<div class="intelText">
+Live level telemetry successfully connected and refreshing automatically from official EA flood-monitoring infrastructure.
+</div>
+
+</div>
+
+<div class="intelItem">
+
+<div class="intelSource">
+RFCA
+</div>
+
+<div class="intelHeadline">
+Water-quality platform operational
+</div>
+
+<div class="intelText">
+RFCA confirms live sonde monitoring now publicly available for anglers through its monitoring dashboard initiative.
+</div>
+
+</div>
+
+<div class="intelItem">
+
+<div class="intelSource">
+System Direction
+</div>
+
+<div class="intelHeadline">
+Verified-data-only architecture retained
+</div>
+
+<div class="intelText">
+This platform will not classify conditions as “prime”, “good” or “poor” unless based on fully evidenced measurable criteria.
+</div>
+
+</div>
+
+</div>
+
+<div class="footer">
+
+Data sources:<br>
+EA Flood Monitoring API<br>
+RFCA Live Water Quality Monitoring<br><br>
+
+No speculative classifications.<br>
+No invented catch data.<br>
+Verified sources only.
+
+</div>
+
 </div>
 
 <script>
-const EA_LATEST =
-  "https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?latest";
 
-const EA_RECENT =
-  "https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=12";
+const stationId = "710305";
 
-async function getJSON(url){
-  const r = await fetch(url,{cache:"no-store"});
-  if(!r.ok) throw new Error("HTTP " + r.status);
-  return await r.json();
+async function loadRiverData(){
+
+try{
+
+const url =
+`https://environment.data.gov.uk/flood-monitoring/id/stations/${stationId}.json`;
+
+const response = await fetch(url);
+
+const data = await response.json();
+
+const latest =
+data.items.measures.find(m =>
+m.parameterName &&
+m.parameterName.toLowerCase().includes("level")
+);
+
+if(!latest){
+throw new Error("No level measure found");
 }
 
-function formatLevel(v){
-  if(v === null || v === undefined || isNaN(v)) return "—";
-  return Number(v).toFixed(2);
+const latestReadingUrl =
+latest.latestReading["@id"] + ".json";
+
+const readingResponse = await fetch(latestReadingUrl);
+
+const readingData = await readingResponse.json();
+
+const reading = readingData.items.value;
+const date = readingData.items.dateTime;
+
+document.getElementById("riverLevel").innerText =
+reading.toFixed(2) + " m";
+
+document.getElementById("timestamp").innerText =
+new Date(date).toLocaleTimeString([],{
+hour:'2-digit',
+minute:'2-digit'
+});
+
+document.getElementById("movement").innerText =
+"Live Environment Agency telemetry";
+
+document.getElementById("statusBar").innerHTML =
+'<span class="liveDot"></span>Live telemetry operational — verified EA reading received';
+
+}
+catch(error){
+
+document.getElementById("statusBar").innerHTML =
+'<span class="warning">Telemetry connection issue</span>';
+
+document.getElementById("movement").innerText =
+"Unable to retrieve live telemetry";
+
+console.error(error);
+
 }
 
-function formatMovement(v){
-  if(v === null || v === undefined || isNaN(v)) return "—";
-  const sign = v > 0 ? "+" : "";
-  return sign + Number(v).toFixed(2) + " m";
 }
 
-function ageText(dt){
-  if(!dt) return "—";
-  const mins = Math.round((Date.now() - new Date(dt)) / 60000);
-  if(mins < 1) return "just now";
-  if(mins < 60) return mins + " min old";
-  return Math.round(mins / 60) + " hr old";
-}
+loadRiverData();
 
-function fullTime(dt){
-  if(!dt) return "—";
-  return new Date(dt).toLocaleString("en-GB",{
-    weekday:"short",
-    day:"2-digit",
-    month:"short",
-    hour:"2-digit",
-    minute:"2-digit"
-  });
-}
+setInterval(loadRiverData,300000);
 
-function trendFromMovement(movement){
-  if(movement === null || isNaN(movement)) return "Unknown";
-  if(movement > 0.02) return "Rising";
-  if(movement < -0.02) return "Falling";
-  return "Steady";
-}
-
-async function getRiver(){
-  const latest = await getJSON(EA_LATEST);
-  const recent = await getJSON(EA_RECENT);
-
-  const latestItem = latest.items && latest.items.length ? latest.items[0] : null;
-  if(!latestItem) throw new Error("No latest EA reading returned");
-
-  const level = Number(latestItem.value);
-  const time = latestItem.dateTime;
-  let movement = null;
-
-  if(recent.items && recent.items.length > 1){
-    const newest = Number(recent.items[recent.items.length - 1].value);
-    const oldest = Number(recent.items[0].value);
-    movement = newest - oldest;
-  }
-
-  return {
-    level,
-    time,
-    movement,
-    trend: trendFromMovement(movement)
-  };
-}
-
-function renderLive(r){
-  return `
-    <section class="card">
-      <div class="card-title">Live Henthorn Conditions</div>
-      <div class="source">Environment Agency station 710305 · Ribble at Henthorn</div>
-
-      <div class="level-wrap">
-        <div class="level">${formatLevel(r.level)}</div>
-        <div class="unit">m</div>
-      </div>
-
-      <div class="chips">
-        <span class="chip chip-blue">${r.trend}</span>
-        <span class="chip chip-gold">${ageText(r.time)}</span>
-      </div>
-
-      <div class="stats">
-        <div class="stat">
-          <div class="stat-label">Recent movement</div>
-          <div class="stat-value">${formatMovement(r.movement)}</div>
-        </div>
-
-        <div class="stat">
-          <div class="stat-label">Updated</div>
-          <div class="stat-value">${fullTime(r.time)}</div>
-        </div>
-
-        <div class="stat">
-          <div class="stat-label">Water temperature</div>
-          <div class="stat-value">RFCA source available</div>
-        </div>
-
-        <div class="stat">
-          <div class="stat-label">Rainfall</div>
-          <div class="stat-value">Not verified</div>
-        </div>
-      </div>
-
-      <div class="notice">
-        Water temperature is not guessed. RFCA publishes real-time sonde water-quality readings, including temperature, but a stable direct app endpoint has not yet been connected.
-      </div>
-    </section>
-  `;
-}
-
-function renderIntel(){
-  return `
-    <section class="card">
-      <div class="card-title">Ribble Salmon Intelligence</div>
-      <div class="source">Current-season facts only. No historic totals and no unsupported claims.</div>
-
-      <div class="fact">
-        <div class="fact-tag">13 Apr 2026 · Catch signal</div>
-        <div class="fact-title">Fish continuing to be caught across the catchment</div>
-        <div class="fact-text">
-          Current visible River Ribble catch-report snippet states that fish were continuing to be caught across the catchment during the week commencing 13 April 2026.
-        </div>
-        <div class="fact-source">Source: River Ribble Catch Reports</div>
-      </div>
-
-      <div class="fact">
-        <div class="fact-tag">30 Jan 2026 · River condition</div>
-        <div class="fact-title">Good steady height reported, but likely still early</div>
-        <div class="fact-text">
-          River Ribble 2026 angler discussion described the river as a good height and steady, while noting it was probably still too early for reliable catches.
-        </div>
-        <div class="fact-source">Source: Salmon Fishing Forum — River Ribble 2026</div>
-      </div>
-
-      <div class="fact">
-        <div class="fact-tag">2026 · Current total</div>
-        <div class="fact-title">No verified 2026 Ribble salmon total found</div>
-        <div class="fact-text">
-          No reliable published 2026 whole-river salmon catch total has been verified. This app therefore does not show a current numerical total.
-        </div>
-        <div class="fact-source">Status: not published / not verified</div>
-      </div>
-
-      <div class="fact">
-        <div class="fact-tag">Current rule · Skirbeck water</div>
-        <div class="fact-title">Salmon and sea-trout catches must be reported</div>
-        <div class="fact-text">
-          BCAA’s River Ribble Skirbeck rules state that all catches of salmon and sea trout must be reported with details via catch return.
-        </div>
-        <div class="fact-source">Source: Bradford City AA — River Ribble Skirbeck</div>
-      </div>
-    </section>
-
-    <section class="card">
-      <div class="card-title">Verified Live Water Quality Source</div>
-      <div class="source">Not yet imported into app display.</div>
-
-      <div class="fact">
-        <div class="fact-tag">RFCA live water quality</div>
-        <div class="fact-title">Real-time sonde readings exist</div>
-        <div class="fact-text">
-          RFCA states its live dashboard presents Strabag real-time sonde readings updated every few minutes, including temperature, dissolved oxygen, turbidity, pH, conductivity, ammonium and river level.
-        </div>
-        <div class="fact-source">Source: RFCA Live Water Quality Monitoring</div>
-      </div>
-
-      <div class="links">
-        <a href="https://www.ribblefisheriesca.co.uk/live-water-quality-monitoring/" target="_blank">Open RFCA Live Water Quality Monitoring</a>
-      </div>
-    </section>
-  `;
-}
-
-async function init(){
-  const content = document.getElementById("content");
-
-  try{
-    const river = await getRiver();
-    content.innerHTML = renderLive(river) + renderIntel();
-  }catch(e){
-    content.innerHTML = `
-      <section class="card">
-        <div class="card-title">Live Henthorn Conditions</div>
-        <div class="source">Environment Agency station 710305</div>
-        <div class="notice">Live data unavailable: ${e.message}</div>
-      </section>
-      ${renderIntel()}
-    `;
-  }
-}
-
-setInterval(init,300000);
-init();
 </script>
+
 </body>
 </html>
