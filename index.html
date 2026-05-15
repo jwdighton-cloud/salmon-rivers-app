@@ -12,6 +12,7 @@
   --gold:#d9a441;
   --blue:#dcecf4;
   --cream:#fff8e7;
+  --bg:#edf3f5;
   --card:#ffffff;
   --text:#101820;
   --muted:#607077;
@@ -57,18 +58,8 @@ body{
 .chip{border-radius:999px;padding:8px 12px;font-weight:800;font-size:14px;}
 .chip-blue{background:var(--blue);}
 .chip-gold{background:var(--cream);color:#7a5600;}
-.stats{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-top:14px;
-}
-.stat{
-  background:#f2f6f7;
-  border-radius:18px;
-  padding:14px;
-  min-height:82px;
-}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;}
+.stat{background:#f2f6f7;border-radius:18px;padding:14px;min-height:82px;}
 .stat-label{color:var(--muted);font-size:13px;margin-bottom:6px;}
 .stat-value{font-size:21px;font-weight:900;}
 .notice{
@@ -100,6 +91,16 @@ body{
 .fact-title{font-size:17px;font-weight:900;margin-bottom:6px;}
 .fact-text{font-size:14px;color:#333;line-height:1.45;}
 .fact-source{font-size:12px;color:var(--muted);font-weight:800;margin-top:8px;}
+.links a{
+  display:block;
+  text-decoration:none;
+  background:#eaf2f6;
+  color:#083f50;
+  font-weight:850;
+  border-radius:16px;
+  padding:13px;
+  margin-top:8px;
+}
 .footer{text-align:center;color:var(--muted);font-size:12px;padding:8px 0 20px;}
 .loading{color:var(--muted);font-weight:700;}
 @media(max-width:480px){
@@ -116,7 +117,7 @@ body{
 <section class="header">
   <div class="brand">Salmon Rivers Intelligence</div>
   <h1>Ribble at Henthorn</h1>
-  <div class="subtitle">Atlantic salmon only · verified current-season intelligence</div>
+  <div class="subtitle">Live Henthorn level · verified current-season facts only</div>
 </section>
 
 <main id="content">
@@ -127,7 +128,7 @@ body{
   </section>
 </main>
 
-<div class="footer">Gold Build 10050</div>
+<div class="footer">Gold Build 10051</div>
 </div>
 
 <script>
@@ -189,7 +190,6 @@ async function getRiver(){
 
   const level = Number(latestItem.value);
   const time = latestItem.dateTime;
-
   let movement = null;
 
   if(recent.items && recent.items.length > 1){
@@ -235,7 +235,7 @@ function renderLive(r){
 
         <div class="stat">
           <div class="stat-label">Water temperature</div>
-          <div class="stat-value">Not available</div>
+          <div class="stat-value">RFCA source available</div>
         </div>
 
         <div class="stat">
@@ -245,7 +245,7 @@ function renderLive(r){
       </div>
 
       <div class="notice">
-        This panel shows measured or verified data only. No inferred fishability ratings, no guessed water temperature, and no unverified rainfall.
+        Water temperature is not guessed. RFCA publishes real-time sonde water-quality readings, including temperature, but a stable direct app endpoint has not yet been connected.
       </div>
     </section>
   `;
@@ -254,52 +254,61 @@ function renderLive(r){
 function renderIntel(){
   return `
     <section class="card">
-      <div class="card-title">Atlantic Salmon Intelligence</div>
-      <div class="source">Current-season Ribble salmon facts only. No sea-trout, trout, or mixed-species figures.</div>
+      <div class="card-title">Ribble Salmon Intelligence</div>
+      <div class="source">Current-season facts only. No historic totals and no unsupported claims.</div>
 
       <div class="fact">
-        <div class="fact-tag">Latest verified salmon signal</div>
-        <div class="fact-title">13 Apr 2026 — salmon catches reported across the catchment</div>
+        <div class="fact-tag">13 Apr 2026 · Catch signal</div>
+        <div class="fact-title">Fish continuing to be caught across the catchment</div>
         <div class="fact-text">
-          Publicly visible River Ribble catch-report wording states that fish were continuing to be caught across the catchment during the week commencing 13 April 2026. This is the latest current-season catch signal currently held in the app.
+          Current visible River Ribble catch-report snippet states that fish were continuing to be caught across the catchment during the week commencing 13 April 2026.
         </div>
-        <div class="fact-source">Source: River Ribble Catch Reports · verified public snippet</div>
+        <div class="fact-source">Source: River Ribble Catch Reports</div>
       </div>
 
       <div class="fact">
-        <div class="fact-tag">Current salmon total</div>
-        <div class="fact-title">No verified 2026 whole-river salmon total found</div>
+        <div class="fact-tag">30 Jan 2026 · River condition</div>
+        <div class="fact-title">Good steady height reported, but likely still early</div>
         <div class="fact-text">
-          No reliable public 2026 River Ribble Atlantic salmon total has been verified. The app therefore does not display a current numerical total.
+          River Ribble 2026 angler discussion described the river as a good height and steady, while noting it was probably still too early for reliable catches.
+        </div>
+        <div class="fact-source">Source: Salmon Fishing Forum — River Ribble 2026</div>
+      </div>
+
+      <div class="fact">
+        <div class="fact-tag">2026 · Current total</div>
+        <div class="fact-title">No verified 2026 Ribble salmon total found</div>
+        <div class="fact-text">
+          No reliable published 2026 whole-river salmon catch total has been verified. This app therefore does not show a current numerical total.
         </div>
         <div class="fact-source">Status: not published / not verified</div>
       </div>
 
       <div class="fact">
-        <div class="fact-tag">Current discussion source</div>
-        <div class="fact-title">River Ribble 2026 active thread</div>
+        <div class="fact-tag">Current rule · Skirbeck water</div>
+        <div class="fact-title">Salmon and sea-trout catches must be reported</div>
         <div class="fact-text">
-          The River Ribble 2026 discussion thread is the active public source to monitor for fresh salmon catch mentions, river-condition discussion, and angler observations.
+          BCAA’s River Ribble Skirbeck rules state that all catches of salmon and sea trout must be reported with details via catch return.
         </div>
-        <div class="fact-source">Source: Salmon Fishing Forum — River Ribble 2026</div>
+        <div class="fact-source">Source: Bradford City AA — River Ribble Skirbeck</div>
       </div>
+    </section>
+
+    <section class="card">
+      <div class="card-title">Verified Live Water Quality Source</div>
+      <div class="source">Not yet imported into app display.</div>
 
       <div class="fact">
-        <div class="fact-tag">30 Jan 2026 · river condition</div>
-        <div class="fact-title">Good steady height reported, but likely still early</div>
+        <div class="fact-tag">RFCA live water quality</div>
+        <div class="fact-title">Real-time sonde readings exist</div>
         <div class="fact-text">
-          River Ribble 2026 discussion described the river as a good steady height while noting it was probably still early for reliable salmon catches.
+          RFCA states its live dashboard presents Strabag real-time sonde readings updated every few minutes, including temperature, dissolved oxygen, turbidity, pH, conductivity, ammonium and river level.
         </div>
-        <div class="fact-source">Source: Salmon Fishing Forum — River Ribble 2026</div>
+        <div class="fact-source">Source: RFCA Live Water Quality Monitoring</div>
       </div>
 
-      <div class="fact">
-        <div class="fact-tag">Catch reporting status</div>
-        <div class="fact-title">No live official catch-return feed connected</div>
-        <div class="fact-text">
-          A live official salmon catch-return feed has not been found or connected. Future builds should use a backend JSON feed if automated daily catch intelligence is required.
-        </div>
-        <div class="fact-source">Status: frontend-only GitHub Pages app</div>
+      <div class="links">
+        <a href="https://www.ribblefisheriesca.co.uk/live-water-quality-monitoring/" target="_blank">Open RFCA Live Water Quality Monitoring</a>
       </div>
     </section>
   `;
