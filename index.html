@@ -7,344 +7,722 @@
 <meta name="theme-color" content="#0f1114">
 
 <style>
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;background:#0f1114;color:#f2f2f2;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
-.container{max-width:720px;margin:auto;padding:18px}
-.header{margin-bottom:20px}
-.title{font-size:28px;font-weight:750;letter-spacing:-.6px}
-.subtitle{margin-top:7px;font-size:14px;color:#9aa4af;line-height:1.5}
-.version{margin-top:12px;display:inline-block;font-size:12px;padding:5px 11px;border-radius:999px;background:#1c2229;color:#9fb3c8}
-.card{background:#171b20;border:1px solid #232a32;border-radius:19px;padding:18px;margin-bottom:16px}
-.cardTitle{font-size:12px;text-transform:uppercase;letter-spacing:1.1px;color:#7d8b98;margin-bottom:14px;font-weight:700}
-.mainLevel{font-size:58px;font-weight:780;line-height:1;margin-bottom:9px}
-.mainMeta{font-size:16px;color:#b9c2ca}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
-.metric{background:#101419;border-radius:15px;padding:14px;border:1px solid #1f252d}
-.metricLabel{font-size:11px;text-transform:uppercase;letter-spacing:.9px;color:#7f8a96;margin-bottom:8px;font-weight:700}
-.metricValue{font-size:22px;font-weight:760}
-.metricSub{margin-top:6px;font-size:12px;color:#95a0ab;line-height:1.45}
-.statusBar{margin-top:12px;padding:13px;border-radius:13px;background:#11161b;border:1px solid #202831;font-size:14px;line-height:1.5;color:#d8dee5}
-.intelItem{padding:14px 0;border-bottom:1px solid #232a32}
-.intelItem:last-child{border-bottom:none;padding-bottom:0}
-.intelSource{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#7f8c98;margin-bottom:6px;font-weight:700}
-.intelHeadline{font-size:16px;font-weight:700;line-height:1.45;margin-bottom:6px}
-.intelText{font-size:14px;color:#bcc5ce;line-height:1.6}
-.footer{margin-top:26px;font-size:12px;line-height:1.7;color:#7e8893;text-align:center}
-a{color:#87bfff;text-decoration:none}
-.refresh{margin-top:16px;font-size:12px;color:#81909d}
-.liveDot{display:inline-block;width:8px;height:8px;background:#37d67a;border-radius:50%;margin-right:6px;vertical-align:middle}
-.warnDot{display:inline-block;width:8px;height:8px;background:#ffcf70;border-radius:50%;margin-right:6px;vertical-align:middle}
-.badDot{display:inline-block;width:8px;height:8px;background:#ff6b6b;border-radius:50%;margin-right:6px;vertical-align:middle}
-.muted{color:#8d99a5}
-.warning{color:#ffcf70}
-.error{color:#ff8b8b}
-.smallLink{font-size:13px;margin-top:8px;color:#87bfff}
+*{
+box-sizing:border-box;
+-webkit-tap-highlight-color:transparent;
+}
+
+body{
+margin:0;
+background:#0f1114;
+color:#f2f2f2;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+}
+
+.container{
+max-width:720px;
+margin:auto;
+padding:18px;
+}
+
+.header{
+margin-bottom:20px;
+}
+
+.title{
+font-size:28px;
+font-weight:750;
+letter-spacing:-0.6px;
+}
+
+.subtitle{
+margin-top:7px;
+font-size:14px;
+color:#9aa4af;
+line-height:1.5;
+}
+
+.version{
+margin-top:12px;
+display:inline-block;
+font-size:12px;
+padding:5px 11px;
+border-radius:999px;
+background:#1c2229;
+color:#9fb3c8;
+}
+
+.card{
+background:#171b20;
+border:1px solid #232a32;
+border-radius:19px;
+padding:18px;
+margin-bottom:16px;
+}
+
+.cardTitle{
+font-size:12px;
+text-transform:uppercase;
+letter-spacing:1.1px;
+color:#7d8b98;
+margin-bottom:14px;
+font-weight:700;
+}
+
+.mainLevel{
+font-size:58px;
+font-weight:780;
+line-height:1;
+margin-bottom:9px;
+}
+
+.mainMeta{
+font-size:16px;
+color:#b9c2ca;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin-top:16px;
+}
+
+.metric{
+background:#101419;
+border-radius:15px;
+padding:14px;
+border:1px solid #1f252d;
+}
+
+.metricLabel{
+font-size:11px;
+text-transform:uppercase;
+letter-spacing:0.9px;
+color:#7f8a96;
+margin-bottom:8px;
+font-weight:700;
+}
+
+.metricValue{
+font-size:22px;
+font-weight:760;
+}
+
+.metricSub{
+margin-top:6px;
+font-size:12px;
+color:#95a0ab;
+line-height:1.45;
+}
+
+.statusBar{
+margin-top:12px;
+padding:13px;
+border-radius:13px;
+background:#11161b;
+border:1px solid #202831;
+font-size:14px;
+line-height:1.5;
+color:#d8dee5;
+}
+
+.intelItem{
+padding:14px 0;
+border-bottom:1px solid #232a32;
+}
+
+.intelItem:last-child{
+border-bottom:none;
+padding-bottom:0;
+}
+
+.intelSource{
+font-size:11px;
+text-transform:uppercase;
+letter-spacing:1px;
+color:#7f8c98;
+margin-bottom:6px;
+font-weight:700;
+}
+
+.intelHeadline{
+font-size:16px;
+font-weight:700;
+line-height:1.45;
+margin-bottom:6px;
+}
+
+.intelText{
+font-size:14px;
+color:#bcc5ce;
+line-height:1.6;
+}
+
+.footer{
+margin-top:26px;
+font-size:12px;
+line-height:1.7;
+color:#7e8893;
+text-align:center;
+}
+
+.liveDot{
+display:inline-block;
+width:8px;
+height:8px;
+background:#37d67a;
+border-radius:50%;
+margin-right:6px;
+vertical-align:middle;
+}
+
+.warnDot{
+display:inline-block;
+width:8px;
+height:8px;
+background:#ffcf70;
+border-radius:50%;
+margin-right:6px;
+vertical-align:middle;
+}
+
+.badDot{
+display:inline-block;
+width:8px;
+height:8px;
+background:#ff6b6b;
+border-radius:50%;
+margin-right:6px;
+vertical-align:middle;
+}
+
+.warning{
+color:#ffcf70;
+}
+
+.error{
+color:#ff8b8b;
+}
+
+.refresh{
+margin-top:16px;
+font-size:12px;
+color:#81909d;
+}
+
 @media(max-width:560px){
-.container{padding:14px}
-.mainLevel{font-size:48px}
-.grid{grid-template-columns:1fr}
-.card{padding:16px;border-radius:17px}
+
+.container{
+padding:14px;
+}
+
+.mainLevel{
+font-size:48px;
+}
+
+.grid{
+grid-template-columns:1fr;
+}
+
+.card{
+padding:16px;
+border-radius:17px;
+}
+
 }
 </style>
 </head>
 
 <body>
+
 <div class="container">
 
 <div class="header">
-<div class="title">Salmon Rivers Intelligence</div>
+
+<div class="title">
+Salmon Rivers Intelligence
+</div>
+
 <div class="subtitle">
 River Ribble — Henthorn only<br>
 Environment Agency station 710305<br>
 Verified-data intelligence terminal
 </div>
-<div class="version">Build 10053</div>
+
+<div class="version">
+Build 10053
+</div>
+
 </div>
 
 <div class="card">
-<div class="cardTitle">Live Henthorn River Level</div>
-<div class="mainLevel" id="riverLevel">--</div>
-<div class="mainMeta" id="movement">Loading official EA telemetry...</div>
+
+<div class="cardTitle">
+Live Henthorn River Level
+</div>
+
+<div class="mainLevel" id="riverLevel">
+--
+</div>
+
+<div class="mainMeta" id="movement">
+Loading official EA telemetry...
+</div>
 
 <div class="grid">
+
 <div class="metric">
-<div class="metricLabel">Last Reading</div>
-<div class="metricValue" id="timestamp">--</div>
-<div class="metricSub">Official EA reading timestamp</div>
+<div class="metricLabel">
+Last Reading
+</div>
+<div class="metricValue" id="timestamp">
+--
+</div>
+<div class="metricSub">
+Official EA reading timestamp
+</div>
 </div>
 
 <div class="metric">
-<div class="metricLabel">Movement</div>
-<div class="metricValue" id="movementValue">--</div>
-<div class="metricSub" id="movementSub">Calculated only from EA readings</div>
+<div class="metricLabel">
+Movement
 </div>
+<div class="metricValue" id="movementValue">
+--
+</div>
+<div class="metricSub" id="movementSub">
+Calculated only from EA readings
+</div>
+</div>
+
 </div>
 
 <div class="statusBar" id="levelStatus">
-<span class="liveDot"></span>Connecting to live Henthorn telemetry...
+<span class="liveDot"></span>
+Connecting to live Henthorn telemetry...
 </div>
 
-<div class="refresh">Auto refresh every 5 minutes</div>
+<div class="refresh">
+Auto refresh every 5 minutes
+</div>
+
 </div>
 
 <div class="card">
-<div class="cardTitle">Verified Rainfall Watch</div>
+
+<div class="cardTitle">
+Verified Rainfall Watch
+</div>
 
 <div class="grid">
+
 <div class="metric">
-<div class="metricLabel">Nearest EA Rainfall</div>
-<div class="metricValue" id="rainValue">--</div>
-<div class="metricSub" id="rainStation">Searching EA rainfall network</div>
+<div class="metricLabel">
+Nearest EA Rainfall
+</div>
+<div class="metricValue" id="rainValue">
+--
+</div>
+<div class="metricSub" id="rainStation">
+Searching EA rainfall network
+</div>
 </div>
 
 <div class="metric">
-<div class="metricLabel">Rain Timestamp</div>
-<div class="metricValue" id="rainTime">--</div>
-<div class="metricSub">Official EA rainfall telemetry</div>
+<div class="metricLabel">
+Rain Timestamp
 </div>
+<div class="metricValue" id="rainTime">
+--
+</div>
+<div class="metricSub">
+Official EA rainfall telemetry
+</div>
+</div>
+
 </div>
 
 <div class="statusBar" id="rainStatus">
-<span class="warnDot"></span>Rainfall integration loading. No rainfall estimate will be shown.
+<span class="warnDot"></span>
+Rainfall integration loading. No rainfall estimate will be shown.
 </div>
+
 </div>
 
 <div class="card">
-<div class="cardTitle">RFCA Temperature Status</div>
+
+<div class="cardTitle">
+RFCA Temperature Status
+</div>
 
 <div class="intelItem">
-<div class="intelHeadline">RFCA water-quality dashboard confirmed</div>
+
+<div class="intelHeadline">
+RFCA water-quality dashboard confirmed
+</div>
+
 <div class="intelText">
 RFCA publicly confirms live water-quality monitoring for anglers, including temperature and other sonde readings.
 </div>
+
 </div>
 
 <div class="intelItem">
-<div class="intelHeadline">Direct temperature feed not yet verified</div>
+
+<div class="intelHeadline">
+Direct temperature feed not yet verified
+</div>
+
 <div class="intelText">
 Build 10053 does not display a water temperature value because no stable public JSON/API feed has yet been verified.
 </div>
+
 </div>
 
 <div class="intelItem">
-<div class="intelHeadline">Gold rule retained</div>
+
+<div class="intelHeadline">
+Gold rule retained
+</div>
+
 <div class="intelText">
 No estimated temperatures. No screen scraping unless the feed structure is stable, traceable and production-safe.
 </div>
+
 </div>
+
 </div>
 
 <div class="card">
-<div class="cardTitle">Current Intelligence Position</div>
+
+<div class="cardTitle">
+Current Intelligence Position
+</div>
 
 <div class="intelItem">
-<div class="intelSource">EA Henthorn</div>
-<div class="intelHeadline">Live level is the primary trusted signal</div>
+
+<div class="intelSource">
+EA Henthorn
+</div>
+
+<div class="intelHeadline">
+Live level is the primary trusted signal
+</div>
+
 <div class="intelText" id="summaryLevel">
 Waiting for current Henthorn telemetry.
 </div>
+
 </div>
 
 <div class="intelItem">
-<div class="intelSource">EA Rainfall</div>
-<div class="intelHeadline">Rainfall is now treated as a verified telemetry target</div>
+
+<div class="intelSource">
+EA Rainfall
+</div>
+
+<div class="intelHeadline">
+Rainfall is now treated as a verified telemetry target
+</div>
+
 <div class="intelText" id="summaryRain">
 Waiting for nearest official rainfall station reading.
 </div>
+
 </div>
 
 <div class="intelItem">
-<div class="intelSource">System Discipline</div>
-<div class="intelHeadline">No fishing-condition judgement yet</div>
+
+<div class="intelSource">
+System Discipline
+</div>
+
+<div class="intelHeadline">
+No fishing-condition judgement yet
+</div>
+
 <div class="intelText">
 This build does not call the river good, poor or prime. It reports facts only until measured criteria are agreed and evidenced.
 </div>
+
 </div>
+
 </div>
 
 <div class="footer">
-This uses Environment Agency flood and river level data from the real-time data API.<br><br>
+
+Environment Agency live telemetry only.<br><br>
+
 No speculative classifications.<br>
 No invented catch data.<br>
 Verified sources only.
+
 </div>
 
 </div>
 
 <script>
-const STATION_ID="710305";
-const HENTHORN_LAT=53.848003;
-const HENTHORN_LONG=-2.424337;
+
+const STATION_ID = "710305";
+
+const HENTHORN_LAT = 53.848003;
+const HENTHORN_LONG = -2.424337;
 
 function setText(id,value){
-document.getElementById(id).innerText=value;
+document.getElementById(id).innerText = value;
 }
 
-function fmtTime(dateString){
-if(!dateString)return "--";
+function formatTime(dateString){
+
+if(!dateString){
+return "--";
+}
+
 return new Date(dateString).toLocaleString([],{
 day:"2-digit",
 month:"short",
 hour:"2-digit",
 minute:"2-digit"
 });
+
 }
 
-function movementFromReadings(readings){
-if(!Array.isArray(readings)||readings.length<2)return null;
+function calculateMovement(readings){
 
-const clean=readings
-.filter(r=>typeof r.value==="number"&&r.dateTime)
-.sort((a,b)=>new Date(a.dateTime)-new Date(b.dateTime));
+if(!Array.isArray(readings) || readings.length < 2){
+return null;
+}
 
-if(clean.length<2)return null;
+const clean = readings
+.filter(r => typeof r.value === "number")
+.sort((a,b) => new Date(a.dateTime) - new Date(b.dateTime));
 
-const first=clean[0];
-const last=clean[clean.length-1];
-const diff=last.value-first.value;
+if(clean.length < 2){
+return null;
+}
+
+const first = clean[0];
+const last = clean[clean.length - 1];
 
 return {
-diff,
-first:first.value,
-last:last.value,
-firstTime:first.dateTime,
-lastTime:last.dateTime
+difference:last.value - first.value
 };
+
 }
 
 function movementLabel(diff){
-if(Math.abs(diff)<0.005)return "Steady";
-if(diff>0)return "Rising";
+
+if(Math.abs(diff) < 0.005){
+return "Steady";
+}
+
+if(diff > 0){
+return "Rising";
+}
+
 return "Falling";
+
 }
 
 async function fetchJSON(url){
-const r=await fetch(url,{cache:"no-store"});
-if(!r.ok)throw new Error("HTTP "+r.status+" for "+url);
-return await r.json();
+
+const response = await fetch(url,{cache:"no-store"});
+
+if(!response.ok){
+throw new Error("HTTP error");
+}
+
+return await response.json();
+
 }
 
 async function loadRiverData(){
-try{
-const stationUrl=`https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}.json`;
-const stationData=await fetchJSON(stationUrl);
 
-const measures=stationData.items&&stationData.items.measures?stationData.items.measures:[];
-const levelMeasure=measures.find(m=>
-String(m.parameterName||"").toLowerCase().includes("level")||
-String(m.parameter||"").toLowerCase().includes("level")
+try{
+
+const stationUrl =
+`https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}.json`;
+
+const stationData = await fetchJSON(stationUrl);
+
+const measures = stationData.items.measures || [];
+
+const levelMeasure = measures.find(m =>
+String(m.parameterName || "").toLowerCase().includes("level")
 );
 
-if(!levelMeasure||!levelMeasure.latestReading)throw new Error("No level measure found for Henthorn");
-
-const latestUrl=levelMeasure.latestReading["@id"]+".json";
-const latestData=await fetchJSON(latestUrl);
-
-const latest=latestData.items;
-const value=Number(latest.value);
-const date=latest.dateTime;
-
-setText("riverLevel",value.toFixed(2)+" m");
-setText("timestamp",fmtTime(date));
-setText("movement","Live Environment Agency Henthorn telemetry");
-
-let readings=[];
-try{
-const readingsUrl=levelMeasure["@id"]+"/readings?_sorted&_limit=8";
-const readingsData=await fetchJSON(readingsUrl);
-readings=readingsData.items||[];
-}catch(e){}
-
-const mv=movementFromReadings(readings);
-
-if(mv){
-const label=movementLabel(mv.diff);
-setText("movementValue",label);
-setText("movementSub",(mv.diff>=0?"+":"")+mv.diff.toFixed(3)+" m across latest EA sample window");
-setText("summaryLevel","Current official Henthorn level is "+value.toFixed(2)+" m. Movement over the latest EA sample window: "+label+" ("+(mv.diff>=0?"+":"")+mv.diff.toFixed(3)+" m).");
-}else{
-setText("movementValue","Live");
-setText("movementSub","Latest value received; movement sample unavailable");
-setText("summaryLevel","Current official Henthorn level is "+value.toFixed(2)+" m. Movement sample is not available from the current response.");
+if(!levelMeasure){
+throw new Error("No level measure");
 }
 
-document.getElementById("levelStatus").innerHTML=
+const latestUrl =
+levelMeasure.latestReading["@id"] + ".json";
+
+const latestData = await fetchJSON(latestUrl);
+
+const latest = latestData.items;
+
+const value = Number(latest.value);
+
+setText("riverLevel", value.toFixed(2) + " m");
+
+setText("timestamp", formatTime(latest.dateTime));
+
+setText("movement", "Live Environment Agency Henthorn telemetry");
+
+let movementData = null;
+
+try{
+
+const readingsUrl =
+levelMeasure["@id"] + "/readings?_sorted&_limit=8";
+
+const readingsData = await fetchJSON(readingsUrl);
+
+movementData = calculateMovement(readingsData.items);
+
+}catch(e){}
+
+if(movementData){
+
+const label = movementLabel(movementData.difference);
+
+setText("movementValue", label);
+
+setText(
+"movementSub",
+(movementData.difference >= 0 ? "+" : "") +
+movementData.difference.toFixed(3) +
+" m across latest sample window"
+);
+
+setText(
+"summaryLevel",
+"Current official Henthorn level is " +
+value.toFixed(2) +
+" m with " +
+label.toLowerCase() +
+" movement across the latest EA readings."
+);
+
+}else{
+
+setText("movementValue","Live");
+
+setText("movementSub","Movement sample unavailable");
+
+}
+
+document.getElementById("levelStatus").innerHTML =
 '<span class="liveDot"></span>Live Henthorn telemetry received from official EA API.';
 
 }catch(error){
+
 console.error(error);
+
 setText("riverLevel","--");
-setText("movement","Unable to retrieve official Henthorn telemetry");
-setText("movementValue","--");
-setText("timestamp","--");
-setText("summaryLevel","Henthorn telemetry could not be retrieved on this refresh.");
-document.getElementById("levelStatus").innerHTML=
-'<span class="badDot"></span><span class="error">EA Henthorn telemetry connection issue.</span>';
+
+setText("movement","Unable to retrieve official telemetry");
+
+document.getElementById("levelStatus").innerHTML =
+'<span class="badDot"></span><span class="error">EA telemetry connection issue.</span>';
+
 }
+
 }
 
 async function loadRainfallData(){
+
 try{
-const stationsUrl=
+
+const rainfallUrl =
 `https://environment.data.gov.uk/flood-monitoring/id/stations?parameter=rainfall&lat=${HENTHORN_LAT}&long=${HENTHORN_LONG}&dist=25`;
-const stationData=await fetchJSON(stationsUrl);
 
-const stations=Array.isArray(stationData.items)?stationData.items:[];
-if(!stations.length)throw new Error("No EA rainfall stations returned near Henthorn");
+const stationData = await fetchJSON(rainfallUrl);
 
-let chosen=null;
-let chosenMeasure=null;
+const stations = stationData.items || [];
 
-for(const st of stations){
-const measures=Array.isArray(st.measures)?st.measures:[];
-const rainMeasure=measures.find(m=>
-String(m.parameter||"").toLowerCase().includes("rainfall")||
-String(m.parameterName||"").toLowerCase().includes("rainfall")
+let selectedStation = null;
+let selectedMeasure = null;
+
+for(const station of stations){
+
+const measures = station.measures || [];
+
+const rainfallMeasure = measures.find(m =>
+String(m.parameter || "").toLowerCase().includes("rainfall")
 );
-if(rainMeasure&&rainMeasure.latestReading){
-chosen=st;
-chosenMeasure=rainMeasure;
+
+if(rainfallMeasure && rainfallMeasure.latestReading){
+
+selectedStation = station;
+selectedMeasure = rainfallMeasure;
+
 break;
+
 }
+
 }
 
-if(!chosen||!chosenMeasure)throw new Error("No rainfall measure with latest reading found");
+if(!selectedMeasure){
+throw new Error("No rainfall measure");
+}
 
-const latestUrl=chosenMeasure.latestReading["@id"]+".json";
-const latestData=await fetchJSON(latestUrl);
-const latest=latestData.items;
+const latestUrl =
+selectedMeasure.latestReading["@id"] + ".json";
 
-const rain=Number(latest.value);
-const date=latest.dateTime;
-const stationRef=chosen.stationReference||chosen.notation||chosen["@id"].split("/").pop();
+const latestData = await fetchJSON(latestUrl);
 
-setText("rainValue",rain.toFixed(2)+" mm");
-setText("rainTime",fmtTime(date));
-setText("rainStation","EA station "+stationRef+" near Henthorn");
+const latest = latestData.items;
 
-setText("summaryRain","Nearest official EA rainfall reading found: "+rain.toFixed(2)+" mm at "+fmtTime(date)+" from station "+stationRef+".");
+setText("rainValue", Number(latest.value).toFixed(2) + " mm");
 
-document.getElementById("rainStatus").innerHTML=
-'<span class="liveDot"></span>Official EA rainfall telemetry received. Station ID shown for traceability.';
+setText("rainTime", formatTime(latest.dateTime));
+
+setText(
+"rainStation",
+"EA station " +
+(selectedStation.stationReference || "unknown")
+);
+
+setText(
+"summaryRain",
+"Nearest verified EA rainfall telemetry successfully connected."
+);
+
+document.getElementById("rainStatus").innerHTML =
+'<span class="liveDot"></span>Official EA rainfall telemetry received.';
 
 }catch(error){
+
 console.error(error);
+
 setText("rainValue","--");
+
 setText("rainTime","--");
-setText("rainStation","No verified rainfall reading on this refresh");
-setText("summaryRain","Rainfall telemetry was not retrieved on this refresh. No estimate has been substituted.");
-document.getElementById("rainStatus").innerHTML=
-'<span class="warnDot"></span><span class="warning">EA rainfall source targeted, but no verified reading returned on this refresh.</span>';
-}
+
+setText("rainStation","No verified rainfall reading");
+
+document.getElementById("rainStatus").innerHTML =
+'<span class="warnDot"></span><span class="warning">Rainfall source targeted but no verified reading returned.</span>';
+
 }
 
-function loadAll(){
+}
+
+function refreshAll(){
+
 loadRiverData();
+
 loadRainfallData();
+
 }
 
-loadAll();
-setInterval(loadAll,300000);
+refreshAll();
+
+setInterval(refreshAll,300000);
+
 </script>
 
 </body>
