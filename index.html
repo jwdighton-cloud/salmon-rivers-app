@@ -65,6 +65,11 @@ body{margin:0;background:#0f1114;color:#f2f2f2;font-family:-apple-system,BlinkMa
 .chipStatus{font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:.6px}
 .chipActive{color:#37d67a}.chipManual{color:#87bfff}.chipTarget{color:#ffcf70}.chipBlocked{color:#ff8b8b}
 
+.requirementList{margin:0;padding:0;list-style:none}
+.requirementList li{padding:9px 0;border-bottom:1px solid #232a32;font-size:14px;color:#bcc5ce;line-height:1.45}
+.requirementList li:last-child{border-bottom:none}
+.requirementList strong{color:#f2f2f2}
+
 .investigationGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
 .investigationBox{background:#101419;border:1px solid #1f252d;border-radius:14px;padding:12px}
 .investigationLabel{font-size:10px;text-transform:uppercase;letter-spacing:.9px;color:#7f8a96;font-weight:800;margin-bottom:6px}
@@ -110,7 +115,7 @@ River Ribble — Henthorn only<br>
 Current-season salmon activity intelligence terminal<br>
 Environment Agency station 710305
 </div>
-<div class="version">Build 10064</div>
+<div class="version">Build 10065</div>
 <div class="seasonBadge">2026 SEASON ONLY</div>
 </div>
 
@@ -131,7 +136,8 @@ Environment Agency station 710305
 <div class="snapshotGrid">
 <div class="snapshotItem"><div class="snapshotLabel">Season Rule</div><div class="snapshotValue snapshotTesting">2026 only</div></div>
 <div class="snapshotItem"><div class="snapshotLabel">Salmon Catches</div><div class="snapshotValue snapshotManual">Manual source</div></div>
-<div class="snapshotItem"><div class="snapshotLabel">Fish Counters</div><div class="snapshotValue snapshotTesting">Priority search</div></div>
+<div class="snapshotItem"><div class="snapshotLabel">Fish Counters</div><div class="snapshotValue snapshotTesting">Priority source</div></div>
+<div class="snapshotItem"><div class="snapshotLabel">Counter Value</div><div class="snapshotValue snapshotBlocked">Not displayed</div></div>
 <div class="snapshotItem"><div class="snapshotLabel">Level</div><div class="snapshotValue snapshotLive" id="snapLevel">Live EA</div></div>
 <div class="snapshotItem"><div class="snapshotLabel">Movement</div><div class="snapshotValue snapshotLive" id="snapMovement">Live EA</div></div>
 <div class="snapshotItem"><div class="snapshotLabel">Rainfall</div><div class="snapshotValue snapshotTesting" id="snapRain">Testing</div></div>
@@ -152,7 +158,7 @@ Environment Agency station 710305
 
 <div class="priorityBox">
 <div class="priorityLabel">Fish Counters</div>
-<div class="priorityValue priorityTarget">Investigation priority</div>
+<div class="priorityValue priorityTarget">Priority source</div>
 </div>
 
 <div class="priorityBox">
@@ -178,16 +184,66 @@ This app must not display historical catch returns, old totals, typical averages
 <div class="intelSource">Current catches</div>
 <div class="intelHeadline">No automated verified catch feed active yet</div>
 <div class="intelText">
-Current-year catch reports are the highest-value intelligence target. Build 10064 does not show catch numbers because no stable verified 2026 catch feed has been integrated.
+Current-year catch reports are the highest-value intelligence target. Build 10065 does not show catch numbers because no stable verified 2026 catch feed has been integrated.
 </div>
 </div>
 
 <div class="intelItem">
 <div class="intelSource">Fish counters</div>
-<div class="intelHeadline">Fish counter data promoted to priority source</div>
+<div class="intelHeadline">Fish counter data is now a first-class intelligence source</div>
 <div class="intelText">
-Fish counter or fish pass count data is treated as a priority intelligence source. No counter value is displayed until a current, traceable source is verified.
+Fish counter or fish pass count data is treated as a core salmon-activity signal. No counter number is displayed until a current-year, traceable source is verified.
 </div>
+</div>
+</div>
+
+<div class="card">
+<div class="cardTitle">Fish Counter Intelligence</div>
+
+<div class="priorityGrid">
+<div class="priorityBox">
+<div class="priorityLabel">Status</div>
+<div class="priorityValue priorityTarget">Priority source</div>
+</div>
+
+<div class="priorityBox">
+<div class="priorityLabel">Current Value</div>
+<div class="priorityValue priorityBlocked">Not displayed</div>
+</div>
+
+<div class="priorityBox">
+<div class="priorityLabel">Reason</div>
+<div class="priorityValue priorityBlocked">No verified feed</div>
+</div>
+
+<div class="priorityBox">
+<div class="priorityLabel">Season Rule</div>
+<div class="priorityValue priorityTarget">2026 only</div>
+</div>
+</div>
+
+<div class="intelItem">
+<div class="intelSource">Display rule</div>
+<div class="intelHeadline">A fish counter value needs a verified current-year source</div>
+<div class="intelText">
+Build 10065 deliberately shows no fish counter count. Before any counter number appears, it must have source name, counter location, count type, current-season date, and update timestamp.
+</div>
+</div>
+
+<div class="intelItem">
+<div class="intelSource">Required before display</div>
+<div class="intelHeadline">Counter evidence checklist</div>
+<ul class="requirementList">
+<li><strong>Source name:</strong> organisation or system publishing the count.</li>
+<li><strong>Counter location:</strong> named fish pass, weir, tributary, or counter site.</li>
+<li><strong>Current-season date:</strong> 2026 data only.</li>
+<li><strong>Count type:</strong> salmon, sea trout, total fish, upstream count, downstream count, or other clearly labelled measure.</li>
+<li><strong>Update timestamp:</strong> date/time or reporting period for the value.</li>
+</ul>
+</div>
+
+<div class="statusBar">
+<span class="warnDot"></span>No fish counter value is displayed in Build 10065. This is intentional until the current-year source is verified.
 </div>
 </div>
 
@@ -319,7 +375,7 @@ RFCA live water-quality dashboard is known as a target source, but this build do
 </div>
 
 <div class="statusBar">
-<span class="warnDot"></span>No RFCA temperature value is displayed in Build 10064. A value must not be shown until the feed is verified and traceable.
+<span class="warnDot"></span>No RFCA temperature value is displayed in Build 10065. A value must not be shown until the feed is verified and traceable.
 </div>
 </div>
 
@@ -350,9 +406,9 @@ Current-year confirmed salmon catches are the main target. They must be source-l
 
 <div class="intelItem">
 <div class="intelSource">Fish counter data</div>
-<div class="intelHeadline">Priority investigation source</div>
+<div class="intelHeadline">First-class priority source</div>
 <div class="intelText">
-Fish counter or fish pass count data is now treated as a core intelligence stream. Values must not be shown until the current-year source is verified.
+Fish counter or fish pass count data is now a core intelligence stream. Values must not be shown until the current-year source is verified.
 </div>
 </div>
 
@@ -396,7 +452,7 @@ Future direction: verified fishery operators, estate reports, beat-level updates
 <div class="card">
 <div class="cardTitle">Source Register</div>
 <div class="registerRow"><div class="registerName">Current 2026 catch reports</div><div class="registerType">Priority intelligence</div><div class="registerStatus statusTesting">Manual source</div></div>
-<div class="registerRow"><div class="registerName">Fish counter data</div><div class="registerType">Priority investigation</div><div class="registerStatus statusTesting">Not verified</div></div>
+<div class="registerRow"><div class="registerName">Fish counter data</div><div class="registerType">First-class priority</div><div class="registerStatus statusTesting">Not verified</div></div>
 <div class="registerRow"><div class="registerName">EA Henthorn Level</div><div class="registerType">Live API telemetry</div><div class="registerStatus statusActive">Active</div></div>
 <div class="registerRow"><div class="registerName">EA Rainfall</div><div class="registerType">Live API telemetry</div><div class="registerStatus statusTesting">Testing</div></div>
 <div class="registerRow"><div class="registerName">RFCA Temperature</div><div class="registerType">Investigation priority</div><div class="registerStatus statusBlocked">Feed not verified</div></div>
