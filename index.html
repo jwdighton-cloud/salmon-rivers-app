@@ -1,9 +1,476 @@
-<!-- BUILD 10061 — EXTERNAL INTELLIGENCE FEED LAYER -->
-<!-- INSERT THIS NEW CARD DIRECTLY AFTER:
-     "Current Intelligence Position"
-     AND BEFORE:
-     "Operator / Local Intelligence"
--->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Salmon Rivers Intelligence</title>
+<meta name="theme-color" content="#0f1114">
+
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:#0f1114;color:#f2f2f2;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+.container{max-width:720px;margin:auto;padding:18px}
+.header{margin-bottom:20px}
+.title{font-size:28px;font-weight:750;letter-spacing:-.6px}
+.subtitle{margin-top:7px;font-size:14px;color:#9aa4af;line-height:1.5}
+.version{margin-top:12px;display:inline-block;font-size:12px;padding:5px 11px;border-radius:999px;background:#1c2229;color:#9fb3c8}
+.card{background:#171b20;border:1px solid #232a32;border-radius:19px;padding:18px;margin-bottom:16px}
+.cardTitle{font-size:12px;text-transform:uppercase;letter-spacing:1.1px;color:#7d8b98;margin-bottom:14px;font-weight:700}
+
+.statusTable{display:grid;gap:9px}
+.statusLine{display:grid;grid-template-columns:1fr auto;gap:12px;padding:9px 0;border-bottom:1px solid #232a32;font-size:14px}
+.statusLine:last-child{border-bottom:none}
+.statusName{color:#bcc5ce}
+.statusValue{font-weight:800;text-transform:uppercase;letter-spacing:.7px}
+.ok{color:#37d67a}
+.test{color:#ffcf70}
+.blocked{color:#ff8b8b}
+.manual{color:#87bfff}
+
+.snapshotGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.snapshotItem{background:#101419;border:1px solid #1f252d;border-radius:14px;padding:12px}
+.snapshotLabel{font-size:10px;text-transform:uppercase;letter-spacing:.9px;color:#7f8a96;font-weight:800;margin-bottom:6px}
+.snapshotValue{font-size:14px;font-weight:800;line-height:1.35}
+.snapshotLive{color:#37d67a}
+.snapshotTesting{color:#ffcf70}
+.snapshotBlocked{color:#ff8b8b}
+.snapshotManual{color:#87bfff}
+
+.mainLevel{font-size:58px;font-weight:780;line-height:1;margin-bottom:9px}
+.mainMeta{font-size:16px;color:#b9c2ca}
+
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+
+.metric{background:#101419;border-radius:15px;padding:14px;border:1px solid #1f252d}
+.metricLabel{font-size:11px;text-transform:uppercase;letter-spacing:.9px;color:#7f8a96;margin-bottom:8px;font-weight:700}
+.metricValue{font-size:22px;font-weight:760}
+.metricSub{margin-top:6px;font-size:12px;color:#95a0ab;line-height:1.45}
+
+.statusBar{margin-top:12px;padding:13px;border-radius:13px;background:#11161b;border:1px solid #202831;font-size:14px;line-height:1.5;color:#d8dee5}
+
+.freshnessBar{margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.freshnessBox{background:#101419;border:1px solid #1f252d;border-radius:14px;padding:12px}
+.freshnessLabel{font-size:10px;text-transform:uppercase;letter-spacing:.9px;color:#7f8a96;font-weight:800;margin-bottom:6px}
+.freshnessValue{font-size:14px;font-weight:800;line-height:1.35}
+.fresh{color:#37d67a}
+.ageing{color:#ffcf70}
+.stale{color:#ff8b8b}
+
+.intelItem{padding:14px 0;border-bottom:1px solid #232a32}
+.intelItem:last-child{border-bottom:none;padding-bottom:0}
+.intelDate{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#8fa4b8;margin-bottom:6px;font-weight:700}
+.intelSource{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#7f8c98;margin-bottom:6px;font-weight:700}
+.intelHeadline{font-size:16px;font-weight:700;line-height:1.45;margin-bottom:6px}
+.intelText{font-size:14px;color:#bcc5ce;line-height:1.6}
+
+.sourceLink{
+display:inline-block;
+margin-top:8px;
+font-size:13px;
+color:#87bfff;
+text-decoration:none;
+}
+
+.registerRow{
+display:grid;
+grid-template-columns:1.2fr .9fr .8fr;
+gap:10px;
+padding:13px 0;
+border-bottom:1px solid #232a32;
+align-items:start;
+}
+
+.registerRow:last-child{
+border-bottom:none;
+}
+
+.registerName{
+font-size:14px;
+font-weight:700;
+line-height:1.4;
+}
+
+.registerType{
+font-size:13px;
+color:#b9c2ca;
+line-height:1.4;
+}
+
+.registerStatus{
+font-size:12px;
+font-weight:800;
+text-transform:uppercase;
+letter-spacing:.8px;
+line-height:1.4;
+}
+
+.statusActive{color:#37d67a}
+.statusTesting{color:#ffcf70}
+.statusManual{color:#87bfff}
+.statusBlocked{color:#ff8b8b}
+.statusDormant{color:#9aa4af}
+
+.trustRow{
+display:grid;
+grid-template-columns:34px 1fr;
+gap:10px;
+padding:11px 0;
+border-bottom:1px solid #232a32;
+align-items:start;
+}
+
+.trustRow:last-child{
+border-bottom:none;
+}
+
+.trustNumber{
+width:26px;
+height:26px;
+border-radius:50%;
+background:#101419;
+border:1px solid #2a333d;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:12px;
+font-weight:800;
+color:#b9c2ca;
+}
+
+.trustText{
+font-size:14px;
+line-height:1.45;
+color:#d8dee5;
+}
+
+.trustSub{
+font-size:12px;
+color:#95a0ab;
+margin-top:3px;
+line-height:1.4;
+}
+
+.footer{
+margin-top:26px;
+font-size:12px;
+line-height:1.7;
+color:#7e8893;
+text-align:center;
+}
+
+.liveDot,.warnDot,.badDot{
+display:inline-block;
+width:8px;
+height:8px;
+border-radius:50%;
+margin-right:6px;
+vertical-align:middle;
+}
+
+.liveDot{background:#37d67a}
+.warnDot{background:#ffcf70}
+.badDot{background:#ff6b6b}
+
+.warning{color:#ffcf70}
+.error{color:#ff8b8b}
+
+.refresh{
+margin-top:16px;
+font-size:12px;
+color:#81909d;
+}
+
+@media(max-width:560px){
+
+.container{
+padding:14px;
+}
+
+.mainLevel{
+font-size:48px;
+}
+
+.grid{
+grid-template-columns:1fr;
+}
+
+.snapshotGrid{
+grid-template-columns:1fr;
+}
+
+.freshnessBar{
+grid-template-columns:1fr;
+}
+
+.registerRow{
+grid-template-columns:1fr;
+}
+
+.card{
+padding:16px;
+border-radius:17px;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+<div class="title">Salmon Rivers Intelligence</div>
+
+<div class="subtitle">
+River Ribble — Henthorn only<br>
+Environment Agency station 710305<br>
+Verified-data intelligence terminal
+</div>
+
+<div class="version">
+Build 10061
+</div>
+</div>
+
+<div class="card">
+
+<div class="cardTitle">
+System Status
+</div>
+
+<div class="statusTable">
+
+<div class="statusLine">
+<div class="statusName">EA Level Feed</div>
+<div class="statusValue ok" id="sysLevel">Online</div>
+</div>
+
+<div class="statusLine">
+<div class="statusName">EA Rainfall Feed</div>
+<div class="statusValue test" id="sysRain">Testing</div>
+</div>
+
+<div class="statusLine">
+<div class="statusName">RFCA Temperature</div>
+<div class="statusValue blocked">Blocked</div>
+</div>
+
+<div class="statusLine">
+<div class="statusName">Intelligence Layer</div>
+<div class="statusValue manual">Manual</div>
+</div>
+
+<div class="statusLine">
+<div class="statusName">Last Refresh</div>
+<div class="statusValue manual" id="sysRefresh">--</div>
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="cardTitle">
+Now Snapshot
+</div>
+
+<div class="snapshotGrid">
+
+<div class="snapshotItem">
+<div class="snapshotLabel">Level</div>
+<div class="snapshotValue snapshotLive" id="snapLevel">Live EA</div>
+</div>
+
+<div class="snapshotItem">
+<div class="snapshotLabel">Movement</div>
+<div class="snapshotValue snapshotLive" id="snapMovement">Live EA</div>
+</div>
+
+<div class="snapshotItem">
+<div class="snapshotLabel">Rainfall</div>
+<div class="snapshotValue snapshotTesting" id="snapRain">Testing</div>
+</div>
+
+<div class="snapshotItem">
+<div class="snapshotLabel">Freshness</div>
+<div class="snapshotValue snapshotTesting" id="snapFreshness">Checking</div>
+</div>
+
+<div class="snapshotItem">
+<div class="snapshotLabel">Temperature</div>
+<div class="snapshotValue snapshotBlocked">Blocked</div>
+</div>
+
+<div class="snapshotItem">
+<div class="snapshotLabel">Catch Intel</div>
+<div class="snapshotValue snapshotManual">Manual only</div>
+</div>
+
+<div class="snapshotItem">
+<div class="snapshotLabel">Judgement</div>
+<div class="snapshotValue snapshotBlocked">Not scored</div>
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="cardTitle">
+Live Henthorn River Level
+</div>
+
+<div class="mainLevel" id="riverLevel">
+--
+</div>
+
+<div class="mainMeta" id="movement">
+Loading official EA telemetry...
+</div>
+
+<div class="grid">
+
+<div class="metric">
+<div class="metricLabel">Last Reading</div>
+<div class="metricValue" id="timestamp">--</div>
+<div class="metricSub">Official EA reading timestamp</div>
+</div>
+
+<div class="metric">
+<div class="metricLabel">Movement</div>
+<div class="metricValue" id="movementValue">--</div>
+<div class="metricSub" id="movementSub">Calculated only from EA readings</div>
+</div>
+
+</div>
+
+<div class="freshnessBar">
+
+<div class="freshnessBox">
+<div class="freshnessLabel">Level Data Age</div>
+<div class="freshnessValue ageing" id="levelAge">Checking</div>
+</div>
+
+<div class="freshnessBox">
+<div class="freshnessLabel">Freshness Rule</div>
+<div class="freshnessValue">Fresh &lt; 90 min</div>
+</div>
+
+</div>
+
+<div class="statusBar" id="levelStatus">
+<span class="liveDot"></span>
+Connecting to live Henthorn telemetry...
+</div>
+
+<div class="refresh">
+Auto refresh every 5 minutes
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="cardTitle">
+Verified Rainfall Watch
+</div>
+
+<div class="grid">
+
+<div class="metric">
+<div class="metricLabel">Nearest EA Rainfall</div>
+<div class="metricValue" id="rainValue">--</div>
+<div class="metricSub" id="rainStation">Searching EA rainfall network</div>
+</div>
+
+<div class="metric">
+<div class="metricLabel">Rain Timestamp</div>
+<div class="metricValue" id="rainTime">--</div>
+<div class="metricSub">Official EA rainfall telemetry</div>
+</div>
+
+</div>
+
+<div class="freshnessBar">
+
+<div class="freshnessBox">
+<div class="freshnessLabel">Rain Data Age</div>
+<div class="freshnessValue ageing" id="rainAge">Checking</div>
+</div>
+
+<div class="freshnessBox">
+<div class="freshnessLabel">Rain Source State</div>
+<div class="freshnessValue ageing" id="rainSourceState">Testing</div>
+</div>
+
+</div>
+
+<div class="statusBar" id="rainStatus">
+<span class="warnDot"></span>
+Rainfall integration loading. No rainfall estimate will be shown.
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="cardTitle">
+Current Intelligence Position
+</div>
+
+<div class="intelItem">
+
+<div class="intelSource">
+EA Henthorn
+</div>
+
+<div class="intelHeadline">
+Live level is the primary trusted signal
+</div>
+
+<div class="intelText" id="summaryLevel">
+Waiting for current Henthorn telemetry.
+</div>
+
+</div>
+
+<div class="intelItem">
+
+<div class="intelSource">
+EA Rainfall
+</div>
+
+<div class="intelHeadline">
+Rainfall is the secondary telemetry signal
+</div>
+
+<div class="intelText" id="summaryRain">
+Waiting for nearest official rainfall station reading.
+</div>
+
+</div>
+
+<div class="intelItem">
+
+<div class="intelSource">
+System Discipline
+</div>
+
+<div class="intelHeadline">
+No fishing-condition judgement yet
+</div>
+
+<div class="intelText">
+This build does not call the river good, poor or prime.
+It reports facts only until measured criteria are agreed and evidenced.
+</div>
+
+</div>
+
+</div>
 
 <div class="card">
 
@@ -123,3 +590,364 @@ No automated ingestion is active in Build 10061.
 </div>
 
 </div>
+
+<div class="footer">
+Environment Agency live telemetry only for live figures.<br><br>
+No speculative classifications.<br>
+No invented catch data.<br>
+Verified sources only.
+</div>
+
+</div>
+
+<script>
+
+const STATION_ID = "710305";
+const HENTHORN_LAT = 53.848003;
+const HENTHORN_LONG = -2.424337;
+
+function setText(id,value){
+document.getElementById(id).innerText = value;
+}
+
+function setClass(id,className){
+document.getElementById(id).className = className;
+}
+
+function refreshTime(){
+return new Date().toLocaleTimeString([],{
+hour:"2-digit",
+minute:"2-digit"
+});
+}
+
+function formatTime(dateString){
+
+if(!dateString){
+return "--";
+}
+
+return new Date(dateString).toLocaleString([],{
+day:"2-digit",
+month:"short",
+hour:"2-digit",
+minute:"2-digit"
+});
+
+}
+
+function ageMinutes(dateString){
+
+if(!dateString){
+return null;
+}
+
+const then = new Date(dateString).getTime();
+
+if(Number.isNaN(then)){
+return null;
+}
+
+return Math.max(
+0,
+Math.round((Date.now() - then) / 60000)
+);
+
+}
+
+function ageLabel(minutes){
+
+if(minutes === null){
+return "Unknown";
+}
+
+if(minutes < 60){
+return minutes + " min old";
+}
+
+const hours = Math.floor(minutes / 60);
+
+const rem = minutes % 60;
+
+if(hours < 24){
+return hours + "h " + rem + "m old";
+}
+
+const days = Math.floor(hours / 24);
+
+return days + "d old";
+
+}
+
+function freshnessClass(minutes){
+
+if(minutes === null){
+return "freshnessValue stale";
+}
+
+if(minutes <= 90){
+return "freshnessValue fresh";
+}
+
+if(minutes <= 240){
+return "freshnessValue ageing";
+}
+
+return "freshnessValue stale";
+
+}
+
+function freshnessWord(minutes){
+
+if(minutes === null){
+return "Unknown";
+}
+
+if(minutes <= 90){
+return "Fresh";
+}
+
+if(minutes <= 240){
+return "Ageing";
+}
+
+return "Stale";
+
+}
+
+function calculateMovement(readings){
+
+if(!Array.isArray(readings) || readings.length < 2){
+return null;
+}
+
+const clean = readings
+.filter(r => typeof r.value === "number")
+.sort((a,b) => new Date(a.dateTime) - new Date(b.dateTime));
+
+if(clean.length < 2){
+return null;
+}
+
+const first = clean[0];
+const last = clean[clean.length - 1];
+
+return {
+difference:last.value - first.value
+};
+
+}
+
+function movementLabel(diff){
+
+if(Math.abs(diff) < 0.005){
+return "Steady";
+}
+
+if(diff > 0){
+return "Rising";
+}
+
+return "Falling";
+
+}
+
+async function fetchJSON(url){
+
+const response = await fetch(url,{cache:"no-store"});
+
+if(!response.ok){
+throw new Error("HTTP error");
+}
+
+return await response.json();
+
+}
+
+async function loadRiverData(){
+
+try{
+
+const stationUrl =
+`https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}.json`;
+
+const stationData = await fetchJSON(stationUrl);
+
+const measures = stationData.items.measures || [];
+
+const levelMeasure = measures.find(m =>
+String(m.parameterName || "").toLowerCase().includes("level")
+);
+
+if(!levelMeasure){
+throw new Error("No level measure");
+}
+
+const latestUrl =
+levelMeasure.latestReading["@id"] + ".json";
+
+const latestData = await fetchJSON(latestUrl);
+
+const latest = latestData.items;
+
+const value = Number(latest.value);
+
+const minutes = ageMinutes(latest.dateTime);
+
+setText("riverLevel", value.toFixed(2) + " m");
+
+setText("timestamp", formatTime(latest.dateTime));
+
+setText("movement", "Live Environment Agency Henthorn telemetry");
+
+setText(
+"levelAge",
+ageLabel(minutes) + " — " + freshnessWord(minutes)
+);
+
+setClass("levelAge", freshnessClass(minutes));
+
+setText("snapLevel","Live EA");
+
+setClass("snapLevel","snapshotValue snapshotLive");
+
+setText("sysLevel","Online");
+
+setClass("sysLevel","statusValue ok");
+
+setText("snapFreshness", freshnessWord(minutes));
+
+setClass(
+"snapFreshness",
+minutes !== null && minutes <= 90
+? "snapshotValue snapshotLive"
+: minutes !== null && minutes <= 240
+? "snapshotValue snapshotTesting"
+: "snapshotValue snapshotBlocked"
+);
+
+let movementData = null;
+
+try{
+
+const readingsUrl =
+levelMeasure["@id"] + "/readings?_sorted&_limit=8";
+
+const readingsData = await fetchJSON(readingsUrl);
+
+movementData =
+calculateMovement(readingsData.items);
+
+}catch(e){}
+
+if(movementData){
+
+const label =
+movementLabel(movementData.difference);
+
+setText("movementValue", label);
+
+setText("snapMovement", label);
+
+setClass(
+"snapMovement",
+"snapshotValue snapshotLive"
+);
+
+setText(
+"movementSub",
+(movementData.difference >= 0 ? "+" : "") +
+movementData.difference.toFixed(3) +
+" m across latest sample window"
+);
+
+}else{
+
+setText("movementValue","Live");
+
+setText("snapMovement","Live EA");
+
+setClass(
+"snapMovement",
+"snapshotValue snapshotLive"
+);
+
+setText(
+"movementSub",
+"Movement sample unavailable"
+);
+
+}
+
+document.getElementById("levelStatus").innerHTML =
+'<span class="liveDot"></span>Live Henthorn telemetry received from official EA API.';
+
+}catch(error){
+
+console.error(error);
+
+setText("riverLevel","--");
+
+setText(
+"movement",
+"Unable to retrieve official telemetry"
+);
+
+setText("levelAge","Unknown");
+
+setClass(
+"levelAge",
+"freshnessValue stale"
+);
+
+setText("snapLevel","Offline");
+
+setText("snapMovement","Offline");
+
+setText("snapFreshness","Unknown");
+
+setClass(
+"snapLevel",
+"snapshotValue snapshotBlocked"
+);
+
+setClass(
+"snapMovement",
+"snapshotValue snapshotBlocked"
+);
+
+setClass(
+"snapFreshness",
+"snapshotValue snapshotBlocked"
+);
+
+setText("sysLevel","Offline");
+
+setClass(
+"sysLevel",
+"statusValue blocked"
+);
+
+document.getElementById("levelStatus").innerHTML =
+'<span class="badDot"></span><span class="error">EA telemetry connection issue.</span>';
+
+}
+
+}
+
+function refreshAll(){
+
+setText("sysRefresh", refreshTime());
+
+loadRiverData();
+
+}
+
+refreshAll();
+
+setInterval(refreshAll,300000);
+
+</script>
+
+</body>
+</html>
