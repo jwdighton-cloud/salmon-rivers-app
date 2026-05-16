@@ -56,7 +56,13 @@ body{margin:0;background:#0f1114;color:#f2f2f2;font-family:-apple-system,BlinkMa
 .chip{background:#101419;border:1px solid #1f252d;border-radius:14px;padding:12px}
 .chipName{font-size:11px;text-transform:uppercase;letter-spacing:.9px;color:#7f8a96;font-weight:800;margin-bottom:6px}
 .chipStatus{font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:.6px}
-.chipActive{color:#37d67a}.chipManual{color:#87bfff}.chipTarget{color:#ffcf70}
+.chipActive{color:#37d67a}.chipManual{color:#87bfff}.chipTarget{color:#ffcf70}.chipBlocked{color:#ff8b8b}
+
+.investigationGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.investigationBox{background:#101419;border:1px solid #1f252d;border-radius:14px;padding:12px}
+.investigationLabel{font-size:10px;text-transform:uppercase;letter-spacing:.9px;color:#7f8a96;font-weight:800;margin-bottom:6px}
+.investigationValue{font-size:14px;font-weight:800;line-height:1.35}
+.invOk{color:#37d67a}.invBlocked{color:#ff8b8b}.invNext{color:#ffcf70}
 
 .registerRow{display:grid;grid-template-columns:1.2fr .9fr .8fr;gap:10px;padding:13px 0;border-bottom:1px solid #232a32;align-items:start}
 .registerRow:last-child{border-bottom:none}
@@ -80,7 +86,7 @@ body{margin:0;background:#0f1114;color:#f2f2f2;font-family:-apple-system,BlinkMa
 @media(max-width:560px){
 .container{padding:14px}
 .mainLevel{font-size:48px}
-.grid,.snapshotGrid,.freshnessBar,.chipGrid{grid-template-columns:1fr}
+.grid,.snapshotGrid,.freshnessBar,.chipGrid,.investigationGrid{grid-template-columns:1fr}
 .registerRow{grid-template-columns:1fr}
 .card{padding:16px;border-radius:17px}
 }
@@ -97,7 +103,7 @@ River Ribble — Henthorn only<br>
 Environment Agency station 710305<br>
 Verified-data intelligence terminal
 </div>
-<div class="version">Build 10062</div>
+<div class="version">Build 10063</div>
 </div>
 
 <div class="card">
@@ -118,7 +124,7 @@ Verified-data intelligence terminal
 <div class="snapshotItem"><div class="snapshotLabel">Movement</div><div class="snapshotValue snapshotLive" id="snapMovement">Live EA</div></div>
 <div class="snapshotItem"><div class="snapshotLabel">Rainfall</div><div class="snapshotValue snapshotTesting" id="snapRain">Testing</div></div>
 <div class="snapshotItem"><div class="snapshotLabel">Freshness</div><div class="snapshotValue snapshotTesting" id="snapFreshness">Checking</div></div>
-<div class="snapshotItem"><div class="snapshotLabel">Temperature</div><div class="snapshotValue snapshotBlocked">Blocked</div></div>
+<div class="snapshotItem"><div class="snapshotLabel">Temperature</div><div class="snapshotValue snapshotBlocked">Feed not verified</div></div>
 <div class="snapshotItem"><div class="snapshotLabel">External Intel</div><div class="snapshotValue snapshotManual">Manual only</div></div>
 <div class="snapshotItem"><div class="snapshotLabel">Judgement</div><div class="snapshotValue snapshotBlocked">Not scored</div></div>
 </div>
@@ -210,11 +216,49 @@ Verified-data intelligence terminal
 </div>
 
 <div class="intelItem">
+<div class="intelSource">RFCA Temperature</div>
+<div class="intelHeadline">Most important unresolved live metric</div>
+<div class="intelText">
+RFCA live water-quality dashboard is known as a target source, but this build does not display temperature because no stable public JSON/API feed has been verified.
+</div>
+</div>
+
+<div class="intelItem">
 <div class="intelSource">System Discipline</div>
 <div class="intelHeadline">No fishing-condition judgement yet</div>
 <div class="intelText">
 This build does not call the river good, poor or prime. It reports facts only until measured criteria are agreed and evidenced.
 </div>
+</div>
+</div>
+
+<div class="card">
+<div class="cardTitle">RFCA Temperature Investigation</div>
+
+<div class="investigationGrid">
+<div class="investigationBox">
+<div class="investigationLabel">Dashboard</div>
+<div class="investigationValue invOk">Confirmed target</div>
+</div>
+
+<div class="investigationBox">
+<div class="investigationLabel">Public API</div>
+<div class="investigationValue invBlocked">Not verified</div>
+</div>
+
+<div class="investigationBox">
+<div class="investigationLabel">Direct Feed</div>
+<div class="investigationValue invBlocked">Blocked</div>
+</div>
+
+<div class="investigationBox">
+<div class="investigationLabel">Next Action</div>
+<div class="investigationValue invNext">Inspect network feed</div>
+</div>
+</div>
+
+<div class="statusBar">
+<span class="warnDot"></span>No RFCA temperature value is displayed in Build 10063. A value must not be shown until the feed is verified and traceable.
 </div>
 </div>
 
@@ -230,6 +274,7 @@ This build does not call the river good, poor or prime. It reports facts only un
 <div class="chip"><div class="chipName">Ribble Trust</div><div class="chipStatus chipActive">Active manual</div></div>
 <div class="chip"><div class="chipName">Forum</div><div class="chipStatus chipManual">Manual review</div></div>
 <div class="chip"><div class="chipName">Operators</div><div class="chipStatus chipTarget">Target source</div></div>
+<div class="chip"><div class="chipName">Temperature</div><div class="chipStatus chipBlocked">Feed blocked</div></div>
 </div>
 
 <div class="intelItem">
@@ -302,7 +347,7 @@ Future external entries must be date-labelled, source-labelled and factual: wate
 <div class="cardTitle">Source Register</div>
 <div class="registerRow"><div class="registerName">EA Henthorn Level</div><div class="registerType">Live API telemetry</div><div class="registerStatus statusActive">Active</div></div>
 <div class="registerRow"><div class="registerName">EA Rainfall</div><div class="registerType">Live API telemetry</div><div class="registerStatus statusTesting">Testing</div></div>
-<div class="registerRow"><div class="registerName">RFCA Temperature</div><div class="registerType">Public dashboard</div><div class="registerStatus statusBlocked">Feed not verified</div></div>
+<div class="registerRow"><div class="registerName">RFCA Temperature</div><div class="registerType">Investigation priority</div><div class="registerStatus statusBlocked">Feed not verified</div></div>
 <div class="registerRow"><div class="registerName">RFCA Blog</div><div class="registerType">Manual intelligence</div><div class="registerStatus statusManual">Active manual</div></div>
 <div class="registerRow"><div class="registerName">Ribble Trust Blog</div><div class="registerType">Manual intelligence</div><div class="registerStatus statusManual">Active manual</div></div>
 <div class="registerRow"><div class="registerName">Salmon Fishing Forum</div><div class="registerType">Manual review only</div><div class="registerStatus statusDormant">Not automated</div></div>
@@ -310,26 +355,11 @@ Future external entries must be date-labelled, source-labelled and factual: wate
 <div class="statusBar"><span class="warnDot"></span>Only Active live API sources are allowed to display live numerical values.</div>
 </div>
 
-<div class="card">
-<div class="cardTitle">RFCA Temperature Status</div>
-<div class="intelItem">
-<div class="intelHeadline">RFCA water-quality dashboard confirmed</div>
-<div class="intelText">
-RFCA publicly confirms live water-quality monitoring for anglers, including temperature and other sonde readings.
-</div>
-</div>
-<div class="intelItem">
-<div class="intelHeadline">Direct temperature feed not yet verified</div>
-<div class="intelText">
-Build 10062 does not display a water temperature value because no stable public JSON/API feed has yet been verified.
-</div>
-</div>
-</div>
-
 <div class="footer">
 Environment Agency live telemetry only for live figures.<br><br>
 No speculative classifications.<br>
 No invented catch data.<br>
+No unverified temperature value.<br>
 Verified sources only.
 </div>
 
