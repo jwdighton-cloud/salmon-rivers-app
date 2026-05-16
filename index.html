@@ -8,542 +8,742 @@
 
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;background:#0f1114;color:#f2f2f2;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
-.container{max-width:720px;margin:auto;padding:18px}
-.header{margin-bottom:20px}
-.title{font-size:28px;font-weight:750;letter-spacing:-.6px}
-.subtitle{margin-top:7px;font-size:14px;color:#9aa4af;line-height:1.5}
-.version{margin-top:12px;display:inline-block;font-size:12px;padding:5px 11px;border-radius:999px;background:#1c2229;color:#9fb3c8}
-.seasonBadge{margin-top:8px;display:inline-block;font-size:12px;padding:5px 11px;border-radius:999px;background:#2a1f13;color:#ffcf70;border:1px solid #4a3519}
-.card{background:#171b20;border:1px solid #232a32;border-radius:19px;padding:18px;margin-bottom:16px}
-.cardTitle{font-size:12px;text-transform:uppercase;letter-spacing:1.1px;color:#7d8b98;margin-bottom:14px;font-weight:700}
+body{
+margin:0;
+background:#0f1114;
+color:#f2f2f2;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+}
 
-.statusTable{display:grid;gap:9px}
-.statusLine{display:grid;grid-template-columns:1fr auto;gap:12px;padding:9px 0;border-bottom:1px solid #232a32;font-size:14px}
-.statusLine:last-child{border-bottom:none}
-.statusName{color:#bcc5ce}
-.statusValue{font-weight:800;text-transform:uppercase;letter-spacing:.7px}
-.ok{color:#37d67a}.test{color:#ffcf70}.blocked{color:#ff8b8b}.manual{color:#87bfff}
+.container{
+max-width:760px;
+margin:auto;
+padding:18px;
+}
 
-.snapshotGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.snapshotItem{background:#101419;border:1px solid #1f252d;border-radius:14px;padding:12px}
-.snapshotLabel{font-size:10px;text-transform:uppercase;letter-spacing:.9px;color:#7f8a96;font-weight:800;margin-bottom:6px}
-.snapshotValue{font-size:14px;font-weight:800;line-height:1.35}
-.snapshotLive{color:#37d67a}.snapshotTesting{color:#ffcf70}.snapshotBlocked{color:#ff8b8b}.snapshotManual{color:#87bfff}
+.header{
+margin-bottom:20px;
+}
 
-.priorityGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
-.priorityBox{background:#101419;border:1px solid #1f252d;border-radius:14px;padding:12px}
-.priorityLabel{font-size:10px;text-transform:uppercase;letter-spacing:.9px;color:#7f8a96;font-weight:800;margin-bottom:6px}
-.priorityValue{font-size:14px;font-weight:800;line-height:1.35}
-.priorityManual{color:#87bfff}.priorityBlocked{color:#ff8b8b}.priorityTarget{color:#ffcf70}.priorityLive{color:#37d67a}
+.title{
+font-size:30px;
+font-weight:800;
+letter-spacing:-0.7px;
+}
 
-.mainLevel{font-size:58px;font-weight:780;line-height:1;margin-bottom:9px}
-.mainMeta{font-size:16px;color:#b9c2ca}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
-.metric{background:#101419;border-radius:15px;padding:14px;border:1px solid #1f252d}
-.metricLabel{font-size:11px;text-transform:uppercase;letter-spacing:.9px;color:#7f8a96;margin-bottom:8px;font-weight:700}
-.metricValue{font-size:22px;font-weight:760}
-.metricSub{margin-top:6px;font-size:12px;color:#95a0ab;line-height:1.45}
-.statusBar{margin-top:12px;padding:13px;border-radius:13px;background:#11161b;border:1px solid #202831;font-size:14px;line-height:1.5;color:#d8dee5}
+.subtitle{
+margin-top:8px;
+font-size:14px;
+line-height:1.55;
+color:#a0a9b3;
+}
 
-.freshnessBar{margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.freshnessBox{background:#101419;border:1px solid #1f252d;border-radius:14px;padding:12px}
-.freshnessLabel{font-size:10px;text-transform:uppercase;letter-spacing:.9px;color:#7f8a96;font-weight:800;margin-bottom:6px}
-.freshnessValue{font-size:14px;font-weight:800;line-height:1.35}
-.fresh{color:#37d67a}.ageing{color:#ffcf70}.stale{color:#ff8b8b}
+.versionRow{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin-top:12px;
+}
 
-.intelItem{padding:14px 0;border-bottom:1px solid #232a32}
-.intelItem:last-child{border-bottom:none;padding-bottom:0}
-.intelSource{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#7f8c98;margin-bottom:6px;font-weight:700}
-.intelHeadline{font-size:16px;font-weight:700;line-height:1.45;margin-bottom:6px}
-.intelText{font-size:14px;color:#bcc5ce;line-height:1.6}
-.sourceLink{display:inline-block;margin-top:8px;font-size:13px;color:#87bfff;text-decoration:none}
+.badge{
+display:inline-block;
+padding:6px 12px;
+border-radius:999px;
+font-size:12px;
+font-weight:700;
+letter-spacing:.5px;
+}
 
-.chipGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
-.chip{background:#101419;border:1px solid #1f252d;border-radius:14px;padding:12px}
-.chipName{font-size:11px;text-transform:uppercase;letter-spacing:.9px;color:#7f8a96;font-weight:800;margin-bottom:6px}
-.chipStatus{font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:.6px}
-.chipActive{color:#37d67a}.chipManual{color:#87bfff}.chipTarget{color:#ffcf70}.chipBlocked{color:#ff8b8b}
+.buildBadge{
+background:#1c2229;
+color:#9fb3c8;
+}
 
-.requirementList{margin:0;padding:0;list-style:none}
-.requirementList li{padding:9px 0;border-bottom:1px solid #232a32;font-size:14px;color:#bcc5ce;line-height:1.45}
-.requirementList li:last-child{border-bottom:none}
-.requirementList strong{color:#f2f2f2}
+.seasonBadge{
+background:#2b2012;
+color:#ffcf70;
+border:1px solid #4b3718;
+}
 
-.investigationGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
-.investigationBox{background:#101419;border:1px solid #1f252d;border-radius:14px;padding:12px}
-.investigationLabel{font-size:10px;text-transform:uppercase;letter-spacing:.9px;color:#7f8a96;font-weight:800;margin-bottom:6px}
-.investigationValue{font-size:14px;font-weight:800;line-height:1.35}
-.invOk{color:#37d67a}.invBlocked{color:#ff8b8b}.invNext{color:#ffcf70}
+.card{
+background:#171b20;
+border:1px solid #232a32;
+border-radius:20px;
+padding:18px;
+margin-bottom:16px;
+}
 
-.registerRow{display:grid;grid-template-columns:1.2fr .9fr .8fr;gap:10px;padding:13px 0;border-bottom:1px solid #232a32;align-items:start}
-.registerRow:last-child{border-bottom:none}
-.registerName{font-size:14px;font-weight:700;line-height:1.4}
-.registerType{font-size:13px;color:#b9c2ca;line-height:1.4}
-.registerStatus{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;line-height:1.4}
-.statusActive{color:#37d67a}.statusTesting{color:#ffcf70}.statusManual{color:#87bfff}.statusBlocked{color:#ff8b8b}.statusDormant{color:#9aa4af}
+.cardTitle{
+font-size:12px;
+font-weight:800;
+letter-spacing:1.1px;
+text-transform:uppercase;
+color:#7d8b98;
+margin-bottom:14px;
+}
 
-.trustRow{display:grid;grid-template-columns:34px 1fr;gap:10px;padding:11px 0;border-bottom:1px solid #232a32;align-items:start}
-.trustRow:last-child{border-bottom:none}
-.trustNumber{width:26px;height:26px;border-radius:50%;background:#101419;border:1px solid #2a333d;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#b9c2ca}
-.trustText{font-size:14px;line-height:1.45;color:#d8dee5}
-.trustSub{font-size:12px;color:#95a0ab;margin-top:3px;line-height:1.4}
+.statusTable{
+display:grid;
+gap:10px;
+}
 
-.footer{margin-top:26px;font-size:12px;line-height:1.7;color:#7e8893;text-align:center}
-.liveDot,.warnDot,.badDot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:middle}
-.liveDot{background:#37d67a}.warnDot{background:#ffcf70}.badDot{background:#ff6b6b}
-.warning{color:#ffcf70}.error{color:#ff8b8b}
-.refresh{margin-top:16px;font-size:12px;color:#81909d}
+.statusLine{
+display:grid;
+grid-template-columns:1fr auto;
+gap:12px;
+padding:10px 0;
+border-bottom:1px solid #232a32;
+font-size:14px;
+}
 
-@media(max-width:560px){
-.container{padding:14px}
-.mainLevel{font-size:48px}
-.grid,.snapshotGrid,.freshnessBar,.chipGrid,.investigationGrid,.priorityGrid{grid-template-columns:1fr}
-.registerRow{grid-template-columns:1fr}
-.card{padding:16px;border-radius:17px}
+.statusLine:last-child{
+border-bottom:none;
+}
+
+.statusName{
+color:#c0c8d0;
+}
+
+.statusValue{
+font-weight:800;
+text-transform:uppercase;
+letter-spacing:.6px;
+}
+
+.ok{color:#37d67a;}
+.test{color:#ffcf70;}
+.blocked{color:#ff8b8b;}
+.manual{color:#87bfff;}
+
+.heroLevel{
+font-size:64px;
+font-weight:800;
+line-height:1;
+margin-bottom:10px;
+}
+
+.heroMeta{
+font-size:16px;
+color:#bcc5ce;
+line-height:1.5;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin-top:16px;
+}
+
+.metric{
+background:#101419;
+border:1px solid #1f252d;
+border-radius:16px;
+padding:14px;
+}
+
+.metricLabel{
+font-size:11px;
+font-weight:700;
+letter-spacing:.9px;
+text-transform:uppercase;
+color:#7f8a96;
+margin-bottom:8px;
+}
+
+.metricValue{
+font-size:22px;
+font-weight:800;
+line-height:1.3;
+}
+
+.metricSub{
+margin-top:6px;
+font-size:12px;
+line-height:1.5;
+color:#97a1ac;
+}
+
+.priorityGrid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
+
+.priorityBox{
+background:#101419;
+border:1px solid #1f252d;
+border-radius:15px;
+padding:13px;
+}
+
+.priorityLabel{
+font-size:10px;
+font-weight:800;
+letter-spacing:.9px;
+text-transform:uppercase;
+color:#7f8a96;
+margin-bottom:6px;
+}
+
+.priorityValue{
+font-size:14px;
+font-weight:800;
+line-height:1.35;
+}
+
+.priorityLive{color:#37d67a;}
+.priorityTarget{color:#ffcf70;}
+.priorityBlocked{color:#ff8b8b;}
+.priorityManual{color:#87bfff;}
+
+.statusBar{
+margin-top:14px;
+padding:13px;
+background:#11161b;
+border:1px solid #202831;
+border-radius:14px;
+font-size:14px;
+line-height:1.55;
+color:#d9e0e7;
+}
+
+.intelItem{
+padding:14px 0;
+border-bottom:1px solid #232a32;
+}
+
+.intelItem:last-child{
+border-bottom:none;
+padding-bottom:0;
+}
+
+.intelSource{
+font-size:11px;
+font-weight:700;
+letter-spacing:1px;
+text-transform:uppercase;
+color:#7f8c98;
+margin-bottom:6px;
+}
+
+.intelHeadline{
+font-size:16px;
+font-weight:700;
+line-height:1.45;
+margin-bottom:6px;
+}
+
+.intelText{
+font-size:14px;
+line-height:1.6;
+color:#bcc5ce;
+}
+
+.sourceLink{
+display:inline-block;
+margin-top:8px;
+font-size:13px;
+color:#87bfff;
+text-decoration:none;
+}
+
+.registerRow{
+display:grid;
+grid-template-columns:1.2fr .9fr .8fr;
+gap:10px;
+padding:13px 0;
+border-bottom:1px solid #232a32;
+align-items:start;
+}
+
+.registerRow:last-child{
+border-bottom:none;
+}
+
+.registerName{
+font-size:14px;
+font-weight:700;
+line-height:1.4;
+}
+
+.registerType{
+font-size:13px;
+line-height:1.45;
+color:#bcc5ce;
+}
+
+.registerStatus{
+font-size:12px;
+font-weight:800;
+text-transform:uppercase;
+letter-spacing:.7px;
+line-height:1.4;
+}
+
+.statusActive{color:#37d67a;}
+.statusTesting{color:#ffcf70;}
+.statusBlocked{color:#ff8b8b;}
+.statusManual{color:#87bfff;}
+.statusDormant{color:#9aa4af;}
+
+.footer{
+margin-top:26px;
+font-size:12px;
+line-height:1.7;
+color:#7d8792;
+text-align:center;
+}
+
+.liveDot,.warnDot,.badDot{
+display:inline-block;
+width:8px;
+height:8px;
+border-radius:50%;
+margin-right:6px;
+vertical-align:middle;
+}
+
+.liveDot{background:#37d67a;}
+.warnDot{background:#ffcf70;}
+.badDot{background:#ff6b6b;}
+
+.warning{color:#ffcf70;}
+.error{color:#ff8b8b;}
+
+.refresh{
+margin-top:16px;
+font-size:12px;
+color:#81909d;
+}
+
+@media(max-width:600px){
+.container{
+padding:14px;
+}
+.heroLevel{
+font-size:52px;
+}
+.grid,
+.priorityGrid{
+grid-template-columns:1fr;
+}
+.registerRow{
+grid-template-columns:1fr;
+}
+.card{
+padding:16px;
+border-radius:18px;
+}
 }
 </style>
 </head>
 
 <body>
+
 <div class="container">
 
 <div class="header">
 <div class="title">Salmon Rivers Intelligence</div>
+
 <div class="subtitle">
-River Ribble — Henthorn only<br>
-Current-season salmon activity intelligence terminal<br>
+River Ribble — Henthorn conditions terminal<br>
+Current-season Ribble system salmon intelligence<br>
 Environment Agency station 710305
 </div>
-<div class="version">Build 10066</div>
-<div class="seasonBadge">2026 SEASON ONLY</div>
+
+<div class="versionRow">
+<div class="badge buildBadge">Build 10067</div>
+<div class="badge seasonBadge">2026 SEASON ONLY</div>
+</div>
 </div>
 
 <div class="card">
 <div class="cardTitle">System Status</div>
+
 <div class="statusTable">
-<div class="statusLine"><div class="statusName">Current-season catch intel</div><div class="statusValue test">Priority</div></div>
-<div class="statusLine"><div class="statusName">Current catch count</div><div class="statusValue blocked">Not displayed</div></div>
-<div class="statusLine"><div class="statusName">Fish counter data</div><div class="statusValue test">Priority</div></div>
-<div class="statusLine"><div class="statusName">EA Level Feed</div><div class="statusValue ok" id="sysLevel">Online</div></div>
-<div class="statusLine"><div class="statusName">EA Rainfall Feed</div><div class="statusValue test" id="sysRain">Testing</div></div>
-<div class="statusLine"><div class="statusName">RFCA Temperature</div><div class="statusValue blocked">Blocked</div></div>
-<div class="statusLine"><div class="statusName">Last Refresh</div><div class="statusValue manual" id="sysRefresh">--</div></div>
+
+<div class="statusLine">
+<div class="statusName">Henthorn conditions</div>
+<div class="statusValue ok">Primary View</div>
+</div>
+
+<div class="statusLine">
+<div class="statusName">Current-season totals</div>
+<div class="statusValue test">Priority</div>
+</div>
+
+<div class="statusLine">
+<div class="statusName">Fish counter data</div>
+<div class="statusValue test">Priority</div>
+</div>
+
+<div class="statusLine">
+<div class="statusName">EA level telemetry</div>
+<div class="statusValue ok" id="sysLevel">Online</div>
+</div>
+
+<div class="statusLine">
+<div class="statusName">EA rainfall telemetry</div>
+<div class="statusValue test" id="sysRain">Testing</div>
+</div>
+
+<div class="statusLine">
+<div class="statusName">RFCA temperature</div>
+<div class="statusValue blocked">Not verified</div>
+</div>
+
+<div class="statusLine">
+<div class="statusName">Last refresh</div>
+<div class="statusValue manual" id="sysRefresh">--</div>
+</div>
+
 </div>
 </div>
 
 <div class="card">
-<div class="cardTitle">Now Snapshot</div>
-<div class="snapshotGrid">
-<div class="snapshotItem"><div class="snapshotLabel">Season Rule</div><div class="snapshotValue snapshotTesting">2026 only</div></div>
-<div class="snapshotItem"><div class="snapshotLabel">Salmon Catches</div><div class="snapshotValue snapshotTesting">Priority source</div></div>
-<div class="snapshotItem"><div class="snapshotLabel">Catch Count</div><div class="snapshotValue snapshotBlocked">Not displayed</div></div>
-<div class="snapshotItem"><div class="snapshotLabel">Fish Counters</div><div class="snapshotValue snapshotTesting">Priority source</div></div>
-<div class="snapshotItem"><div class="snapshotLabel">Counter Value</div><div class="snapshotValue snapshotBlocked">Not displayed</div></div>
-<div class="snapshotItem"><div class="snapshotLabel">Level</div><div class="snapshotValue snapshotLive" id="snapLevel">Live EA</div></div>
-<div class="snapshotItem"><div class="snapshotLabel">Movement</div><div class="snapshotValue snapshotLive" id="snapMovement">Live EA</div></div>
-<div class="snapshotItem"><div class="snapshotLabel">Rainfall</div><div class="snapshotValue snapshotTesting" id="snapRain">Testing</div></div>
-<div class="snapshotItem"><div class="snapshotLabel">Freshness</div><div class="snapshotValue snapshotTesting" id="snapFreshness">Checking</div></div>
-<div class="snapshotItem"><div class="snapshotLabel">Temperature</div><div class="snapshotValue snapshotBlocked">Feed not verified</div></div>
-<div class="snapshotItem"><div class="snapshotLabel">Judgement</div><div class="snapshotValue snapshotBlocked">Not scored</div></div>
+<div class="cardTitle">Henthorn Conditions</div>
+
+<div class="heroLevel" id="riverLevel">--</div>
+
+<div class="heroMeta" id="movement">
+Loading official Henthorn telemetry...
+</div>
+
+<div class="grid">
+
+<div class="metric">
+<div class="metricLabel">Movement</div>
+<div class="metricValue" id="movementValue">--</div>
+<div class="metricSub" id="movementSub">
+Calculated only from official EA readings
 </div>
 </div>
 
+<div class="metric">
+<div class="metricLabel">Last Reading</div>
+<div class="metricValue" id="timestamp">--</div>
+<div class="metricSub">
+Official Environment Agency timestamp
+</div>
+</div>
+
+<div class="metric">
+<div class="metricLabel">Rainfall</div>
+<div class="metricValue" id="rainValue">--</div>
+<div class="metricSub" id="rainStation">
+Searching nearest EA rainfall telemetry
+</div>
+</div>
+
+<div class="metric">
+<div class="metricLabel">Temperature</div>
+<div class="metricValue blocked">Not displayed</div>
+<div class="metricSub">
+RFCA feed not yet verified
+</div>
+</div>
+
+</div>
+
+<div class="statusBar" id="levelStatus">
+<span class="liveDot"></span>
+Connecting to official EA telemetry...
+</div>
+
+<div class="refresh">
+Auto refresh every 5 minutes
+</div>
+
+</div>
+
 <div class="card">
-<div class="cardTitle">Current Catch Intelligence</div>
+<div class="cardTitle">Current-Season Ribble System Totals</div>
 
 <div class="priorityGrid">
+
 <div class="priorityBox">
-<div class="priorityLabel">Status</div>
-<div class="priorityValue priorityTarget">Priority source</div>
+<div class="priorityLabel">River Ribble Salmon</div>
+<div class="priorityValue priorityBlocked">
+Not displayed
+</div>
 </div>
 
 <div class="priorityBox">
-<div class="priorityLabel">Current Catch Count</div>
-<div class="priorityValue priorityBlocked">Not displayed</div>
+<div class="priorityLabel">River Ribble Sea Trout</div>
+<div class="priorityValue priorityBlocked">
+Not displayed
+</div>
 </div>
 
 <div class="priorityBox">
-<div class="priorityLabel">Reason</div>
-<div class="priorityValue priorityBlocked">No verified feed</div>
+<div class="priorityLabel">River Hodder Salmon</div>
+<div class="priorityValue priorityBlocked">
+Not displayed
+</div>
 </div>
 
 <div class="priorityBox">
-<div class="priorityLabel">Season Rule</div>
-<div class="priorityValue priorityTarget">2026 only</div>
+<div class="priorityLabel">River Hodder Sea Trout</div>
+<div class="priorityValue priorityBlocked">
+Not displayed
+</div>
+</div>
+
+</div>
+
+<div class="statusBar">
+<span class="warnDot"></span>
+No current-season totals are displayed in Build 10067 until verified 2026 sources are integrated.
+</div>
+
+<div class="intelItem">
+<div class="intelSource">Gold rule</div>
+<div class="intelHeadline">
+Current season only
+</div>
+<div class="intelText">
+Historical catch returns, archived totals, old seasons, estimates and projections are excluded from the live intelligence layer.
 </div>
 </div>
 
 <div class="intelItem">
 <div class="intelSource">Display rule</div>
-<div class="intelHeadline">A catch number needs verified current-year evidence</div>
+<div class="intelHeadline">
+Every total must be traceable
+</div>
 <div class="intelText">
-Build 10066 deliberately shows no salmon catch count. Before any catch number appears, it must have source name, report date, beat or location, species, number caught, and confidence status.
+Before any salmon or sea trout total appears, the app requires source name, report date, river or beat reference, species, count value, and confidence status.
 </div>
 </div>
 
-<div class="intelItem">
-<div class="intelSource">Required before display</div>
-<div class="intelHeadline">Current catch evidence checklist</div>
-<ul class="requirementList">
-<li><strong>Source name:</strong> organisation, operator, club, fishery, or named report source.</li>
-<li><strong>Report date:</strong> current 2026 season date only.</li>
-<li><strong>Beat/location:</strong> named beat, stretch, fishery, or river section where available.</li>
-<li><strong>Species:</strong> salmon only unless sea trout or other fish are explicitly labelled separately.</li>
-<li><strong>Number caught:</strong> exact reported number, not an estimate or rumour.</li>
-<li><strong>Confidence status:</strong> confirmed, manual review, or unverified — only confirmed values become app facts.</li>
-</ul>
-</div>
-
-<div class="statusBar">
-<span class="warnDot"></span>No salmon catch count is displayed in Build 10066. This is intentional until a verified current-year source is available.
-</div>
-</div>
-
-<div class="card">
-<div class="cardTitle">Current-Season Salmon Activity</div>
-
-<div class="priorityGrid">
-<div class="priorityBox">
-<div class="priorityLabel">Current Catches</div>
-<div class="priorityValue priorityTarget">Priority source</div>
-</div>
-
-<div class="priorityBox">
-<div class="priorityLabel">Fish Counters</div>
-<div class="priorityValue priorityTarget">Priority source</div>
-</div>
-
-<div class="priorityBox">
-<div class="priorityLabel">Forum Reports</div>
-<div class="priorityValue priorityManual">Manual review only</div>
-</div>
-
-<div class="priorityBox">
-<div class="priorityLabel">Historical Returns</div>
-<div class="priorityValue priorityBlocked">Excluded</div>
-</div>
-</div>
-
-<div class="intelItem">
-<div class="intelSource">Gold rule</div>
-<div class="intelHeadline">Only current 2026 season salmon activity is allowed</div>
-<div class="intelText">
-This app must not display historical catch returns, old totals, typical averages, or invented projections. Salmon catch and fish counter intelligence must be current-season, source-labelled, and traceable.
-</div>
-</div>
-
-<div class="intelItem">
-<div class="intelSource">Current catches</div>
-<div class="intelHeadline">No automated verified catch feed active yet</div>
-<div class="intelText">
-Current-year catch reports are the highest-value intelligence target. Build 10066 does not show catch numbers because no stable verified 2026 catch feed has been integrated.
-</div>
-</div>
-
-<div class="intelItem">
-<div class="intelSource">Fish counters</div>
-<div class="intelHeadline">Fish counter data is now a first-class intelligence source</div>
-<div class="intelText">
-Fish counter or fish pass count data is treated as a core salmon-activity signal. No counter number is displayed until a current-year, traceable source is verified.
-</div>
-</div>
 </div>
 
 <div class="card">
 <div class="cardTitle">Fish Counter Intelligence</div>
 
 <div class="priorityGrid">
+
 <div class="priorityBox">
 <div class="priorityLabel">Status</div>
-<div class="priorityValue priorityTarget">Priority source</div>
+<div class="priorityValue priorityTarget">
+Priority source
+</div>
 </div>
 
 <div class="priorityBox">
-<div class="priorityLabel">Current Value</div>
-<div class="priorityValue priorityBlocked">Not displayed</div>
+<div class="priorityLabel">Current Counter Value</div>
+<div class="priorityValue priorityBlocked">
+Not displayed
 </div>
-
-<div class="priorityBox">
-<div class="priorityLabel">Reason</div>
-<div class="priorityValue priorityBlocked">No verified feed</div>
 </div>
 
 <div class="priorityBox">
 <div class="priorityLabel">Season Rule</div>
-<div class="priorityValue priorityTarget">2026 only</div>
+<div class="priorityValue priorityTarget">
+2026 only
 </div>
 </div>
 
-<div class="intelItem">
-<div class="intelSource">Display rule</div>
-<div class="intelHeadline">A fish counter value needs a verified current-year source</div>
-<div class="intelText">
-Build 10066 deliberately shows no fish counter count. Before any counter number appears, it must have source name, counter location, count type, current-season date, and update timestamp.
+<div class="priorityBox">
+<div class="priorityLabel">Feed State</div>
+<div class="priorityValue priorityBlocked">
+Not verified
 </div>
 </div>
 
-<div class="intelItem">
-<div class="intelSource">Required before display</div>
-<div class="intelHeadline">Counter evidence checklist</div>
-<ul class="requirementList">
-<li><strong>Source name:</strong> organisation or system publishing the count.</li>
-<li><strong>Counter location:</strong> named fish pass, weir, tributary, or counter site.</li>
-<li><strong>Current-season date:</strong> 2026 data only.</li>
-<li><strong>Count type:</strong> salmon, sea trout, total fish, upstream count, downstream count, or other clearly labelled measure.</li>
-<li><strong>Update timestamp:</strong> date/time or reporting period for the value.</li>
-</ul>
 </div>
 
 <div class="statusBar">
-<span class="warnDot"></span>No fish counter value is displayed in Build 10066. This is intentional until the current-year source is verified.
+<span class="warnDot"></span>
+No fish counter values are shown until a verified current-season source is confirmed.
 </div>
-</div>
-
-<div class="card">
-<div class="cardTitle">Live Henthorn River Level</div>
-<div class="mainLevel" id="riverLevel">--</div>
-<div class="mainMeta" id="movement">Loading official EA telemetry...</div>
-
-<div class="grid">
-<div class="metric">
-<div class="metricLabel">Last Reading</div>
-<div class="metricValue" id="timestamp">--</div>
-<div class="metricSub">Official EA reading timestamp</div>
-</div>
-
-<div class="metric">
-<div class="metricLabel">Movement</div>
-<div class="metricValue" id="movementValue">--</div>
-<div class="metricSub" id="movementSub">Calculated only from EA readings</div>
-</div>
-</div>
-
-<div class="freshnessBar">
-<div class="freshnessBox">
-<div class="freshnessLabel">Level Data Age</div>
-<div class="freshnessValue ageing" id="levelAge">Checking</div>
-</div>
-<div class="freshnessBox">
-<div class="freshnessLabel">Freshness Rule</div>
-<div class="freshnessValue">Fresh &lt; 90 min</div>
-</div>
-</div>
-
-<div class="statusBar" id="levelStatus">
-<span class="liveDot"></span>Connecting to live Henthorn telemetry...
-</div>
-
-<div class="refresh">Auto refresh every 5 minutes</div>
-</div>
-
-<div class="card">
-<div class="cardTitle">Verified Rainfall Watch</div>
-
-<div class="grid">
-<div class="metric">
-<div class="metricLabel">Nearest EA Rainfall</div>
-<div class="metricValue" id="rainValue">--</div>
-<div class="metricSub" id="rainStation">Searching EA rainfall network</div>
-</div>
-
-<div class="metric">
-<div class="metricLabel">Rain Timestamp</div>
-<div class="metricValue" id="rainTime">--</div>
-<div class="metricSub">Official EA rainfall telemetry</div>
-</div>
-</div>
-
-<div class="freshnessBar">
-<div class="freshnessBox">
-<div class="freshnessLabel">Rain Data Age</div>
-<div class="freshnessValue ageing" id="rainAge">Checking</div>
-</div>
-<div class="freshnessBox">
-<div class="freshnessLabel">Rain Source State</div>
-<div class="freshnessValue ageing" id="rainSourceState">Testing</div>
-</div>
-</div>
-
-<div class="statusBar" id="rainStatus">
-<span class="warnDot"></span>Rainfall integration loading. No rainfall estimate will be shown.
-</div>
-</div>
-
-<div class="card">
-<div class="cardTitle">Current Intelligence Position</div>
 
 <div class="intelItem">
-<div class="intelSource">Primary purpose</div>
-<div class="intelHeadline">Current-season salmon activity comes first</div>
+<div class="intelSource">Counter rules</div>
+<div class="intelHeadline">
+Counter data must be source-labelled
+</div>
 <div class="intelText">
-The main target is current-year salmon caught where available, fish counter data where available, and current source-labelled fish movement intelligence. River level, rainfall and temperature are supporting context.
+Before a fish counter number can appear, the app requires counter location, source organisation, count type, update timestamp, and current-season date.
 </div>
 </div>
 
-<div class="intelItem">
-<div class="intelSource">EA Henthorn</div>
-<div class="intelHeadline">Live level supports salmon activity interpretation</div>
-<div class="intelText" id="summaryLevel">Waiting for current Henthorn telemetry.</div>
-</div>
-
-<div class="intelItem">
-<div class="intelSource">EA Rainfall</div>
-<div class="intelHeadline">Rainfall supports movement context</div>
-<div class="intelText" id="summaryRain">Waiting for nearest official rainfall station reading.</div>
-</div>
-
-<div class="intelItem">
-<div class="intelSource">RFCA Temperature</div>
-<div class="intelHeadline">Important unresolved supporting metric</div>
-<div class="intelText">
-RFCA live water-quality dashboard is known as a target source, but this build does not display temperature because no stable public JSON/API feed has been verified.
-</div>
-</div>
 </div>
 
 <div class="card">
-<div class="cardTitle">RFCA Temperature Investigation</div>
-
-<div class="investigationGrid">
-<div class="investigationBox">
-<div class="investigationLabel">Dashboard</div>
-<div class="investigationValue invOk">Confirmed target</div>
-</div>
-
-<div class="investigationBox">
-<div class="investigationLabel">Public API</div>
-<div class="investigationValue invBlocked">Not verified</div>
-</div>
-
-<div class="investigationBox">
-<div class="investigationLabel">Direct Feed</div>
-<div class="investigationValue invBlocked">Blocked</div>
-</div>
-
-<div class="investigationBox">
-<div class="investigationLabel">Next Action</div>
-<div class="investigationValue invNext">Inspect network feed</div>
-</div>
-</div>
-
-<div class="statusBar">
-<span class="warnDot"></span>No RFCA temperature value is displayed in Build 10066. A value must not be shown until the feed is verified and traceable.
-</div>
-</div>
-
-<div class="card">
-<div class="cardTitle">External Intelligence Feed</div>
-
-<div class="statusBar">
-<span class="warnDot"></span>2026 season only. Historical reports and old catch returns are excluded from live intelligence.
-</div>
-
-<div class="chipGrid">
-<div class="chip"><div class="chipName">Current catches</div><div class="chipStatus chipTarget">Priority</div></div>
-<div class="chip"><div class="chipName">Fish counters</div><div class="chipStatus chipTarget">Priority</div></div>
-<div class="chip"><div class="chipName">RFCA</div><div class="chipStatus chipActive">Active manual</div></div>
-<div class="chip"><div class="chipName">Ribble Trust</div><div class="chipStatus chipActive">Active manual</div></div>
-<div class="chip"><div class="chipName">Forum</div><div class="chipStatus chipManual">Manual review</div></div>
-<div class="chip"><div class="chipName">Operators</div><div class="chipStatus chipTarget">Target source</div></div>
-<div class="chip"><div class="chipName">Temperature</div><div class="chipStatus chipBlocked">Feed blocked</div></div>
-</div>
-
-<div class="intelItem">
-<div class="intelSource">Current catch reports</div>
-<div class="intelHeadline">Highest-value intelligence source</div>
-<div class="intelText">
-Current-year confirmed salmon catches are the main target. They must be source-labelled and dated before being shown as app facts.
-</div>
-</div>
-
-<div class="intelItem">
-<div class="intelSource">Fish counter data</div>
-<div class="intelHeadline">First-class priority source</div>
-<div class="intelText">
-Fish counter or fish pass count data is now a core intelligence stream. Values must not be shown until the current-year source is verified.
-</div>
-</div>
+<div class="cardTitle">External Intelligence Sources</div>
 
 <div class="intelItem">
 <div class="intelSource">RFCA</div>
-<div class="intelHeadline">Catchment authority intelligence source</div>
-<div class="intelText">
-Used for current-season catchment updates, river conditions, temperature dashboard references, fish movement context, and official fisheries communication.
+<div class="intelHeadline">
+Current-season fisheries intelligence
 </div>
-<a class="sourceLink" href="https://www.ribblefisheriesca.co.uk/category/blog/" target="_blank" rel="noopener">Open RFCA updates</a>
+<div class="intelText">
+Used for current-season river conditions, fisheries communication, catchment updates, and fish movement intelligence.
+</div>
+<a class="sourceLink" href="https://www.ribblefisheriesca.co.uk/category/blog/" target="_blank" rel="noopener">
+Open RFCA updates
+</a>
 </div>
 
 <div class="intelItem">
 <div class="intelSource">Salmon Fishing Forum</div>
-<div class="intelHeadline">Current-season discussion monitoring source</div>
-<div class="intelText">
-Used only for current-year River Ribble discussion, angler movement reports, water observations, and informal fish activity discussion. Forum content is not treated as verified fact without manual checking.
+<div class="intelHeadline">
+Current-season discussion monitoring
 </div>
-<a class="sourceLink" href="https://www.salmonfishingforum.com/threads/river-ribble-2026.292508/" target="_blank" rel="noopener">Open River Ribble 2026 discussion</a>
+<div class="intelText">
+Used only for current-year Ribble discussion and movement reports. Forum content is not treated as verified fact without confirmation.
+</div>
+<a class="sourceLink" href="https://www.salmonfishingforum.com/threads/river-ribble-2026.292508/" target="_blank" rel="noopener">
+Open River Ribble 2026 discussion
+</a>
 </div>
 
 <div class="intelItem">
-<div class="intelSource">Operator Sources</div>
-<div class="intelHeadline">Target intelligence layer</div>
-<div class="intelText">
-Future direction: verified fishery operators, estate reports, beat-level updates, and structured current-season local condition reporting. No automated operator feed currently active.
+<div class="intelSource">Operators & Fisheries</div>
+<div class="intelHeadline">
+Target intelligence layer
 </div>
+<div class="intelText">
+Future direction: verified beat reports, operator intelligence, fish movement updates, and current-season salmon activity reports.
 </div>
 </div>
 
-<div class="card">
-<div class="cardTitle">Trust Hierarchy</div>
-<div class="trustRow"><div class="trustNumber">1</div><div><div class="trustText">Current-season confirmed catches and fish counter data</div><div class="trustSub">Highest value, but only shown when source-labelled, dated and current-year.</div></div></div>
-<div class="trustRow"><div class="trustNumber">2</div><div><div class="trustText">Live official API telemetry</div><div class="trustSub">EA Henthorn level and EA rainfall readings where successfully returned.</div></div></div>
-<div class="trustRow"><div class="trustNumber">3</div><div><div class="trustText">Official organisation updates</div><div class="trustSub">RFCA, Ribble Trust, Environment Agency and other named bodies.</div></div></div>
-<div class="trustRow"><div class="trustNumber">4</div><div><div class="trustText">Manual current-season external intelligence</div><div class="trustSub">Dated and source-labelled operator, club, fishery, or angler reports.</div></div></div>
-<div class="trustRow"><div class="trustNumber">5</div><div><div class="trustText">Forum and community reports</div><div class="trustSub">Useful for awareness, but not converted into app facts without manual verification.</div></div></div>
-<div class="trustRow"><div class="trustNumber">6</div><div><div class="trustText">Historical or unverified material</div><div class="trustSub">Excluded from current live intelligence unless explicitly labelled outside the live layer.</div></div></div>
 </div>
 
 <div class="card">
 <div class="cardTitle">Source Register</div>
-<div class="registerRow"><div class="registerName">Current 2026 catch reports</div><div class="registerType">First-class priority</div><div class="registerStatus statusTesting">Not verified</div></div>
-<div class="registerRow"><div class="registerName">Fish counter data</div><div class="registerType">First-class priority</div><div class="registerStatus statusTesting">Not verified</div></div>
-<div class="registerRow"><div class="registerName">EA Henthorn Level</div><div class="registerType">Live API telemetry</div><div class="registerStatus statusActive">Active</div></div>
-<div class="registerRow"><div class="registerName">EA Rainfall</div><div class="registerType">Live API telemetry</div><div class="registerStatus statusTesting">Testing</div></div>
-<div class="registerRow"><div class="registerName">RFCA Temperature</div><div class="registerType">Investigation priority</div><div class="registerStatus statusBlocked">Feed not verified</div></div>
-<div class="registerRow"><div class="registerName">RFCA Blog</div><div class="registerType">Manual current-season intelligence</div><div class="registerStatus statusManual">Active manual</div></div>
-<div class="registerRow"><div class="registerName">Ribble Trust Blog</div><div class="registerType">Manual current-season intelligence</div><div class="registerStatus statusManual">Active manual</div></div>
-<div class="registerRow"><div class="registerName">Salmon Fishing Forum</div><div class="registerType">Manual 2026 review only</div><div class="registerStatus statusDormant">Not automated</div></div>
-<div class="registerRow"><div class="registerName">Historical catch returns</div><div class="registerType">Excluded from live layer</div><div class="registerStatus statusBlocked">Do not use</div></div>
-<div class="statusBar"><span class="warnDot"></span>Only current-season verified salmon activity and live telemetry may be displayed as operational intelligence.</div>
+
+<div class="registerRow">
+<div class="registerName">
+Current-season salmon totals
+</div>
+<div class="registerType">
+Priority intelligence
+</div>
+<div class="registerStatus statusTesting">
+Not verified
+</div>
+</div>
+
+<div class="registerRow">
+<div class="registerName">
+Current-season sea trout totals
+</div>
+<div class="registerType">
+Priority intelligence
+</div>
+<div class="registerStatus statusTesting">
+Not verified
+</div>
+</div>
+
+<div class="registerRow">
+<div class="registerName">
+Fish counter data
+</div>
+<div class="registerType">
+Priority intelligence
+</div>
+<div class="registerStatus statusTesting">
+Not verified
+</div>
+</div>
+
+<div class="registerRow">
+<div class="registerName">
+EA Henthorn level
+</div>
+<div class="registerType">
+Live telemetry
+</div>
+<div class="registerStatus statusActive">
+Active
+</div>
+</div>
+
+<div class="registerRow">
+<div class="registerName">
+EA rainfall
+</div>
+<div class="registerType">
+Live telemetry
+</div>
+<div class="registerStatus statusTesting">
+Testing
+</div>
+</div>
+
+<div class="registerRow">
+<div class="registerName">
+RFCA temperature
+</div>
+<div class="registerType">
+Investigation priority
+</div>
+<div class="registerStatus statusBlocked">
+Feed not verified
+</div>
+</div>
+
+<div class="registerRow">
+<div class="registerName">
+Historical catch returns
+</div>
+<div class="registerType">
+Excluded from live layer
+</div>
+<div class="registerStatus statusBlocked">
+Do not use
+</div>
+</div>
+
+<div class="statusBar">
+<span class="warnDot"></span>
+Only current-season verified salmon intelligence and live telemetry may appear as operational data.
+</div>
+
 </div>
 
 <div class="footer">
-2026 season only for salmon activity intelligence.<br><br>
-No historical catch totals in the live layer.<br>
+Henthorn conditions first.<br>
+Current-season Ribble system intelligence second.<br><br>
+
+No historical totals.<br>
 No speculative classifications.<br>
 No invented catch data.<br>
-No unverified current catch values.<br>
 No unverified fish counter values.<br>
-No unverified temperature value.<br>
 Verified sources only.
 </div>
 
 </div>
 
 <script>
+
 const STATION_ID="710305";
 const HENTHORN_LAT=53.848003;
 const HENTHORN_LONG=-2.424337;
 
-function setText(id,value){document.getElementById(id).innerText=value;}
-function setClass(id,className){document.getElementById(id).className=className;}
+function setText(id,value){
+document.getElementById(id).innerText=value;
+}
 
 function refreshTime(){
-return new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"});
+return new Date().toLocaleTimeString([],{
+hour:"2-digit",
+minute:"2-digit"
+});
 }
 
 function formatTime(dateString){
 if(!dateString){return "--";}
-return new Date(dateString).toLocaleString([],{day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"});
+return new Date(dateString).toLocaleString([],{
+day:"2-digit",
+month:"short",
+hour:"2-digit",
+minute:"2-digit"
+});
 }
 
 function ageMinutes(dateString){
@@ -553,184 +753,232 @@ if(Number.isNaN(then)){return null;}
 return Math.max(0,Math.round((Date.now()-then)/60000));
 }
 
-function ageLabel(minutes){
-if(minutes===null){return "Unknown";}
-if(minutes<60){return minutes+" min old";}
-const hours=Math.floor(minutes/60);
-const rem=minutes%60;
-if(hours<24){return hours+"h "+rem+"m old";}
-return Math.floor(hours/24)+"d old";
-}
-
-function freshnessClass(minutes){
-if(minutes===null){return "freshnessValue stale";}
-if(minutes<=90){return "freshnessValue fresh";}
-if(minutes<=240){return "freshnessValue ageing";}
-return "freshnessValue stale";
-}
-
-function freshnessWord(minutes){
-if(minutes===null){return "Unknown";}
-if(minutes<=90){return "Fresh";}
-if(minutes<=240){return "Ageing";}
-return "Stale";
-}
-
 function calculateMovement(readings){
-if(!Array.isArray(readings)||readings.length<2){return null;}
+
+if(!Array.isArray(readings) || readings.length<2){
+return null;
+}
+
 const clean=readings
 .filter(r=>typeof r.value==="number")
 .sort((a,b)=>new Date(a.dateTime)-new Date(b.dateTime));
-if(clean.length<2){return null;}
-return {difference:clean[clean.length-1].value-clean[0].value};
+
+if(clean.length<2){
+return null;
+}
+
+return {
+difference:clean[clean.length-1].value-clean[0].value
+};
 }
 
 function movementLabel(diff){
-if(Math.abs(diff)<0.005){return "Steady";}
-if(diff>0){return "Rising";}
+
+if(Math.abs(diff)<0.005){
+return "Steady";
+}
+
+if(diff>0){
+return "Rising";
+}
+
 return "Falling";
 }
 
 async function fetchJSON(url){
-const response=await fetch(url,{cache:"no-store"});
-if(!response.ok){throw new Error("HTTP error");}
+
+const response=await fetch(url,{
+cache:"no-store"
+});
+
+if(!response.ok){
+throw new Error("HTTP error");
+}
+
 return await response.json();
 }
 
 async function loadRiverData(){
+
 try{
+
 const stationUrl=`https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}.json`;
+
 const stationData=await fetchJSON(stationUrl);
-const measures=stationData.items.measures||[];
-const levelMeasure=measures.find(m=>String(m.parameterName||"").toLowerCase().includes("level"));
-if(!levelMeasure){throw new Error("No level measure");}
+
+const measures=stationData.items.measures || [];
+
+const levelMeasure=measures.find(m=>
+String(m.parameterName || "").toLowerCase().includes("level")
+);
+
+if(!levelMeasure){
+throw new Error("No level measure");
+}
 
 const latestUrl=levelMeasure.latestReading["@id"]+".json";
+
 const latestData=await fetchJSON(latestUrl);
+
 const latest=latestData.items;
+
 const value=Number(latest.value);
-const minutes=ageMinutes(latest.dateTime);
 
 setText("riverLevel",value.toFixed(2)+" m");
-setText("timestamp",formatTime(latest.dateTime));
-setText("movement","Live Environment Agency Henthorn telemetry");
-setText("levelAge",ageLabel(minutes)+" — "+freshnessWord(minutes));
-setClass("levelAge",freshnessClass(minutes));
-setText("snapLevel","Live EA");
-setClass("snapLevel","snapshotValue snapshotLive");
-setText("sysLevel","Online");
-setClass("sysLevel","statusValue ok");
-setText("snapFreshness",freshnessWord(minutes));
-setClass("snapFreshness",minutes!==null&&minutes<=90?"snapshotValue snapshotLive":minutes!==null&&minutes<=240?"snapshotValue snapshotTesting":"snapshotValue snapshotBlocked");
+
+setText(
+"timestamp",
+formatTime(latest.dateTime)
+);
+
+setText(
+"movement",
+"Live Environment Agency telemetry for River Ribble @ Henthorn"
+);
 
 let movementData=null;
+
 try{
+
 const readingsUrl=levelMeasure["@id"]+"/readings?_sorted&_limit=8";
+
 const readingsData=await fetchJSON(readingsUrl);
+
 movementData=calculateMovement(readingsData.items);
+
 }catch(e){}
 
 if(movementData){
+
 const label=movementLabel(movementData.difference);
+
 setText("movementValue",label);
-setText("snapMovement",label);
-setClass("snapMovement","snapshotValue snapshotLive");
-setText("movementSub",(movementData.difference>=0?"+":"")+movementData.difference.toFixed(3)+" m across latest sample window");
-setText("summaryLevel","Current official Henthorn level is "+value.toFixed(2)+" m with "+label.toLowerCase()+" movement across the latest EA readings. Data age: "+ageLabel(minutes)+".");
+
+setText(
+"movementSub",
+(movementData.difference>=0?"+":"")+
+movementData.difference.toFixed(3)+
+" m across latest sample window"
+);
+
 }else{
+
 setText("movementValue","Live");
-setText("snapMovement","Live EA");
-setClass("snapMovement","snapshotValue snapshotLive");
-setText("movementSub","Movement sample unavailable");
-setText("summaryLevel","Current official Henthorn level is "+value.toFixed(2)+" m. Movement sample unavailable. Data age: "+ageLabel(minutes)+".");
+
+setText(
+"movementSub",
+"Movement sample unavailable"
+);
 }
 
-document.getElementById("levelStatus").innerHTML='<span class="liveDot"></span>Live Henthorn telemetry received from official EA API.';
+document.getElementById("levelStatus").innerHTML=
+'<span class="liveDot"></span>Official Environment Agency telemetry received.';
+
+document.getElementById("sysLevel").innerText="Online";
+
 }catch(error){
+
 console.error(error);
+
 setText("riverLevel","--");
-setText("movement","Unable to retrieve official telemetry");
-setText("levelAge","Unknown");
-setClass("levelAge","freshnessValue stale");
-setText("snapLevel","Offline");
-setText("snapMovement","Offline");
-setText("snapFreshness","Unknown");
-setClass("snapLevel","snapshotValue snapshotBlocked");
-setClass("snapMovement","snapshotValue snapshotBlocked");
-setClass("snapFreshness","snapshotValue snapshotBlocked");
-setText("sysLevel","Offline");
-setClass("sysLevel","statusValue blocked");
-document.getElementById("levelStatus").innerHTML='<span class="badDot"></span><span class="error">EA telemetry connection issue.</span>';
+
+setText(
+"movement",
+"Unable to retrieve official telemetry"
+);
+
+document.getElementById("levelStatus").innerHTML=
+'<span class="badDot"></span><span class="error">EA telemetry connection issue.</span>';
+
+document.getElementById("sysLevel").innerText="Offline";
 }
 }
 
 async function loadRainfallData(){
+
 try{
-const rainfallUrl=`https://environment.data.gov.uk/flood-monitoring/id/stations?parameter=rainfall&lat=${HENTHORN_LAT}&long=${HENTHORN_LONG}&dist=25`;
+
+const rainfallUrl=
+`https://environment.data.gov.uk/flood-monitoring/id/stations?parameter=rainfall&lat=${HENTHORN_LAT}&long=${HENTHORN_LONG}&dist=25`;
+
 const stationData=await fetchJSON(rainfallUrl);
-const stations=stationData.items||[];
+
+const stations=stationData.items || [];
 
 let selectedStation=null;
 let selectedMeasure=null;
 
 for(const station of stations){
-const measures=station.measures||[];
-const rainfallMeasure=measures.find(m=>String(m.parameter||"").toLowerCase().includes("rainfall"));
-if(rainfallMeasure&&rainfallMeasure.latestReading){
+
+const measures=station.measures || [];
+
+const rainfallMeasure=measures.find(m=>
+String(m.parameter || "").toLowerCase().includes("rainfall")
+);
+
+if(rainfallMeasure && rainfallMeasure.latestReading){
+
 selectedStation=station;
 selectedMeasure=rainfallMeasure;
+
 break;
 }
 }
 
-if(!selectedMeasure){throw new Error("No rainfall measure");}
+if(!selectedMeasure){
+throw new Error("No rainfall measure");
+}
 
-const latestUrl=selectedMeasure.latestReading["@id"]+".json";
+const latestUrl=
+selectedMeasure.latestReading["@id"]+".json";
+
 const latestData=await fetchJSON(latestUrl);
+
 const latest=latestData.items;
+
 const rainValue=Number(latest.value).toFixed(2);
-const minutes=ageMinutes(latest.dateTime);
 
 setText("rainValue",rainValue+" mm");
-setText("rainTime",formatTime(latest.dateTime));
-setText("rainStation","EA station "+(selectedStation.stationReference||"unknown"));
-setText("rainAge",ageLabel(minutes)+" — "+freshnessWord(minutes));
-setClass("rainAge",freshnessClass(minutes));
-setText("rainSourceState","Live EA");
-setClass("rainSourceState","freshnessValue fresh");
-setText("summaryRain","Nearest verified EA rainfall telemetry successfully connected: "+rainValue+" mm at "+formatTime(latest.dateTime)+". Data age: "+ageLabel(minutes)+".");
-setText("snapRain","Live EA");
-setClass("snapRain","snapshotValue snapshotLive");
-setText("sysRain","Online");
-setClass("sysRain","statusValue ok");
 
-document.getElementById("rainStatus").innerHTML='<span class="liveDot"></span>Official EA rainfall telemetry received.';
+setText(
+"rainStation",
+"EA station "+
+(selectedStation.stationReference || "unknown")
+);
+
+document.getElementById("sysRain").innerText="Online";
+
 }catch(error){
+
 console.error(error);
+
 setText("rainValue","--");
-setText("rainTime","--");
-setText("rainStation","No verified rainfall reading");
-setText("rainAge","Unknown");
-setClass("rainAge","freshnessValue stale");
-setText("rainSourceState","Testing");
-setClass("rainSourceState","freshnessValue ageing");
-setText("summaryRain","Rainfall telemetry was not retrieved on this refresh. No estimate has been substituted.");
-setText("snapRain","Testing");
-setClass("snapRain","snapshotValue snapshotTesting");
-setText("sysRain","Testing");
-setClass("sysRain","statusValue test");
-document.getElementById("rainStatus").innerHTML='<span class="warnDot"></span><span class="warning">Rainfall source targeted but no verified reading returned.</span>';
+
+setText(
+"rainStation",
+"No verified rainfall reading"
+);
+
+document.getElementById("sysRain").innerText="Testing";
 }
 }
 
 function refreshAll(){
-setText("sysRefresh",refreshTime());
+
+setText(
+"sysRefresh",
+refreshTime()
+);
+
 loadRiverData();
+
 loadRainfallData();
 }
 
 refreshAll();
+
 setInterval(refreshAll,300000);
+
 </script>
 
 </body>
