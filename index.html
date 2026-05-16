@@ -14,6 +14,7 @@ body{margin:0;background:#0f1114;color:#f2f2f2;font-family:-apple-system,BlinkMa
 .title{font-size:28px;font-weight:750;letter-spacing:-.6px}
 .subtitle{margin-top:7px;font-size:14px;color:#9aa4af;line-height:1.5}
 .version{margin-top:12px;display:inline-block;font-size:12px;padding:5px 11px;border-radius:999px;background:#1c2229;color:#9fb3c8}
+.seasonBadge{margin-top:8px;display:inline-block;font-size:12px;padding:5px 11px;border-radius:999px;background:#2a1f13;color:#ffcf70;border:1px solid #4a3519}
 .card{background:#171b20;border:1px solid #232a32;border-radius:19px;padding:18px;margin-bottom:16px}
 .cardTitle{font-size:12px;text-transform:uppercase;letter-spacing:1.1px;color:#7d8b98;margin-bottom:14px;font-weight:700}
 
@@ -29,6 +30,12 @@ body{margin:0;background:#0f1114;color:#f2f2f2;font-family:-apple-system,BlinkMa
 .snapshotLabel{font-size:10px;text-transform:uppercase;letter-spacing:.9px;color:#7f8a96;font-weight:800;margin-bottom:6px}
 .snapshotValue{font-size:14px;font-weight:800;line-height:1.35}
 .snapshotLive{color:#37d67a}.snapshotTesting{color:#ffcf70}.snapshotBlocked{color:#ff8b8b}.snapshotManual{color:#87bfff}
+
+.priorityGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.priorityBox{background:#101419;border:1px solid #1f252d;border-radius:14px;padding:12px}
+.priorityLabel{font-size:10px;text-transform:uppercase;letter-spacing:.9px;color:#7f8a96;font-weight:800;margin-bottom:6px}
+.priorityValue{font-size:14px;font-weight:800;line-height:1.35}
+.priorityManual{color:#87bfff}.priorityBlocked{color:#ff8b8b}.priorityTarget{color:#ffcf70}.priorityLive{color:#37d67a}
 
 .mainLevel{font-size:58px;font-weight:780;line-height:1;margin-bottom:9px}
 .mainMeta{font-size:16px;color:#b9c2ca}
@@ -86,7 +93,7 @@ body{margin:0;background:#0f1114;color:#f2f2f2;font-family:-apple-system,BlinkMa
 @media(max-width:560px){
 .container{padding:14px}
 .mainLevel{font-size:48px}
-.grid,.snapshotGrid,.freshnessBar,.chipGrid,.investigationGrid{grid-template-columns:1fr}
+.grid,.snapshotGrid,.freshnessBar,.chipGrid,.investigationGrid,.priorityGrid{grid-template-columns:1fr}
 .registerRow{grid-template-columns:1fr}
 .card{padding:16px;border-radius:17px}
 }
@@ -100,19 +107,21 @@ body{margin:0;background:#0f1114;color:#f2f2f2;font-family:-apple-system,BlinkMa
 <div class="title">Salmon Rivers Intelligence</div>
 <div class="subtitle">
 River Ribble — Henthorn only<br>
-Environment Agency station 710305<br>
-Verified-data intelligence terminal
+Current-season salmon activity intelligence terminal<br>
+Environment Agency station 710305
 </div>
-<div class="version">Build 10063</div>
+<div class="version">Build 10064</div>
+<div class="seasonBadge">2026 SEASON ONLY</div>
 </div>
 
 <div class="card">
 <div class="cardTitle">System Status</div>
 <div class="statusTable">
+<div class="statusLine"><div class="statusName">Current-season catch intel</div><div class="statusValue manual">Manual</div></div>
+<div class="statusLine"><div class="statusName">Fish counter data</div><div class="statusValue test">Priority</div></div>
 <div class="statusLine"><div class="statusName">EA Level Feed</div><div class="statusValue ok" id="sysLevel">Online</div></div>
 <div class="statusLine"><div class="statusName">EA Rainfall Feed</div><div class="statusValue test" id="sysRain">Testing</div></div>
 <div class="statusLine"><div class="statusName">RFCA Temperature</div><div class="statusValue blocked">Blocked</div></div>
-<div class="statusLine"><div class="statusName">Intelligence Layer</div><div class="statusValue manual">Manual</div></div>
 <div class="statusLine"><div class="statusName">Last Refresh</div><div class="statusValue manual" id="sysRefresh">--</div></div>
 </div>
 </div>
@@ -120,13 +129,65 @@ Verified-data intelligence terminal
 <div class="card">
 <div class="cardTitle">Now Snapshot</div>
 <div class="snapshotGrid">
+<div class="snapshotItem"><div class="snapshotLabel">Season Rule</div><div class="snapshotValue snapshotTesting">2026 only</div></div>
+<div class="snapshotItem"><div class="snapshotLabel">Salmon Catches</div><div class="snapshotValue snapshotManual">Manual source</div></div>
+<div class="snapshotItem"><div class="snapshotLabel">Fish Counters</div><div class="snapshotValue snapshotTesting">Priority search</div></div>
 <div class="snapshotItem"><div class="snapshotLabel">Level</div><div class="snapshotValue snapshotLive" id="snapLevel">Live EA</div></div>
 <div class="snapshotItem"><div class="snapshotLabel">Movement</div><div class="snapshotValue snapshotLive" id="snapMovement">Live EA</div></div>
 <div class="snapshotItem"><div class="snapshotLabel">Rainfall</div><div class="snapshotValue snapshotTesting" id="snapRain">Testing</div></div>
 <div class="snapshotItem"><div class="snapshotLabel">Freshness</div><div class="snapshotValue snapshotTesting" id="snapFreshness">Checking</div></div>
 <div class="snapshotItem"><div class="snapshotLabel">Temperature</div><div class="snapshotValue snapshotBlocked">Feed not verified</div></div>
-<div class="snapshotItem"><div class="snapshotLabel">External Intel</div><div class="snapshotValue snapshotManual">Manual only</div></div>
 <div class="snapshotItem"><div class="snapshotLabel">Judgement</div><div class="snapshotValue snapshotBlocked">Not scored</div></div>
+</div>
+</div>
+
+<div class="card">
+<div class="cardTitle">Current-Season Salmon Activity</div>
+
+<div class="priorityGrid">
+<div class="priorityBox">
+<div class="priorityLabel">Current Catches</div>
+<div class="priorityValue priorityManual">Manual source only</div>
+</div>
+
+<div class="priorityBox">
+<div class="priorityLabel">Fish Counters</div>
+<div class="priorityValue priorityTarget">Investigation priority</div>
+</div>
+
+<div class="priorityBox">
+<div class="priorityLabel">Forum Reports</div>
+<div class="priorityValue priorityManual">Manual review only</div>
+</div>
+
+<div class="priorityBox">
+<div class="priorityLabel">Historical Returns</div>
+<div class="priorityValue priorityBlocked">Excluded</div>
+</div>
+</div>
+
+<div class="intelItem">
+<div class="intelSource">Gold rule</div>
+<div class="intelHeadline">Only current 2026 season salmon activity is allowed</div>
+<div class="intelText">
+This app must not display historical catch returns, old totals, typical averages, or invented projections. Salmon catch and fish counter intelligence must be current-season, source-labelled, and traceable.
+</div>
+</div>
+
+<div class="intelItem">
+<div class="intelSource">Current catches</div>
+<div class="intelHeadline">No automated verified catch feed active yet</div>
+<div class="intelText">
+Current-year catch reports are the highest-value intelligence target. Build 10064 does not show catch numbers because no stable verified 2026 catch feed has been integrated.
+</div>
+</div>
+
+<div class="intelItem">
+<div class="intelSource">Fish counters</div>
+<div class="intelHeadline">Fish counter data promoted to priority source</div>
+<div class="intelText">
+Fish counter or fish pass count data is treated as a priority intelligence source. No counter value is displayed until a current, traceable source is verified.
+</div>
 </div>
 </div>
 
@@ -204,30 +265,30 @@ Verified-data intelligence terminal
 <div class="cardTitle">Current Intelligence Position</div>
 
 <div class="intelItem">
+<div class="intelSource">Primary purpose</div>
+<div class="intelHeadline">Current-season salmon activity comes first</div>
+<div class="intelText">
+The main target is current-year salmon caught where available, fish counter data where available, and current source-labelled fish movement intelligence. River level, rainfall and temperature are supporting context.
+</div>
+</div>
+
+<div class="intelItem">
 <div class="intelSource">EA Henthorn</div>
-<div class="intelHeadline">Live level is the primary trusted signal</div>
+<div class="intelHeadline">Live level supports salmon activity interpretation</div>
 <div class="intelText" id="summaryLevel">Waiting for current Henthorn telemetry.</div>
 </div>
 
 <div class="intelItem">
 <div class="intelSource">EA Rainfall</div>
-<div class="intelHeadline">Rainfall is the secondary telemetry signal</div>
+<div class="intelHeadline">Rainfall supports movement context</div>
 <div class="intelText" id="summaryRain">Waiting for nearest official rainfall station reading.</div>
 </div>
 
 <div class="intelItem">
 <div class="intelSource">RFCA Temperature</div>
-<div class="intelHeadline">Most important unresolved live metric</div>
+<div class="intelHeadline">Important unresolved supporting metric</div>
 <div class="intelText">
 RFCA live water-quality dashboard is known as a target source, but this build does not display temperature because no stable public JSON/API feed has been verified.
-</div>
-</div>
-
-<div class="intelItem">
-<div class="intelSource">System Discipline</div>
-<div class="intelHeadline">No fishing-condition judgement yet</div>
-<div class="intelText">
-This build does not call the river good, poor or prime. It reports facts only until measured criteria are agreed and evidenced.
 </div>
 </div>
 </div>
@@ -258,7 +319,7 @@ This build does not call the river good, poor or prime. It reports facts only un
 </div>
 
 <div class="statusBar">
-<span class="warnDot"></span>No RFCA temperature value is displayed in Build 10063. A value must not be shown until the feed is verified and traceable.
+<span class="warnDot"></span>No RFCA temperature value is displayed in Build 10064. A value must not be shown until the feed is verified and traceable.
 </div>
 </div>
 
@@ -266,10 +327,12 @@ This build does not call the river good, poor or prime. It reports facts only un
 <div class="cardTitle">External Intelligence Feed</div>
 
 <div class="statusBar">
-<span class="warnDot"></span>Last intelligence review: manually updated. No automated ingestion active.
+<span class="warnDot"></span>2026 season only. Historical reports and old catch returns are excluded from live intelligence.
 </div>
 
 <div class="chipGrid">
+<div class="chip"><div class="chipName">Current catches</div><div class="chipStatus chipTarget">Priority</div></div>
+<div class="chip"><div class="chipName">Fish counters</div><div class="chipStatus chipTarget">Priority</div></div>
 <div class="chip"><div class="chipName">RFCA</div><div class="chipStatus chipActive">Active manual</div></div>
 <div class="chip"><div class="chipName">Ribble Trust</div><div class="chipStatus chipActive">Active manual</div></div>
 <div class="chip"><div class="chipName">Forum</div><div class="chipStatus chipManual">Manual review</div></div>
@@ -278,87 +341,78 @@ This build does not call the river good, poor or prime. It reports facts only un
 </div>
 
 <div class="intelItem">
+<div class="intelSource">Current catch reports</div>
+<div class="intelHeadline">Highest-value intelligence source</div>
+<div class="intelText">
+Current-year confirmed salmon catches are the main target. They must be source-labelled and dated before being shown as app facts.
+</div>
+</div>
+
+<div class="intelItem">
+<div class="intelSource">Fish counter data</div>
+<div class="intelHeadline">Priority investigation source</div>
+<div class="intelText">
+Fish counter or fish pass count data is now treated as a core intelligence stream. Values must not be shown until the current-year source is verified.
+</div>
+</div>
+
+<div class="intelItem">
 <div class="intelSource">RFCA</div>
 <div class="intelHeadline">Catchment authority intelligence source</div>
 <div class="intelText">
-Used for catchment updates, river conditions, temperature dashboard references, fish movement context, and official fisheries communication. This is currently treated as a manual intelligence source only.
+Used for current-season catchment updates, river conditions, temperature dashboard references, fish movement context, and official fisheries communication.
 </div>
 <a class="sourceLink" href="https://www.ribblefisheriesca.co.uk/category/blog/" target="_blank" rel="noopener">Open RFCA updates</a>
 </div>
 
 <div class="intelItem">
-<div class="intelSource">Ribble Rivers Trust</div>
-<div class="intelHeadline">River health and habitat intelligence source</div>
-<div class="intelText">
-Used for river health information, habitat projects, catchment activity, environmental incidents, and wider Ribble system context. Currently monitored manually.
-</div>
-<a class="sourceLink" href="https://ribbletrust.org.uk/news/" target="_blank" rel="noopener">Open Ribble Trust news</a>
-</div>
-
-<div class="intelItem">
 <div class="intelSource">Salmon Fishing Forum</div>
-<div class="intelHeadline">Community discussion monitoring source</div>
+<div class="intelHeadline">Current-season discussion monitoring source</div>
 <div class="intelText">
-Used for seasonal River Ribble discussion, angler movement reports, water observations, and informal fish activity discussion. Forum content is not treated as verified fact.
+Used only for current-year River Ribble discussion, angler movement reports, water observations, and informal fish activity discussion. Forum content is not treated as verified fact without manual checking.
 </div>
-<a class="sourceLink" href="https://www.salmonfishingforum.com/threads/river-ribble-2026.292508/" target="_blank" rel="noopener">Open River Ribble discussion</a>
+<a class="sourceLink" href="https://www.salmonfishingforum.com/threads/river-ribble-2026.292508/" target="_blank" rel="noopener">Open River Ribble 2026 discussion</a>
 </div>
 
 <div class="intelItem">
 <div class="intelSource">Operator Sources</div>
 <div class="intelHeadline">Target intelligence layer</div>
 <div class="intelText">
-Future direction: verified fishery operators, estate reports, beat-level updates, and structured local condition reporting. No automated operator feed currently active.
-</div>
-</div>
-</div>
-
-<div class="card">
-<div class="cardTitle">Operator / Local Intelligence</div>
-
-<div class="intelItem">
-<div class="intelSource">RFCA catchment update</div>
-<div class="intelHeadline">Recent rainfall created conditions for fresh fish movement</div>
-<div class="intelText">
-RFCA’s Spring 2026 catchment update said recent rainfall had put needed water into the system and created conditions for fresh fish movement. This is treated as catchment intelligence, not a current catch count.
-</div>
-<a class="sourceLink" href="https://www.ribblefisheriesca.co.uk/category/blog/" target="_blank" rel="noopener">Open RFCA blog</a>
-</div>
-
-<div class="intelItem">
-<div class="intelSource">Manual entry standard</div>
-<div class="intelHeadline">Allowed intelligence format</div>
-<div class="intelText">
-Future external entries must be date-labelled, source-labelled and factual: water colour, level behaviour, fish movement, operator note, or confirmed report. No invented catches. No “prime” wording.
+Future direction: verified fishery operators, estate reports, beat-level updates, and structured current-season local condition reporting. No automated operator feed currently active.
 </div>
 </div>
 </div>
 
 <div class="card">
 <div class="cardTitle">Trust Hierarchy</div>
-<div class="trustRow"><div class="trustNumber">1</div><div><div class="trustText">Live official API telemetry</div><div class="trustSub">EA Henthorn level and EA rainfall readings where successfully returned.</div></div></div>
-<div class="trustRow"><div class="trustNumber">2</div><div><div class="trustText">Official organisation updates</div><div class="trustSub">RFCA, Ribble Trust, Environment Agency and other named bodies.</div></div></div>
-<div class="trustRow"><div class="trustNumber">3</div><div><div class="trustText">Manual external intelligence</div><div class="trustSub">Dated and source-labelled operator, club, fishery, or angler reports.</div></div></div>
-<div class="trustRow"><div class="trustNumber">4</div><div><div class="trustText">Forum and community reports</div><div class="trustSub">Useful for awareness, but not converted into app facts without manual verification.</div></div></div>
-<div class="trustRow"><div class="trustNumber">5</div><div><div class="trustText">Unverified social chatter</div><div class="trustSub">Not used for live values or condition judgement.</div></div></div>
+<div class="trustRow"><div class="trustNumber">1</div><div><div class="trustText">Current-season confirmed catches and fish counter data</div><div class="trustSub">Highest value, but only shown when source-labelled, dated and current-year.</div></div></div>
+<div class="trustRow"><div class="trustNumber">2</div><div><div class="trustText">Live official API telemetry</div><div class="trustSub">EA Henthorn level and EA rainfall readings where successfully returned.</div></div></div>
+<div class="trustRow"><div class="trustNumber">3</div><div><div class="trustText">Official organisation updates</div><div class="trustSub">RFCA, Ribble Trust, Environment Agency and other named bodies.</div></div></div>
+<div class="trustRow"><div class="trustNumber">4</div><div><div class="trustText">Manual current-season external intelligence</div><div class="trustSub">Dated and source-labelled operator, club, fishery, or angler reports.</div></div></div>
+<div class="trustRow"><div class="trustNumber">5</div><div><div class="trustText">Forum and community reports</div><div class="trustSub">Useful for awareness, but not converted into app facts without manual verification.</div></div></div>
+<div class="trustRow"><div class="trustNumber">6</div><div><div class="trustText">Historical or unverified material</div><div class="trustSub">Excluded from current live intelligence unless explicitly labelled outside the live layer.</div></div></div>
 </div>
 
 <div class="card">
 <div class="cardTitle">Source Register</div>
+<div class="registerRow"><div class="registerName">Current 2026 catch reports</div><div class="registerType">Priority intelligence</div><div class="registerStatus statusTesting">Manual source</div></div>
+<div class="registerRow"><div class="registerName">Fish counter data</div><div class="registerType">Priority investigation</div><div class="registerStatus statusTesting">Not verified</div></div>
 <div class="registerRow"><div class="registerName">EA Henthorn Level</div><div class="registerType">Live API telemetry</div><div class="registerStatus statusActive">Active</div></div>
 <div class="registerRow"><div class="registerName">EA Rainfall</div><div class="registerType">Live API telemetry</div><div class="registerStatus statusTesting">Testing</div></div>
 <div class="registerRow"><div class="registerName">RFCA Temperature</div><div class="registerType">Investigation priority</div><div class="registerStatus statusBlocked">Feed not verified</div></div>
-<div class="registerRow"><div class="registerName">RFCA Blog</div><div class="registerType">Manual intelligence</div><div class="registerStatus statusManual">Active manual</div></div>
-<div class="registerRow"><div class="registerName">Ribble Trust Blog</div><div class="registerType">Manual intelligence</div><div class="registerStatus statusManual">Active manual</div></div>
-<div class="registerRow"><div class="registerName">Salmon Fishing Forum</div><div class="registerType">Manual review only</div><div class="registerStatus statusDormant">Not automated</div></div>
-<div class="registerRow"><div class="registerName">Facebook Groups</div><div class="registerType">Community reports</div><div class="registerStatus statusDormant">Not automated</div></div>
-<div class="statusBar"><span class="warnDot"></span>Only Active live API sources are allowed to display live numerical values.</div>
+<div class="registerRow"><div class="registerName">RFCA Blog</div><div class="registerType">Manual current-season intelligence</div><div class="registerStatus statusManual">Active manual</div></div>
+<div class="registerRow"><div class="registerName">Ribble Trust Blog</div><div class="registerType">Manual current-season intelligence</div><div class="registerStatus statusManual">Active manual</div></div>
+<div class="registerRow"><div class="registerName">Salmon Fishing Forum</div><div class="registerType">Manual 2026 review only</div><div class="registerStatus statusDormant">Not automated</div></div>
+<div class="registerRow"><div class="registerName">Historical catch returns</div><div class="registerType">Excluded from live layer</div><div class="registerStatus statusBlocked">Do not use</div></div>
+<div class="statusBar"><span class="warnDot"></span>Only current-season verified salmon activity and live telemetry may be displayed as operational intelligence.</div>
 </div>
 
 <div class="footer">
-Environment Agency live telemetry only for live figures.<br><br>
+2026 season only for salmon activity intelligence.<br><br>
+No historical catch totals in the live layer.<br>
 No speculative classifications.<br>
 No invented catch data.<br>
+No unverified fish counter values.<br>
 No unverified temperature value.<br>
 Verified sources only.
 </div>
