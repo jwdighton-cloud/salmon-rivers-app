@@ -115,14 +115,15 @@ River Ribble — Henthorn only<br>
 Current-season salmon activity intelligence terminal<br>
 Environment Agency station 710305
 </div>
-<div class="version">Build 10065</div>
+<div class="version">Build 10066</div>
 <div class="seasonBadge">2026 SEASON ONLY</div>
 </div>
 
 <div class="card">
 <div class="cardTitle">System Status</div>
 <div class="statusTable">
-<div class="statusLine"><div class="statusName">Current-season catch intel</div><div class="statusValue manual">Manual</div></div>
+<div class="statusLine"><div class="statusName">Current-season catch intel</div><div class="statusValue test">Priority</div></div>
+<div class="statusLine"><div class="statusName">Current catch count</div><div class="statusValue blocked">Not displayed</div></div>
 <div class="statusLine"><div class="statusName">Fish counter data</div><div class="statusValue test">Priority</div></div>
 <div class="statusLine"><div class="statusName">EA Level Feed</div><div class="statusValue ok" id="sysLevel">Online</div></div>
 <div class="statusLine"><div class="statusName">EA Rainfall Feed</div><div class="statusValue test" id="sysRain">Testing</div></div>
@@ -135,7 +136,8 @@ Environment Agency station 710305
 <div class="cardTitle">Now Snapshot</div>
 <div class="snapshotGrid">
 <div class="snapshotItem"><div class="snapshotLabel">Season Rule</div><div class="snapshotValue snapshotTesting">2026 only</div></div>
-<div class="snapshotItem"><div class="snapshotLabel">Salmon Catches</div><div class="snapshotValue snapshotManual">Manual source</div></div>
+<div class="snapshotItem"><div class="snapshotLabel">Salmon Catches</div><div class="snapshotValue snapshotTesting">Priority source</div></div>
+<div class="snapshotItem"><div class="snapshotLabel">Catch Count</div><div class="snapshotValue snapshotBlocked">Not displayed</div></div>
 <div class="snapshotItem"><div class="snapshotLabel">Fish Counters</div><div class="snapshotValue snapshotTesting">Priority source</div></div>
 <div class="snapshotItem"><div class="snapshotLabel">Counter Value</div><div class="snapshotValue snapshotBlocked">Not displayed</div></div>
 <div class="snapshotItem"><div class="snapshotLabel">Level</div><div class="snapshotValue snapshotLive" id="snapLevel">Live EA</div></div>
@@ -148,12 +150,63 @@ Environment Agency station 710305
 </div>
 
 <div class="card">
+<div class="cardTitle">Current Catch Intelligence</div>
+
+<div class="priorityGrid">
+<div class="priorityBox">
+<div class="priorityLabel">Status</div>
+<div class="priorityValue priorityTarget">Priority source</div>
+</div>
+
+<div class="priorityBox">
+<div class="priorityLabel">Current Catch Count</div>
+<div class="priorityValue priorityBlocked">Not displayed</div>
+</div>
+
+<div class="priorityBox">
+<div class="priorityLabel">Reason</div>
+<div class="priorityValue priorityBlocked">No verified feed</div>
+</div>
+
+<div class="priorityBox">
+<div class="priorityLabel">Season Rule</div>
+<div class="priorityValue priorityTarget">2026 only</div>
+</div>
+</div>
+
+<div class="intelItem">
+<div class="intelSource">Display rule</div>
+<div class="intelHeadline">A catch number needs verified current-year evidence</div>
+<div class="intelText">
+Build 10066 deliberately shows no salmon catch count. Before any catch number appears, it must have source name, report date, beat or location, species, number caught, and confidence status.
+</div>
+</div>
+
+<div class="intelItem">
+<div class="intelSource">Required before display</div>
+<div class="intelHeadline">Current catch evidence checklist</div>
+<ul class="requirementList">
+<li><strong>Source name:</strong> organisation, operator, club, fishery, or named report source.</li>
+<li><strong>Report date:</strong> current 2026 season date only.</li>
+<li><strong>Beat/location:</strong> named beat, stretch, fishery, or river section where available.</li>
+<li><strong>Species:</strong> salmon only unless sea trout or other fish are explicitly labelled separately.</li>
+<li><strong>Number caught:</strong> exact reported number, not an estimate or rumour.</li>
+<li><strong>Confidence status:</strong> confirmed, manual review, or unverified — only confirmed values become app facts.</li>
+</ul>
+</div>
+
+<div class="statusBar">
+<span class="warnDot"></span>No salmon catch count is displayed in Build 10066. This is intentional until a verified current-year source is available.
+</div>
+</div>
+
+<div class="card">
 <div class="cardTitle">Current-Season Salmon Activity</div>
 
 <div class="priorityGrid">
 <div class="priorityBox">
 <div class="priorityLabel">Current Catches</div>
-<div class="priorityValue priorityManual">Manual source only</div>
+<div class="priorityValue priorityTarget">Priority source</div>
 </div>
 
 <div class="priorityBox">
@@ -184,7 +237,7 @@ This app must not display historical catch returns, old totals, typical averages
 <div class="intelSource">Current catches</div>
 <div class="intelHeadline">No automated verified catch feed active yet</div>
 <div class="intelText">
-Current-year catch reports are the highest-value intelligence target. Build 10065 does not show catch numbers because no stable verified 2026 catch feed has been integrated.
+Current-year catch reports are the highest-value intelligence target. Build 10066 does not show catch numbers because no stable verified 2026 catch feed has been integrated.
 </div>
 </div>
 
@@ -226,7 +279,7 @@ Fish counter or fish pass count data is treated as a core salmon-activity signal
 <div class="intelSource">Display rule</div>
 <div class="intelHeadline">A fish counter value needs a verified current-year source</div>
 <div class="intelText">
-Build 10065 deliberately shows no fish counter count. Before any counter number appears, it must have source name, counter location, count type, current-season date, and update timestamp.
+Build 10066 deliberately shows no fish counter count. Before any counter number appears, it must have source name, counter location, count type, current-season date, and update timestamp.
 </div>
 </div>
 
@@ -243,7 +296,7 @@ Build 10065 deliberately shows no fish counter count. Before any counter number 
 </div>
 
 <div class="statusBar">
-<span class="warnDot"></span>No fish counter value is displayed in Build 10065. This is intentional until the current-year source is verified.
+<span class="warnDot"></span>No fish counter value is displayed in Build 10066. This is intentional until the current-year source is verified.
 </div>
 </div>
 
@@ -375,7 +428,7 @@ RFCA live water-quality dashboard is known as a target source, but this build do
 </div>
 
 <div class="statusBar">
-<span class="warnDot"></span>No RFCA temperature value is displayed in Build 10065. A value must not be shown until the feed is verified and traceable.
+<span class="warnDot"></span>No RFCA temperature value is displayed in Build 10066. A value must not be shown until the feed is verified and traceable.
 </div>
 </div>
 
@@ -451,7 +504,7 @@ Future direction: verified fishery operators, estate reports, beat-level updates
 
 <div class="card">
 <div class="cardTitle">Source Register</div>
-<div class="registerRow"><div class="registerName">Current 2026 catch reports</div><div class="registerType">Priority intelligence</div><div class="registerStatus statusTesting">Manual source</div></div>
+<div class="registerRow"><div class="registerName">Current 2026 catch reports</div><div class="registerType">First-class priority</div><div class="registerStatus statusTesting">Not verified</div></div>
 <div class="registerRow"><div class="registerName">Fish counter data</div><div class="registerType">First-class priority</div><div class="registerStatus statusTesting">Not verified</div></div>
 <div class="registerRow"><div class="registerName">EA Henthorn Level</div><div class="registerType">Live API telemetry</div><div class="registerStatus statusActive">Active</div></div>
 <div class="registerRow"><div class="registerName">EA Rainfall</div><div class="registerType">Live API telemetry</div><div class="registerStatus statusTesting">Testing</div></div>
@@ -468,6 +521,7 @@ Future direction: verified fishery operators, estate reports, beat-level updates
 No historical catch totals in the live layer.<br>
 No speculative classifications.<br>
 No invented catch data.<br>
+No unverified current catch values.<br>
 No unverified fish counter values.<br>
 No unverified temperature value.<br>
 Verified sources only.
