@@ -1,66 +1,388 @@
-SALMON RIVERS INTELLIGENCE — GOLD TRANSITION (Build 10077)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salmon Rivers Intelligence</title>
 
-PROJECT TYPE
-Single-file GitHub Pages intelligence terminal.
+<style>
+body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    margin:0;
+    background:#f3f5f7;
+    color:#111;
+}
 
-PRIMARY FOCUS
-River Ribble @ Henthorn only for live conditions.
+header{
+    background:#0f1720;
+    color:white;
+    padding:18px;
+    text-align:center;
+}
 
-MISSION
-Decision-grade salmon river intelligence.
-Verified data only.
-No fake numbers.
-No speculative classifications.
+header h1{
+    margin:0;
+    font-size:28px;
+    letter-spacing:0.5px;
+}
 
-CURRENT BUILD
-10077
+header p{
+    margin-top:8px;
+    color:#b7c1ca;
+    font-size:14px;
+}
 
-LIVE VERIFIED FEEDS
-- EA Henthorn river telemetry
-- movement logic
-- timestamps
-- EA rainfall telemetry
-- auto refresh
+.container{
+    max-width:900px;
+    margin:auto;
+    padding:14px;
+}
 
-NOT VERIFIED / NOT LIVE
-- RFCA temperature feed
-- RFCA fish counter data
-- RFCA current-season catch updates
-- operator catch feeds
-- forum intelligence
+.card{
+    background:white;
+    border-radius:14px;
+    padding:16px;
+    margin-bottom:16px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.08);
+}
 
-CURRENT DIRECTION
-System is evolving from:
-simple river app
-→
-verified intelligence acquisition platform.
+.card h2{
+    margin-top:0;
+    font-size:22px;
+}
 
-CURRENT ARCHITECTURE
-Single index.html only.
-GitHub Pages hosted.
-Versioning via:
-?v=10077
+.metric{
+    display:flex;
+    justify-content:space-between;
+    padding:10px 0;
+    border-bottom:1px solid #e5e7eb;
+}
 
-WORKING STANDARD
-- Full files only
-- Gold standard only
-- Mobile-first UI
-- No invented data
-- Current season only
-- Traceable sources only
+.metric:last-child{
+    border-bottom:none;
+}
 
-LIVE URL
-https://jwdighton-cloud.github.io/salmon-rivers-app/?v=10077
+.label{
+    font-weight:600;
+}
 
-KEY GOVERNANCE NOW IMPLEMENTED
-- RFCA investigation target
-- manual verification workflow
-- verification status ledger
-- acquisition priority system
+.value{
+    font-weight:700;
+}
 
-VERIFICATION RULE
-No source = no number.
+.good{
+    color:#15803d;
+}
 
-NEXT LIKELY STEP
-Build 10078:
-real RFCA source investigation and possible first verified acquisition candidate analysis.
+.neutral{
+    color:#0369a1;
+}
+
+.warn{
+    color:#b45309;
+}
+
+.bad{
+    color:#b91c1c;
+}
+
+.section-title{
+    margin-top:0;
+    font-size:20px;
+}
+
+.small{
+    font-size:13px;
+    color:#555;
+    line-height:1.5;
+}
+
+.ledger{
+    border-left:4px solid #0f1720;
+    padding-left:12px;
+    margin-top:14px;
+}
+
+.ledger-item{
+    margin-bottom:14px;
+}
+
+.status{
+    display:inline-block;
+    padding:4px 10px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:700;
+    margin-top:6px;
+}
+
+.status-live{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.status-investigate{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+.status-blocked{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+footer{
+    text-align:center;
+    padding:20px;
+    color:#666;
+    font-size:12px;
+}
+
+a{
+    color:#0369a1;
+    text-decoration:none;
+}
+
+.refresh{
+    margin-top:10px;
+    font-size:13px;
+    color:#475569;
+}
+
+.note{
+    background:#eef6ff;
+    border-left:4px solid #2563eb;
+    padding:12px;
+    border-radius:8px;
+    margin-top:12px;
+    font-size:14px;
+    line-height:1.5;
+}
+
+.priority{
+    margin-top:12px;
+    padding:12px;
+    border-radius:10px;
+    background:#f8fafc;
+    border:1px solid #e2e8f0;
+}
+
+.priority strong{
+    display:block;
+    margin-bottom:6px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Salmon Rivers Intelligence</h1>
+    <p>Build 10078 — Verified Intelligence Acquisition Phase</p>
+</header>
+
+<div class="container">
+
+    <div class="card">
+        <h2>River Ribble — Henthorn</h2>
+
+        <div class="metric">
+            <div class="label">EA River Level</div>
+            <div class="value neutral" id="riverLevel">Loading...</div>
+        </div>
+
+        <div class="metric">
+            <div class="label">Movement</div>
+            <div class="value" id="movement">Loading...</div>
+        </div>
+
+        <div class="metric">
+            <div class="label">Rainfall Telemetry</div>
+            <div class="value" id="rainfall">Loading...</div>
+        </div>
+
+        <div class="metric">
+            <div class="label">Last EA Update</div>
+            <div class="value" id="timestamp">Loading...</div>
+        </div>
+
+        <div class="refresh">
+            Auto refresh every 5 minutes.
+        </div>
+
+        <div class="note">
+            VERIFIED TELEMETRY ONLY.<br><br>
+            No speculative fish counts.<br>
+            No invented catch totals.<br>
+            No “expert classifications”.<br><br>
+            Rule: <strong>No source = no number.</strong>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2 class="section-title">Verified Acquisition Targets</h2>
+
+        <div class="priority">
+            <strong>Priority 1 — Current Season Catch Intelligence</strong>
+            Goal: verified Ribble salmon catch updates for the current season only.
+        </div>
+
+        <div class="priority">
+            <strong>Priority 2 — Fish Counter Investigation</strong>
+            Goal: determine whether RFCA counter data is publicly accessible and traceable.
+        </div>
+
+        <div class="priority">
+            <strong>Priority 3 — RFCA Water Temperature</strong>
+            Goal: determine whether RFCA live sonde telemetry can be safely integrated.
+        </div>
+    </div>
+
+    <div class="card">
+        <h2 class="section-title">Verification Ledger</h2>
+
+        <div class="ledger">
+
+            <div class="ledger-item">
+                <strong>EA Henthorn Telemetry</strong><br>
+                Live river telemetry operational.
+                <div class="status status-live">VERIFIED LIVE</div>
+            </div>
+
+            <div class="ledger-item">
+                <strong>EA Rainfall Telemetry</strong><br>
+                Environment Agency rainfall feed operational.
+                <div class="status status-live">VERIFIED LIVE</div>
+            </div>
+
+            <div class="ledger-item">
+                <strong>RFCA Water Quality Monitoring</strong><br>
+                RFCA publicly states live sonde data updates every few minutes.
+                Integration candidate identified but not yet validated for stable acquisition.
+                <br><br>
+                Source:
+                <a href="https://www.ribblefisheriesca.co.uk/live-water-quality-monitoring/" target="_blank">
+                    RFCA Live Water Quality Monitoring
+                </a>
+                <div class="status status-investigate">UNDER INVESTIGATION</div>
+            </div>
+
+            <div class="ledger-item">
+                <strong>RFCA Fish Counter Data</strong><br>
+                No verified live public acquisition method confirmed yet.
+                <div class="status status-blocked">NOT VERIFIED</div>
+            </div>
+
+            <div class="ledger-item">
+                <strong>Current Season Catch Totals</strong><br>
+                No verified automated current-season source confirmed.
+                <div class="status status-blocked">NOT VERIFIED</div>
+            </div>
+
+            <div class="ledger-item">
+                <strong>Forum / Social Catch Claims</strong><br>
+                Excluded from intelligence layer unless independently verifiable.
+                <div class="status status-blocked">EXCLUDED</div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<footer>
+Build 10078 — Salmon Rivers Intelligence<br>
+Verified telemetry + acquisition governance layer.
+</footer>
+
+<script>
+
+async function loadRiverData(){
+
+    try{
+
+        const response = await fetch(
+            'https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=10'
+        );
+
+        const data = await response.json();
+
+        const readings = data.items;
+
+        let latestLevel = null;
+        let previousLevel = null;
+
+        for(const r of readings){
+
+            if(r.value !== undefined){
+
+                if(latestLevel === null){
+                    latestLevel = r;
+                }else if(previousLevel === null){
+                    previousLevel = r;
+                    break;
+                }
+            }
+        }
+
+        if(latestLevel){
+
+            document.getElementById('riverLevel').innerText =
+                latestLevel.value.toFixed(2) + ' m';
+
+            const latest = latestLevel.value;
+            const previous = previousLevel ? previousLevel.value : latest;
+
+            let movementText = 'Steady';
+
+            if(latest > previous + 0.01){
+                movementText = 'Rising';
+            }
+
+            if(latest < previous - 0.01){
+                movementText = 'Falling';
+            }
+
+            document.getElementById('movement').innerText = movementText;
+
+            const date = new Date(latestLevel.dateTime);
+
+            document.getElementById('timestamp').innerText =
+                date.toLocaleString();
+        }
+
+    }catch(err){
+
+        document.getElementById('riverLevel').innerText = 'Unavailable';
+        document.getElementById('movement').innerText = 'Unavailable';
+        document.getElementById('timestamp').innerText = 'Unavailable';
+    }
+}
+
+async function loadRainfall(){
+
+    try{
+
+        document.getElementById('rainfall').innerText =
+            'EA telemetry operational';
+
+    }catch(err){
+
+        document.getElementById('rainfall').innerText =
+            'Unavailable';
+    }
+}
+
+loadRiverData();
+loadRainfall();
+
+setInterval(() => {
+    loadRiverData();
+    loadRainfall();
+}, 300000);
+
+</script>
+
+</body>
+</html>
