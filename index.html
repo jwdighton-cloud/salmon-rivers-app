@@ -297,6 +297,32 @@ color:#87bfff;
 font-weight:800;
 }
 
+.candidateCard{
+background:#101419;
+border:1px solid #1f252d;
+border-radius:16px;
+padding:14px;
+margin-bottom:12px;
+}
+
+.candidateTitle{
+font-size:15px;
+font-weight:800;
+margin-bottom:10px;
+}
+
+.candidateList{
+margin:0;
+padding-left:18px;
+}
+
+.candidateList li{
+margin-bottom:8px;
+font-size:14px;
+line-height:1.5;
+color:#bcc5ce;
+}
+
 .statusBar{
 margin-top:14px;
 padding:13px;
@@ -424,7 +450,7 @@ Environment Agency station 710305
 </div>
 
 <div class="versionRow">
-<div class="badge buildBadge">Build 10071</div>
+<div class="badge buildBadge">Build 10072</div>
 <div class="badge seasonBadge">2026 SEASON ONLY</div>
 </div>
 </div>
@@ -446,6 +472,11 @@ Environment Agency station 710305
 
 <div class="statusLine">
 <div class="statusName">Source acquisition layer</div>
+<div class="statusValue test">Active</div>
+</div>
+
+<div class="statusLine">
+<div class="statusName">Source candidate mapping</div>
 <div class="statusValue test">Active</div>
 </div>
 
@@ -601,7 +632,77 @@ Acquisition phase
 
 <div class="statusBar">
 <span class="warnDot"></span>
-Build 10071 keeps verified source acquisition mapping. No salmon or sea trout totals are displayed until verified current-season evidence is integrated.
+No verified current-season totals are integrated yet.
+</div>
+
+</div>
+
+<div class="card">
+<div class="cardTitle">Source Candidates To Investigate</div>
+
+<div class="candidateCard">
+<div class="candidateTitle">RFCA</div>
+
+<ul class="candidateList">
+<li>Current-season catch updates</li>
+<li>Fish counter data</li>
+<li>Temperature dashboard</li>
+<li>River condition intelligence</li>
+<li>Fisheries communication updates</li>
+</ul>
+
+<a class="sourceLink" href="https://www.ribblefisheriesca.co.uk/" target="_blank" rel="noopener">
+Open RFCA
+</a>
+</div>
+
+<div class="candidateCard">
+<div class="candidateTitle">Ribble Rivers Trust</div>
+
+<ul class="candidateList">
+<li>Monitoring reports</li>
+<li>Fish passage references</li>
+<li>Counter references</li>
+<li>Habitat and river intelligence</li>
+<li>Catchment monitoring information</li>
+</ul>
+
+<a class="sourceLink" href="https://ribbletrust.org.uk/" target="_blank" rel="noopener">
+Open Ribble Rivers Trust
+</a>
+</div>
+
+<div class="candidateCard">
+<div class="candidateTitle">Salmon Fishing Forum</div>
+
+<ul class="candidateList">
+<li>Current-season reports</li>
+<li>Manual review only</li>
+<li>Movement observations</li>
+<li>River condition discussion</li>
+<li>Potential catch mentions requiring verification</li>
+</ul>
+
+<a class="sourceLink" href="https://www.salmonfishingforum.com/" target="_blank" rel="noopener">
+Open Salmon Fishing Forum
+</a>
+</div>
+
+<div class="candidateCard">
+<div class="candidateTitle">Operators / Fisheries</div>
+
+<ul class="candidateList">
+<li>Beat-level current catches</li>
+<li>Sea trout reports</li>
+<li>Fish movement updates</li>
+<li>Local conditions intelligence</li>
+<li>Current-season activity reporting</li>
+</ul>
+</div>
+
+<div class="statusBar">
+<span class="warnDot"></span>
+Build 10072 identifies candidate intelligence sources only. No source has yet been elevated into verified operational totals.
 </div>
 
 </div>
@@ -684,11 +785,11 @@ Build 10071 keeps verified source acquisition mapping. No salmon or sea trout to
 <div class="intelItem">
 <div class="intelSource">Purpose</div>
 <div class="intelHeadline">
-Build 10071 is the stable source-acquisition baseline
+Build 10072 expands source investigation
 </div>
 
 <div class="intelText">
-The app separates structure from acquisition. This layer exists to determine which current-season salmon, sea trout, counter and environmental sources can actually become operational intelligence feeds.
+The app now maintains candidate-source mapping for salmon totals, sea trout totals, fish counters, temperature feeds, operator reports and river intelligence acquisition.
 </div>
 </div>
 
@@ -700,52 +801,6 @@ No source = no number
 
 <div class="intelText">
 No total, fish counter value, or temperature reading is permitted into the live intelligence layer unless it is traceable to a verified current-season source.
-</div>
-</div>
-
-</div>
-
-<div class="card">
-<div class="cardTitle">External Intelligence Sources</div>
-
-<div class="intelItem">
-<div class="intelSource">RFCA</div>
-<div class="intelHeadline">
-Current-season fisheries intelligence
-</div>
-
-<div class="intelText">
-Used for river conditions, fisheries communication, catchment updates, movement intelligence and possible current-season salmon reporting where available.
-</div>
-
-<a class="sourceLink" href="https://www.ribblefisheriesca.co.uk/category/blog/" target="_blank" rel="noopener">
-Open RFCA updates
-</a>
-</div>
-
-<div class="intelItem">
-<div class="intelSource">Salmon Fishing Forum</div>
-<div class="intelHeadline">
-Current-season monitoring source
-</div>
-
-<div class="intelText">
-Used only for current-year movement reports and observations. Forum content is not treated as verified operational data without confirmation.
-</div>
-
-<a class="sourceLink" href="https://www.salmonfishingforum.com/threads/river-ribble-2026.292508/" target="_blank" rel="noopener">
-Open River Ribble 2026 discussion
-</a>
-</div>
-
-<div class="intelItem">
-<div class="intelSource">Operators & Fisheries</div>
-<div class="intelHeadline">
-Potential high-value intelligence
-</div>
-
-<div class="intelText">
-Future target layer for verified beat reports, salmon movement updates, catch reports and current-season fish activity across multiple rivers.
 </div>
 </div>
 
