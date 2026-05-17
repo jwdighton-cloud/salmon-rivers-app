@@ -8,15 +8,63 @@
 
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;background:#0f1114;color:#f2f2f2;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
-.container{max-width:780px;margin:auto;padding:18px}
-.header{margin-bottom:20px}
-.title{font-size:30px;font-weight:800;letter-spacing:-.7px}
-.subtitle{margin-top:8px;font-size:14px;line-height:1.55;color:#a0a9b3}
-.versionRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-.badge{display:inline-block;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.5px}
-.buildBadge{background:#1c2229;color:#9fb3c8}
-.seasonBadge{background:#2b2012;color:#ffcf70;border:1px solid #4b3718}
+
+body{
+margin:0;
+background:#0f1114;
+color:#f2f2f2;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+}
+
+.container{
+max-width:780px;
+margin:auto;
+padding:18px;
+}
+
+.header{
+margin-bottom:20px;
+}
+
+.title{
+font-size:30px;
+font-weight:800;
+letter-spacing:-.7px;
+}
+
+.subtitle{
+margin-top:8px;
+font-size:14px;
+line-height:1.55;
+color:#a0a9b3;
+}
+
+.versionRow{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin-top:12px;
+}
+
+.badge{
+display:inline-block;
+padding:6px 12px;
+border-radius:999px;
+font-size:12px;
+font-weight:700;
+letter-spacing:.5px;
+}
+
+.buildBadge{
+background:#1c2229;
+color:#9fb3c8;
+}
+
+.seasonBadge{
+background:#2b2012;
+color:#ffcf70;
+border:1px solid #4b3718;
+}
 
 .card{
 background:#171b20;
@@ -53,7 +101,10 @@ font-size:14px;
 border-bottom:none;
 }
 
-.statusName{color:#c0c8d0}
+.statusName{
+color:#c0c8d0;
+}
+
 .statusValue{
 font-weight:800;
 text-transform:uppercase;
@@ -128,16 +179,14 @@ line-height:1.35;
 .priorityManual{color:#87bfff}
 
 .totalsTable,
-.sourceTable,
-.statusMatrix{
+.ledgerTable{
 width:100%;
 border-collapse:collapse;
 margin-top:14px;
 }
 
 .totalsTable th,
-.sourceTable th,
-.statusMatrix th{
+.ledgerTable th{
 font-size:10px;
 text-transform:uppercase;
 letter-spacing:.9px;
@@ -149,8 +198,7 @@ padding:12px 10px;
 }
 
 .totalsTable td,
-.sourceTable td,
-.statusMatrix td{
+.ledgerTable td{
 font-size:13px;
 color:#bcc5ce;
 border-bottom:1px solid #232a32;
@@ -160,8 +208,7 @@ vertical-align:top;
 }
 
 .totalsTable tr:last-child td,
-.sourceTable tr:last-child td,
-.statusMatrix tr:last-child td{
+.ledgerTable tr:last-child td{
 border-bottom:none;
 }
 
@@ -183,36 +230,19 @@ font-size:12px;
 letter-spacing:.5px;
 }
 
-.sourceHigh{color:#37d67a;font-weight:800}
-.sourceMedium{color:#ffcf70;font-weight:800}
-.sourceBlocked{color:#ff8b8b;font-weight:800}
-.sourceManual{color:#87bfff;font-weight:800}
-.sourceNA{color:#7d8792;font-weight:800}
-
-.candidateCard{
-background:#101419;
-border:1px solid #1f252d;
-border-radius:16px;
-padding:14px;
-margin-bottom:12px;
-}
-
-.candidateTitle{
-font-size:15px;
+.verified{
+color:#37d67a;
 font-weight:800;
-margin-bottom:10px;
 }
 
-.candidateList{
-margin:0;
-padding-left:18px;
+.pending{
+color:#ffcf70;
+font-weight:800;
 }
 
-.candidateList li{
-margin-bottom:8px;
-font-size:14px;
-line-height:1.5;
-color:#bcc5ce;
+.blockedStatus{
+color:#ff8b8b;
+font-weight:800;
 }
 
 .queueItem{
@@ -326,7 +356,9 @@ vertical-align:middle;
 .warnDot{background:#ffcf70}
 .badDot{background:#ff6b6b}
 
-.error{color:#ff8b8b}
+.error{
+color:#ff8b8b;
+}
 
 .refresh{
 margin-top:16px;
@@ -356,10 +388,8 @@ border-radius:18px;
 
 .totalsTable th,
 .totalsTable td,
-.sourceTable th,
-.sourceTable td,
-.statusMatrix th,
-.statusMatrix td{
+.ledgerTable th,
+.ledgerTable td{
 font-size:11px;
 padding:9px 6px;
 }
@@ -372,7 +402,10 @@ padding:9px 6px;
 <div class="container">
 
 <div class="header">
-<div class="title">Salmon Rivers Intelligence</div>
+
+<div class="title">
+Salmon Rivers Intelligence
+</div>
 
 <div class="subtitle">
 River Ribble — Henthorn conditions terminal<br>
@@ -381,13 +414,17 @@ Environment Agency station 710305
 </div>
 
 <div class="versionRow">
-<div class="badge buildBadge">Build 10076</div>
+<div class="badge buildBadge">Build 10077</div>
 <div class="badge seasonBadge">2026 SEASON ONLY</div>
 </div>
+
 </div>
 
 <div class="card">
-<div class="cardTitle">System Status</div>
+
+<div class="cardTitle">
+System Status
+</div>
 
 <div class="statusTable">
 
@@ -402,13 +439,13 @@ Environment Agency station 710305
 </div>
 
 <div class="statusLine">
-<div class="statusName">RFCA investigation</div>
-<div class="statusValue test">Priority</div>
+<div class="statusName">Verification ledger</div>
+<div class="statusValue test">Active</div>
 </div>
 
 <div class="statusLine">
-<div class="statusName">Manual verification workflow</div>
-<div class="statusValue test">Active</div>
+<div class="statusName">RFCA investigation</div>
+<div class="statusValue test">Priority</div>
 </div>
 
 <div class="statusLine">
@@ -435,7 +472,10 @@ Environment Agency station 710305
 </div>
 
 <div class="card">
-<div class="cardTitle">Henthorn Conditions</div>
+
+<div class="cardTitle">
+Henthorn Conditions
+</div>
 
 <div class="heroLevel" id="riverLevel">--</div>
 
@@ -491,7 +531,10 @@ Auto refresh every 5 minutes
 </div>
 
 <div class="card">
-<div class="cardTitle">Current-Season All-River Totals</div>
+
+<div class="cardTitle">
+Current-Season All-River Totals
+</div>
 
 <div class="priorityGrid">
 
@@ -562,7 +605,69 @@ No verified current-season totals are integrated yet.
 </div>
 
 <div class="card">
-<div class="cardTitle">RFCA Investigation Target</div>
+
+<div class="cardTitle">
+Verification Status Ledger
+</div>
+
+<table class="ledgerTable">
+
+<thead>
+<tr>
+<th>Source</th>
+<th>Status</th>
+<th>Operational State</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td><strong>RFCA fish counter data</strong></td>
+<td class="pending">Pending investigation</td>
+<td>Not operational</td>
+</tr>
+
+<tr>
+<td><strong>RFCA catch updates</strong></td>
+<td class="pending">Pending investigation</td>
+<td>Not operational</td>
+</tr>
+
+<tr>
+<td><strong>RFCA temperature feed</strong></td>
+<td class="pending">Pending investigation</td>
+<td>Blocked</td>
+</tr>
+
+<tr>
+<td><strong>EA Henthorn telemetry</strong></td>
+<td class="verified">Verified operational</td>
+<td>Live</td>
+</tr>
+
+<tr>
+<td><strong>EA rainfall telemetry</strong></td>
+<td class="verified">Verified operational</td>
+<td>Live</td>
+</tr>
+
+</tbody>
+
+</table>
+
+<div class="statusBar">
+<span class="warnDot"></span>
+The verification ledger separates verified operational feeds from acquisition targets still under investigation.
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="cardTitle">
+RFCA Investigation Target
+</div>
 
 <div class="priorityGrid">
 
@@ -588,38 +693,6 @@ No verified current-season totals are integrated yet.
 
 </div>
 
-<div class="intelItem">
-
-<div class="intelSource">RFCA acquisition rule</div>
-
-<div class="intelHeadline">
-RFCA is the first real acquisition target
-</div>
-
-<div class="intelText">
-RFCA is being treated as the first priority source to investigate for fish counter data, current-season catch updates, and the water temperature dashboard feed. No RFCA-derived catch, counter, or temperature value is displayed until the source is verified.
-</div>
-
-</div>
-
-<div class="intelItem">
-
-<div class="intelSource">Display status</div>
-
-<div class="intelHeadline">
-No values displayed
-</div>
-
-<div class="intelText">
-Build 10076 does not claim that RFCA data has been integrated. This card only records the investigation priority and keeps the app honest while the source is checked.
-</div>
-
-<a class="sourceLink" href="https://www.ribblefisheriesca.co.uk/" target="_blank" rel="noopener">
-Open RFCA
-</a>
-
-</div>
-
 <div class="statusBar">
 <span class="warnDot"></span>
 RFCA values remain blocked until verified. No fake catch totals, counter counts, or temperature readings are permitted.
@@ -628,7 +701,10 @@ RFCA values remain blocked until verified. No fake catch totals, counter counts,
 </div>
 
 <div class="card">
-<div class="cardTitle">Manual Verification Workflow</div>
+
+<div class="cardTitle">
+Manual Verification Workflow
+</div>
 
 <div class="queueItem">
 <div class="queueNumber">1</div>
@@ -707,70 +783,10 @@ No value moves from candidate source to operational display without this verific
 
 </div>
 
-<div class="card">
-<div class="cardTitle">Source Investigation Priority Order</div>
-
-<div class="queueItem">
-<div class="queueNumber">1</div>
-<div>
-<div class="queueTitle">RFCA fish counter / catch update data</div>
-<div class="queueText">
-Highest-value first target because it may connect fish movement, catch updates, authority context, and counter references.
-</div>
-</div>
-</div>
-
-<div class="queueItem">
-<div class="queueNumber">2</div>
-<div>
-<div class="queueTitle">RFCA temperature dashboard feed</div>
-<div class="queueText">
-Important Henthorn/Ribble condition signal. No value may be shown until a stable, traceable feed is verified.
-</div>
-</div>
-</div>
-
-<div class="queueItem">
-<div class="queueNumber">3</div>
-<div>
-<div class="queueTitle">Ribble Rivers Trust monitoring / counter references</div>
-<div class="queueText">
-Investigate monitoring reports, fish passage references, and any counter-related current-season material.
-</div>
-</div>
-</div>
-
-<div class="queueItem">
-<div class="queueNumber">4</div>
-<div>
-<div class="queueTitle">Operator / fishery catch reports</div>
-<div class="queueText">
-Target beat-level salmon and sea trout reports where source, date, location, and species can be verified.
-</div>
-</div>
-</div>
-
-<div class="queueItem">
-<div class="queueNumber">5</div>
-<div>
-<div class="queueTitle">Salmon Fishing Forum manual review</div>
-<div class="queueText">
-Useful for awareness and leads only. Forum content does not become operational data without independent confirmation.
-</div>
-</div>
-</div>
-
-<div class="statusBar">
-<span class="warnDot"></span>
-Build 10076 adds governance and verification workflow only. No source is treated as verified and no catch, counter, or temperature number is added.
-</div>
-
-</div>
-
 <div class="footer">
 Henthorn conditions first.<br>
 Current-season all-river intelligence second.<br>
-RFCA investigation target active.<br>
+Verification ledger active.<br>
 Manual verification workflow active.<br><br>
 
 No historical contamination.<br>
