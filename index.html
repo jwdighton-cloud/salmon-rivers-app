@@ -8,81 +8,404 @@
 
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;background:#0f1114;color:#f2f2f2;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
-.container{max-width:760px;margin:auto;padding:18px}
-.header{margin-bottom:20px}
-.title{font-size:30px;font-weight:800;letter-spacing:-0.7px}
-.subtitle{margin-top:8px;font-size:14px;line-height:1.55;color:#a0a9b3}
-.versionRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-.badge{display:inline-block;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.5px}
-.buildBadge{background:#1c2229;color:#9fb3c8}
-.seasonBadge{background:#2b2012;color:#ffcf70;border:1px solid #4b3718}
-.card{background:#171b20;border:1px solid #232a32;border-radius:20px;padding:18px;margin-bottom:16px}
-.cardTitle{font-size:12px;font-weight:800;letter-spacing:1.1px;text-transform:uppercase;color:#7d8b98;margin-bottom:14px}
 
-.statusTable{display:grid;gap:10px}
-.statusLine{display:grid;grid-template-columns:1fr auto;gap:12px;padding:10px 0;border-bottom:1px solid #232a32;font-size:14px}
-.statusLine:last-child{border-bottom:none}
-.statusName{color:#c0c8d0}
-.statusValue{font-weight:800;text-transform:uppercase;letter-spacing:.6px}
-.ok{color:#37d67a}.test{color:#ffcf70}.blocked{color:#ff8b8b}.manual{color:#87bfff}
+body{
+margin:0;
+background:#0f1114;
+color:#f2f2f2;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+}
 
-.heroLevel{font-size:64px;font-weight:800;line-height:1;margin-bottom:10px}
-.heroMeta{font-size:16px;color:#bcc5ce;line-height:1.5}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
-.metric{background:#101419;border:1px solid #1f252d;border-radius:16px;padding:14px}
-.metricLabel{font-size:11px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;color:#7f8a96;margin-bottom:8px}
-.metricValue{font-size:22px;font-weight:800;line-height:1.3}
-.metricSub{margin-top:6px;font-size:12px;line-height:1.5;color:#97a1ac}
+.container{
+max-width:780px;
+margin:auto;
+padding:18px;
+}
 
-.priorityGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.priorityBox{background:#101419;border:1px solid #1f252d;border-radius:15px;padding:13px}
-.priorityLabel{font-size:10px;font-weight:800;letter-spacing:.9px;text-transform:uppercase;color:#7f8a96;margin-bottom:6px}
-.priorityValue{font-size:14px;font-weight:800;line-height:1.35}
-.priorityTarget{color:#ffcf70}.priorityBlocked{color:#ff8b8b}
+.header{
+margin-bottom:20px;
+}
 
-.totalsTable{width:100%;border-collapse:collapse;margin-top:14px;overflow:hidden;border-radius:14px}
-.totalsTable th{font-size:10px;text-transform:uppercase;letter-spacing:.9px;color:#7f8a96;text-align:left;background:#101419;border-bottom:1px solid #232a32;padding:12px 10px}
-.totalsTable td{font-size:14px;color:#bcc5ce;border-bottom:1px solid #232a32;padding:12px 10px;line-height:1.4}
-.totalsTable tr:last-child td{border-bottom:none}
-.totalsTable .riverName{font-weight:800;color:#f2f2f2}
-.totalsTable .notShown{color:#ff8b8b;font-weight:800}
-.totalsTable .sourceNeeded{color:#ffcf70;font-weight:800;text-transform:uppercase;font-size:12px;letter-spacing:.5px}
+.title{
+font-size:30px;
+font-weight:800;
+letter-spacing:-0.7px;
+}
 
-.statusBar{margin-top:14px;padding:13px;background:#11161b;border:1px solid #202831;border-radius:14px;font-size:14px;line-height:1.55;color:#d9e0e7}
-.intelItem{padding:14px 0;border-bottom:1px solid #232a32}
-.intelItem:last-child{border-bottom:none;padding-bottom:0}
-.intelSource{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#7f8c98;margin-bottom:6px}
-.intelHeadline{font-size:16px;font-weight:700;line-height:1.45;margin-bottom:6px}
-.intelText{font-size:14px;line-height:1.6;color:#bcc5ce}
-.sourceLink{display:inline-block;margin-top:8px;font-size:13px;color:#87bfff;text-decoration:none}
+.subtitle{
+margin-top:8px;
+font-size:14px;
+line-height:1.55;
+color:#a0a9b3;
+}
 
-.requirementList{margin:0;padding:0;list-style:none}
-.requirementList li{padding:9px 0;border-bottom:1px solid #232a32;font-size:14px;color:#bcc5ce;line-height:1.45}
-.requirementList li:last-child{border-bottom:none}
-.requirementList strong{color:#f2f2f2}
+.versionRow{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin-top:12px;
+}
 
-.registerRow{display:grid;grid-template-columns:1.2fr .9fr .8fr;gap:10px;padding:13px 0;border-bottom:1px solid #232a32;align-items:start}
-.registerRow:last-child{border-bottom:none}
-.registerName{font-size:14px;font-weight:700;line-height:1.4}
-.registerType{font-size:13px;line-height:1.45;color:#bcc5ce}
-.registerStatus{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;line-height:1.4}
-.statusActive{color:#37d67a}.statusTesting{color:#ffcf70}.statusBlocked{color:#ff8b8b}
+.badge{
+display:inline-block;
+padding:6px 12px;
+border-radius:999px;
+font-size:12px;
+font-weight:700;
+letter-spacing:.5px;
+}
 
-.footer{margin-top:26px;font-size:12px;line-height:1.7;color:#7d8792;text-align:center}
-.liveDot,.warnDot,.badDot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:middle}
-.liveDot{background:#37d67a}.warnDot{background:#ffcf70}.badDot{background:#ff6b6b}
-.error{color:#ff8b8b}
-.refresh{margin-top:16px;font-size:12px;color:#81909d}
+.buildBadge{
+background:#1c2229;
+color:#9fb3c8;
+}
 
-@media(max-width:600px){
-.container{padding:14px}
-.heroLevel{font-size:52px}
-.grid,.priorityGrid{grid-template-columns:1fr}
-.registerRow{grid-template-columns:1fr}
-.card{padding:16px;border-radius:18px}
-.totalsTable th,.totalsTable td{font-size:12px;padding:10px 7px}
-.totalsTable .sourceNeeded{font-size:10px}
+.seasonBadge{
+background:#2b2012;
+color:#ffcf70;
+border:1px solid #4b3718;
+}
+
+.card{
+background:#171b20;
+border:1px solid #232a32;
+border-radius:20px;
+padding:18px;
+margin-bottom:16px;
+}
+
+.cardTitle{
+font-size:12px;
+font-weight:800;
+letter-spacing:1.1px;
+text-transform:uppercase;
+color:#7d8b98;
+margin-bottom:14px;
+}
+
+.statusTable{
+display:grid;
+gap:10px;
+}
+
+.statusLine{
+display:grid;
+grid-template-columns:1fr auto;
+gap:12px;
+padding:10px 0;
+border-bottom:1px solid #232a32;
+font-size:14px;
+}
+
+.statusLine:last-child{
+border-bottom:none;
+}
+
+.statusName{
+color:#c0c8d0;
+}
+
+.statusValue{
+font-weight:800;
+text-transform:uppercase;
+letter-spacing:.6px;
+}
+
+.ok{color:#37d67a;}
+.test{color:#ffcf70;}
+.blocked{color:#ff8b8b;}
+.manual{color:#87bfff;}
+
+.heroLevel{
+font-size:64px;
+font-weight:800;
+line-height:1;
+margin-bottom:10px;
+}
+
+.heroMeta{
+font-size:16px;
+color:#bcc5ce;
+line-height:1.5;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin-top:16px;
+}
+
+.metric{
+background:#101419;
+border:1px solid #1f252d;
+border-radius:16px;
+padding:14px;
+}
+
+.metricLabel{
+font-size:11px;
+font-weight:700;
+letter-spacing:.9px;
+text-transform:uppercase;
+color:#7f8a96;
+margin-bottom:8px;
+}
+
+.metricValue{
+font-size:22px;
+font-weight:800;
+line-height:1.3;
+}
+
+.metricSub{
+margin-top:6px;
+font-size:12px;
+line-height:1.5;
+color:#97a1ac;
+}
+
+.priorityGrid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
+
+.priorityBox{
+background:#101419;
+border:1px solid #1f252d;
+border-radius:15px;
+padding:13px;
+}
+
+.priorityLabel{
+font-size:10px;
+font-weight:800;
+letter-spacing:.9px;
+text-transform:uppercase;
+color:#7f8a96;
+margin-bottom:6px;
+}
+
+.priorityValue{
+font-size:14px;
+font-weight:800;
+line-height:1.35;
+}
+
+.priorityTarget{color:#ffcf70;}
+.priorityBlocked{color:#ff8b8b;}
+.priorityLive{color:#37d67a;}
+.priorityManual{color:#87bfff;}
+
+.totalsTable{
+width:100%;
+border-collapse:collapse;
+margin-top:14px;
+overflow:hidden;
+border-radius:14px;
+}
+
+.totalsTable th{
+font-size:10px;
+text-transform:uppercase;
+letter-spacing:.9px;
+color:#7f8a96;
+text-align:left;
+background:#101419;
+border-bottom:1px solid #232a32;
+padding:12px 10px;
+}
+
+.totalsTable td{
+font-size:14px;
+color:#bcc5ce;
+border-bottom:1px solid #232a32;
+padding:12px 10px;
+line-height:1.4;
+}
+
+.totalsTable tr:last-child td{
+border-bottom:none;
+}
+
+.riverName{
+font-weight:800;
+color:#f2f2f2;
+}
+
+.notShown{
+color:#ff8b8b;
+font-weight:800;
+}
+
+.sourceNeeded{
+color:#ffcf70;
+font-weight:800;
+text-transform:uppercase;
+font-size:12px;
+letter-spacing:.5px;
+}
+
+.sourceTable{
+width:100%;
+border-collapse:collapse;
+margin-top:14px;
+}
+
+.sourceTable th{
+font-size:10px;
+text-transform:uppercase;
+letter-spacing:.9px;
+color:#7f8a96;
+text-align:left;
+background:#101419;
+border-bottom:1px solid #232a32;
+padding:12px 10px;
+}
+
+.sourceTable td{
+font-size:13px;
+color:#bcc5ce;
+border-bottom:1px solid #232a32;
+padding:12px 10px;
+line-height:1.45;
+vertical-align:top;
+}
+
+.sourceTable tr:last-child td{
+border-bottom:none;
+}
+
+.sourceHigh{
+color:#37d67a;
+font-weight:800;
+}
+
+.sourceMedium{
+color:#ffcf70;
+font-weight:800;
+}
+
+.sourceBlocked{
+color:#ff8b8b;
+font-weight:800;
+}
+
+.sourceManual{
+color:#87bfff;
+font-weight:800;
+}
+
+.statusBar{
+margin-top:14px;
+padding:13px;
+background:#11161b;
+border:1px solid #202831;
+border-radius:14px;
+font-size:14px;
+line-height:1.55;
+color:#d9e0e7;
+}
+
+.intelItem{
+padding:14px 0;
+border-bottom:1px solid #232a32;
+}
+
+.intelItem:last-child{
+border-bottom:none;
+padding-bottom:0;
+}
+
+.intelSource{
+font-size:11px;
+font-weight:700;
+letter-spacing:1px;
+text-transform:uppercase;
+color:#7f8c98;
+margin-bottom:6px;
+}
+
+.intelHeadline{
+font-size:16px;
+font-weight:700;
+line-height:1.45;
+margin-bottom:6px;
+}
+
+.intelText{
+font-size:14px;
+line-height:1.6;
+color:#bcc5ce;
+}
+
+.sourceLink{
+display:inline-block;
+margin-top:8px;
+font-size:13px;
+color:#87bfff;
+text-decoration:none;
+}
+
+.footer{
+margin-top:26px;
+font-size:12px;
+line-height:1.7;
+color:#7d8792;
+text-align:center;
+}
+
+.liveDot,.warnDot,.badDot{
+display:inline-block;
+width:8px;
+height:8px;
+border-radius:50%;
+margin-right:6px;
+vertical-align:middle;
+}
+
+.liveDot{background:#37d67a;}
+.warnDot{background:#ffcf70;}
+.badDot{background:#ff6b6b;}
+
+.error{
+color:#ff8b8b;
+}
+
+.refresh{
+margin-top:16px;
+font-size:12px;
+color:#81909d;
+}
+
+@media(max-width:700px){
+
+.container{
+padding:14px;
+}
+
+.heroLevel{
+font-size:52px;
+}
+
+.grid,
+.priorityGrid{
+grid-template-columns:1fr;
+}
+
+.card{
+padding:16px;
+border-radius:18px;
+}
+
+.totalsTable th,
+.totalsTable td,
+.sourceTable th,
+.sourceTable td{
+font-size:12px;
+padding:10px 7px;
+}
 }
 </style>
 </head>
@@ -93,89 +416,151 @@ body{margin:0;background:#0f1114;color:#f2f2f2;font-family:-apple-system,BlinkMa
 
 <div class="header">
 <div class="title">Salmon Rivers Intelligence</div>
+
 <div class="subtitle">
 River Ribble — Henthorn conditions terminal<br>
 Current-season all-river salmon and sea trout intelligence<br>
 Environment Agency station 710305
 </div>
+
 <div class="versionRow">
-<div class="badge buildBadge">Build 10069</div>
+<div class="badge buildBadge">Build 10070</div>
 <div class="badge seasonBadge">2026 SEASON ONLY</div>
 </div>
 </div>
 
 <div class="card">
 <div class="cardTitle">System Status</div>
+
 <div class="statusTable">
-<div class="statusLine"><div class="statusName">Henthorn conditions</div><div class="statusValue ok">Primary View</div></div>
-<div class="statusLine"><div class="statusName">Current-season all-river totals</div><div class="statusValue test">Priority</div></div>
-<div class="statusLine"><div class="statusName">River totals table</div><div class="statusValue test">Source Gate</div></div>
-<div class="statusLine"><div class="statusName">Fish counter data</div><div class="statusValue test">Priority</div></div>
-<div class="statusLine"><div class="statusName">EA level telemetry</div><div class="statusValue ok" id="sysLevel">Online</div></div>
-<div class="statusLine"><div class="statusName">EA rainfall telemetry</div><div class="statusValue test" id="sysRain">Testing</div></div>
-<div class="statusLine"><div class="statusName">RFCA temperature</div><div class="statusValue blocked">Not verified</div></div>
-<div class="statusLine"><div class="statusName">Last refresh</div><div class="statusValue manual" id="sysRefresh">--</div></div>
+
+<div class="statusLine">
+<div class="statusName">Henthorn conditions</div>
+<div class="statusValue ok">Primary View</div>
+</div>
+
+<div class="statusLine">
+<div class="statusName">All-river totals layer</div>
+<div class="statusValue test">Priority</div>
+</div>
+
+<div class="statusLine">
+<div class="statusName">Source acquisition layer</div>
+<div class="statusValue test">Active</div>
+</div>
+
+<div class="statusLine">
+<div class="statusName">Fish counter intelligence</div>
+<div class="statusValue test">Priority</div>
+</div>
+
+<div class="statusLine">
+<div class="statusName">EA telemetry</div>
+<div class="statusValue ok" id="sysLevel">Online</div>
+</div>
+
+<div class="statusLine">
+<div class="statusName">RFCA temperature</div>
+<div class="statusValue blocked">Not verified</div>
+</div>
+
+<div class="statusLine">
+<div class="statusName">Last refresh</div>
+<div class="statusValue manual" id="sysRefresh">--</div>
+</div>
+
 </div>
 </div>
 
 <div class="card">
 <div class="cardTitle">Henthorn Conditions</div>
+
 <div class="heroLevel" id="riverLevel">--</div>
-<div class="heroMeta" id="movement">Loading official Henthorn telemetry...</div>
+
+<div class="heroMeta" id="movement">
+Loading official Henthorn telemetry...
+</div>
 
 <div class="grid">
+
 <div class="metric">
 <div class="metricLabel">Movement</div>
 <div class="metricValue" id="movementValue">--</div>
-<div class="metricSub" id="movementSub">Calculated only from official EA readings</div>
+<div class="metricSub" id="movementSub">
+Calculated only from official EA readings
+</div>
 </div>
 
 <div class="metric">
 <div class="metricLabel">Last Reading</div>
 <div class="metricValue" id="timestamp">--</div>
-<div class="metricSub">Official Environment Agency timestamp</div>
+<div class="metricSub">
+Official Environment Agency timestamp
+</div>
 </div>
 
 <div class="metric">
 <div class="metricLabel">Rainfall</div>
 <div class="metricValue" id="rainValue">--</div>
-<div class="metricSub" id="rainStation">Searching nearest EA rainfall telemetry</div>
+<div class="metricSub" id="rainStation">
+Searching nearest EA rainfall telemetry
+</div>
 </div>
 
 <div class="metric">
 <div class="metricLabel">Temperature</div>
 <div class="metricValue blocked">Not displayed</div>
-<div class="metricSub">RFCA feed not yet verified</div>
+<div class="metricSub">
+RFCA feed not yet verified
 </div>
+</div>
+
 </div>
 
 <div class="statusBar" id="levelStatus">
-<span class="liveDot"></span>Connecting to official EA telemetry...
+<span class="liveDot"></span>
+Connecting to official EA telemetry...
 </div>
 
-<div class="refresh">Auto refresh every 5 minutes</div>
+<div class="refresh">
+Auto refresh every 5 minutes
+</div>
+
 </div>
 
 <div class="card">
 <div class="cardTitle">Current-Season All-River Totals</div>
 
 <div class="priorityGrid">
+
 <div class="priorityBox">
 <div class="priorityLabel">All Rivers Salmon</div>
-<div class="priorityValue priorityBlocked">Not displayed</div>
+<div class="priorityValue priorityBlocked">
+Not displayed
 </div>
+</div>
+
 <div class="priorityBox">
 <div class="priorityLabel">All Rivers Sea Trout</div>
-<div class="priorityValue priorityBlocked">Not displayed</div>
+<div class="priorityValue priorityBlocked">
+Not displayed
 </div>
+</div>
+
 <div class="priorityBox">
 <div class="priorityLabel">River-Level Breakdown</div>
-<div class="priorityValue priorityBlocked">Not displayed</div>
+<div class="priorityValue priorityBlocked">
+Not displayed
 </div>
+</div>
+
 <div class="priorityBox">
 <div class="priorityLabel">Source Status</div>
-<div class="priorityValue priorityTarget">Source gate active</div>
+<div class="priorityValue priorityTarget">
+Acquisition phase
 </div>
+</div>
+
 </div>
 
 <table class="totalsTable">
@@ -187,77 +572,137 @@ Environment Agency station 710305
 <th>Status</th>
 </tr>
 </thead>
+
 <tbody>
+
 <tr>
 <td class="riverName">Ribble</td>
 <td class="notShown">Not displayed</td>
 <td class="notShown">Not displayed</td>
 <td class="sourceNeeded">Source needed</td>
 </tr>
+
 <tr>
 <td class="riverName">Hodder</td>
 <td class="notShown">Not displayed</td>
 <td class="notShown">Not displayed</td>
 <td class="sourceNeeded">Source needed</td>
 </tr>
+
 <tr>
 <td class="riverName">Other</td>
 <td class="notShown">Not displayed</td>
 <td class="notShown">Not displayed</td>
 <td class="sourceNeeded">Source needed</td>
 </tr>
+
 </tbody>
 </table>
 
 <div class="statusBar">
 <span class="warnDot"></span>
-The totals table is structure only in Build 10069. No salmon or sea trout number is displayed until verified current-season source evidence exists.
+Build 10070 introduces verified source acquisition mapping. No salmon or sea trout totals are displayed until verified current-season evidence is integrated.
 </div>
 
-<div class="intelItem">
-<div class="intelSource">Purpose</div>
-<div class="intelHeadline">All-river current-season totals sit below Henthorn conditions</div>
-<div class="intelText">
-Henthorn remains the top conditions view because it is the fishing beat/stretch. The wider intelligence layer is for current-season salmon and sea trout totals across all rivers where verified data is available.
-</div>
-</div>
-
-<div class="intelItem">
-<div class="intelSource">Current-season totals source gate</div>
-<div class="intelHeadline">Required before any total is shown</div>
-<ul class="requirementList">
-<li><strong>River name:</strong> Ribble, Hodder, tributary, or other river explicitly named by the source.</li>
-<li><strong>Species:</strong> salmon or sea trout, separately labelled.</li>
-<li><strong>Season period:</strong> current 2026 season only.</li>
-<li><strong>Source name:</strong> organisation, fishery, club, operator, counter system, or named report source.</li>
-<li><strong>Count value:</strong> exact reported number, not an estimate.</li>
-<li><strong>Report date:</strong> date of publication or reporting period.</li>
-<li><strong>Confidence status:</strong> confirmed, manual review, or unverified.</li>
-</ul>
-</div>
 </div>
 
 <div class="card">
-<div class="cardTitle">Fish Counter Intelligence</div>
+<div class="cardTitle">Verified Source Acquisition Layer</div>
 
-<div class="priorityGrid">
-<div class="priorityBox"><div class="priorityLabel">Status</div><div class="priorityValue priorityTarget">Priority source</div></div>
-<div class="priorityBox"><div class="priorityLabel">Current Counter Value</div><div class="priorityValue priorityBlocked">Not displayed</div></div>
-<div class="priorityBox"><div class="priorityLabel">Season Rule</div><div class="priorityValue priorityTarget">2026 only</div></div>
-<div class="priorityBox"><div class="priorityLabel">Feed State</div><div class="priorityValue priorityBlocked">Not verified</div></div>
+<table class="sourceTable">
+
+<thead>
+<tr>
+<th>Target</th>
+<th>Source Type</th>
+<th>Status</th>
+<th>Automation Potential</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td><strong>Current-season salmon totals</strong></td>
+<td>Fishery / club / authority reports</td>
+<td class="sourceMedium">Investigating</td>
+<td>Medium</td>
+</tr>
+
+<tr>
+<td><strong>Current-season sea trout totals</strong></td>
+<td>Fishery / club / authority reports</td>
+<td class="sourceMedium">Investigating</td>
+<td>Medium</td>
+</tr>
+
+<tr>
+<td><strong>Fish counters</strong></td>
+<td>Counter systems / fish passes</td>
+<td class="sourceMedium">Investigating</td>
+<td>Medium</td>
+</tr>
+
+<tr>
+<td><strong>RFCA temperature</strong></td>
+<td>RFCA dashboard feed</td>
+<td class="sourceBlocked">Blocked</td>
+<td>Unknown</td>
+</tr>
+
+<tr>
+<td><strong>EA Henthorn telemetry</strong></td>
+<td>Official EA API</td>
+<td class="sourceHigh">Operational</td>
+<td>High</td>
+</tr>
+
+<tr>
+<td><strong>EA rainfall telemetry</strong></td>
+<td>Official EA API</td>
+<td class="sourceHigh">Operational</td>
+<td>High</td>
+</tr>
+
+<tr>
+<td><strong>Forum intelligence</strong></td>
+<td>Community reports</td>
+<td class="sourceManual">Manual review</td>
+<td>Low</td>
+</tr>
+
+<tr>
+<td><strong>Operator reports</strong></td>
+<td>Beat / lodge / fishery updates</td>
+<td class="sourceMedium">Target source</td>
+<td>Medium</td>
+</tr>
+
+</tbody>
+</table>
+
+<div class="intelItem">
+<div class="intelSource">Purpose</div>
+<div class="intelHeadline">
+Build 10070 begins real source acquisition mapping
 </div>
 
-<div class="statusBar">
-<span class="warnDot"></span>No fish counter values are shown until a verified current-season source is confirmed.
+<div class="intelText">
+The app now separates structure from acquisition. This layer exists to determine which current-season salmon, sea trout, counter and environmental sources can actually become operational intelligence feeds.
+</div>
 </div>
 
 <div class="intelItem">
-<div class="intelSource">Counter rules</div>
-<div class="intelHeadline">Counter data must be source-labelled</div>
+<div class="intelSource">Gold rule</div>
+<div class="intelHeadline">
+No source = no number
+</div>
+
 <div class="intelText">
-Before a fish counter number can appear, the app requires counter location, source organisation, count type, update timestamp, and current-season date.
+No total, fish counter value, or temperature reading is permitted into the live intelligence layer unless it is traceable to a verified current-season source.
 </div>
 </div>
+
 </div>
 
 <div class="card">
@@ -265,100 +710,63 @@ Before a fish counter number can appear, the app requires counter location, sour
 
 <div class="intelItem">
 <div class="intelSource">RFCA</div>
-<div class="intelHeadline">Current-season fisheries intelligence</div>
-<div class="intelText">
-Used for current-season river conditions, fisheries communication, catchment updates, fish movement intelligence, and any verified salmon or sea trout reporting where available.
+<div class="intelHeadline">
+Current-season fisheries intelligence
 </div>
-<a class="sourceLink" href="https://www.ribblefisheriesca.co.uk/category/blog/" target="_blank" rel="noopener">Open RFCA updates</a>
+
+<div class="intelText">
+Used for river conditions, fisheries communication, catchment updates, movement intelligence and possible current-season salmon reporting where available.
+</div>
+
+<a class="sourceLink" href="https://www.ribblefisheriesca.co.uk/category/blog/" target="_blank" rel="noopener">
+Open RFCA updates
+</a>
 </div>
 
 <div class="intelItem">
 <div class="intelSource">Salmon Fishing Forum</div>
-<div class="intelHeadline">Current-season discussion monitoring</div>
-<div class="intelText">
-Used only for current-year discussion and movement reports. Forum content is not treated as verified fact without confirmation.
+<div class="intelHeadline">
+Current-season monitoring source
 </div>
-<a class="sourceLink" href="https://www.salmonfishingforum.com/threads/river-ribble-2026.292508/" target="_blank" rel="noopener">Open River Ribble 2026 discussion</a>
+
+<div class="intelText">
+Used only for current-year movement reports and observations. Forum content is not treated as verified operational data without confirmation.
+</div>
+
+<a class="sourceLink" href="https://www.salmonfishingforum.com/threads/river-ribble-2026.292508/" target="_blank" rel="noopener">
+Open River Ribble 2026 discussion
+</a>
 </div>
 
 <div class="intelItem">
 <div class="intelSource">Operators & Fisheries</div>
-<div class="intelHeadline">Target intelligence layer</div>
+<div class="intelHeadline">
+Potential high-value intelligence
+</div>
+
 <div class="intelText">
-Future direction: verified beat reports, operator intelligence, fish movement updates, and current-season salmon and sea trout activity reports across all rivers where available.
-</div>
+Future target layer for verified beat reports, salmon movement updates, catch reports and current-season fish activity across multiple rivers.
 </div>
 </div>
 
-<div class="card">
-<div class="cardTitle">Source Register</div>
-
-<div class="registerRow">
-<div class="registerName">Current-season all-river salmon totals</div>
-<div class="registerType">Priority intelligence</div>
-<div class="registerStatus statusTesting">Source gate active</div>
-</div>
-
-<div class="registerRow">
-<div class="registerName">Current-season all-river sea trout totals</div>
-<div class="registerType">Priority intelligence</div>
-<div class="registerStatus statusTesting">Source gate active</div>
-</div>
-
-<div class="registerRow">
-<div class="registerName">River totals table</div>
-<div class="registerType">Display structure</div>
-<div class="registerStatus statusTesting">Source needed</div>
-</div>
-
-<div class="registerRow">
-<div class="registerName">Fish counter data</div>
-<div class="registerType">Priority intelligence</div>
-<div class="registerStatus statusTesting">Not verified</div>
-</div>
-
-<div class="registerRow">
-<div class="registerName">EA Henthorn level</div>
-<div class="registerType">Live conditions telemetry</div>
-<div class="registerStatus statusActive">Active</div>
-</div>
-
-<div class="registerRow">
-<div class="registerName">EA rainfall</div>
-<div class="registerType">Live supporting telemetry</div>
-<div class="registerStatus statusTesting">Testing</div>
-</div>
-
-<div class="registerRow">
-<div class="registerName">RFCA temperature</div>
-<div class="registerType">Investigation priority</div>
-<div class="registerStatus statusBlocked">Feed not verified</div>
-</div>
-
-<div class="registerRow">
-<div class="registerName">Historical catch returns</div>
-<div class="registerType">Excluded from live layer</div>
-<div class="registerStatus statusBlocked">Do not use</div>
-</div>
-
-<div class="statusBar">
-<span class="warnDot"></span>Only current-season verified salmon/sea trout totals and live conditions telemetry may appear as operational data.
-</div>
 </div>
 
 <div class="footer">
 Henthorn conditions first.<br>
-Current-season all-river salmon and sea trout intelligence second.<br><br>
-No historical totals.<br>
-No speculative classifications.<br>
-No invented catch data.<br>
-No unverified fish counter values.<br>
+Current-season all-river intelligence second.<br>
+Verified source acquisition layer active.<br><br>
+
+No historical contamination.<br>
+No speculative scoring.<br>
+No invented totals.<br>
+No fake fish counts.<br>
 Verified sources only.
 </div>
 
 </div>
 
 <script>
+
 const STATION_ID="710305";
 const HENTHORN_LAT=53.848003;
 const HENTHORN_LONG=-2.424337;
@@ -375,7 +783,11 @@ minute:"2-digit"
 }
 
 function formatTime(dateString){
-if(!dateString){return "--";}
+
+if(!dateString){
+return "--";
+}
+
 return new Date(dateString).toLocaleString([],{
 day:"2-digit",
 month:"short",
@@ -385,61 +797,127 @@ minute:"2-digit"
 }
 
 function calculateMovement(readings){
-if(!Array.isArray(readings) || readings.length<2){return null;}
+
+if(!Array.isArray(readings) || readings.length<2){
+return null;
+}
+
 const clean=readings
 .filter(r=>typeof r.value==="number")
 .sort((a,b)=>new Date(a.dateTime)-new Date(b.dateTime));
-if(clean.length<2){return null;}
-return {difference:clean[clean.length-1].value-clean[0].value};
+
+if(clean.length<2){
+return null;
+}
+
+return {
+difference:clean[clean.length-1].value-clean[0].value
+};
 }
 
 function movementLabel(diff){
-if(Math.abs(diff)<0.005){return "Steady";}
-if(diff>0){return "Rising";}
+
+if(Math.abs(diff)<0.005){
+return "Steady";
+}
+
+if(diff>0){
+return "Rising";
+}
+
 return "Falling";
 }
 
 async function fetchJSON(url){
-const response=await fetch(url,{cache:"no-store"});
-if(!response.ok){throw new Error("HTTP error");}
+
+const response=await fetch(url,{
+cache:"no-store"
+});
+
+if(!response.ok){
+throw new Error("HTTP error");
+}
+
 return await response.json();
 }
 
 async function loadRiverData(){
+
 try{
+
 const stationUrl=`https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}.json`;
+
 const stationData=await fetchJSON(stationUrl);
+
 const measures=stationData.items.measures || [];
-const levelMeasure=measures.find(m =>
+
+const levelMeasure=measures.find(m=>
 String(m.parameterName || "").toLowerCase().includes("level")
 );
 
-if(!levelMeasure){throw new Error("No level measure");}
+if(!levelMeasure){
+throw new Error("No level measure");
+}
 
 const latestUrl=levelMeasure.latestReading["@id"]+".json";
+
 const latestData=await fetchJSON(latestUrl);
+
 const latest=latestData.items;
+
 const value=Number(latest.value);
 
 setText("riverLevel",value.toFixed(2)+" m");
-setText("timestamp",formatTime(latest.dateTime));
-setText("movement","Live Environment Agency telemetry for River Ribble @ Henthorn");
+
+setText(
+"timestamp",
+formatTime(latest.dateTime)
+);
+
+setText(
+"movement",
+"Live Environment Agency telemetry for River Ribble @ Henthorn"
+);
 
 let movementData=null;
 
 try{
+
+const readingsUrl=levelMeasure["@id"]+"/readings?_sorted&_limit=8`;
+
+}catch(e){}
+
+try{
+
 const readingsUrl=levelMeasure["@id"]+"/readings?_sorted&_limit=8";
+
 const readingsData=await fetchJSON(readingsUrl);
+
 movementData=calculateMovement(readingsData.items);
+
 }catch(e){}
 
 if(movementData){
+
 const label=movementLabel(movementData.difference);
+
 setText("movementValue",label);
-setText("movementSub",(movementData.difference>=0?"+":"")+movementData.difference.toFixed(3)+" m across latest sample window");
+
+setText(
+"movementSub",
+(movementData.difference>=0?"+":"")+
+movementData.difference.toFixed(3)+
+" m across latest sample window"
+);
+
 }else{
+
 setText("movementValue","Live");
-setText("movementSub","Movement sample unavailable");
+
+setText(
+"movementSub",
+"Movement sample unavailable"
+);
 }
 
 document.getElementById("levelStatus").innerHTML=
@@ -448,10 +926,15 @@ document.getElementById("levelStatus").innerHTML=
 document.getElementById("sysLevel").innerText="Online";
 
 }catch(error){
+
 console.error(error);
 
 setText("riverLevel","--");
-setText("movement","Unable to retrieve official telemetry");
+
+setText(
+"movement",
+"Unable to retrieve official telemetry"
+);
 
 document.getElementById("levelStatus").innerHTML=
 '<span class="badDot"></span><span class="error">EA telemetry connection issue.</span>';
@@ -461,59 +944,86 @@ document.getElementById("sysLevel").innerText="Offline";
 }
 
 async function loadRainfallData(){
+
 try{
+
 const rainfallUrl=
 `https://environment.data.gov.uk/flood-monitoring/id/stations?parameter=rainfall&lat=${HENTHORN_LAT}&long=${HENTHORN_LONG}&dist=25`;
 
 const stationData=await fetchJSON(rainfallUrl);
+
 const stations=stationData.items || [];
 
 let selectedStation=null;
 let selectedMeasure=null;
 
 for(const station of stations){
+
 const measures=station.measures || [];
-const rainfallMeasure=measures.find(m =>
+
+const rainfallMeasure=measures.find(m=>
 String(m.parameter || "").toLowerCase().includes("rainfall")
 );
 
 if(rainfallMeasure && rainfallMeasure.latestReading){
+
 selectedStation=station;
 selectedMeasure=rainfallMeasure;
+
 break;
 }
 }
 
-if(!selectedMeasure){throw new Error("No rainfall measure");}
+if(!selectedMeasure){
+throw new Error("No rainfall measure");
+}
 
-const latestUrl=selectedMeasure.latestReading["@id"]+".json";
+const latestUrl=
+selectedMeasure.latestReading["@id"]+".json";
+
 const latestData=await fetchJSON(latestUrl);
+
 const latest=latestData.items;
+
 const rainValue=Number(latest.value).toFixed(2);
 
 setText("rainValue",rainValue+" mm");
-setText("rainStation","EA station "+(selectedStation.stationReference || "unknown"));
 
-document.getElementById("sysRain").innerText="Online";
+setText(
+"rainStation",
+"EA station "+
+(selectedStation.stationReference || "unknown")
+);
 
 }catch(error){
+
 console.error(error);
 
 setText("rainValue","--");
-setText("rainStation","No verified rainfall reading");
 
-document.getElementById("sysRain").innerText="Testing";
+setText(
+"rainStation",
+"No verified rainfall reading"
+);
 }
 }
 
 function refreshAll(){
-setText("sysRefresh",refreshTime());
+
+setText(
+"sysRefresh",
+refreshTime()
+);
+
 loadRiverData();
+
 loadRainfallData();
 }
 
 refreshAll();
+
 setInterval(refreshAll,300000);
+
 </script>
 
 </body>
