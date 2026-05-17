@@ -33,7 +33,7 @@ header p{
 }
 
 .container{
-    max-width:920px;
+    max-width:960px;
     margin:auto;
     padding:14px;
 }
@@ -70,6 +70,10 @@ header p{
     font-weight:700;
 }
 
+.neutral{
+    color:#0369a1;
+}
+
 .good{
     color:#166534;
 }
@@ -82,25 +86,52 @@ header p{
     color:#991b1b;
 }
 
-.neutral{
-    color:#0369a1;
-}
-
 .note{
     background:#eef6ff;
     border-left:4px solid #2563eb;
     padding:12px;
     border-radius:8px;
     margin-top:12px;
-    font-size:14px;
     line-height:1.5;
+    font-size:14px;
+}
+
+.status-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:14px;
+}
+
+@media(min-width:700px){
+    .status-grid{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+.status-box{
+    background:#f8fafc;
+    border:1px solid #cbd5e1;
+    border-radius:12px;
+    padding:14px;
+}
+
+.status-box h3{
+    margin-top:0;
+    margin-bottom:10px;
+    font-size:17px;
+}
+
+.small{
+    font-size:13px;
+    line-height:1.6;
+    color:#475569;
 }
 
 .priority{
-    padding:12px;
-    border-radius:10px;
     background:#f8fafc;
     border:1px solid #e2e8f0;
+    border-radius:10px;
+    padding:12px;
     margin-top:10px;
 }
 
@@ -147,27 +178,18 @@ header p{
     color:#374151;
 }
 
-.intel-box{
+.audit-box{
     margin-top:14px;
-    padding:14px;
-    border-radius:12px;
-    background:#f8fafc;
-    border:1px solid #cbd5e1;
-}
-
-.intel-title{
-    font-weight:700;
-    margin-bottom:8px;
-}
-
-.small{
-    font-size:13px;
-    color:#555;
-    line-height:1.6;
+    background:#fff7ed;
+    border-left:4px solid #ea580c;
+    padding:12px;
+    border-radius:8px;
+    font-size:14px;
+    line-height:1.5;
 }
 
 .source-link{
-    margin-top:10px;
+    margin-top:8px;
     font-size:13px;
 }
 
@@ -185,8 +207,8 @@ footer{
 
 .refresh{
     margin-top:10px;
+    color:#64748b;
     font-size:13px;
-    color:#475569;
 }
 
 </style>
@@ -196,7 +218,7 @@ footer{
 
 <header>
     <h1>Salmon Rivers Intelligence</h1>
-    <p>Build 10080 — Verified Intelligence Framework</p>
+    <p>Build 10081 — Verified Intelligence Control Layer</p>
 </header>
 
 <div class="container">
@@ -230,79 +252,99 @@ footer{
         </div>
 
         <div class="note">
+
             VERIFIED DATA ONLY.<br><br>
 
-            No estimated catches.<br>
-            No speculative classifications.<br>
-            No fake salmon counts.<br><br>
+            No speculative salmon counts.<br>
+            No invented catch returns.<br>
+            No unverified “good conditions” statements.<br><br>
 
             <strong>Rule: No source = no number.</strong>
+
         </div>
 
     </div>
 
     <div class="card">
 
-        <h2>Verified Intelligence Status</h2>
+        <h2>Live Intelligence State</h2>
 
-        <div class="intel-box">
-            <div class="intel-title">
-                VERIFIED LIVE TELEMETRY
+        <div class="status-grid">
+
+            <div class="status-box">
+
+                <h3>Verified Live Layer</h3>
+
+                <div class="small">
+                    • EA Henthorn river telemetry<br>
+                    • movement detection<br>
+                    • timestamps<br>
+                    • auto refresh<br>
+                    • governance controls
+                </div>
+
             </div>
 
-            <div class="small">
-                • EA Henthorn river level<br>
-                • movement logic<br>
-                • timestamps<br>
-                • auto refresh
-            </div>
-        </div>
+            <div class="status-box">
 
-        <div class="intel-box">
-            <div class="intel-title">
-                ACTIVE ACQUISITION INVESTIGATION
-            </div>
+                <h3>Acquisition Investigation Layer</h3>
 
-            <div class="small">
-                • RFCA water quality telemetry<br>
-                • RFCA temperature acquisition<br>
-                • fish counter intelligence<br>
-                • current season catch reporting
-            </div>
-        </div>
+                <div class="small">
+                    • RFCA temperature telemetry<br>
+                    • fish counter investigation<br>
+                    • current-season catch reports<br>
+                    • source validation
+                </div>
 
-        <div class="intel-box">
-            <div class="intel-title">
-                EXCLUDED FROM LIVE INTELLIGENCE
             </div>
 
-            <div class="small">
-                • unverified forum claims<br>
-                • social media rumours<br>
-                • historical season totals<br>
-                • speculative “good run” statements
+            <div class="status-box">
+
+                <h3>Manual Verification Layer</h3>
+
+                <div class="small">
+                    • operator reports<br>
+                    • RFCA updates<br>
+                    • club bulletins<br>
+                    • manually checked evidence
+                </div>
+
             </div>
+
+            <div class="status-box">
+
+                <h3>Excluded Intelligence</h3>
+
+                <div class="small">
+                    • rumours<br>
+                    • unverified forum posts<br>
+                    • fake totals<br>
+                    • speculative classifications
+                </div>
+
+            </div>
+
         </div>
 
     </div>
 
     <div class="card">
 
-        <h2>Acquisition Priority System</h2>
+        <h2>Current Acquisition Priorities</h2>
 
         <div class="priority">
             <strong>Priority 1 — Current Season Catch Intelligence</strong><br>
-            Only traceable current-season Ribble salmon returns.
+            Verified current-season salmon returns only.
         </div>
 
         <div class="priority">
-            <strong>Priority 2 — Fish Counter Data</strong><br>
-            Identify whether live or delayed migration counts are publicly accessible.
+            <strong>Priority 2 — Fish Counter Access</strong><br>
+            Determine whether migration telemetry is publicly accessible.
         </div>
 
         <div class="priority">
-            <strong>Priority 3 — RFCA Temperature Telemetry</strong><br>
-            Validate stable acquisition pathway from RFCA live sonde systems.
+            <strong>Priority 3 — RFCA Sonde Telemetry</strong><br>
+            Validate stable machine-readable acquisition route.
         </div>
 
     </div>
@@ -314,49 +356,102 @@ footer{
         <div class="ledger">
 
             <div class="ledger-item">
+
                 <strong>EA Henthorn River Telemetry</strong><br>
-                Live Environment Agency telemetry verified operational.
-                <div class="status status-live">VERIFIED LIVE</div>
+                Verified live Environment Agency telemetry operational.
+
+                <div class="status status-live">
+                    VERIFIED LIVE
+                </div>
+
             </div>
 
             <div class="ledger-item">
+
                 <strong>EA Rainfall Discovery</strong><br>
-                EA rainfall telemetry endpoint discovery operational.
-                Precise station linkage still under validation.
-                <div class="status status-candidate">LIVE CANDIDATE</div>
+                Rainfall telemetry endpoint discovered.
+                Precise telemetry linkage still under validation.
+
+                <div class="status status-candidate">
+                    LIVE CANDIDATE
+                </div>
+
             </div>
 
             <div class="ledger-item">
+
                 <strong>RFCA Water Quality Monitoring</strong><br>
-                RFCA publicly states real-time sonde updates every few minutes.
+                RFCA publicly states real-time sonde telemetry updates every few minutes.
                 Stable machine-readable acquisition not yet confirmed.
+
                 <div class="source-link">
                     Source:
                     <a href="https://www.ribblefisheriesca.co.uk/live-water-quality-monitoring/" target="_blank">
                         RFCA Live Water Quality Monitoring
                     </a>
                 </div>
-                <div class="status status-candidate">UNDER INVESTIGATION</div>
+
+                <div class="status status-candidate">
+                    UNDER INVESTIGATION
+                </div>
+
             </div>
 
             <div class="ledger-item">
-                <strong>Current Season Catch Reports</strong><br>
-                Manual verification workflow only.
-                No automated verified acquisition source confirmed.
-                <div class="status status-manual">MANUAL VERIFICATION ONLY</div>
+
+                <strong>Current Season Catch Returns</strong><br>
+                Manual verification workflow active.
+                No verified automated live source confirmed.
+
+                <div class="status status-manual">
+                    MANUAL VERIFICATION ONLY
+                </div>
+
             </div>
 
             <div class="ledger-item">
+
                 <strong>Fish Counter Data</strong><br>
                 No verified public acquisition route confirmed.
-                <div class="status status-blocked">NOT VERIFIED</div>
+
+                <div class="status status-blocked">
+                    NOT VERIFIED
+                </div>
+
             </div>
 
             <div class="ledger-item">
-                <strong>Forum & Social Catch Claims</strong><br>
-                Excluded unless independently verifiable with traceable evidence.
-                <div class="status status-excluded">EXCLUDED</div>
+
+                <strong>Forum & Social Claims</strong><br>
+                Excluded unless independently verified with traceable evidence.
+
+                <div class="status status-excluded">
+                    EXCLUDED
+                </div>
+
             </div>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Intelligence Audit Rules</h2>
+
+        <div class="audit-box">
+
+            Every intelligence item entering the system must satisfy:
+            <br><br>
+
+            • identifiable source<br>
+            • current season relevance<br>
+            • timestamp traceability<br>
+            • verification pathway<br>
+            • non-speculative wording
+            <br><br>
+
+            Failure of any rule blocks live integration.
 
         </div>
 
@@ -368,21 +463,22 @@ footer{
 
         <div class="small">
 
-            Salmon Rivers Intelligence is evolving into a verified intelligence acquisition platform rather than a traditional fishing app.
+            Salmon Rivers Intelligence is evolving into a verified acquisition platform rather than a traditional river report app.
             <br><br>
 
             Current architecture:
             <br><br>
 
-            • verified telemetry layer<br>
-            • acquisition governance layer<br>
-            • verification workflow layer<br>
+            • telemetry layer<br>
+            • governance layer<br>
+            • acquisition layer<br>
+            • audit layer<br>
             • confidence-controlled intelligence layer
             <br><br>
 
             Expansion to:
             River Tyne, River Tweed, Norway and Iceland
-            will only occur once Ribble governance standards are proven stable.
+            will only occur after Ribble governance standards are proven stable.
 
         </div>
 
@@ -391,7 +487,7 @@ footer{
 </div>
 
 <footer>
-Build 10080 — Verified telemetry + intelligence governance framework.
+Build 10081 — Verified telemetry + intelligence control architecture.
 </footer>
 
 <script>
@@ -421,7 +517,9 @@ async function loadRiverLevel(){
                     previous = item;
                     break;
                 }
+
             }
+
         }
 
         if(latest){
@@ -463,6 +561,7 @@ async function loadRiverLevel(){
 
         document.getElementById('timestamp').innerText =
             'Unavailable';
+
     }
 
 }
