@@ -74,18 +74,6 @@ header p{
     color:#0369a1;
 }
 
-.good{
-    color:#166534;
-}
-
-.warn{
-    color:#92400e;
-}
-
-.bad{
-    color:#991b1b;
-}
-
 .note{
     background:#eef6ff;
     border-left:4px solid #2563eb;
@@ -197,6 +185,67 @@ header p{
     margin-bottom:6px;
 }
 
+.form-row{
+    margin-bottom:12px;
+}
+
+label{
+    display:block;
+    font-size:13px;
+    font-weight:700;
+    margin-bottom:5px;
+}
+
+input,textarea,select{
+    width:100%;
+    box-sizing:border-box;
+    padding:10px;
+    border-radius:8px;
+    border:1px solid #cbd5e1;
+    font-size:14px;
+    font-family:inherit;
+}
+
+textarea{
+    min-height:80px;
+}
+
+button{
+    border:none;
+    border-radius:10px;
+    padding:10px 14px;
+    font-weight:700;
+    cursor:pointer;
+    background:#0f1720;
+    color:white;
+}
+
+button.secondary{
+    background:#64748b;
+}
+
+.catch-entry{
+    border:1px solid #e2e8f0;
+    border-radius:10px;
+    padding:12px;
+    margin-top:10px;
+    background:#f8fafc;
+}
+
+.catch-entry strong{
+    display:block;
+    margin-bottom:6px;
+}
+
+.warning{
+    background:#fef2f2;
+    border-left:4px solid #dc2626;
+    padding:12px;
+    border-radius:8px;
+    font-size:14px;
+    line-height:1.5;
+}
+
 footer{
     text-align:center;
     padding:20px;
@@ -222,7 +271,7 @@ a{
 
 <header>
     <h1>Salmon Rivers Intelligence</h1>
-    <p>Build 10082 — Operational Intelligence Layer</p>
+    <p>Build 10083 — Manual Verified Catch Ledger</p>
 </header>
 
 <div class="container">
@@ -256,16 +305,52 @@ a{
         </div>
 
         <div class="note">
-
             VERIFIED DATA ONLY.<br><br>
-
             No speculative catches.<br>
             No invented salmon numbers.<br>
             No fake classifications.<br><br>
-
             <strong>Rule: No source = no number.</strong>
-
         </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Manual Verified Catch Ledger</h2>
+
+        <div class="warning">
+            This ledger is for manually verified current-season catch intelligence only.
+            Do not enter rumours, old-season totals, or untraceable claims.
+        </div>
+
+        <div class="form-row">
+            <label for="catchDate">Catch / Report Date</label>
+            <input type="date" id="catchDate">
+        </div>
+
+        <div class="form-row">
+            <label for="catchSource">Traceable Source</label>
+            <input type="text" id="catchSource" placeholder="Example: RFCA bulletin, club update, operator report">
+        </div>
+
+        <div class="form-row">
+            <label for="catchDetail">Verified Detail</label>
+            <textarea id="catchDetail" placeholder="Enter only what the source actually verifies."></textarea>
+        </div>
+
+        <div class="form-row">
+            <label for="catchConfidence">Verification Confidence</label>
+            <select id="catchConfidence">
+                <option value="Manual verified">Manual verified</option>
+                <option value="Needs re-check">Needs re-check</option>
+                <option value="Do not use live">Do not use live</option>
+            </select>
+        </div>
+
+        <button onclick="saveCatchEntry()">Save Verified Entry</button>
+        <button class="secondary" onclick="clearCatchLedger()">Clear Ledger</button>
+
+        <div id="catchLedger"></div>
 
     </div>
 
@@ -276,34 +361,22 @@ a{
         <div class="board">
 
             <div class="board-item">
-                <div class="board-title">
-                    Live Telemetry State
-                </div>
-
+                <div class="board-title">Live Telemetry State</div>
                 EA Henthorn telemetry operational and updating.
             </div>
 
             <div class="board-item">
-                <div class="board-title">
-                    Acquisition State
-                </div>
-
+                <div class="board-title">Acquisition State</div>
                 RFCA telemetry acquisition investigation active.
             </div>
 
             <div class="board-item">
-                <div class="board-title">
-                    Source Integrity
-                </div>
-
+                <div class="board-title">Source Integrity</div>
                 Current live intelligence remains evidence-controlled.
             </div>
 
             <div class="board-item">
-                <div class="board-title">
-                    Expansion Readiness
-                </div>
-
+                <div class="board-title">Expansion Readiness</div>
                 Tyne/Tweed/Norway/Iceland expansion blocked pending Ribble validation.
             </div>
 
@@ -318,9 +391,7 @@ a{
         <div class="grid">
 
             <div class="panel">
-
                 <h3>Verified Live Layer</h3>
-
                 <div class="small">
                     • EA telemetry<br>
                     • movement detection<br>
@@ -328,62 +399,40 @@ a{
                     • auto refresh<br>
                     • telemetry governance
                 </div>
-
-                <div class="status live">
-                    VERIFIED LIVE
-                </div>
-
+                <div class="status live">VERIFIED LIVE</div>
             </div>
 
             <div class="panel">
-
                 <h3>Acquisition Investigation Layer</h3>
-
                 <div class="small">
                     • RFCA telemetry<br>
                     • fish counter access<br>
                     • catch acquisition<br>
                     • source validation
                 </div>
-
-                <div class="status candidate">
-                    UNDER INVESTIGATION
-                </div>
-
+                <div class="status candidate">UNDER INVESTIGATION</div>
             </div>
 
             <div class="panel">
-
                 <h3>Manual Verification Layer</h3>
-
                 <div class="small">
                     • club bulletins<br>
                     • RFCA updates<br>
                     • operator reports<br>
                     • manually checked evidence
                 </div>
-
-                <div class="status manual">
-                    MANUAL VERIFIED
-                </div>
-
+                <div class="status manual">MANUAL VERIFIED</div>
             </div>
 
             <div class="panel">
-
                 <h3>Excluded Intelligence Layer</h3>
-
                 <div class="small">
                     • rumours<br>
                     • fake counts<br>
                     • speculative conditions<br>
                     • unverified forum posts
                 </div>
-
-                <div class="status excluded">
-                    EXCLUDED
-                </div>
-
+                <div class="status excluded">EXCLUDED</div>
             </div>
 
         </div>
@@ -416,19 +465,15 @@ a{
         <h2>Verification & Audit Rules</h2>
 
         <div class="audit">
-
             Every intelligence item entering the live platform must satisfy:
             <br><br>
-
             • identifiable source<br>
             • current season relevance<br>
             • timestamp traceability<br>
             • verification pathway<br>
             • non-speculative wording
             <br><br>
-
             Failure of any rule blocks integration.
-
         </div>
 
     </div>
@@ -438,24 +483,19 @@ a{
         <h2>Platform Direction</h2>
 
         <div class="small">
-
             Salmon Rivers Intelligence is evolving into a verified acquisition terminal rather than a traditional river report app.
             <br><br>
-
             Current architecture:
             <br><br>
-
             • telemetry layer<br>
             • governance layer<br>
             • acquisition layer<br>
+            • manual verification ledger<br>
             • audit layer<br>
-            • operational intelligence layer
-            <br>
+            • operational intelligence layer<br>
             • confidence-controlled intelligence layer
             <br><br>
-
             Expansion beyond the Ribble remains blocked until governance standards are proven stable.
-
         </div>
 
     </div>
@@ -463,10 +503,12 @@ a{
 </div>
 
 <footer>
-Build 10082 — Operational intelligence governance architecture.
+Build 10083 — Manual verified catch ledger + operational intelligence control.
 </footer>
 
 <script>
+
+const CATCH_LEDGER_KEY = 'salmonRiversCatchLedger10083';
 
 async function loadRiverLevel(){
 
@@ -517,8 +559,7 @@ async function loadRiverLevel(){
 
             }
 
-            document.getElementById('movement').innerText =
-                movement;
+            document.getElementById('movement').innerText = movement;
 
             const date = new Date(latest.dateTime);
 
@@ -529,14 +570,9 @@ async function loadRiverLevel(){
 
     }catch(error){
 
-        document.getElementById('riverLevel').innerText =
-            'Unavailable';
-
-        document.getElementById('movement').innerText =
-            'Unavailable';
-
-        document.getElementById('timestamp').innerText =
-            'Unavailable';
+        document.getElementById('riverLevel').innerText = 'Unavailable';
+        document.getElementById('movement').innerText = 'Unavailable';
+        document.getElementById('timestamp').innerText = 'Unavailable';
 
     }
 
@@ -573,8 +609,116 @@ async function loadRainfall(){
 
 }
 
+function getCatchLedger(){
+
+    const raw = localStorage.getItem(CATCH_LEDGER_KEY);
+
+    if(!raw){
+        return [];
+    }
+
+    try{
+        return JSON.parse(raw);
+    }catch(error){
+        return [];
+    }
+
+}
+
+function saveCatchLedger(entries){
+
+    localStorage.setItem(CATCH_LEDGER_KEY, JSON.stringify(entries));
+
+}
+
+function saveCatchEntry(){
+
+    const date = document.getElementById('catchDate').value;
+    const source = document.getElementById('catchSource').value.trim();
+    const detail = document.getElementById('catchDetail').value.trim();
+    const confidence = document.getElementById('catchConfidence').value;
+
+    if(!date || !source || !detail){
+        alert('Date, source and verified detail are required.');
+        return;
+    }
+
+    const entries = getCatchLedger();
+
+    entries.unshift({
+        date: date,
+        source: source,
+        detail: detail,
+        confidence: confidence,
+        savedAt: new Date().toISOString()
+    });
+
+    saveCatchLedger(entries);
+
+    document.getElementById('catchDate').value = '';
+    document.getElementById('catchSource').value = '';
+    document.getElementById('catchDetail').value = '';
+    document.getElementById('catchConfidence').value = 'Manual verified';
+
+    renderCatchLedger();
+
+}
+
+function clearCatchLedger(){
+
+    const confirmed = confirm('Clear all locally saved catch ledger entries?');
+
+    if(!confirmed){
+        return;
+    }
+
+    localStorage.removeItem(CATCH_LEDGER_KEY);
+    renderCatchLedger();
+
+}
+
+function escapeHtml(text){
+
+    return text
+        .replaceAll('&','&amp;')
+        .replaceAll('<','&lt;')
+        .replaceAll('>','&gt;')
+        .replaceAll('"','&quot;')
+        .replaceAll("'","&#039;");
+
+}
+
+function renderCatchLedger(){
+
+    const entries = getCatchLedger();
+    const container = document.getElementById('catchLedger');
+
+    if(entries.length === 0){
+
+        container.innerHTML =
+            '<div class="catch-entry"><strong>No verified catch entries yet.</strong>No current-season catch intelligence has been manually verified.</div>';
+
+        return;
+    }
+
+    container.innerHTML = entries.map(entry => {
+
+        return `
+            <div class="catch-entry">
+                <strong>${escapeHtml(entry.date)} — ${escapeHtml(entry.confidence)}</strong>
+                <div><b>Source:</b> ${escapeHtml(entry.source)}</div>
+                <div><b>Detail:</b> ${escapeHtml(entry.detail)}</div>
+                <div class="small">Saved: ${escapeHtml(new Date(entry.savedAt).toLocaleString())}</div>
+            </div>
+        `;
+
+    }).join('');
+
+}
+
 loadRiverLevel();
 loadRainfall();
+renderCatchLedger();
 
 setInterval(() => {
 
