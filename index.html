@@ -33,7 +33,7 @@ body{margin:0;background:#0f1114;color:#f2f2f2;font-family:-apple-system,BlinkMa
 .metricValue{font-size:22px;font-weight:800;line-height:1.3}
 .metricSub{margin-top:6px;font-size:12px;line-height:1.5;color:#97a1ac}
 .priorityValue{font-size:14px;font-weight:800;line-height:1.35}
-.priorityTarget{color:#ffcf70}.priorityBlocked{color:#ff8b8b}
+.priorityTarget{color:#ffcf70}.priorityBlocked{color:#ff8b8b}.priorityManual{color:#87bfff}
 .totalsTable,.sourceTable,.statusMatrix{width:100%;border-collapse:collapse;margin-top:14px}
 .totalsTable th,.sourceTable th,.statusMatrix th{font-size:10px;text-transform:uppercase;letter-spacing:.9px;color:#7f8a96;text-align:left;background:#101419;border-bottom:1px solid #232a32;padding:12px 10px}
 .totalsTable td,.sourceTable td,.statusMatrix td{font-size:13px;color:#bcc5ce;border-bottom:1px solid #232a32;padding:12px 10px;line-height:1.45;vertical-align:top}
@@ -88,7 +88,7 @@ Current-season all-river salmon and sea trout intelligence<br>
 Environment Agency station 710305
 </div>
 <div class="versionRow">
-<div class="badge buildBadge">Build 10074</div>
+<div class="badge buildBadge">Build 10075</div>
 <div class="badge seasonBadge">2026 SEASON ONLY</div>
 </div>
 </div>
@@ -98,8 +98,7 @@ Environment Agency station 710305
 <div class="statusTable">
 <div class="statusLine"><div class="statusName">Henthorn conditions</div><div class="statusValue ok">Primary View</div></div>
 <div class="statusLine"><div class="statusName">All-river totals layer</div><div class="statusValue test">Priority</div></div>
-<div class="statusLine"><div class="statusName">Source acquisition layer</div><div class="statusValue test">Active</div></div>
-<div class="statusLine"><div class="statusName">Investigation priority queue</div><div class="statusValue test">Active</div></div>
+<div class="statusLine"><div class="statusName">RFCA investigation</div><div class="statusValue test">Priority</div></div>
 <div class="statusLine"><div class="statusName">Fish counter intelligence</div><div class="statusValue test">Priority</div></div>
 <div class="statusLine"><div class="statusName">EA telemetry</div><div class="statusValue ok" id="sysLevel">Online</div></div>
 <div class="statusLine"><div class="statusName">RFCA temperature</div><div class="statusValue blocked">Not verified</div></div>
@@ -172,6 +171,53 @@ Environment Agency station 710305
 </div>
 
 <div class="card">
+<div class="cardTitle">RFCA Investigation Target</div>
+
+<div class="priorityGrid">
+<div class="priorityBox">
+<div class="priorityLabel">Priority 1</div>
+<div class="priorityValue priorityTarget">Fish counter data</div>
+</div>
+
+<div class="priorityBox">
+<div class="priorityLabel">Priority 2</div>
+<div class="priorityValue priorityTarget">Current-season catch updates</div>
+</div>
+
+<div class="priorityBox">
+<div class="priorityLabel">Priority 3</div>
+<div class="priorityValue priorityTarget">Temperature dashboard feed</div>
+</div>
+
+<div class="priorityBox">
+<div class="priorityLabel">Status</div>
+<div class="priorityValue priorityBlocked">Not verified yet</div>
+</div>
+</div>
+
+<div class="intelItem">
+<div class="intelSource">RFCA acquisition rule</div>
+<div class="intelHeadline">RFCA is the first real acquisition target</div>
+<div class="intelText">
+RFCA is being treated as the first priority source to investigate for fish counter data, current-season catch updates, and the water temperature dashboard feed. No RFCA-derived catch, counter, or temperature value is displayed until the source is verified.
+</div>
+</div>
+
+<div class="intelItem">
+<div class="intelSource">Display status</div>
+<div class="intelHeadline">No values displayed</div>
+<div class="intelText">
+Build 10075 does not claim that RFCA data has been integrated. This card only records the investigation priority and keeps the app honest while the source is checked.
+</div>
+<a class="sourceLink" href="https://www.ribblefisheriesca.co.uk/" target="_blank" rel="noopener">Open RFCA</a>
+</div>
+
+<div class="statusBar">
+<span class="warnDot"></span>RFCA values remain blocked until verified. No fake catch totals, counter counts, or temperature readings are permitted.
+</div>
+</div>
+
+<div class="card">
 <div class="cardTitle">Source Investigation Priority Order</div>
 
 <div class="queueItem">
@@ -215,7 +261,7 @@ Environment Agency station 710305
 </div>
 
 <div class="statusBar">
-<span class="warnDot"></span>Build 10074 adds the acquisition roadmap only. No source is treated as verified and no catch, counter, or temperature number is added.
+<span class="warnDot"></span>Build 10075 adds RFCA focus only. No source is treated as verified and no catch, counter, or temperature number is added.
 </div>
 </div>
 
@@ -290,7 +336,7 @@ Environment Agency station 710305
 </div>
 
 <div class="statusBar">
-<span class="warnDot"></span>Build 10074 maps candidate sources only. No source has yet been elevated into verified operational totals.
+<span class="warnDot"></span>Build 10075 maps candidate sources only. No source has yet been elevated into verified operational totals.
 </div>
 </div>
 
@@ -315,8 +361,8 @@ Environment Agency station 710305
 
 <div class="intelItem">
 <div class="intelSource">Purpose</div>
-<div class="intelHeadline">Build 10074 gives the acquisition work a fixed order</div>
-<div class="intelText">The app now shows both candidate source status and the order in which sources should be investigated for current-season salmon totals, sea trout totals, fish counters, and temperature.</div>
+<div class="intelHeadline">Build 10075 focuses the next acquisition step on RFCA</div>
+<div class="intelText">The app now identifies RFCA as the first investigation target while preserving the wider source acquisition map for current-season salmon totals, sea trout totals, fish counters, and temperature.</div>
 </div>
 
 <div class="intelItem">
@@ -329,7 +375,7 @@ Environment Agency station 710305
 <div class="footer">
 Henthorn conditions first.<br>
 Current-season all-river intelligence second.<br>
-Verified source acquisition roadmap active.<br><br>
+RFCA investigation target active.<br><br>
 No historical contamination.<br>
 No speculative scoring.<br>
 No invented totals.<br>
