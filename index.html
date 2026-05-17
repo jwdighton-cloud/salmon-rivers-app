@@ -424,7 +424,7 @@ Environment Agency station 710305
 </div>
 
 <div class="versionRow">
-<div class="badge buildBadge">Build 10070</div>
+<div class="badge buildBadge">Build 10071</div>
 <div class="badge seasonBadge">2026 SEASON ONLY</div>
 </div>
 </div>
@@ -601,7 +601,7 @@ Acquisition phase
 
 <div class="statusBar">
 <span class="warnDot"></span>
-Build 10070 introduces verified source acquisition mapping. No salmon or sea trout totals are displayed until verified current-season evidence is integrated.
+Build 10071 keeps verified source acquisition mapping. No salmon or sea trout totals are displayed until verified current-season evidence is integrated.
 </div>
 
 </div>
@@ -684,11 +684,11 @@ Build 10070 introduces verified source acquisition mapping. No salmon or sea tro
 <div class="intelItem">
 <div class="intelSource">Purpose</div>
 <div class="intelHeadline">
-Build 10070 begins real source acquisition mapping
+Build 10071 is the stable source-acquisition baseline
 </div>
 
 <div class="intelText">
-The app now separates structure from acquisition. This layer exists to determine which current-season salmon, sea trout, counter and environmental sources can actually become operational intelligence feeds.
+The app separates structure from acquisition. This layer exists to determine which current-season salmon, sea trout, counter and environmental sources can actually become operational intelligence feeds.
 </div>
 </div>
 
@@ -880,12 +880,6 @@ setText(
 );
 
 let movementData=null;
-
-try{
-
-const readingsUrl=levelMeasure["@id"]+"/readings?_sorted&_limit=8`;
-
-}catch(e){}
 
 try{
 
