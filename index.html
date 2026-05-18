@@ -106,6 +106,72 @@ header p{
     font-size:14px;
 }
 
+.ladder{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:12px;
+}
+
+.ladder-step{
+    border-radius:10px;
+    padding:14px;
+    border:1px solid #d1d5db;
+}
+
+.highest{
+    background:#dcfce7;
+}
+
+.high{
+    background:#eff6ff;
+}
+
+.medium{
+    background:#fef9c3;
+}
+
+.low{
+    background:#fff7ed;
+}
+
+.block{
+    background:#fee2e2;
+}
+
+.status{
+    display:inline-block;
+    margin-top:8px;
+    padding:4px 10px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:700;
+}
+
+.live{
+    background:#166534;
+    color:white;
+}
+
+.crosscheck{
+    background:#1d4ed8;
+    color:white;
+}
+
+.magazine{
+    background:#854d0e;
+    color:white;
+}
+
+.candidate{
+    background:#92400e;
+    color:white;
+}
+
+.blocked{
+    background:#991b1b;
+    color:white;
+}
+
 .grid{
     display:grid;
     grid-template-columns:1fr;
@@ -125,102 +191,10 @@ header p{
     padding:14px;
 }
 
-.panel h3{
-    margin-top:0;
-    margin-bottom:10px;
-    font-size:17px;
-}
-
 .small{
     font-size:13px;
     line-height:1.6;
     color:#475569;
-}
-
-.status{
-    display:inline-block;
-    margin-top:8px;
-    padding:4px 10px;
-    border-radius:20px;
-    font-size:12px;
-    font-weight:700;
-}
-
-.live{
-    background:#dcfce7;
-    color:#166534;
-}
-
-.crosscheck{
-    background:#dbeafe;
-    color:#1d4ed8;
-}
-
-.magazine{
-    background:#fef9c3;
-    color:#854d0e;
-}
-
-.candidate{
-    background:#fef3c7;
-    color:#92400e;
-}
-
-.blocked{
-    background:#fee2e2;
-    color:#991b1b;
-}
-
-.excluded{
-    background:#e5e7eb;
-    color:#374151;
-}
-
-.queue{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:12px;
-}
-
-.queue-item{
-    border:1px solid #dbeafe;
-    background:#eff6ff;
-    border-radius:10px;
-    padding:12px;
-}
-
-.queue-item strong{
-    display:block;
-    margin-bottom:6px;
-}
-
-.matrix{
-    overflow-x:auto;
-}
-
-table{
-    width:100%;
-    border-collapse:collapse;
-    margin-top:10px;
-}
-
-th{
-    background:#0f1720;
-    color:white;
-    padding:10px;
-    text-align:left;
-    font-size:13px;
-}
-
-td{
-    padding:10px;
-    border-bottom:1px solid #e5e7eb;
-    font-size:13px;
-    vertical-align:top;
-}
-
-tr:nth-child(even){
-    background:#f8fafc;
 }
 
 .button-row{
@@ -253,12 +227,6 @@ tr:nth-child(even){
     background:#166534;
 }
 
-a{
-    color:#0369a1;
-    text-decoration:none;
-    font-weight:700;
-}
-
 footer{
     text-align:center;
     padding:20px;
@@ -279,7 +247,7 @@ footer{
 
 <header>
     <h1>Salmon Rivers Intelligence</h1>
-    <p>Build 10095 — Current-Season Gate</p>
+    <p>Build 10096 — Intelligence Confidence Ladder</p>
 </header>
 
 <div class="container">
@@ -314,15 +282,53 @@ footer{
 
         <div class="note">
             VERIFIED DATA ONLY.<br><br>
-            This app seeks external salmon and river intelligence from traceable sources.
-            It does not rely on user-entered catch claims.
+            This system prioritises traceable intelligence sources by confidence level.
             <br><br>
             <strong>Rule: No source = no number.</strong>
         </div>
 
         <div class="warning" id="dataWarning" style="display:none;">
-            Live EA API telemetry is currently unavailable in this browser session.
-            Use official Henthorn links below to cross-check manually.
+            Live EA telemetry currently unavailable. Use official Henthorn links below.
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Intelligence Confidence Ladder</h2>
+
+        <div class="ladder">
+
+            <div class="ladder-step highest">
+                <strong>Level 1 — Verified Official Telemetry</strong><br>
+                EA telemetry, GOV.UK station data, official hydrology feeds.
+                <div class="status live">HIGHEST CONFIDENCE</div>
+            </div>
+
+            <div class="ladder-step high">
+                <strong>Level 2 — Verified Current-Season Reports</strong><br>
+                Dated and traceable association, club or fishery reports.
+                <div class="status crosscheck">HIGH CONFIDENCE</div>
+            </div>
+
+            <div class="ladder-step medium">
+                <strong>Level 3 — Editorial Intelligence</strong><br>
+                Trout & Salmon and equivalent current-season editorial reporting.
+                <div class="status magazine">TIER 1 EDITORIAL</div>
+            </div>
+
+            <div class="ladder-step low">
+                <strong>Level 4 — Operator / Beat Intelligence</strong><br>
+                Named operators, ghillies and beat reports where traceable and current.
+                <div class="status candidate">MEDIUM CONFIDENCE</div>
+            </div>
+
+            <div class="ladder-step block">
+                <strong>Level 5 — Weak or Unverified Sources</strong><br>
+                Rumours, old-season claims, forums and unsupported social media.
+                <div class="status blocked">BLOCKED</div>
+            </div>
+
         </div>
 
     </div>
@@ -334,59 +340,11 @@ footer{
         <div class="gate">
             Catch-related intelligence is blocked unless it is:
             <br><br>
-            • from the current salmon season<br>
-            • dated or clearly time-stamped<br>
-            • traceable to an identifiable source<br>
+            • current-season<br>
+            • dated<br>
+            • traceable<br>
             • river-specific where possible<br>
             • non-speculative
-            <br><br>
-            Old-season totals, vague reports, rumours and undated claims must not enter the live intelligence layer.
-        </div>
-
-    </div>
-
-    <div class="card">
-
-        <h2>Today’s Intelligence Checklist</h2>
-
-        <div class="queue">
-
-            <div class="queue-item">
-                <strong>1. Confirm Henthorn Conditions</strong>
-                Check EA level, movement and timestamp before reading catch or magazine intelligence.
-                <div class="status live">FIRST CHECK</div>
-            </div>
-
-            <div class="queue-item">
-                <strong>2. Confirm Source Freshness</strong>
-                Any catch-related information must be current-season and dated.
-                <div class="status blocked">CURRENT-SEASON GATE</div>
-            </div>
-
-            <div class="queue-item">
-                <strong>3. Check Trout & Salmon</strong>
-                Use as Tier 1 magazine intelligence for current-season river mentions and catch-report discovery.
-                <div class="status magazine">TIER 1</div>
-            </div>
-
-            <div class="queue-item">
-                <strong>4. Check RFCA / Association Sources</strong>
-                Seek water quality, temperature, fish counters and official local updates.
-                <div class="status candidate">INVESTIGATE</div>
-            </div>
-
-            <div class="queue-item">
-                <strong>5. Check Operators / Clubs</strong>
-                Use only if reports are dated, named and traceable.
-                <div class="status candidate">SEEKING</div>
-            </div>
-
-            <div class="queue-item">
-                <strong>6. Block Weak Claims</strong>
-                Exclude social/forum claims unless independently corroborated.
-                <div class="status excluded">EXCLUDED BY DEFAULT</div>
-            </div>
-
         </div>
 
     </div>
@@ -399,134 +357,44 @@ footer{
 
             <div class="panel">
                 <h3>Official Henthorn Telemetry</h3>
-                <div class="small">
-                    Primary live condition layer for Henthorn.
-                </div>
+
                 <div class="button-row">
                     <a class="button-link" href="https://check-for-flooding.service.gov.uk/station/5066" target="_blank">GOV.UK Henthorn</a>
-                    <a class="button-link secondary" href="https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings?_sorted&_limit=10" target="_blank">EA Measure Feed</a>
-                    <a class="button-link secondary" href="https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=10" target="_blank">EA Station Feed</a>
+
+                    <a class="button-link secondary"
+                    href="https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings?_sorted&_limit=10"
+                    target="_blank">EA Measure Feed</a>
                 </div>
+
                 <div class="status live">LIVE BASELINE</div>
+
             </div>
 
             <div class="panel">
                 <h3>Trout & Salmon Reports</h3>
-                <div class="small">
-                    Tier 1 magazine intelligence for current-season river reports and catch-report discovery.
-                </div>
+
                 <div class="button-row">
-                    <a class="button-link gold" href="https://www.troutandsalmon.com/fishing-reports/" target="_blank">Open Trout & Salmon Reports</a>
+                    <a class="button-link gold"
+                    href="https://www.troutandsalmon.com/fishing-reports/"
+                    target="_blank">Open Trout & Salmon</a>
                 </div>
-                <div class="status magazine">TIER 1 MAGAZINE</div>
+
+                <div class="status magazine">TIER 1</div>
+
             </div>
 
             <div class="panel">
                 <h3>RFCA Water Quality</h3>
-                <div class="small">
-                    Candidate source for temperature, sonde and river-health intelligence.
-                </div>
+
                 <div class="button-row">
-                    <a class="button-link green" href="https://www.ribblefisheriesca.co.uk/live-water-quality-monitoring/" target="_blank">Open RFCA Water Quality</a>
+                    <a class="button-link green"
+                    href="https://www.ribblefisheriesca.co.uk/live-water-quality-monitoring/"
+                    target="_blank">Open RFCA</a>
                 </div>
+
                 <div class="status candidate">INVESTIGATING</div>
+
             </div>
-
-            <div class="panel">
-                <h3>EA API Reference</h3>
-                <div class="small">
-                    Official Environment Agency API documentation for levels, flows, rainfall and station readings.
-                </div>
-                <div class="button-row">
-                    <a class="button-link secondary" href="https://environment.data.gov.uk/flood-monitoring/doc/reference" target="_blank">Open EA API Docs</a>
-                    <a class="button-link secondary" href="https://environment.data.gov.uk/flood-monitoring/doc/rainfall" target="_blank">Open EA Rainfall Docs</a>
-                </div>
-                <div class="status crosscheck">REFERENCE</div>
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="card">
-
-        <h2>Source Registry</h2>
-
-        <div class="matrix">
-
-            <table>
-                <tr>
-                    <th>Source</th>
-                    <th>Class</th>
-                    <th>Confidence</th>
-                    <th>Status</th>
-                    <th>Use in App</th>
-                </tr>
-
-                <tr>
-                    <td>Environment Agency Henthorn API</td>
-                    <td>Official Telemetry</td>
-                    <td>Highest</td>
-                    <td><span class="status live">LIVE BASELINE</span></td>
-                    <td>River level, movement, timestamp</td>
-                </tr>
-
-                <tr>
-                    <td>GOV.UK Henthorn Station Page</td>
-                    <td>Official Cross-Check</td>
-                    <td>Highest</td>
-                    <td><span class="status crosscheck">CROSS-CHECK</span></td>
-                    <td>Manual official verification if API fails</td>
-                </tr>
-
-                <tr>
-                    <td>Trout & Salmon Fishing Reports</td>
-                    <td>Tier 1 Magazine Intelligence</td>
-                    <td>High</td>
-                    <td><span class="status magazine">TIER 1</span></td>
-                    <td>Current-season river mentions and catch-report discovery</td>
-                </tr>
-
-                <tr>
-                    <td>RFCA Water Quality / Sonde Data</td>
-                    <td>Water Quality Telemetry</td>
-                    <td>High if acquired</td>
-                    <td><span class="status candidate">INVESTIGATING</span></td>
-                    <td>Temperature, river-health context, welfare signals</td>
-                </tr>
-
-                <tr>
-                    <td>RFCA Fish Counter Data</td>
-                    <td>Migration Intelligence</td>
-                    <td>Very High if acquired</td>
-                    <td><span class="status blocked">NOT VERIFIED</span></td>
-                    <td>Potential fish movement / migration pulse intelligence</td>
-                </tr>
-
-                <tr>
-                    <td>Club / Association Bulletins</td>
-                    <td>Verified Catch / Local Intel</td>
-                    <td>High if dated and traceable</td>
-                    <td><span class="status candidate">SEEKING</span></td>
-                    <td>Current-season catch references and river updates</td>
-                </tr>
-
-                <tr>
-                    <td>Operator / Beat Reports</td>
-                    <td>Operator Intelligence</td>
-                    <td>Medium-High if dated</td>
-                    <td><span class="status candidate">FUTURE</span></td>
-                    <td>Beat-level activity, local observations, named reports</td>
-                </tr>
-
-                <tr>
-                    <td>Forums / Social Media</td>
-                    <td>Community Intelligence</td>
-                    <td>Low unless corroborated</td>
-                    <td><span class="status excluded">EXCLUDED BY DEFAULT</span></td>
-                    <td>Source discovery only; never standalone verified data</td>
-                </tr>
-            </table>
 
         </div>
 
@@ -535,7 +403,7 @@ footer{
 </div>
 
 <footer>
-Build 10095 — Current-season gate and source-seeking controls.
+Build 10096 — Intelligence confidence hierarchy active.
 </footer>
 
 <script>
@@ -552,7 +420,7 @@ function setText(id, value){
 
 async function fetchJson(url){
 
-    const response = await fetch(url, {
+    const response = await fetch(url,{
         cache:'no-store'
     });
 
@@ -571,13 +439,13 @@ function extractReadings(data){
     }
 
     return data.items
-        .filter(item => item.value !== undefined && item.dateTime)
-        .map(item => ({
-            value:Number(item.value),
-            dateTime:item.dateTime
-        }))
-        .filter(item => !Number.isNaN(item.value))
-        .sort((a,b) => new Date(b.dateTime) - new Date(a.dateTime));
+    .filter(item => item.value !== undefined && item.dateTime)
+    .map(item => ({
+        value:Number(item.value),
+        dateTime:item.dateTime
+    }))
+    .filter(item => !Number.isNaN(item.value))
+    .sort((a,b) => new Date(b.dateTime) - new Date(a.dateTime));
 
 }
 
@@ -588,42 +456,44 @@ function showUnavailable(sourceUsed){
     setText('timestamp','Unavailable');
     setText('dataSource',sourceUsed || 'Unavailable');
 
-    document.getElementById('dataWarning').style.display = 'block';
+    document.getElementById('dataWarning').style.display='block';
 
 }
 
 async function loadRiverLevel(){
 
-    let readings = [];
-    let sourceUsed = '';
+    let readings=[];
+    let sourceUsed='';
 
     try{
 
         const measureData = await fetchJson(HENTHORN_MEASURE_URL);
+
         readings = extractReadings(measureData);
 
         if(readings.length > 0){
-            sourceUsed = 'EA measure feed';
+            sourceUsed='EA measure feed';
         }
 
     }catch(error){}
 
-    if(readings.length === 0){
+    if(readings.length===0){
 
         try{
 
             const stationData = await fetchJson(HENTHORN_STATION_URL);
+
             readings = extractReadings(stationData);
 
             if(readings.length > 0){
-                sourceUsed = 'EA station feed';
+                sourceUsed='EA station feed';
             }
 
         }catch(error){}
 
     }
 
-    if(readings.length === 0){
+    if(readings.length===0){
 
         showUnavailable(sourceUsed);
         return;
@@ -633,27 +503,32 @@ async function loadRiverLevel(){
     const latest = readings[0];
     const previous = readings.length > 1 ? readings[1] : null;
 
-    setText('riverLevel', latest.value.toFixed(2) + ' m');
+    setText('riverLevel', latest.value.toFixed(2)+' m');
 
-    let movement = 'Steady';
+    let movement='Steady';
 
     if(previous){
 
         if(latest.value > previous.value + 0.01){
-            movement = 'Rising';
+            movement='Rising';
         }
 
         if(latest.value < previous.value - 0.01){
-            movement = 'Falling';
+            movement='Falling';
         }
 
     }
 
     setText('movement', movement);
-    setText('timestamp', new Date(latest.dateTime).toLocaleString());
+
+    setText(
+        'timestamp',
+        new Date(latest.dateTime).toLocaleString()
+    );
+
     setText('dataSource', sourceUsed);
 
-    document.getElementById('dataWarning').style.display = 'none';
+    document.getElementById('dataWarning').style.display='none';
 
 }
 
