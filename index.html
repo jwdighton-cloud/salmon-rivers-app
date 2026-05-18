@@ -166,20 +166,20 @@ header p{
     color:#374151;
 }
 
-.workflow{
+.queue{
     display:grid;
     grid-template-columns:1fr;
     gap:12px;
 }
 
-.workflow-step{
+.queue-item{
     border:1px solid #dbeafe;
     background:#eff6ff;
     border-radius:10px;
     padding:12px;
 }
 
-.workflow-step strong{
+.queue-item strong{
     display:block;
     margin-bottom:6px;
 }
@@ -269,7 +269,7 @@ footer{
 
 <header>
     <h1>Salmon Rivers Intelligence</h1>
-    <p>Build 10092 — River Intelligence Workflow</p>
+    <p>Build 10093 — Source Search Queue</p>
 </header>
 
 <div class="container">
@@ -305,6 +305,7 @@ footer{
         <div class="note">
             VERIFIED DATA ONLY.<br><br>
             This app seeks external salmon and river intelligence from traceable sources.
+            It does not rely on user-entered catch claims.
             <br><br>
             <strong>Rule: No source = no number.</strong>
         </div>
@@ -318,33 +319,50 @@ footer{
 
     <div class="card">
 
-        <h2>River Intelligence Workflow</h2>
+        <h2>Source Search Queue</h2>
 
-        <div class="workflow">
+        <div class="queue">
 
-            <div class="workflow-step">
-                <strong>1. Confirm Conditions</strong>
-                Use official Henthorn telemetry first: river level, movement and timestamp.
+            <div class="queue-item">
+                <strong>1. Official Telemetry First</strong>
+                Check Henthorn EA river level, movement and timestamp before interpreting any salmon intelligence.
+                <div class="status live">PRIMARY</div>
             </div>
 
-            <div class="workflow-step">
-                <strong>2. Check Editorial Intelligence</strong>
-                Use Trout & Salmon as Tier 1 magazine intelligence for river mentions, current-season reports and wider salmon activity context.
+            <div class="queue-item">
+                <strong>2. Official Cross-Check</strong>
+                If the live API does not load, use GOV.UK Henthorn as the official public cross-check.
+                <div class="status crosscheck">CROSS-CHECK</div>
             </div>
 
-            <div class="workflow-step">
-                <strong>3. Seek RFCA Data</strong>
-                Investigate RFCA water quality, temperature, fish-counter and association intelligence.
+            <div class="queue-item">
+                <strong>3. Trout & Salmon Reports</strong>
+                Use as Tier 1 magazine intelligence for current-season river mentions, reported catches and regional salmon activity.
+                <div class="status magazine">TIER 1</div>
             </div>
 
-            <div class="workflow-step">
-                <strong>4. Seek Operator / Beat Intelligence</strong>
-                Use named operators, beats and fishery reports only when dated and traceable.
+            <div class="queue-item">
+                <strong>4. RFCA Water Quality / Temperature</strong>
+                Investigate as a likely high-value telemetry source for temperature and river-health context.
+                <div class="status candidate">INVESTIGATE</div>
             </div>
 
-            <div class="workflow-step">
-                <strong>5. Block Weak Claims</strong>
-                Exclude forum rumours, undated claims, old-season figures and untraceable social media posts unless independently corroborated.
+            <div class="queue-item">
+                <strong>5. RFCA Fish Counter Data</strong>
+                Highest-value missing migration source, but blocked until public traceable access is confirmed.
+                <div class="status blocked">NOT VERIFIED</div>
+            </div>
+
+            <div class="queue-item">
+                <strong>6. Club, Association, Operator and Beat Reports</strong>
+                Use only if dated, current-season relevant and traceable.
+                <div class="status candidate">SEEKING</div>
+            </div>
+
+            <div class="queue-item">
+                <strong>7. Forums and Social Media</strong>
+                Use only for source discovery. Never use as standalone verified intelligence.
+                <div class="status excluded">EXCLUDED BY DEFAULT</div>
             </div>
 
         </div>
@@ -395,10 +413,11 @@ footer{
             <div class="panel">
                 <h3>EA API Reference</h3>
                 <div class="small">
-                    Official Environment Agency API documentation for levels, flows and station readings.
+                    Official Environment Agency API documentation for levels, flows, rainfall and station readings.
                 </div>
                 <div class="button-row">
                     <a class="button-link secondary" href="https://environment.data.gov.uk/flood-monitoring/doc/reference" target="_blank">Open EA API Docs</a>
+                    <a class="button-link secondary" href="https://environment.data.gov.uk/flood-monitoring/doc/rainfall" target="_blank">Open EA Rainfall Docs</a>
                 </div>
                 <div class="status crosscheck">REFERENCE</div>
             </div>
@@ -512,7 +531,7 @@ footer{
 </div>
 
 <footer>
-Build 10092 — River intelligence workflow and source launchpad.
+Build 10093 — Source search queue and multi-source intelligence control.
 </footer>
 
 <script>
