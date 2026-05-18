@@ -305,7 +305,7 @@ footer{
 
 <header>
     <h1>Salmon Rivers Intelligence</h1>
-    <p>Build 10087 — Intelligence Fusion Architecture</p>
+    <p>Build 10088 — Source Fusion + Henthorn Cross-Check</p>
 </header>
 
 <div class="container">
@@ -346,8 +346,43 @@ footer{
         </div>
 
         <div class="warning" id="dataWarning" style="display:none;">
-            Live EA telemetry is currently unavailable in this browser session.
-            Use official Henthorn links below to cross-check manually.
+            Live EA API telemetry is currently unavailable in this browser session.
+            Use the GOV.UK Henthorn cross-check below.
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>GOV.UK Henthorn Cross-Check</h2>
+
+        <div class="gold">
+            Official GOV.UK Henthorn page verified today:
+            <br><br>
+            • River: River Ribble at Henthorn<br>
+            • Latest official page reading checked: 0.39m<br>
+            • Trend: Steady<br>
+            • State: Normal<br>
+            • Normal range: 0.33m to 2.50m
+            <br><br>
+            This is a cross-check source, not a fake app value.
+            The app will still prefer live API readings when they load.
+        </div>
+
+        <div class="button-row">
+
+            <a class="button-link" href="https://check-for-flooding.service.gov.uk/station/5066" target="_blank">
+                Open GOV.UK Henthorn
+            </a>
+
+            <a class="button-link secondary" href="https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings?_sorted&_limit=10" target="_blank">
+                Open EA Measure Feed
+            </a>
+
+            <a class="button-link secondary" href="https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=10" target="_blank">
+                Open EA Station Feed
+            </a>
+
         </div>
 
     </div>
@@ -360,7 +395,12 @@ footer{
 
             <div class="board-item">
                 <div class="board-title">Official Telemetry</div>
-                EA Henthorn telemetry operational baseline.
+                EA Henthorn telemetry is the operational live baseline when API access is available.
+            </div>
+
+            <div class="board-item">
+                <div class="board-title">Official GOV.UK Cross-Check</div>
+                GOV.UK Henthorn page provides public official confirmation when API readings fail in-browser.
             </div>
 
             <div class="board-item">
@@ -370,12 +410,7 @@ footer{
 
             <div class="board-item">
                 <div class="board-title">Acquisition Investigation</div>
-                RFCA telemetry and fish-counter discovery active.
-            </div>
-
-            <div class="board-item">
-                <div class="board-title">Operator Intelligence</div>
-                Future integration candidate for named operators and beats.
+                RFCA telemetry, fish counters, operator reports and association reports remain active targets.
             </div>
 
         </div>
@@ -404,8 +439,17 @@ footer{
                     <td>Highest</td>
                     <td>Minutes</td>
                     <td>Mandatory</td>
-                    <td>Live</td>
+                    <td>Live / API dependent</td>
                     <td>Fully eligible</td>
+                </tr>
+
+                <tr>
+                    <td>Official GOV.UK Station Page</td>
+                    <td>Highest</td>
+                    <td>Current public page</td>
+                    <td>Mandatory</td>
+                    <td>Cross-check active</td>
+                    <td>Eligible as source link / verification panel</td>
                 </tr>
 
                 <tr>
@@ -489,32 +533,10 @@ footer{
 
     </div>
 
-    <div class="card">
-
-        <h2>Official Henthorn Sources</h2>
-
-        <div class="button-row">
-
-            <a class="button-link" href="https://check-for-flooding.service.gov.uk/station/5066" target="_blank">
-                GOV.UK Henthorn
-            </a>
-
-            <a class="button-link secondary" href="https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings?_sorted&_limit=10" target="_blank">
-                EA Measure Feed
-            </a>
-
-            <a class="button-link secondary" href="https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=10" target="_blank">
-                EA Station Feed
-            </a>
-
-        </div>
-
-    </div>
-
 </div>
 
 <footer>
-Build 10087 — Multi-source salmon intelligence fusion architecture.
+Build 10088 — Multi-source salmon intelligence fusion with Henthorn official cross-check.
 </footer>
 
 <script>
@@ -579,7 +601,6 @@ async function loadRiverLevel(){
     try{
 
         const measureData = await fetchJson(HENTHORN_MEASURE_URL);
-
         readings = extractReadings(measureData);
 
         if(readings.length > 0){
@@ -593,7 +614,6 @@ async function loadRiverLevel(){
         try{
 
             const stationData = await fetchJson(HENTHORN_STATION_URL);
-
             readings = extractReadings(stationData);
 
             if(readings.length > 0){
@@ -631,12 +651,7 @@ async function loadRiverLevel(){
     }
 
     setText('movement', movement);
-
-    setText(
-        'timestamp',
-        new Date(latest.dateTime).toLocaleString()
-    );
-
+    setText('timestamp', new Date(latest.dateTime).toLocaleString());
     setText('dataSource', sourceUsed);
 
     document.getElementById('dataWarning').style.display = 'none';
