@@ -33,7 +33,7 @@ header p{
 }
 
 .container{
-    max-width:980px;
+    max-width:1100px;
     margin:auto;
     padding:14px;
 }
@@ -228,6 +228,35 @@ header p{
     margin-bottom:6px;
 }
 
+.matrix{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:10px;
+}
+
+th{
+    background:#0f1720;
+    color:white;
+    padding:10px;
+    text-align:left;
+    font-size:13px;
+}
+
+td{
+    padding:10px;
+    border-bottom:1px solid #e5e7eb;
+    font-size:13px;
+    vertical-align:top;
+}
+
+tr:nth-child(even){
+    background:#f8fafc;
+}
+
 .button-row{
     display:flex;
     flex-wrap:wrap;
@@ -276,7 +305,7 @@ footer{
 
 <header>
     <h1>Salmon Rivers Intelligence</h1>
-    <p>Build 10086 — Telemetry Diagnostics + Tier 1 Magazine Intel</p>
+    <p>Build 10087 — Intelligence Fusion Architecture</p>
 </header>
 
 <div class="container">
@@ -311,55 +340,151 @@ footer{
 
         <div class="note">
             VERIFIED DATA ONLY.<br><br>
-            This app seeks verified river and salmon intelligence from traceable sources.
-            It does not rely on user-entered catch claims.
+            Salmon Rivers Intelligence fuses multiple confidence-controlled intelligence streams.
             <br><br>
             <strong>Rule: No source = no number.</strong>
         </div>
 
         <div class="warning" id="dataWarning" style="display:none;">
             Live EA telemetry is currently unavailable in this browser session.
-            Open the official source links below to cross-check Henthorn directly.
+            Use official Henthorn links below to cross-check manually.
         </div>
 
     </div>
 
     <div class="card">
 
-        <h2>Live Data Diagnostics</h2>
+        <h2>Current Active Intelligence Streams</h2>
 
-        <div class="metric">
-            <div class="label">Measure Feed Status</div>
-            <div class="value neutral" id="measureStatus">Not tested yet</div>
+        <div class="board">
+
+            <div class="board-item">
+                <div class="board-title">Official Telemetry</div>
+                EA Henthorn telemetry operational baseline.
+            </div>
+
+            <div class="board-item">
+                <div class="board-title">Magazine Intelligence</div>
+                Trout & Salmon classified as Tier 1 editorial intelligence.
+            </div>
+
+            <div class="board-item">
+                <div class="board-title">Acquisition Investigation</div>
+                RFCA telemetry and fish-counter discovery active.
+            </div>
+
+            <div class="board-item">
+                <div class="board-title">Operator Intelligence</div>
+                Future integration candidate for named operators and beats.
+            </div>
+
         </div>
 
-        <div class="metric">
-            <div class="label">Station Feed Status</div>
-            <div class="value neutral" id="stationStatus">Not tested yet</div>
+    </div>
+
+    <div class="card">
+
+        <h2>Intelligence Fusion Matrix</h2>
+
+        <div class="matrix">
+
+            <table>
+
+                <tr>
+                    <th>Source Class</th>
+                    <th>Confidence</th>
+                    <th>Freshness Requirement</th>
+                    <th>Traceability</th>
+                    <th>Current Status</th>
+                    <th>Integration Eligibility</th>
+                </tr>
+
+                <tr>
+                    <td>Official Telemetry</td>
+                    <td>Highest</td>
+                    <td>Minutes</td>
+                    <td>Mandatory</td>
+                    <td>Live</td>
+                    <td>Fully eligible</td>
+                </tr>
+
+                <tr>
+                    <td>Fish Counter Data</td>
+                    <td>Very High</td>
+                    <td>Hours / Daily</td>
+                    <td>Mandatory</td>
+                    <td>Investigating</td>
+                    <td>Pending source verification</td>
+                </tr>
+
+                <tr>
+                    <td>Magazine Intelligence</td>
+                    <td>High</td>
+                    <td>Current season</td>
+                    <td>Mandatory</td>
+                    <td>Tier 1 active</td>
+                    <td>Eligible with classification</td>
+                </tr>
+
+                <tr>
+                    <td>Operator Intelligence</td>
+                    <td>Medium-High</td>
+                    <td>Current season</td>
+                    <td>Mandatory</td>
+                    <td>Future candidate</td>
+                    <td>Conditional eligibility</td>
+                </tr>
+
+                <tr>
+                    <td>Club / Association Reports</td>
+                    <td>High</td>
+                    <td>Current season</td>
+                    <td>Mandatory</td>
+                    <td>Seeking sources</td>
+                    <td>Eligible if verified</td>
+                </tr>
+
+                <tr>
+                    <td>Forum / Social Reports</td>
+                    <td>Low</td>
+                    <td>Immediate</td>
+                    <td>Rarely sufficient</td>
+                    <td>Excluded by default</td>
+                    <td>Requires corroboration</td>
+                </tr>
+
+            </table>
+
         </div>
 
-        <div class="metric">
-            <div class="label">Latest Refresh Attempt</div>
-            <div class="value neutral" id="refreshAttempt">Waiting...</div>
-        </div>
+    </div>
 
-        <div class="metric">
-            <div class="label">Diagnostic Result</div>
-            <div class="value neutral" id="diagnosticResult">Waiting...</div>
-        </div>
+    <div class="card">
 
-        <div class="button-row">
-            <a class="button-link" href="https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings?_sorted&_limit=10" target="_blank">
-                Open EA Measure Feed
-            </a>
+        <h2>Blocked / Not Yet Integrated Sources</h2>
 
-            <a class="button-link secondary" href="https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=10" target="_blank">
-                Open EA Station Feed
-            </a>
+        <div class="source-list">
 
-            <a class="button-link secondary" href="https://check-for-flooding.service.gov.uk/station/5066" target="_blank">
-                Open GOV.UK Henthorn
-            </a>
+            <div class="source-item">
+                <strong>RFCA Fish Counter Data</strong>
+                No verified public machine-readable source confirmed yet.
+            </div>
+
+            <div class="source-item">
+                <strong>RFCA Sonde Temperature Telemetry</strong>
+                Public monitoring page exists but stable acquisition route not yet validated.
+            </div>
+
+            <div class="source-item">
+                <strong>Current Season Ribble Catch Totals</strong>
+                No verified continuously-updated official source confirmed.
+            </div>
+
+            <div class="source-item">
+                <strong>Named Operator Feeds</strong>
+                Future integration candidates once traceability model is standardised.
+            </div>
+
         </div>
 
     </div>
@@ -368,221 +493,19 @@ footer{
 
         <h2>Official Henthorn Sources</h2>
 
-        <div class="source-list">
+        <div class="button-row">
 
-            <div class="source-item">
-                <strong>GOV.UK — River Ribble level at Henthorn</strong>
-                Official public station page for Henthorn height, trend, state and normal range.
-                <br><br>
-                <a href="https://check-for-flooding.service.gov.uk/station/5066" target="_blank">
-                    Open official Henthorn page
-                </a>
-            </div>
+            <a class="button-link" href="https://check-for-flooding.service.gov.uk/station/5066" target="_blank">
+                GOV.UK Henthorn
+            </a>
 
-            <div class="source-item">
-                <strong>Environment Agency API — Henthorn Measure Feed</strong>
-                Direct machine-readable readings for Henthorn water level.
-                <br><br>
-                <a href="https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings?_sorted&_limit=10" target="_blank">
-                    Open EA measure feed
-                </a>
-            </div>
+            <a class="button-link secondary" href="https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings?_sorted&_limit=10" target="_blank">
+                EA Measure Feed
+            </a>
 
-            <div class="source-item">
-                <strong>Environment Agency API — Henthorn Station Feed</strong>
-                Station-level fallback feed for Henthorn readings.
-                <br><br>
-                <a href="https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=10" target="_blank">
-                    Open EA station feed
-                </a>
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="card">
-
-        <h2>Trout & Salmon Magazine Intelligence</h2>
-
-        <div class="gold">
-            Trout & Salmon fishing reports are treated as a
-            <strong>Tier 1 Magazine Intelligence Source</strong>.
-            <br><br>
-            They are not telemetry and they are not official fish-counter data.
-            They are used as curated river-by-river intelligence, trend evidence,
-            catch-report discovery and regional salmon activity context.
-        </div>
-
-        <div class="source-list">
-
-            <div class="source-item">
-                <strong>Source Class</strong>
-                Magazine Intelligence — Tier 1
-            </div>
-
-            <div class="source-item">
-                <strong>Permitted Use</strong>
-                River mentions, reported activity, dated catch references, regional trend indicators and source discovery.
-            </div>
-
-            <div class="source-item">
-                <strong>Blocked Use</strong>
-                Cannot be treated as exact telemetry, live counter data, or official catch totals unless explicitly stated and traceable.
-            </div>
-
-            <div class="source-item">
-                <strong>Current App Handling</strong>
-                Source recognised and classified. No magazine figures are displayed until directly verified from a current report.
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="card">
-
-        <h2>Source-Seeking Intelligence Board</h2>
-
-        <div class="board">
-
-            <div class="board-item">
-                <div class="board-title">Live Telemetry Search</div>
-                EA Henthorn river telemetry is the verified live base layer.
-            </div>
-
-            <div class="board-item">
-                <div class="board-title">Magazine Intelligence Search</div>
-                Trout & Salmon reports are a Tier 1 intelligence stream.
-            </div>
-
-            <div class="board-item">
-                <div class="board-title">Catch Intelligence Search</div>
-                Current-season salmon catches must come from traceable external sources only.
-            </div>
-
-            <div class="board-item">
-                <div class="board-title">Fish Counter Search</div>
-                Fish-counter data remains under investigation until a public verified source is found.
-            </div>
-
-            <div class="board-item">
-                <div class="board-title">Temperature Search</div>
-                RFCA sonde / water-quality telemetry remains an acquisition candidate.
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="card">
-
-        <h2>Acquisition Targets</h2>
-
-        <div class="priority">
-            <strong>Priority 1 — Current Season Catch Reports</strong><br>
-            Seek official, magazine, operator or clearly traceable Ribble salmon reports for the current season only.
-        </div>
-
-        <div class="priority">
-            <strong>Priority 2 — Trout & Salmon Report Indexing</strong><br>
-            Build structured indexing from current magazine reports without copying wholesale text.
-        </div>
-
-        <div class="priority">
-            <strong>Priority 3 — Fish Counter Data</strong><br>
-            Seek public RFCA or agency-backed migration telemetry.
-        </div>
-
-        <div class="priority">
-            <strong>Priority 4 — Water Temperature</strong><br>
-            Seek stable RFCA temperature / sonde data suitable for live display.
-        </div>
-
-    </div>
-
-    <div class="card">
-
-        <h2>Intelligence Layer Structure</h2>
-
-        <div class="grid">
-
-            <div class="panel">
-                <h3>Verified Live Layer</h3>
-                <div class="small">
-                    • EA Henthorn river level<br>
-                    • movement detection<br>
-                    • timestamped telemetry<br>
-                    • official source links
-                </div>
-                <div class="status live">VERIFIED LIVE</div>
-            </div>
-
-            <div class="panel">
-                <h3>Tier 1 Magazine Intel</h3>
-                <div class="small">
-                    • Trout & Salmon reports<br>
-                    • river-by-river intelligence<br>
-                    • regional fishing reports<br>
-                    • source discovery
-                </div>
-                <div class="status magazine">TIER 1 MAGAZINE</div>
-            </div>
-
-            <div class="panel">
-                <h3>Source-Seeking Layer</h3>
-                <div class="small">
-                    • RFCA water quality<br>
-                    • fish counters<br>
-                    • catch reports<br>
-                    • operator updates
-                </div>
-                <div class="status candidate">SEEKING SOURCES</div>
-            </div>
-
-            <div class="panel">
-                <h3>Blocked Data Layer</h3>
-                <div class="small">
-                    • no public source<br>
-                    • no date<br>
-                    • not current season<br>
-                    • not traceable
-                </div>
-                <div class="status blocked">BLOCKED</div>
-            </div>
-
-            <div class="panel">
-                <h3>Excluded Layer</h3>
-                <div class="small">
-                    • rumours<br>
-                    • unverified forum posts<br>
-                    • fake counts<br>
-                    • speculative conditions
-                </div>
-                <div class="status excluded">EXCLUDED</div>
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="card">
-
-        <h2>Verification Rules</h2>
-
-        <div class="warning">
-
-            A source can enter the live intelligence layer only if it has:
-            <br><br>
-
-            • identifiable origin<br>
-            • current-season relevance<br>
-            • timestamp or publication date<br>
-            • traceable link, report, page or photographed source<br>
-            • non-speculative wording
-            <br><br>
-
-            Otherwise it stays out.
+            <a class="button-link secondary" href="https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=10" target="_blank">
+                EA Station Feed
+            </a>
 
         </div>
 
@@ -591,16 +514,16 @@ footer{
 </div>
 
 <footer>
-Build 10086 — Telemetry diagnostics and Tier 1 Magazine Intelligence.
+Build 10087 — Multi-source salmon intelligence fusion architecture.
 </footer>
 
 <script>
 
 const HENTHORN_MEASURE_URL =
-    'https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings?_sorted&_limit=10';
+'https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings?_sorted&_limit=10';
 
 const HENTHORN_STATION_URL =
-    'https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=10';
+'https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=10';
 
 function setText(id, value){
     document.getElementById(id).innerText = value;
@@ -609,7 +532,7 @@ function setText(id, value){
 async function fetchJson(url){
 
     const response = await fetch(url, {
-        cache: 'no-store'
+        cache:'no-store'
     });
 
     if(!response.ok){
@@ -629,8 +552,8 @@ function extractReadings(data){
     return data.items
         .filter(item => item.value !== undefined && item.dateTime)
         .map(item => ({
-            value: Number(item.value),
-            dateTime: item.dateTime
+            value:Number(item.value),
+            dateTime:item.dateTime
         }))
         .filter(item => !Number.isNaN(item.value))
         .sort((a,b) => new Date(b.dateTime) - new Date(a.dateTime));
@@ -643,17 +566,12 @@ function showUnavailable(sourceUsed){
     setText('movement','Unavailable');
     setText('timestamp','Unavailable');
     setText('dataSource',sourceUsed || 'Unavailable');
-    setText('diagnosticResult','No readable EA telemetry returned');
+
     document.getElementById('dataWarning').style.display = 'block';
 
 }
 
 async function loadRiverLevel(){
-
-    setText('refreshAttempt', new Date().toLocaleString());
-    setText('diagnosticResult','Checking EA feeds...');
-    setText('measureStatus','Testing...');
-    setText('stationStatus','Waiting...');
 
     let readings = [];
     let sourceUsed = '';
@@ -661,52 +579,34 @@ async function loadRiverLevel(){
     try{
 
         const measureData = await fetchJson(HENTHORN_MEASURE_URL);
+
         readings = extractReadings(measureData);
 
         if(readings.length > 0){
-            setText('measureStatus','OK — readings found');
             sourceUsed = 'EA measure feed';
-        }else{
-            setText('measureStatus','No readings returned');
         }
 
-    }catch(error){
-
-        setText('measureStatus','Failed — ' + error.message);
-
-    }
+    }catch(error){}
 
     if(readings.length === 0){
-
-        setText('stationStatus','Testing...');
 
         try{
 
             const stationData = await fetchJson(HENTHORN_STATION_URL);
+
             readings = extractReadings(stationData);
 
             if(readings.length > 0){
-                setText('stationStatus','OK — readings found');
                 sourceUsed = 'EA station feed';
-            }else{
-                setText('stationStatus','No readings returned');
             }
 
-        }catch(secondError){
-
-            setText('stationStatus','Failed — ' + secondError.message);
-
-        }
-
-    }else{
-
-        setText('stationStatus','Not needed');
+        }catch(error){}
 
     }
 
     if(readings.length === 0){
 
-        showUnavailable(sourceUsed || 'Unavailable');
+        showUnavailable(sourceUsed);
         return;
 
     }
@@ -731,9 +631,13 @@ async function loadRiverLevel(){
     }
 
     setText('movement', movement);
-    setText('timestamp', new Date(latest.dateTime).toLocaleString());
+
+    setText(
+        'timestamp',
+        new Date(latest.dateTime).toLocaleString()
+    );
+
     setText('dataSource', sourceUsed);
-    setText('diagnosticResult','Live telemetry loaded successfully');
 
     document.getElementById('dataWarning').style.display = 'none';
 
