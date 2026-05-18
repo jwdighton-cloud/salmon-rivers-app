@@ -166,6 +166,24 @@ header p{
     color:#374151;
 }
 
+.workflow{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:12px;
+}
+
+.workflow-step{
+    border:1px solid #dbeafe;
+    background:#eff6ff;
+    border-radius:10px;
+    padding:12px;
+}
+
+.workflow-step strong{
+    display:block;
+    margin-bottom:6px;
+}
+
 .matrix{
     overflow-x:auto;
 }
@@ -251,7 +269,7 @@ footer{
 
 <header>
     <h1>Salmon Rivers Intelligence</h1>
-    <p>Build 10091 — Source Launchpad + Intelligence Fusion Registry</p>
+    <p>Build 10092 — River Intelligence Workflow</p>
 </header>
 
 <div class="container">
@@ -286,7 +304,7 @@ footer{
 
         <div class="note">
             VERIFIED DATA ONLY.<br><br>
-            Salmon Rivers Intelligence seeks and classifies external evidence from multiple source streams.
+            This app seeks external salmon and river intelligence from traceable sources.
             <br><br>
             <strong>Rule: No source = no number.</strong>
         </div>
@@ -294,6 +312,41 @@ footer{
         <div class="warning" id="dataWarning" style="display:none;">
             Live EA API telemetry is currently unavailable in this browser session.
             Use official Henthorn links below to cross-check manually.
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>River Intelligence Workflow</h2>
+
+        <div class="workflow">
+
+            <div class="workflow-step">
+                <strong>1. Confirm Conditions</strong>
+                Use official Henthorn telemetry first: river level, movement and timestamp.
+            </div>
+
+            <div class="workflow-step">
+                <strong>2. Check Editorial Intelligence</strong>
+                Use Trout & Salmon as Tier 1 magazine intelligence for river mentions, current-season reports and wider salmon activity context.
+            </div>
+
+            <div class="workflow-step">
+                <strong>3. Seek RFCA Data</strong>
+                Investigate RFCA water quality, temperature, fish-counter and association intelligence.
+            </div>
+
+            <div class="workflow-step">
+                <strong>4. Seek Operator / Beat Intelligence</strong>
+                Use named operators, beats and fishery reports only when dated and traceable.
+            </div>
+
+            <div class="workflow-step">
+                <strong>5. Block Weak Claims</strong>
+                Exclude forum rumours, undated claims, old-season figures and untraceable social media posts unless independently corroborated.
+            </div>
+
         </div>
 
     </div>
@@ -440,48 +493,6 @@ footer{
 
     <div class="card">
 
-        <h2>Operational Priority Engine</h2>
-
-        <div class="grid">
-
-            <div class="panel">
-                <h3>Most Trusted Live Layer</h3>
-                <div class="small">
-                    EA Henthorn telemetry remains the most trusted live operational source.
-                </div>
-                <div class="status live">OFFICIAL TELEMETRY</div>
-            </div>
-
-            <div class="panel">
-                <h3>Most Valuable Missing Layer</h3>
-                <div class="small">
-                    Fish-counter intelligence remains the highest-value missing salmon movement source.
-                </div>
-                <div class="status blocked">MISSING HIGH VALUE</div>
-            </div>
-
-            <div class="panel">
-                <h3>Best Editorial Layer</h3>
-                <div class="small">
-                    Trout & Salmon remains Tier 1 Magazine Intelligence.
-                </div>
-                <div class="status magazine">TIER 1 MAGAZINE</div>
-            </div>
-
-            <div class="panel">
-                <h3>Best Next Acquisition Candidate</h3>
-                <div class="small">
-                    RFCA sonde temperature remains the most likely next usable telemetry enhancement.
-                </div>
-                <div class="status candidate">INVESTIGATE NEXT</div>
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="card">
-
         <h2>Intelligence Fusion Rules</h2>
 
         <div class="warning">
@@ -501,7 +512,7 @@ footer{
 </div>
 
 <footer>
-Build 10091 — Source launchpad and multi-source intelligence fusion registry.
+Build 10092 — River intelligence workflow and source launchpad.
 </footer>
 
 <script>
