@@ -106,6 +106,24 @@ header p{
     font-size:14px;
 }
 
+.roadmap{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:12px;
+}
+
+.roadmap-step{
+    border:1px solid #cbd5e1;
+    background:#f8fafc;
+    border-radius:12px;
+    padding:14px;
+}
+
+.roadmap-step strong{
+    display:block;
+    margin-bottom:6px;
+}
+
 .summary-grid,
 .action-grid{
     display:grid;
@@ -315,7 +333,7 @@ footer{
 
 <header>
     <h1>Salmon Rivers Intelligence</h1>
-    <p>Build 10099 — Source Gap Register</p>
+    <p>Build 10100 — Source Acquisition Roadmap</p>
 </header>
 
 <div class="container">
@@ -357,6 +375,46 @@ footer{
 
         <div class="warning" id="dataWarning" style="display:none;">
             Live EA telemetry currently unavailable. Use official Henthorn links below.
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Source Acquisition Roadmap</h2>
+
+        <div class="roadmap">
+
+            <div class="roadmap-step">
+                <strong>1. Stabilise Henthorn telemetry</strong>
+                EA river level remains the live baseline and must stay first on screen.
+                <div class="status live">BASELINE</div>
+            </div>
+
+            <div class="roadmap-step">
+                <strong>2. Investigate RFCA temperature / sonde data</strong>
+                Highest practical next telemetry enhancement if a stable source can be found.
+                <div class="status candidate">NEXT TELEMETRY TARGET</div>
+            </div>
+
+            <div class="roadmap-step">
+                <strong>3. Index Trout & Salmon current-season reports</strong>
+                Use as Tier 1 editorial intelligence for current-season river mentions and catch-report discovery.
+                <div class="status magazine">TIER 1 INTEL</div>
+            </div>
+
+            <div class="roadmap-step">
+                <strong>4. Investigate RFCA fish counters</strong>
+                Highest-value missing migration intelligence, but blocked until a public traceable source is confirmed.
+                <div class="status blocked">HIGH VALUE GAP</div>
+            </div>
+
+            <div class="roadmap-step">
+                <strong>5. Add operator / club / association source models</strong>
+                Future source classes only if dated, current-season and traceable.
+                <div class="status crosscheck">FUTURE SOURCE MODEL</div>
+            </div>
+
         </div>
 
     </div>
@@ -446,74 +504,6 @@ footer{
 
     <div class="card">
 
-        <h2>River Intelligence Summary</h2>
-
-        <div class="summary-grid">
-
-            <div class="summary-box summary-live">
-                <strong>Known Live Layer</strong><br><br>
-                EA Henthorn telemetry is the primary live condition source when the API responds.
-                <div class="status live">LIVE / OFFICIAL</div>
-            </div>
-
-            <div class="summary-box summary-seeking">
-                <strong>Seeking Layer</strong><br><br>
-                Trout & Salmon, RFCA water quality, operators, clubs and associations are intelligence acquisition targets.
-                <div class="status candidate">SOURCE SEEKING</div>
-            </div>
-
-            <div class="summary-box summary-blocked">
-                <strong>Blocked Layer</strong><br><br>
-                No undated catches, old-season totals, rumours, or untraceable social claims are allowed.
-                <div class="status blocked">BLOCKED</div>
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="card">
-
-        <h2>Intelligence Confidence Ladder</h2>
-
-        <div class="ladder">
-
-            <div class="ladder-step highest">
-                <strong>Level 1 — Verified Official Telemetry</strong><br>
-                EA telemetry, GOV.UK station data, official hydrology feeds.
-                <div class="status live">HIGHEST CONFIDENCE</div>
-            </div>
-
-            <div class="ladder-step high">
-                <strong>Level 2 — Verified Current-Season Reports</strong><br>
-                Dated and traceable association, club or fishery reports.
-                <div class="status crosscheck">HIGH CONFIDENCE</div>
-            </div>
-
-            <div class="ladder-step medium">
-                <strong>Level 3 — Editorial Intelligence</strong><br>
-                Trout & Salmon and equivalent current-season editorial reporting.
-                <div class="status magazine">TIER 1 EDITORIAL</div>
-            </div>
-
-            <div class="ladder-step low">
-                <strong>Level 4 — Operator / Beat Intelligence</strong><br>
-                Named operators, ghillies and beat reports where traceable and current.
-                <div class="status candidate">MEDIUM CONFIDENCE</div>
-            </div>
-
-            <div class="ladder-step block">
-                <strong>Level 5 — Weak or Unverified Sources</strong><br>
-                Rumours, old-season claims, forums and unsupported social media.
-                <div class="status blocked">BLOCKED</div>
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="card">
-
         <h2>Current-Season Gate</h2>
 
         <div class="gate">
@@ -582,7 +572,7 @@ footer{
 </div>
 
 <footer>
-Build 10099 — Source gap register and evidence requirements.
+Build 10100 — Source acquisition roadmap and evidence controls.
 </footer>
 
 <script>
