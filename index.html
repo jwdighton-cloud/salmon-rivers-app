@@ -96,6 +96,16 @@ header p{
     font-size:14px;
 }
 
+.gate{
+    background:#fef2f2;
+    border-left:4px solid #dc2626;
+    padding:12px;
+    border-radius:8px;
+    margin-top:12px;
+    line-height:1.5;
+    font-size:14px;
+}
+
 .grid{
     display:grid;
     grid-template-columns:1fr;
@@ -164,24 +174,6 @@ header p{
 .excluded{
     background:#e5e7eb;
     color:#374151;
-}
-
-.checklist{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:12px;
-}
-
-.check-item{
-    border:1px solid #dbeafe;
-    background:#eff6ff;
-    border-radius:10px;
-    padding:12px;
-}
-
-.check-item strong{
-    display:block;
-    margin-bottom:6px;
 }
 
 .queue{
@@ -287,7 +279,7 @@ footer{
 
 <header>
     <h1>Salmon Rivers Intelligence</h1>
-    <p>Build 10094 — Today’s Intelligence Checklist</p>
+    <p>Build 10095 — Current-Season Gate</p>
 </header>
 
 <div class="container">
@@ -337,89 +329,61 @@ footer{
 
     <div class="card">
 
-        <h2>Today’s Intelligence Checklist</h2>
+        <h2>Current-Season Gate</h2>
 
-        <div class="checklist">
-
-            <div class="check-item">
-                <strong>1. Is Henthorn telemetry live?</strong>
-                Confirm river level, movement and timestamp from the EA feed.
-                <div class="status live">FIRST CHECK</div>
-            </div>
-
-            <div class="check-item">
-                <strong>2. Is the level rising, falling or steady?</strong>
-                Use movement only from measured EA values. Do not infer fishability.
-                <div class="status crosscheck">CONDITION CONTEXT</div>
-            </div>
-
-            <div class="check-item">
-                <strong>3. Is there current-season Ribble intelligence?</strong>
-                Check Trout & Salmon, RFCA, club, association and operator sources.
-                <div class="status magazine">SOURCE SEEKING</div>
-            </div>
-
-            <div class="check-item">
-                <strong>4. Is any catch information dated and traceable?</strong>
-                Only accept current-season reports with identifiable source origin.
-                <div class="status candidate">VERIFY BEFORE USE</div>
-            </div>
-
-            <div class="check-item">
-                <strong>5. Is the source weak?</strong>
-                Block rumours, undated reports, old-season totals and standalone social claims.
-                <div class="status excluded">BLOCK IF WEAK</div>
-            </div>
-
+        <div class="gate">
+            Catch-related intelligence is blocked unless it is:
+            <br><br>
+            • from the current salmon season<br>
+            • dated or clearly time-stamped<br>
+            • traceable to an identifiable source<br>
+            • river-specific where possible<br>
+            • non-speculative
+            <br><br>
+            Old-season totals, vague reports, rumours and undated claims must not enter the live intelligence layer.
         </div>
 
     </div>
 
     <div class="card">
 
-        <h2>Source Search Queue</h2>
+        <h2>Today’s Intelligence Checklist</h2>
 
         <div class="queue">
 
             <div class="queue-item">
-                <strong>1. Official Telemetry First</strong>
-                Check Henthorn EA river level, movement and timestamp before interpreting any salmon intelligence.
-                <div class="status live">PRIMARY</div>
+                <strong>1. Confirm Henthorn Conditions</strong>
+                Check EA level, movement and timestamp before reading catch or magazine intelligence.
+                <div class="status live">FIRST CHECK</div>
             </div>
 
             <div class="queue-item">
-                <strong>2. Official Cross-Check</strong>
-                If the live API does not load, use GOV.UK Henthorn as the official public cross-check.
-                <div class="status crosscheck">CROSS-CHECK</div>
+                <strong>2. Confirm Source Freshness</strong>
+                Any catch-related information must be current-season and dated.
+                <div class="status blocked">CURRENT-SEASON GATE</div>
             </div>
 
             <div class="queue-item">
-                <strong>3. Trout & Salmon Reports</strong>
-                Use as Tier 1 magazine intelligence for current-season river mentions, reported catches and regional salmon activity.
+                <strong>3. Check Trout & Salmon</strong>
+                Use as Tier 1 magazine intelligence for current-season river mentions and catch-report discovery.
                 <div class="status magazine">TIER 1</div>
             </div>
 
             <div class="queue-item">
-                <strong>4. RFCA Water Quality / Temperature</strong>
-                Investigate as a likely high-value telemetry source for temperature and river-health context.
+                <strong>4. Check RFCA / Association Sources</strong>
+                Seek water quality, temperature, fish counters and official local updates.
                 <div class="status candidate">INVESTIGATE</div>
             </div>
 
             <div class="queue-item">
-                <strong>5. RFCA Fish Counter Data</strong>
-                Highest-value missing migration source, but blocked until public traceable access is confirmed.
-                <div class="status blocked">NOT VERIFIED</div>
-            </div>
-
-            <div class="queue-item">
-                <strong>6. Club, Association, Operator and Beat Reports</strong>
-                Use only if dated, current-season relevant and traceable.
+                <strong>5. Check Operators / Clubs</strong>
+                Use only if reports are dated, named and traceable.
                 <div class="status candidate">SEEKING</div>
             </div>
 
             <div class="queue-item">
-                <strong>7. Forums and Social Media</strong>
-                Use only for source discovery. Never use as standalone verified intelligence.
+                <strong>6. Block Weak Claims</strong>
+                Exclude social/forum claims unless independently corroborated.
                 <div class="status excluded">EXCLUDED BY DEFAULT</div>
             </div>
 
@@ -520,7 +484,7 @@ footer{
                     <td>Tier 1 Magazine Intelligence</td>
                     <td>High</td>
                     <td><span class="status magazine">TIER 1</span></td>
-                    <td>River mentions, current-season context, curated catch-report discovery</td>
+                    <td>Current-season river mentions and catch-report discovery</td>
                 </tr>
 
                 <tr>
@@ -568,28 +532,10 @@ footer{
 
     </div>
 
-    <div class="card">
-
-        <h2>Intelligence Fusion Rules</h2>
-
-        <div class="warning">
-            A source can influence the live intelligence layer only when it has:
-            <br><br>
-            • identifiable origin<br>
-            • current-season relevance where catch-related<br>
-            • timestamp or publication date<br>
-            • traceable link, report, page or photographed source<br>
-            • non-speculative wording
-            <br><br>
-            Otherwise it remains blocked or excluded.
-        </div>
-
-    </div>
-
 </div>
 
 <footer>
-Build 10094 — Today’s intelligence checklist and source-seeking workflow.
+Build 10095 — Current-season gate and source-seeking controls.
 </footer>
 
 <script>
