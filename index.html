@@ -228,6 +228,28 @@ header p{
     margin-bottom:6px;
 }
 
+.button-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:12px;
+}
+
+.button-link{
+    display:inline-block;
+    background:#0f1720;
+    color:white;
+    padding:10px 12px;
+    border-radius:10px;
+    font-size:13px;
+    text-decoration:none;
+    font-weight:700;
+}
+
+.button-link.secondary{
+    background:#334155;
+}
+
 a{
     color:#0369a1;
     text-decoration:none;
@@ -254,7 +276,7 @@ footer{
 
 <header>
     <h1>Salmon Rivers Intelligence</h1>
-    <p>Build 10085 — Source-Seeking Intelligence + Tier 1 Magazine Intel</p>
+    <p>Build 10086 — Telemetry Diagnostics + Tier 1 Magazine Intel</p>
 </header>
 
 <div class="container">
@@ -279,8 +301,8 @@ footer{
         </div>
 
         <div class="metric">
-            <div class="label">Data Source</div>
-            <div class="value neutral" id="dataSource">EA API</div>
+            <div class="label">Data Source Used</div>
+            <div class="value neutral" id="dataSource">Checking...</div>
         </div>
 
         <div class="refresh">
@@ -297,7 +319,47 @@ footer{
 
         <div class="warning" id="dataWarning" style="display:none;">
             Live EA telemetry is currently unavailable in this browser session.
-            Use the official Henthorn source links below for manual cross-checking.
+            Open the official source links below to cross-check Henthorn directly.
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Live Data Diagnostics</h2>
+
+        <div class="metric">
+            <div class="label">Measure Feed Status</div>
+            <div class="value neutral" id="measureStatus">Not tested yet</div>
+        </div>
+
+        <div class="metric">
+            <div class="label">Station Feed Status</div>
+            <div class="value neutral" id="stationStatus">Not tested yet</div>
+        </div>
+
+        <div class="metric">
+            <div class="label">Latest Refresh Attempt</div>
+            <div class="value neutral" id="refreshAttempt">Waiting...</div>
+        </div>
+
+        <div class="metric">
+            <div class="label">Diagnostic Result</div>
+            <div class="value neutral" id="diagnosticResult">Waiting...</div>
+        </div>
+
+        <div class="button-row">
+            <a class="button-link" href="https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings?_sorted&_limit=10" target="_blank">
+                Open EA Measure Feed
+            </a>
+
+            <a class="button-link secondary" href="https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=10" target="_blank">
+                Open EA Station Feed
+            </a>
+
+            <a class="button-link secondary" href="https://check-for-flooding.service.gov.uk/station/5066" target="_blank">
+                Open GOV.UK Henthorn
+            </a>
         </div>
 
     </div>
@@ -344,7 +406,7 @@ footer{
         <h2>Trout & Salmon Magazine Intelligence</h2>
 
         <div class="gold">
-            Trout & Salmon fishing reports are now treated as a
+            Trout & Salmon fishing reports are treated as a
             <strong>Tier 1 Magazine Intelligence Source</strong>.
             <br><br>
             They are not telemetry and they are not official fish-counter data.
@@ -391,7 +453,7 @@ footer{
 
             <div class="board-item">
                 <div class="board-title">Magazine Intelligence Search</div>
-                Trout & Salmon reports are now a Tier 1 intelligence stream.
+                Trout & Salmon reports are a Tier 1 intelligence stream.
             </div>
 
             <div class="board-item">
@@ -526,33 +588,10 @@ footer{
 
     </div>
 
-    <div class="card">
-
-        <h2>Platform Direction</h2>
-
-        <div class="small">
-            Salmon Rivers Intelligence is a verified information-seeking terminal.
-            <br><br>
-            It should pull, classify and present external evidence, not depend on user-entered data.
-            <br><br>
-            Current architecture:
-            <br><br>
-            • verified telemetry layer<br>
-            • Tier 1 magazine intelligence layer<br>
-            • source-seeking layer<br>
-            • acquisition investigation layer<br>
-            • verification control layer<br>
-            • excluded-data protection layer
-            <br><br>
-            Expansion beyond the Ribble remains blocked until the Ribble source model is stable.
-        </div>
-
-    </div>
-
 </div>
 
 <footer>
-Build 10085 — Source-seeking intelligence terminal with Tier 1 Magazine Intel.
+Build 10086 — Telemetry diagnostics and Tier 1 Magazine Intelligence.
 </footer>
 
 <script>
@@ -563,6 +602,10 @@ const HENTHORN_MEASURE_URL =
 const HENTHORN_STATION_URL =
     'https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=10';
 
+function setText(id, value){
+    document.getElementById(id).innerText = value;
+}
+
 async function fetchJson(url){
 
     const response = await fetch(url, {
@@ -570,7 +613,7 @@ async function fetchJson(url){
     });
 
     if(!response.ok){
-        throw new Error('Fetch failed: ' + response.status);
+        throw new Error('HTTP ' + response.status);
     }
 
     return await response.json();
@@ -594,7 +637,23 @@ function extractReadings(data){
 
 }
 
+function showUnavailable(sourceUsed){
+
+    setText('riverLevel','Unavailable');
+    setText('movement','Unavailable');
+    setText('timestamp','Unavailable');
+    setText('dataSource',sourceUsed || 'Unavailable');
+    setText('diagnosticResult','No readable EA telemetry returned');
+    document.getElementById('dataWarning').style.display = 'block';
+
+}
+
 async function loadRiverLevel(){
+
+    setText('refreshAttempt', new Date().toLocaleString());
+    setText('diagnosticResult','Checking EA feeds...');
+    setText('measureStatus','Testing...');
+    setText('stationStatus','Waiting...');
 
     let readings = [];
     let sourceUsed = '';
@@ -603,33 +662,51 @@ async function loadRiverLevel(){
 
         const measureData = await fetchJson(HENTHORN_MEASURE_URL);
         readings = extractReadings(measureData);
-        sourceUsed = 'EA measure feed';
+
+        if(readings.length > 0){
+            setText('measureStatus','OK — readings found');
+            sourceUsed = 'EA measure feed';
+        }else{
+            setText('measureStatus','No readings returned');
+        }
 
     }catch(error){
 
-        try{
-
-            const stationData = await fetchJson(HENTHORN_STATION_URL);
-            readings = extractReadings(stationData);
-            sourceUsed = 'EA station feed';
-
-        }catch(secondError){
-
-            readings = [];
-            sourceUsed = 'Unavailable';
-
-        }
+        setText('measureStatus','Failed — ' + error.message);
 
     }
 
     if(readings.length === 0){
 
-        document.getElementById('riverLevel').innerText = 'Unavailable';
-        document.getElementById('movement').innerText = 'Unavailable';
-        document.getElementById('timestamp').innerText = 'Unavailable';
-        document.getElementById('dataSource').innerText = sourceUsed;
-        document.getElementById('dataWarning').style.display = 'block';
+        setText('stationStatus','Testing...');
 
+        try{
+
+            const stationData = await fetchJson(HENTHORN_STATION_URL);
+            readings = extractReadings(stationData);
+
+            if(readings.length > 0){
+                setText('stationStatus','OK — readings found');
+                sourceUsed = 'EA station feed';
+            }else{
+                setText('stationStatus','No readings returned');
+            }
+
+        }catch(secondError){
+
+            setText('stationStatus','Failed — ' + secondError.message);
+
+        }
+
+    }else{
+
+        setText('stationStatus','Not needed');
+
+    }
+
+    if(readings.length === 0){
+
+        showUnavailable(sourceUsed || 'Unavailable');
         return;
 
     }
@@ -637,8 +714,7 @@ async function loadRiverLevel(){
     const latest = readings[0];
     const previous = readings.length > 1 ? readings[1] : null;
 
-    document.getElementById('riverLevel').innerText =
-        latest.value.toFixed(2) + ' m';
+    setText('riverLevel', latest.value.toFixed(2) + ' m');
 
     let movement = 'Steady';
 
@@ -654,12 +730,10 @@ async function loadRiverLevel(){
 
     }
 
-    document.getElementById('movement').innerText = movement;
-
-    document.getElementById('timestamp').innerText =
-        new Date(latest.dateTime).toLocaleString();
-
-    document.getElementById('dataSource').innerText = sourceUsed;
+    setText('movement', movement);
+    setText('timestamp', new Date(latest.dateTime).toLocaleString());
+    setText('dataSource', sourceUsed);
+    setText('diagnosticResult','Live telemetry loaded successfully');
 
     document.getElementById('dataWarning').style.display = 'none';
 
