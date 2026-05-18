@@ -33,7 +33,7 @@ header p{
 }
 
 .container{
-    max-width:1100px;
+    max-width:1150px;
     margin:auto;
     padding:14px;
 }
@@ -183,6 +183,21 @@ header p{
     color:#374151;
 }
 
+.priority-high{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.priority-medium{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+.priority-low{
+    background:#dcfce7;
+    color:#166534;
+}
+
 .priority{
     background:#f8fafc;
     border:1px solid #e2e8f0;
@@ -207,24 +222,6 @@ header p{
 
 .board-title{
     font-weight:700;
-    margin-bottom:6px;
-}
-
-.source-list{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:12px;
-}
-
-.source-item{
-    border:1px solid #e2e8f0;
-    background:#f8fafc;
-    border-radius:10px;
-    padding:12px;
-}
-
-.source-item strong{
-    display:block;
     margin-bottom:6px;
 }
 
@@ -305,7 +302,7 @@ footer{
 
 <header>
     <h1>Salmon Rivers Intelligence</h1>
-    <p>Build 10088 — Source Fusion + Henthorn Cross-Check</p>
+    <p>Build 10089 — Operational Priority Engine</p>
 </header>
 
 <div class="container">
@@ -347,71 +344,182 @@ footer{
 
         <div class="warning" id="dataWarning" style="display:none;">
             Live EA API telemetry is currently unavailable in this browser session.
-            Use the GOV.UK Henthorn cross-check below.
+            Use official Henthorn links below to cross-check manually.
         </div>
 
     </div>
 
     <div class="card">
 
-        <h2>GOV.UK Henthorn Cross-Check</h2>
-
-        <div class="gold">
-            Official GOV.UK Henthorn page verified today:
-            <br><br>
-            • River: River Ribble at Henthorn<br>
-            • Latest official page reading checked: 0.39m<br>
-            • Trend: Steady<br>
-            • State: Normal<br>
-            • Normal range: 0.33m to 2.50m
-            <br><br>
-            This is a cross-check source, not a fake app value.
-            The app will still prefer live API readings when they load.
-        </div>
-
-        <div class="button-row">
-
-            <a class="button-link" href="https://check-for-flooding.service.gov.uk/station/5066" target="_blank">
-                Open GOV.UK Henthorn
-            </a>
-
-            <a class="button-link secondary" href="https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings?_sorted&_limit=10" target="_blank">
-                Open EA Measure Feed
-            </a>
-
-            <a class="button-link secondary" href="https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=10" target="_blank">
-                Open EA Station Feed
-            </a>
-
-        </div>
-
-    </div>
-
-    <div class="card">
-
-        <h2>Current Active Intelligence Streams</h2>
+        <h2>Operational Priority Engine</h2>
 
         <div class="board">
 
             <div class="board-item">
-                <div class="board-title">Official Telemetry</div>
-                EA Henthorn telemetry is the operational live baseline when API access is available.
+                <div class="board-title">
+                    Highest Operational Value
+                </div>
+
+                Fish-counter telemetry remains the single highest-value missing intelligence source.
             </div>
 
             <div class="board-item">
-                <div class="board-title">Official GOV.UK Cross-Check</div>
-                GOV.UK Henthorn page provides public official confirmation when API readings fail in-browser.
+                <div class="board-title">
+                    Most Reliable Current Layer
+                </div>
+
+                Official EA telemetry remains the most operationally trusted live source.
             </div>
 
             <div class="board-item">
-                <div class="board-title">Magazine Intelligence</div>
-                Trout & Salmon classified as Tier 1 editorial intelligence.
+                <div class="board-title">
+                    Best Current Editorial Intelligence
+                </div>
+
+                Trout & Salmon currently classified as Tier 1 Magazine Intelligence.
             </div>
 
             <div class="board-item">
-                <div class="board-title">Acquisition Investigation</div>
-                RFCA telemetry, fish counters, operator reports and association reports remain active targets.
+                <div class="board-title">
+                    Current Expansion Constraint
+                </div>
+
+                Ribble governance model must stabilise before Tyne/Tweed/Norway expansion.
             </div>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Operationally Critical Intelligence</h2>
+
+        <div class="grid">
+
+            <div class="panel">
+
+                <h3>Telemetry Layer</h3>
+
+                <div class="small">
+                    • river level<br>
+                    • movement<br>
+                    • rainfall<br>
+                    • water temperature
+                </div>
+
+                <div class="status live">
+                    HIGHEST LIVE VALUE
+                </div>
+
+            </div>
+
+            <div class="panel">
+
+                <h3>Migration Intelligence</h3>
+
+                <div class="small">
+                    • fish counters<br>
+                    • run timing<br>
+                    • migration pulses<br>
+                    • upstream movement
+                </div>
+
+                <div class="status priority-high">
+                    STRATEGIC PRIORITY
+                </div>
+
+            </div>
+
+            <div class="panel">
+
+                <h3>Catch Intelligence</h3>
+
+                <div class="small">
+                    • current season catches<br>
+                    • verified reports<br>
+                    • beat intelligence<br>
+                    • association returns
+                </div>
+
+                <div class="status priority-medium">
+                    HIGH VALUE
+                </div>
+
+            </div>
+
+            <div class="panel">
+
+                <h3>Editorial Intelligence</h3>
+
+                <div class="small">
+                    • Trout & Salmon reports<br>
+                    • operator sentiment<br>
+                    • river mentions<br>
+                    • regional activity
+                </div>
+
+                <div class="status magazine">
+                    TIER 1 INTEL
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Highest Value Missing Sources</h2>
+
+        <div class="matrix">
+
+            <table>
+
+                <tr>
+                    <th>Missing Source</th>
+                    <th>Operational Value</th>
+                    <th>Difficulty</th>
+                    <th>Current Status</th>
+                </tr>
+
+                <tr>
+                    <td>RFCA Fish Counters</td>
+                    <td>Extremely High</td>
+                    <td>High</td>
+                    <td>Investigating public access</td>
+                </tr>
+
+                <tr>
+                    <td>RFCA Sonde Temperature</td>
+                    <td>Very High</td>
+                    <td>Medium</td>
+                    <td>Potential acquisition candidate</td>
+                </tr>
+
+                <tr>
+                    <td>Current Season Catch Totals</td>
+                    <td>Very High</td>
+                    <td>Medium-High</td>
+                    <td>No verified continuous source</td>
+                </tr>
+
+                <tr>
+                    <td>Named Operator Feeds</td>
+                    <td>High</td>
+                    <td>Medium</td>
+                    <td>Future structured integration</td>
+                </tr>
+
+                <tr>
+                    <td>Rainfall Radar Integration</td>
+                    <td>High</td>
+                    <td>Medium</td>
+                    <td>Future hydrology layer</td>
+                </tr>
+
+            </table>
 
         </div>
 
@@ -431,7 +539,6 @@ footer{
                     <th>Freshness Requirement</th>
                     <th>Traceability</th>
                     <th>Current Status</th>
-                    <th>Integration Eligibility</th>
                 </tr>
 
                 <tr>
@@ -439,17 +546,15 @@ footer{
                     <td>Highest</td>
                     <td>Minutes</td>
                     <td>Mandatory</td>
-                    <td>Live / API dependent</td>
-                    <td>Fully eligible</td>
+                    <td>Live baseline</td>
                 </tr>
 
                 <tr>
-                    <td>Official GOV.UK Station Page</td>
+                    <td>Official GOV.UK Cross-Check</td>
                     <td>Highest</td>
-                    <td>Current public page</td>
+                    <td>Current page</td>
                     <td>Mandatory</td>
                     <td>Cross-check active</td>
-                    <td>Eligible as source link / verification panel</td>
                 </tr>
 
                 <tr>
@@ -458,7 +563,6 @@ footer{
                     <td>Hours / Daily</td>
                     <td>Mandatory</td>
                     <td>Investigating</td>
-                    <td>Pending source verification</td>
                 </tr>
 
                 <tr>
@@ -467,7 +571,6 @@ footer{
                     <td>Current season</td>
                     <td>Mandatory</td>
                     <td>Tier 1 active</td>
-                    <td>Eligible with classification</td>
                 </tr>
 
                 <tr>
@@ -476,25 +579,6 @@ footer{
                     <td>Current season</td>
                     <td>Mandatory</td>
                     <td>Future candidate</td>
-                    <td>Conditional eligibility</td>
-                </tr>
-
-                <tr>
-                    <td>Club / Association Reports</td>
-                    <td>High</td>
-                    <td>Current season</td>
-                    <td>Mandatory</td>
-                    <td>Seeking sources</td>
-                    <td>Eligible if verified</td>
-                </tr>
-
-                <tr>
-                    <td>Forum / Social Reports</td>
-                    <td>Low</td>
-                    <td>Immediate</td>
-                    <td>Rarely sufficient</td>
-                    <td>Excluded by default</td>
-                    <td>Requires corroboration</td>
                 </tr>
 
             </table>
@@ -505,29 +589,21 @@ footer{
 
     <div class="card">
 
-        <h2>Blocked / Not Yet Integrated Sources</h2>
+        <h2>Official Henthorn Sources</h2>
 
-        <div class="source-list">
+        <div class="button-row">
 
-            <div class="source-item">
-                <strong>RFCA Fish Counter Data</strong>
-                No verified public machine-readable source confirmed yet.
-            </div>
+            <a class="button-link" href="https://check-for-flooding.service.gov.uk/station/5066" target="_blank">
+                GOV.UK Henthorn
+            </a>
 
-            <div class="source-item">
-                <strong>RFCA Sonde Temperature Telemetry</strong>
-                Public monitoring page exists but stable acquisition route not yet validated.
-            </div>
+            <a class="button-link secondary" href="https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings?_sorted&_limit=10" target="_blank">
+                EA Measure Feed
+            </a>
 
-            <div class="source-item">
-                <strong>Current Season Ribble Catch Totals</strong>
-                No verified continuously-updated official source confirmed.
-            </div>
-
-            <div class="source-item">
-                <strong>Named Operator Feeds</strong>
-                Future integration candidates once traceability model is standardised.
-            </div>
+            <a class="button-link secondary" href="https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=10" target="_blank">
+                EA Station Feed
+            </a>
 
         </div>
 
@@ -536,7 +612,7 @@ footer{
 </div>
 
 <footer>
-Build 10088 — Multi-source salmon intelligence fusion with Henthorn official cross-check.
+Build 10089 — Operational intelligence priority engine.
 </footer>
 
 <script>
@@ -601,6 +677,7 @@ async function loadRiverLevel(){
     try{
 
         const measureData = await fetchJson(HENTHORN_MEASURE_URL);
+
         readings = extractReadings(measureData);
 
         if(readings.length > 0){
@@ -614,6 +691,7 @@ async function loadRiverLevel(){
         try{
 
             const stationData = await fetchJson(HENTHORN_STATION_URL);
+
             readings = extractReadings(stationData);
 
             if(readings.length > 0){
@@ -651,7 +729,12 @@ async function loadRiverLevel(){
     }
 
     setText('movement', movement);
-    setText('timestamp', new Date(latest.dateTime).toLocaleString());
+
+    setText(
+        'timestamp',
+        new Date(latest.dateTime).toLocaleString()
+    );
+
     setText('dataSource', sourceUsed);
 
     document.getElementById('dataWarning').style.display = 'none';
