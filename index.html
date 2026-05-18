@@ -166,6 +166,24 @@ header p{
     color:#374151;
 }
 
+.checklist{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:12px;
+}
+
+.check-item{
+    border:1px solid #dbeafe;
+    background:#eff6ff;
+    border-radius:10px;
+    padding:12px;
+}
+
+.check-item strong{
+    display:block;
+    margin-bottom:6px;
+}
+
 .queue{
     display:grid;
     grid-template-columns:1fr;
@@ -269,7 +287,7 @@ footer{
 
 <header>
     <h1>Salmon Rivers Intelligence</h1>
-    <p>Build 10093 — Source Search Queue</p>
+    <p>Build 10094 — Today’s Intelligence Checklist</p>
 </header>
 
 <div class="container">
@@ -313,6 +331,46 @@ footer{
         <div class="warning" id="dataWarning" style="display:none;">
             Live EA API telemetry is currently unavailable in this browser session.
             Use official Henthorn links below to cross-check manually.
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Today’s Intelligence Checklist</h2>
+
+        <div class="checklist">
+
+            <div class="check-item">
+                <strong>1. Is Henthorn telemetry live?</strong>
+                Confirm river level, movement and timestamp from the EA feed.
+                <div class="status live">FIRST CHECK</div>
+            </div>
+
+            <div class="check-item">
+                <strong>2. Is the level rising, falling or steady?</strong>
+                Use movement only from measured EA values. Do not infer fishability.
+                <div class="status crosscheck">CONDITION CONTEXT</div>
+            </div>
+
+            <div class="check-item">
+                <strong>3. Is there current-season Ribble intelligence?</strong>
+                Check Trout & Salmon, RFCA, club, association and operator sources.
+                <div class="status magazine">SOURCE SEEKING</div>
+            </div>
+
+            <div class="check-item">
+                <strong>4. Is any catch information dated and traceable?</strong>
+                Only accept current-season reports with identifiable source origin.
+                <div class="status candidate">VERIFY BEFORE USE</div>
+            </div>
+
+            <div class="check-item">
+                <strong>5. Is the source weak?</strong>
+                Block rumours, undated reports, old-season totals and standalone social claims.
+                <div class="status excluded">BLOCK IF WEAK</div>
+            </div>
+
         </div>
 
     </div>
@@ -531,7 +589,7 @@ footer{
 </div>
 
 <footer>
-Build 10093 — Source search queue and multi-source intelligence control.
+Build 10094 — Today’s intelligence checklist and source-seeking workflow.
 </footer>
 
 <script>
