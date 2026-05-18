@@ -217,6 +217,14 @@ tr:nth-child(even){
     background:#334155;
 }
 
+.button-link.gold{
+    background:#92400e;
+}
+
+.button-link.green{
+    background:#166534;
+}
+
 a{
     color:#0369a1;
     text-decoration:none;
@@ -243,7 +251,7 @@ footer{
 
 <header>
     <h1>Salmon Rivers Intelligence</h1>
-    <p>Build 10090 — Source Registry + Intelligence Fusion Control</p>
+    <p>Build 10091 — Source Launchpad + Intelligence Fusion Registry</p>
 </header>
 
 <div class="container">
@@ -286,6 +294,62 @@ footer{
         <div class="warning" id="dataWarning" style="display:none;">
             Live EA API telemetry is currently unavailable in this browser session.
             Use official Henthorn links below to cross-check manually.
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Source Launchpad</h2>
+
+        <div class="grid">
+
+            <div class="panel">
+                <h3>Official Henthorn Telemetry</h3>
+                <div class="small">
+                    Primary live condition layer for Henthorn.
+                </div>
+                <div class="button-row">
+                    <a class="button-link" href="https://check-for-flooding.service.gov.uk/station/5066" target="_blank">GOV.UK Henthorn</a>
+                    <a class="button-link secondary" href="https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings?_sorted&_limit=10" target="_blank">EA Measure Feed</a>
+                    <a class="button-link secondary" href="https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=10" target="_blank">EA Station Feed</a>
+                </div>
+                <div class="status live">LIVE BASELINE</div>
+            </div>
+
+            <div class="panel">
+                <h3>Trout & Salmon Reports</h3>
+                <div class="small">
+                    Tier 1 magazine intelligence for current-season river reports and catch-report discovery.
+                </div>
+                <div class="button-row">
+                    <a class="button-link gold" href="https://www.troutandsalmon.com/fishing-reports/" target="_blank">Open Trout & Salmon Reports</a>
+                </div>
+                <div class="status magazine">TIER 1 MAGAZINE</div>
+            </div>
+
+            <div class="panel">
+                <h3>RFCA Water Quality</h3>
+                <div class="small">
+                    Candidate source for temperature, sonde and river-health intelligence.
+                </div>
+                <div class="button-row">
+                    <a class="button-link green" href="https://www.ribblefisheriesca.co.uk/live-water-quality-monitoring/" target="_blank">Open RFCA Water Quality</a>
+                </div>
+                <div class="status candidate">INVESTIGATING</div>
+            </div>
+
+            <div class="panel">
+                <h3>EA API Reference</h3>
+                <div class="small">
+                    Official Environment Agency API documentation for levels, flows and station readings.
+                </div>
+                <div class="button-row">
+                    <a class="button-link secondary" href="https://environment.data.gov.uk/flood-monitoring/doc/reference" target="_blank">Open EA API Docs</a>
+                </div>
+                <div class="status crosscheck">REFERENCE</div>
+            </div>
+
         </div>
 
     </div>
@@ -434,32 +498,10 @@ footer{
 
     </div>
 
-    <div class="card">
-
-        <h2>Official Henthorn Sources</h2>
-
-        <div class="button-row">
-
-            <a class="button-link" href="https://check-for-flooding.service.gov.uk/station/5066" target="_blank">
-                GOV.UK Henthorn
-            </a>
-
-            <a class="button-link secondary" href="https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings?_sorted&_limit=10" target="_blank">
-                EA Measure Feed
-            </a>
-
-            <a class="button-link secondary" href="https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=10" target="_blank">
-                EA Station Feed
-            </a>
-
-        </div>
-
-    </div>
-
 </div>
 
 <footer>
-Build 10090 — Source registry and multi-source intelligence fusion control.
+Build 10091 — Source launchpad and multi-source intelligence fusion registry.
 </footer>
 
 <script>
