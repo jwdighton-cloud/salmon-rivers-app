@@ -106,36 +106,7 @@ header p{
     font-size:14px;
 }
 
-.summary-grid{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:12px;
-}
-
-@media(min-width:760px){
-    .summary-grid{
-        grid-template-columns:1fr 1fr 1fr;
-    }
-}
-
-.summary-box{
-    border-radius:12px;
-    padding:14px;
-    border:1px solid #cbd5e1;
-}
-
-.summary-live{
-    background:#ecfdf5;
-}
-
-.summary-seeking{
-    background:#fffbeb;
-}
-
-.summary-blocked{
-    background:#fef2f2;
-}
-
+.summary-grid,
 .action-grid{
     display:grid;
     grid-template-columns:1fr;
@@ -143,23 +114,31 @@ header p{
 }
 
 @media(min-width:760px){
+    .summary-grid,
     .action-grid{
         grid-template-columns:1fr 1fr 1fr;
     }
 }
 
+.summary-box,
 .action-box{
     border-radius:12px;
     padding:14px;
     border:1px solid #cbd5e1;
 }
 
+.summary-live,
 .known{
     background:#ecfdf5;
 }
 
+.summary-seeking,
 .unknown{
     background:#fff7ed;
+}
+
+.summary-blocked{
+    background:#fef2f2;
 }
 
 .next{
@@ -257,6 +236,35 @@ header p{
     color:#475569;
 }
 
+.matrix{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:10px;
+}
+
+th{
+    background:#0f1720;
+    color:white;
+    padding:10px;
+    text-align:left;
+    font-size:13px;
+}
+
+td{
+    padding:10px;
+    border-bottom:1px solid #e5e7eb;
+    font-size:13px;
+    vertical-align:top;
+}
+
+tr:nth-child(even){
+    background:#f8fafc;
+}
+
 .button-row{
     display:flex;
     flex-wrap:wrap;
@@ -307,7 +315,7 @@ footer{
 
 <header>
     <h1>Salmon Rivers Intelligence</h1>
-    <p>Build 10098 — Known / Unknown / Next Action Panel</p>
+    <p>Build 10099 — Source Gap Register</p>
 </header>
 
 <div class="container">
@@ -373,9 +381,64 @@ footer{
 
             <div class="action-box next">
                 <strong>Next Action</strong><br><br>
-                Check Tier 1 magazine reports, RFCA water-quality data and official/club/operator sources for dated current-season evidence.
+                Seek dated current-season evidence from Trout & Salmon, RFCA, clubs, operators and official sources.
                 <div class="status crosscheck">SEEK EVIDENCE</div>
             </div>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Source Gap Register</h2>
+
+        <div class="matrix">
+
+            <table>
+                <tr>
+                    <th>Missing Source</th>
+                    <th>Why It Matters</th>
+                    <th>Proof Needed</th>
+                    <th>Current Status</th>
+                </tr>
+
+                <tr>
+                    <td>RFCA Fish Counter Data</td>
+                    <td>Could show migration pulses and fish movement timing.</td>
+                    <td>Public traceable page, feed, report, or verified RFCA publication.</td>
+                    <td><span class="status blocked">NOT VERIFIED</span></td>
+                </tr>
+
+                <tr>
+                    <td>RFCA Water Temperature / Sonde Data</td>
+                    <td>Temperature is critical for fish welfare and activity context.</td>
+                    <td>Stable live page, data endpoint, or regularly updated official source.</td>
+                    <td><span class="status candidate">INVESTIGATING</span></td>
+                </tr>
+
+                <tr>
+                    <td>Current-Season Ribble Catch Reports</td>
+                    <td>Most important salmon intelligence beyond conditions.</td>
+                    <td>Dated report from Trout & Salmon, RFCA, club, association, operator, or official return.</td>
+                    <td><span class="status candidate">SEEKING</span></td>
+                </tr>
+
+                <tr>
+                    <td>Named Operator / Beat Reports</td>
+                    <td>Useful for local beat-level activity and recent observations.</td>
+                    <td>Named operator, current date/season, river/beat reference, traceable source.</td>
+                    <td><span class="status candidate">FUTURE</span></td>
+                </tr>
+
+                <tr>
+                    <td>Rainfall / Catchment Context</td>
+                    <td>Useful for explaining level movement and future conditions.</td>
+                    <td>Relevant official rainfall feed or stable weather/rainfall data source.</td>
+                    <td><span class="status candidate">FUTURE</span></td>
+                </tr>
+
+            </table>
 
         </div>
 
@@ -519,7 +582,7 @@ footer{
 </div>
 
 <footer>
-Build 10098 — Known / unknown / next-action intelligence control.
+Build 10099 — Source gap register and evidence requirements.
 </footer>
 
 <script>
