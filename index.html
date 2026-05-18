@@ -54,6 +54,7 @@ header p{
     display:flex;
     justify-content:space-between;
     align-items:center;
+    gap:12px;
     padding:12px 0;
     border-bottom:1px solid #e5e7eb;
 }
@@ -68,15 +69,48 @@ header p{
 
 .value{
     font-weight:700;
+    text-align:right;
 }
 
 .neutral{
     color:#0369a1;
 }
 
+.good{
+    color:#166534;
+}
+
+.warn{
+    color:#92400e;
+}
+
+.bad{
+    color:#991b1b;
+}
+
 .note{
     background:#eef6ff;
     border-left:4px solid #2563eb;
+    padding:12px;
+    border-radius:8px;
+    margin-top:12px;
+    line-height:1.5;
+    font-size:14px;
+}
+
+.warning{
+    background:#fff7ed;
+    border-left:4px solid #ea580c;
+    padding:12px;
+    border-radius:8px;
+    margin-top:12px;
+    line-height:1.5;
+    font-size:14px;
+}
+
+.gold{
+    background:#fffbeb;
+    border-left:4px solid #d97706;
     padding:12px;
     border-radius:8px;
     margin-top:12px;
@@ -134,9 +168,9 @@ header p{
     color:#92400e;
 }
 
-.manual{
-    background:#dbeafe;
-    color:#1d4ed8;
+.magazine{
+    background:#fef9c3;
+    color:#854d0e;
 }
 
 .blocked{
@@ -147,15 +181,6 @@ header p{
 .excluded{
     background:#e5e7eb;
     color:#374151;
-}
-
-.audit{
-    background:#fff7ed;
-    border-left:4px solid #ea580c;
-    padding:12px;
-    border-radius:8px;
-    line-height:1.5;
-    font-size:14px;
 }
 
 .priority{
@@ -185,65 +210,28 @@ header p{
     margin-bottom:6px;
 }
 
-.form-row{
-    margin-bottom:12px;
+.source-list{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:12px;
 }
 
-label{
-    display:block;
-    font-size:13px;
-    font-weight:700;
-    margin-bottom:5px;
-}
-
-input,textarea,select{
-    width:100%;
-    box-sizing:border-box;
-    padding:10px;
-    border-radius:8px;
-    border:1px solid #cbd5e1;
-    font-size:14px;
-    font-family:inherit;
-}
-
-textarea{
-    min-height:80px;
-}
-
-button{
-    border:none;
-    border-radius:10px;
-    padding:10px 14px;
-    font-weight:700;
-    cursor:pointer;
-    background:#0f1720;
-    color:white;
-}
-
-button.secondary{
-    background:#64748b;
-}
-
-.catch-entry{
+.source-item{
     border:1px solid #e2e8f0;
+    background:#f8fafc;
     border-radius:10px;
     padding:12px;
-    margin-top:10px;
-    background:#f8fafc;
 }
 
-.catch-entry strong{
+.source-item strong{
     display:block;
     margin-bottom:6px;
 }
 
-.warning{
-    background:#fef2f2;
-    border-left:4px solid #dc2626;
-    padding:12px;
-    border-radius:8px;
-    font-size:14px;
-    line-height:1.5;
+a{
+    color:#0369a1;
+    text-decoration:none;
+    font-weight:700;
 }
 
 footer{
@@ -251,11 +239,6 @@ footer{
     padding:20px;
     font-size:12px;
     color:#666;
-}
-
-a{
-    color:#0369a1;
-    text-decoration:none;
 }
 
 .refresh{
@@ -271,7 +254,7 @@ a{
 
 <header>
     <h1>Salmon Rivers Intelligence</h1>
-    <p>Build 10083 — Manual Verified Catch Ledger</p>
+    <p>Build 10085 — Source-Seeking Intelligence + Tier 1 Magazine Intel</p>
 </header>
 
 <div class="container">
@@ -291,13 +274,13 @@ a{
         </div>
 
         <div class="metric">
-            <div class="label">EA Rainfall Discovery</div>
-            <div class="value neutral" id="rainfall">Loading...</div>
+            <div class="label">Last EA Update</div>
+            <div class="value neutral" id="timestamp">Loading...</div>
         </div>
 
         <div class="metric">
-            <div class="label">Last EA Update</div>
-            <div class="value neutral" id="timestamp">Loading...</div>
+            <div class="label">Data Source</div>
+            <div class="value neutral" id="dataSource">EA API</div>
         </div>
 
         <div class="refresh">
@@ -306,80 +289,152 @@ a{
 
         <div class="note">
             VERIFIED DATA ONLY.<br><br>
-            No speculative catches.<br>
-            No invented salmon numbers.<br>
-            No fake classifications.<br><br>
+            This app seeks verified river and salmon intelligence from traceable sources.
+            It does not rely on user-entered catch claims.
+            <br><br>
             <strong>Rule: No source = no number.</strong>
         </div>
 
-    </div>
-
-    <div class="card">
-
-        <h2>Manual Verified Catch Ledger</h2>
-
-        <div class="warning">
-            This ledger is for manually verified current-season catch intelligence only.
-            Do not enter rumours, old-season totals, or untraceable claims.
+        <div class="warning" id="dataWarning" style="display:none;">
+            Live EA telemetry is currently unavailable in this browser session.
+            Use the official Henthorn source links below for manual cross-checking.
         </div>
-
-        <div class="form-row">
-            <label for="catchDate">Catch / Report Date</label>
-            <input type="date" id="catchDate">
-        </div>
-
-        <div class="form-row">
-            <label for="catchSource">Traceable Source</label>
-            <input type="text" id="catchSource" placeholder="Example: RFCA bulletin, club update, operator report">
-        </div>
-
-        <div class="form-row">
-            <label for="catchDetail">Verified Detail</label>
-            <textarea id="catchDetail" placeholder="Enter only what the source actually verifies."></textarea>
-        </div>
-
-        <div class="form-row">
-            <label for="catchConfidence">Verification Confidence</label>
-            <select id="catchConfidence">
-                <option value="Manual verified">Manual verified</option>
-                <option value="Needs re-check">Needs re-check</option>
-                <option value="Do not use live">Do not use live</option>
-            </select>
-        </div>
-
-        <button onclick="saveCatchEntry()">Save Verified Entry</button>
-        <button class="secondary" onclick="clearCatchLedger()">Clear Ledger</button>
-
-        <div id="catchLedger"></div>
 
     </div>
 
     <div class="card">
 
-        <h2>Operational Intelligence Board</h2>
+        <h2>Official Henthorn Sources</h2>
+
+        <div class="source-list">
+
+            <div class="source-item">
+                <strong>GOV.UK — River Ribble level at Henthorn</strong>
+                Official public station page for Henthorn height, trend, state and normal range.
+                <br><br>
+                <a href="https://check-for-flooding.service.gov.uk/station/5066" target="_blank">
+                    Open official Henthorn page
+                </a>
+            </div>
+
+            <div class="source-item">
+                <strong>Environment Agency API — Henthorn Measure Feed</strong>
+                Direct machine-readable readings for Henthorn water level.
+                <br><br>
+                <a href="https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings?_sorted&_limit=10" target="_blank">
+                    Open EA measure feed
+                </a>
+            </div>
+
+            <div class="source-item">
+                <strong>Environment Agency API — Henthorn Station Feed</strong>
+                Station-level fallback feed for Henthorn readings.
+                <br><br>
+                <a href="https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=10" target="_blank">
+                    Open EA station feed
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Trout & Salmon Magazine Intelligence</h2>
+
+        <div class="gold">
+            Trout & Salmon fishing reports are now treated as a
+            <strong>Tier 1 Magazine Intelligence Source</strong>.
+            <br><br>
+            They are not telemetry and they are not official fish-counter data.
+            They are used as curated river-by-river intelligence, trend evidence,
+            catch-report discovery and regional salmon activity context.
+        </div>
+
+        <div class="source-list">
+
+            <div class="source-item">
+                <strong>Source Class</strong>
+                Magazine Intelligence — Tier 1
+            </div>
+
+            <div class="source-item">
+                <strong>Permitted Use</strong>
+                River mentions, reported activity, dated catch references, regional trend indicators and source discovery.
+            </div>
+
+            <div class="source-item">
+                <strong>Blocked Use</strong>
+                Cannot be treated as exact telemetry, live counter data, or official catch totals unless explicitly stated and traceable.
+            </div>
+
+            <div class="source-item">
+                <strong>Current App Handling</strong>
+                Source recognised and classified. No magazine figures are displayed until directly verified from a current report.
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Source-Seeking Intelligence Board</h2>
 
         <div class="board">
 
             <div class="board-item">
-                <div class="board-title">Live Telemetry State</div>
-                EA Henthorn telemetry operational and updating.
+                <div class="board-title">Live Telemetry Search</div>
+                EA Henthorn river telemetry is the verified live base layer.
             </div>
 
             <div class="board-item">
-                <div class="board-title">Acquisition State</div>
-                RFCA telemetry acquisition investigation active.
+                <div class="board-title">Magazine Intelligence Search</div>
+                Trout & Salmon reports are now a Tier 1 intelligence stream.
             </div>
 
             <div class="board-item">
-                <div class="board-title">Source Integrity</div>
-                Current live intelligence remains evidence-controlled.
+                <div class="board-title">Catch Intelligence Search</div>
+                Current-season salmon catches must come from traceable external sources only.
             </div>
 
             <div class="board-item">
-                <div class="board-title">Expansion Readiness</div>
-                Tyne/Tweed/Norway/Iceland expansion blocked pending Ribble validation.
+                <div class="board-title">Fish Counter Search</div>
+                Fish-counter data remains under investigation until a public verified source is found.
             </div>
 
+            <div class="board-item">
+                <div class="board-title">Temperature Search</div>
+                RFCA sonde / water-quality telemetry remains an acquisition candidate.
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Acquisition Targets</h2>
+
+        <div class="priority">
+            <strong>Priority 1 — Current Season Catch Reports</strong><br>
+            Seek official, magazine, operator or clearly traceable Ribble salmon reports for the current season only.
+        </div>
+
+        <div class="priority">
+            <strong>Priority 2 — Trout & Salmon Report Indexing</strong><br>
+            Build structured indexing from current magazine reports without copying wholesale text.
+        </div>
+
+        <div class="priority">
+            <strong>Priority 3 — Fish Counter Data</strong><br>
+            Seek public RFCA or agency-backed migration telemetry.
+        </div>
+
+        <div class="priority">
+            <strong>Priority 4 — Water Temperature</strong><br>
+            Seek stable RFCA temperature / sonde data suitable for live display.
         </div>
 
     </div>
@@ -393,44 +448,54 @@ a{
             <div class="panel">
                 <h3>Verified Live Layer</h3>
                 <div class="small">
-                    • EA telemetry<br>
+                    • EA Henthorn river level<br>
                     • movement detection<br>
-                    • timestamps<br>
-                    • auto refresh<br>
-                    • telemetry governance
+                    • timestamped telemetry<br>
+                    • official source links
                 </div>
                 <div class="status live">VERIFIED LIVE</div>
             </div>
 
             <div class="panel">
-                <h3>Acquisition Investigation Layer</h3>
+                <h3>Tier 1 Magazine Intel</h3>
                 <div class="small">
-                    • RFCA telemetry<br>
-                    • fish counter access<br>
-                    • catch acquisition<br>
-                    • source validation
+                    • Trout & Salmon reports<br>
+                    • river-by-river intelligence<br>
+                    • regional fishing reports<br>
+                    • source discovery
                 </div>
-                <div class="status candidate">UNDER INVESTIGATION</div>
+                <div class="status magazine">TIER 1 MAGAZINE</div>
             </div>
 
             <div class="panel">
-                <h3>Manual Verification Layer</h3>
+                <h3>Source-Seeking Layer</h3>
                 <div class="small">
-                    • club bulletins<br>
-                    • RFCA updates<br>
-                    • operator reports<br>
-                    • manually checked evidence
+                    • RFCA water quality<br>
+                    • fish counters<br>
+                    • catch reports<br>
+                    • operator updates
                 </div>
-                <div class="status manual">MANUAL VERIFIED</div>
+                <div class="status candidate">SEEKING SOURCES</div>
             </div>
 
             <div class="panel">
-                <h3>Excluded Intelligence Layer</h3>
+                <h3>Blocked Data Layer</h3>
+                <div class="small">
+                    • no public source<br>
+                    • no date<br>
+                    • not current season<br>
+                    • not traceable
+                </div>
+                <div class="status blocked">BLOCKED</div>
+            </div>
+
+            <div class="panel">
+                <h3>Excluded Layer</h3>
                 <div class="small">
                     • rumours<br>
+                    • unverified forum posts<br>
                     • fake counts<br>
-                    • speculative conditions<br>
-                    • unverified forum posts
+                    • speculative conditions
                 </div>
                 <div class="status excluded">EXCLUDED</div>
             </div>
@@ -441,39 +506,22 @@ a{
 
     <div class="card">
 
-        <h2>Current Acquisition Priorities</h2>
+        <h2>Verification Rules</h2>
 
-        <div class="priority">
-            <strong>Priority 1 — Current Season Catch Intelligence</strong><br>
-            Verified current-season salmon returns only.
-        </div>
+        <div class="warning">
 
-        <div class="priority">
-            <strong>Priority 2 — Fish Counter Access</strong><br>
-            Determine whether migration telemetry is publicly accessible.
-        </div>
-
-        <div class="priority">
-            <strong>Priority 3 — RFCA Sonde Telemetry</strong><br>
-            Validate stable machine-readable telemetry acquisition.
-        </div>
-
-    </div>
-
-    <div class="card">
-
-        <h2>Verification & Audit Rules</h2>
-
-        <div class="audit">
-            Every intelligence item entering the live platform must satisfy:
+            A source can enter the live intelligence layer only if it has:
             <br><br>
-            • identifiable source<br>
-            • current season relevance<br>
-            • timestamp traceability<br>
-            • verification pathway<br>
+
+            • identifiable origin<br>
+            • current-season relevance<br>
+            • timestamp or publication date<br>
+            • traceable link, report, page or photographed source<br>
             • non-speculative wording
             <br><br>
-            Failure of any rule blocks integration.
+
+            Otherwise it stays out.
+
         </div>
 
     </div>
@@ -483,19 +531,20 @@ a{
         <h2>Platform Direction</h2>
 
         <div class="small">
-            Salmon Rivers Intelligence is evolving into a verified acquisition terminal rather than a traditional river report app.
+            Salmon Rivers Intelligence is a verified information-seeking terminal.
+            <br><br>
+            It should pull, classify and present external evidence, not depend on user-entered data.
             <br><br>
             Current architecture:
             <br><br>
-            • telemetry layer<br>
-            • governance layer<br>
-            • acquisition layer<br>
-            • manual verification ledger<br>
-            • audit layer<br>
-            • operational intelligence layer<br>
-            • confidence-controlled intelligence layer
+            • verified telemetry layer<br>
+            • Tier 1 magazine intelligence layer<br>
+            • source-seeking layer<br>
+            • acquisition investigation layer<br>
+            • verification control layer<br>
+            • excluded-data protection layer
             <br><br>
-            Expansion beyond the Ribble remains blocked until governance standards are proven stable.
+            Expansion beyond the Ribble remains blocked until the Ribble source model is stable.
         </div>
 
     </div>
@@ -503,227 +552,124 @@ a{
 </div>
 
 <footer>
-Build 10083 — Manual verified catch ledger + operational intelligence control.
+Build 10085 — Source-seeking intelligence terminal with Tier 1 Magazine Intel.
 </footer>
 
 <script>
 
-const CATCH_LEDGER_KEY = 'salmonRiversCatchLedger10083';
+const HENTHORN_MEASURE_URL =
+    'https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings?_sorted&_limit=10';
+
+const HENTHORN_STATION_URL =
+    'https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=10';
+
+async function fetchJson(url){
+
+    const response = await fetch(url, {
+        cache: 'no-store'
+    });
+
+    if(!response.ok){
+        throw new Error('Fetch failed: ' + response.status);
+    }
+
+    return await response.json();
+
+}
+
+function extractReadings(data){
+
+    if(!data || !data.items || !Array.isArray(data.items)){
+        return [];
+    }
+
+    return data.items
+        .filter(item => item.value !== undefined && item.dateTime)
+        .map(item => ({
+            value: Number(item.value),
+            dateTime: item.dateTime
+        }))
+        .filter(item => !Number.isNaN(item.value))
+        .sort((a,b) => new Date(b.dateTime) - new Date(a.dateTime));
+
+}
 
 async function loadRiverLevel(){
 
+    let readings = [];
+    let sourceUsed = '';
+
     try{
 
-        const response = await fetch(
-            'https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=10'
-        );
-
-        const data = await response.json();
-
-        const readings = data.items;
-
-        let latest = null;
-        let previous = null;
-
-        for(const item of readings){
-
-            if(item.value !== undefined){
-
-                if(!latest){
-                    latest = item;
-                }else if(!previous){
-                    previous = item;
-                    break;
-                }
-
-            }
-
-        }
-
-        if(latest){
-
-            document.getElementById('riverLevel').innerText =
-                latest.value.toFixed(2) + ' m';
-
-            let movement = 'Steady';
-
-            if(previous){
-
-                if(latest.value > previous.value + 0.01){
-                    movement = 'Rising';
-                }
-
-                if(latest.value < previous.value - 0.01){
-                    movement = 'Falling';
-                }
-
-            }
-
-            document.getElementById('movement').innerText = movement;
-
-            const date = new Date(latest.dateTime);
-
-            document.getElementById('timestamp').innerText =
-                date.toLocaleString();
-
-        }
+        const measureData = await fetchJson(HENTHORN_MEASURE_URL);
+        readings = extractReadings(measureData);
+        sourceUsed = 'EA measure feed';
 
     }catch(error){
+
+        try{
+
+            const stationData = await fetchJson(HENTHORN_STATION_URL);
+            readings = extractReadings(stationData);
+            sourceUsed = 'EA station feed';
+
+        }catch(secondError){
+
+            readings = [];
+            sourceUsed = 'Unavailable';
+
+        }
+
+    }
+
+    if(readings.length === 0){
 
         document.getElementById('riverLevel').innerText = 'Unavailable';
         document.getElementById('movement').innerText = 'Unavailable';
         document.getElementById('timestamp').innerText = 'Unavailable';
+        document.getElementById('dataSource').innerText = sourceUsed;
+        document.getElementById('dataWarning').style.display = 'block';
+
+        return;
 
     }
 
-}
+    const latest = readings[0];
+    const previous = readings.length > 1 ? readings[1] : null;
 
-async function loadRainfall(){
+    document.getElementById('riverLevel').innerText =
+        latest.value.toFixed(2) + ' m';
 
-    try{
+    let movement = 'Steady';
 
-        const response = await fetch(
-            'https://environment.data.gov.uk/flood-monitoring/id/measures?parameter=rainfall'
-        );
+    if(previous){
 
-        const data = await response.json();
-
-        if(data.items && data.items.length > 0){
-
-            document.getElementById('rainfall').innerText =
-                'Discovery Active';
-
-        }else{
-
-            document.getElementById('rainfall').innerText =
-                'Unavailable';
-
+        if(latest.value > previous.value + 0.01){
+            movement = 'Rising';
         }
 
-    }catch(error){
-
-        document.getElementById('rainfall').innerText =
-            'Unavailable';
+        if(latest.value < previous.value - 0.01){
+            movement = 'Falling';
+        }
 
     }
 
-}
+    document.getElementById('movement').innerText = movement;
 
-function getCatchLedger(){
+    document.getElementById('timestamp').innerText =
+        new Date(latest.dateTime).toLocaleString();
 
-    const raw = localStorage.getItem(CATCH_LEDGER_KEY);
+    document.getElementById('dataSource').innerText = sourceUsed;
 
-    if(!raw){
-        return [];
-    }
-
-    try{
-        return JSON.parse(raw);
-    }catch(error){
-        return [];
-    }
-
-}
-
-function saveCatchLedger(entries){
-
-    localStorage.setItem(CATCH_LEDGER_KEY, JSON.stringify(entries));
-
-}
-
-function saveCatchEntry(){
-
-    const date = document.getElementById('catchDate').value;
-    const source = document.getElementById('catchSource').value.trim();
-    const detail = document.getElementById('catchDetail').value.trim();
-    const confidence = document.getElementById('catchConfidence').value;
-
-    if(!date || !source || !detail){
-        alert('Date, source and verified detail are required.');
-        return;
-    }
-
-    const entries = getCatchLedger();
-
-    entries.unshift({
-        date: date,
-        source: source,
-        detail: detail,
-        confidence: confidence,
-        savedAt: new Date().toISOString()
-    });
-
-    saveCatchLedger(entries);
-
-    document.getElementById('catchDate').value = '';
-    document.getElementById('catchSource').value = '';
-    document.getElementById('catchDetail').value = '';
-    document.getElementById('catchConfidence').value = 'Manual verified';
-
-    renderCatchLedger();
-
-}
-
-function clearCatchLedger(){
-
-    const confirmed = confirm('Clear all locally saved catch ledger entries?');
-
-    if(!confirmed){
-        return;
-    }
-
-    localStorage.removeItem(CATCH_LEDGER_KEY);
-    renderCatchLedger();
-
-}
-
-function escapeHtml(text){
-
-    return text
-        .replaceAll('&','&amp;')
-        .replaceAll('<','&lt;')
-        .replaceAll('>','&gt;')
-        .replaceAll('"','&quot;')
-        .replaceAll("'","&#039;");
-
-}
-
-function renderCatchLedger(){
-
-    const entries = getCatchLedger();
-    const container = document.getElementById('catchLedger');
-
-    if(entries.length === 0){
-
-        container.innerHTML =
-            '<div class="catch-entry"><strong>No verified catch entries yet.</strong>No current-season catch intelligence has been manually verified.</div>';
-
-        return;
-    }
-
-    container.innerHTML = entries.map(entry => {
-
-        return `
-            <div class="catch-entry">
-                <strong>${escapeHtml(entry.date)} — ${escapeHtml(entry.confidence)}</strong>
-                <div><b>Source:</b> ${escapeHtml(entry.source)}</div>
-                <div><b>Detail:</b> ${escapeHtml(entry.detail)}</div>
-                <div class="small">Saved: ${escapeHtml(new Date(entry.savedAt).toLocaleString())}</div>
-            </div>
-        `;
-
-    }).join('');
+    document.getElementById('dataWarning').style.display = 'none';
 
 }
 
 loadRiverLevel();
-loadRainfall();
-renderCatchLedger();
 
 setInterval(() => {
 
     loadRiverLevel();
-    loadRainfall();
 
 }, 300000);
 
