@@ -136,6 +136,36 @@ header p{
     background:#fef2f2;
 }
 
+.action-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:12px;
+}
+
+@media(min-width:760px){
+    .action-grid{
+        grid-template-columns:1fr 1fr 1fr;
+    }
+}
+
+.action-box{
+    border-radius:12px;
+    padding:14px;
+    border:1px solid #cbd5e1;
+}
+
+.known{
+    background:#ecfdf5;
+}
+
+.unknown{
+    background:#fff7ed;
+}
+
+.next{
+    background:#eff6ff;
+}
+
 .ladder{
     display:grid;
     grid-template-columns:1fr;
@@ -277,7 +307,7 @@ footer{
 
 <header>
     <h1>Salmon Rivers Intelligence</h1>
-    <p>Build 10097 — River Intelligence Summary Panel</p>
+    <p>Build 10098 — Known / Unknown / Next Action Panel</p>
 </header>
 
 <div class="container">
@@ -319,6 +349,34 @@ footer{
 
         <div class="warning" id="dataWarning" style="display:none;">
             Live EA telemetry currently unavailable. Use official Henthorn links below.
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Known / Unknown / Next Action</h2>
+
+        <div class="action-grid">
+
+            <div class="action-box known">
+                <strong>Known Now</strong><br><br>
+                Henthorn condition layer is based on official EA telemetry when the API loads.
+                <div class="status live">KNOWN SOURCE</div>
+            </div>
+
+            <div class="action-box unknown">
+                <strong>Unknown / Not Integrated</strong><br><br>
+                Current-season Ribble catch totals, public fish-counter data and stable RFCA temperature acquisition are not yet verified.
+                <div class="status candidate">SOURCE GAP</div>
+            </div>
+
+            <div class="action-box next">
+                <strong>Next Action</strong><br><br>
+                Check Tier 1 magazine reports, RFCA water-quality data and official/club/operator sources for dated current-season evidence.
+                <div class="status crosscheck">SEEK EVIDENCE</div>
+            </div>
+
         </div>
 
     </div>
@@ -461,7 +519,7 @@ footer{
 </div>
 
 <footer>
-Build 10097 — River intelligence summary and confidence hierarchy.
+Build 10098 — Known / unknown / next-action intelligence control.
 </footer>
 
 <script>
