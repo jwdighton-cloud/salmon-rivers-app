@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10105</title>
+<title>Salmon Rivers Intelligence — Build 10106</title>
 <style>
 :root{
   --bg:#f4f6f8;--card:#fff;--ink:#111827;--muted:#6b7280;--line:#d8dee6;
@@ -45,7 +45,7 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 <body>
 <header>
   <h1>Salmon Rivers Intelligence</h1>
-  <div class="build">Build 10105 · Ribble @ Henthorn · verified data only</div>
+  <div class="build">Build 10106 · Ribble @ Henthorn · verified data only</div>
 </header>
 
 <main>
@@ -87,12 +87,51 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   <div class="row"><div class="label">Rainfall acquisition</div><div id="fusionRainfall" class="value">Checking</div></div>
   <div class="row"><div class="label">Catch intelligence</div><div class="value">Blocked</div></div>
   <div class="row"><div class="label">RFCA values</div><div class="value">Blocked</div></div>
+  <div class="row"><div class="label">Operator / association data</div><div class="value">Modelled, blocked</div></div>
   <div class="row"><div class="label">Overall intelligence status</div><div id="fusionOverall" class="value">Checking</div></div>
 
   <p class="small">
-    Fusion logic does not create conclusions. It only separates verified live feeds from candidate sources and blocked intelligence.
-    A source can support the app only when it is live or traceable, current, and governed.
+    Fusion logic does not create conclusions. It separates verified live feeds from candidate sources and blocked intelligence.
   </p>
+</section>
+
+<section class="card">
+  <h2>Operator / Association Modelling</h2>
+  <div class="badge warn">Model added — values blocked</div>
+
+  <p class="small">
+    Operator, club, association, and beat sources are now modelled as candidate intelligence inputs.
+    They can support the app only when each item is current-season, dated, traceable, river-specific, and non-speculative.
+  </p>
+
+  <div class="grid">
+    <div class="source">
+      <div class="source-title">Catch-report groups</div>
+      <div class="badge warn">Candidate only</div>
+      <p class="small">Useful for manual review. Not accepted as automatic catch totals.</p>
+      <p class="small"><a href="https://www.facebook.com/groups/511047772383310/" target="_blank" rel="noopener">Open Ribble Catch Reports</a></p>
+    </div>
+
+    <div class="source">
+      <div class="source-title">Angling association beat pages</div>
+      <div class="badge warn">Candidate only</div>
+      <p class="small">Useful for beat mapping and access context. Not a current catch total source.</p>
+      <p class="small"><a href="https://www.yorkshireflyfishers.co.uk/river_ribble.htm" target="_blank" rel="noopener">Open Yorkshire Fly Fishers Ribble beat</a></p>
+    </div>
+
+    <div class="source">
+      <div class="source-title">Association waters</div>
+      <div class="badge warn">Candidate only</div>
+      <p class="small">May identify waters with salmon and sea trout, but does not provide verified current totals.</p>
+      <p class="small"><a href="https://www.bradfordcityaa.co.uk/river-ribble-skirbeck/" target="_blank" rel="noopener">Open Bradford City AA Skirbeck</a></p>
+    </div>
+
+    <div class="source">
+      <div class="source-title">Operator / beat reports</div>
+      <div class="badge blocked">No trusted feed yet</div>
+      <p class="small">Future integration requires repeatable source format and current-season date checks.</p>
+    </div>
+  </div>
 </section>
 
 <section class="card">
@@ -112,23 +151,10 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
     </div>
 
     <div class="source">
-      <div class="source-title">River Ribble Catch Reports group</div>
-      <div class="badge warn">Candidate only</div>
-      <p class="small">May contain catch reports, but values remain blocked unless individually verified and dated.</p>
-      <p class="small"><a href="https://www.facebook.com/groups/511047772383310/" target="_blank" rel="noopener">Open source</a></p>
-    </div>
-
-    <div class="source">
       <div class="source-title">Trout & Salmon editorial intelligence</div>
       <div class="badge warn">Tier 1 editorial, not live total</div>
       <p class="small">Accepted for context when current and traceable, but not used to invent totals.</p>
       <p class="small"><a href="https://www.troutandsalmon.com/" target="_blank" rel="noopener">Open source</a></p>
-    </div>
-
-    <div class="source">
-      <div class="source-title">Operator / beat reports</div>
-      <div class="badge blocked">Not integrated</div>
-      <p class="small">Future source model required before values can be displayed.</p>
     </div>
   </div>
 </section>
@@ -157,9 +183,9 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   <div class="row"><div class="label">Known</div><div class="value">EA Henthorn level telemetry</div></div>
   <div class="row"><div class="label">Acquired</div><div class="value">EA rainfall API pathway</div></div>
   <div class="row"><div class="label">Indexed</div><div class="value">Current-season report candidates</div></div>
-  <div class="row"><div class="label">Added</div><div class="value">Source fusion logic</div></div>
+  <div class="row"><div class="label">Added</div><div class="value">Operator / association model</div></div>
   <div class="row"><div class="label">Unknown</div><div class="value">Verified Ribble salmon / sea-trout total</div></div>
-  <div class="row"><div class="label">Next action</div><div class="value">Operator / association modelling</div></div>
+  <div class="row"><div class="label">Next action</div><div class="value">Android Studio transition planning</div></div>
 </section>
 
 <section class="card">
@@ -167,7 +193,7 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   <div class="row"><div class="label">RFCA fish counters</div><div class="value">Open gap</div></div>
   <div class="row"><div class="label">Stable RFCA temperature acquisition</div><div class="value">Open gap</div></div>
   <div class="row"><div class="label">Current-season Ribble catch intelligence</div><div class="value">Indexed, blocked</div></div>
-  <div class="row"><div class="label">Operator / beat intelligence</div><div class="value">Next target</div></div>
+  <div class="row"><div class="label">Operator / beat intelligence</div><div class="value">Model added, blocked</div></div>
   <div class="row"><div class="label">Rainfall / catchment intelligence</div><div class="value">EA acquisition added</div></div>
 </section>
 
@@ -183,11 +209,11 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 </main>
 
 <div class="footer">
-  Salmon Rivers Intelligence · Build 10105 · GitHub Pages single-file terminal
+  Salmon Rivers Intelligence · Build 10106 · GitHub Pages single-file terminal
 </div>
 
 <script>
-const BUILD = "10105";
+const BUILD = "10106";
 const HENTHORN_STATION = "710305";
 const HENTHORN_LAT = 53.87;
 const HENTHORN_LONG = -2.39;
