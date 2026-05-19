@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10113</title>
+<title>Salmon Rivers Intelligence — Build 10114</title>
 
 <style>
 :root{
@@ -113,7 +113,7 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 
 <header>
   <h1>Salmon Rivers Intelligence</h1>
-  <div class="build">Build 10113 · Current-Season Catch Intelligence Gate · verified data only</div>
+  <div class="build">Build 10114 · Evidence-Chain Mapping · verified data only</div>
 </header>
 
 <main>
@@ -143,14 +143,71 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 </section>
 
 <section class="card">
+  <h2>Evidence-Chain Mapping</h2>
+
+  <div class="badge info">Promotion path controlled</div>
+
+  <p class="small">
+    Any future value must travel through the full evidence chain before display.
+    If any link fails, the app blocks the number.
+  </p>
+
+  <div class="row"><div class="label">1. Source discovered</div><div class="value">Candidate only</div></div>
+  <div class="row"><div class="label">2. Source traceable</div><div class="value">Required</div></div>
+  <div class="row"><div class="label">3. Current timestamp</div><div class="value">Required</div></div>
+  <div class="row"><div class="label">4. Unit / meaning clear</div><div class="value">Required</div></div>
+  <div class="row"><div class="label">5. River / station clear</div><div class="value">Required</div></div>
+  <div class="row"><div class="label">6. Repeatable refresh</div><div class="value">Required</div></div>
+  <div class="row"><div class="label">7. Display permitted</div><div class="value">Only after pass</div></div>
+
+  <p class="small">
+    This applies to RFCA temperature, RFCA river-health data, fish counters, catch totals,
+    operator reports, and any future non-EA source.
+  </p>
+</section>
+
+<section class="card">
+  <h2>Value Promotion Rules</h2>
+
+  <div class="grid">
+    <div class="source">
+      <div class="source-title">Live EA telemetry</div>
+      <div class="badge good">Already accepted</div>
+      <p class="small">
+        Henthorn level readings are allowed because the EA endpoint is live, traceable, numeric, and repeatable.
+      </p>
+    </div>
+
+    <div class="source">
+      <div class="source-title">EA rainfall</div>
+      <div class="badge good">Accepted if returned live</div>
+      <p class="small">
+        Rainfall is displayed only when the EA rainfall API returns a current numeric reading.
+      </p>
+    </div>
+
+    <div class="source">
+      <div class="source-title">RFCA sonde values</div>
+      <div class="badge blocked">Blocked</div>
+      <p class="small">
+        Page known. Machine-readable endpoint and repeatability not yet proven.
+      </p>
+    </div>
+
+    <div class="source">
+      <div class="source-title">Catch totals</div>
+      <div class="badge blocked">Blocked</div>
+      <p class="small">
+        No current-season, dated, river-specific, traceable numeric total accepted.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="card">
   <h2>Current-Season Catch Intelligence Gate</h2>
 
   <div class="badge blocked">Catch totals blocked</div>
-
-  <p class="small">
-    No Ribble salmon or sea-trout total may appear until the complete evidence chain is proven.
-    Editorial discussion and operator commentary do not automatically qualify as numeric intelligence.
-  </p>
 
   <div class="row"><div class="label">Current season confirmed</div><div class="value">Required</div></div>
   <div class="row"><div class="label">Date visible</div><div class="value">Required</div></div>
@@ -159,77 +216,6 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   <div class="row"><div class="label">Repeatable verification</div><div class="value">Required</div></div>
   <div class="row"><div class="label">Machine-readable feed</div><div class="value">Preferred</div></div>
   <div class="row"><div class="label">Current status</div><div class="value">Evidence incomplete</div></div>
-
-  <p class="small">
-    Until all gates are satisfied, catch intelligence remains investigative only and cannot generate a figure.
-  </p>
-</section>
-
-<section class="card">
-  <h2>Catch Intelligence Classes</h2>
-
-  <div class="section-divider">EDITORIAL</div>
-
-  <div class="grid">
-    <div class="source">
-      <div class="source-title">Trout & Salmon</div>
-      <div class="badge warn">Tier 1 editorial</div>
-      <p class="small">
-        Valuable contextual intelligence when current and traceable, but not automatically a numeric catch source.
-      </p>
-      <p class="small">
-        <a href="https://www.troutandsalmon.com/" target="_blank" rel="noopener">Open Trout & Salmon</a>
-      </p>
-    </div>
-
-    <div class="source">
-      <div class="source-title">Forum discussions</div>
-      <div class="badge warn">Discussion only</div>
-      <p class="small">
-        Useful for investigation and awareness, but cannot create official catch numbers.
-      </p>
-    </div>
-  </div>
-
-  <div class="section-divider">OPERATOR / ASSOCIATION</div>
-
-  <div class="grid">
-    <div class="source">
-      <div class="source-title">Beat / club reports</div>
-      <div class="badge warn">Candidate only</div>
-      <p class="small">
-        Useful if current-season, dated, and traceable. Still blocked until evidence chain is complete.
-      </p>
-    </div>
-
-    <div class="source">
-      <div class="source-title">Association waters</div>
-      <div class="badge warn">Modelled</div>
-      <p class="small">
-        Helps identify salmon waters and reporting patterns, but not verified totals.
-      </p>
-    </div>
-  </div>
-
-  <div class="section-divider">VERIFIED NUMERIC INTELLIGENCE</div>
-
-  <div class="grid">
-    <div class="source">
-      <div class="source-title">Current-season totals</div>
-      <div class="badge blocked">Not established</div>
-      <p class="small">
-        No accepted verified Ribble total currently available to the app.
-      </p>
-    </div>
-
-    <div class="source">
-      <div class="source-title">Fish-counter totals</div>
-      <div class="badge blocked">No verified feed</div>
-      <p class="small">
-        Fish-counter intelligence remains blocked pending a stable public endpoint.
-      </p>
-    </div>
-  </div>
 </section>
 
 <section class="card">
@@ -281,9 +267,10 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   <div class="row"><div class="label">Known</div><div class="value">EA Henthorn telemetry stable</div></div>
   <div class="row"><div class="label">Known</div><div class="value">Rainfall acquisition pathway active</div></div>
   <div class="row"><div class="label">Known</div><div class="value">RFCA water-quality page exists</div></div>
+  <div class="row"><div class="label">Added</div><div class="value">Evidence-chain mapping</div></div>
   <div class="row"><div class="label">Unknown</div><div class="value">Stable RFCA public data endpoint</div></div>
   <div class="row"><div class="label">Unknown</div><div class="value">Verified Ribble salmon totals</div></div>
-  <div class="row"><div class="label">Next action</div><div class="value">Evidence-chain mapping</div></div>
+  <div class="row"><div class="label">Next action</div><div class="value">Display confidence model</div></div>
 </section>
 
 <section class="card">
@@ -295,16 +282,17 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   <div class="row"><div class="label">Temperature policy</div><div class="value">Verified only</div></div>
   <div class="row"><div class="label">Fish-counter policy</div><div class="value">Verified only</div></div>
   <div class="row"><div class="label">RFCA policy</div><div class="value">Pass test first</div></div>
+  <div class="row"><div class="label">Evidence chain</div><div class="value">Required</div></div>
 </section>
 
 </main>
 
 <div class="footer">
-  Salmon Rivers Intelligence · Build 10113 · GitHub Pages intelligence terminal
+  Salmon Rivers Intelligence · Build 10114 · GitHub Pages intelligence terminal
 </div>
 
 <script>
-const BUILD = "10113";
+const BUILD = "10114";
 const HENTHORN_STATION = "710305";
 const HENTHORN_LAT = 53.87;
 const HENTHORN_LONG = -2.39;
