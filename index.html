@@ -3,113 +3,39 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10118</title>
+<title>Salmon Rivers Intelligence — Build 10119</title>
 
 <style>
 :root{
-  --bg:#f4f6f8;
-  --card:#ffffff;
-  --ink:#111827;
-  --muted:#6b7280;
-  --line:#d8dee6;
-  --green:#166534;
-  --amber:#92400e;
-  --red:#991b1b;
-  --blue:#1d4ed8;
-  --soft-green:#dcfce7;
-  --soft-amber:#fef3c7;
-  --soft-red:#fee2e2;
-  --soft-blue:#dbeafe;
+  --bg:#f4f6f8;--card:#fff;--ink:#111827;--muted:#6b7280;--line:#d8dee6;
+  --green:#166534;--amber:#92400e;--red:#991b1b;--blue:#1d4ed8;
+  --soft-green:#dcfce7;--soft-amber:#fef3c7;--soft-red:#fee2e2;--soft-blue:#dbeafe;
 }
 *{box-sizing:border-box}
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--ink);
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-}
-header{
-  background:#0f172a;
-  color:#fff;
-  padding:16px 12px;
-  text-align:center;
-  position:sticky;
-  top:0;
-  z-index:10;
-}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+header{background:#0f172a;color:#fff;padding:16px 12px;text-align:center;position:sticky;top:0;z-index:10}
 header h1{margin:0;font-size:22px}
 header .build{margin-top:5px;color:#cbd5e1;font-size:12px}
-main{
-  max-width:920px;
-  margin:0 auto;
-  padding:12px;
-  padding-bottom:82px;
-}
-.card{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:13px;
-  margin-bottom:12px;
-  box-shadow:0 1px 4px rgba(0,0,0,.05);
-}
+main{max-width:920px;margin:0 auto;padding:12px 12px 82px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:13px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.05)}
 h2{margin:0 0 9px;font-size:17px}
-.row{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  padding:8px 0;
-  border-top:1px solid #edf0f3;
-}
+.row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid #edf0f3}
 .row:first-of-type{border-top:none}
 .label{color:var(--muted);font-size:14px}
 .value{font-weight:700;text-align:right;font-size:14px}
 .big{font-size:38px;font-weight:800;letter-spacing:-1px}
-.badge{
-  display:inline-block;
-  padding:6px 10px;
-  border-radius:999px;
-  font-size:13px;
-  font-weight:700;
-}
+.badge{display:inline-block;padding:6px 10px;border-radius:999px;font-size:13px;font-weight:700}
 .good{background:var(--soft-green);color:var(--green)}
 .warn{background:var(--soft-amber);color:var(--amber)}
 .bad{background:var(--soft-red);color:var(--red)}
 .info{background:var(--soft-blue);color:var(--blue)}
 .blocked{background:#f3f4f6;color:#374151}
 .small{font-size:13px;line-height:1.42;color:var(--muted)}
-button{
-  width:100%;
-  border:0;
-  border-radius:14px;
-  padding:13px;
-  background:#0f172a;
-  color:#fff;
-  font-size:16px;
-  font-weight:800;
-  cursor:pointer;
-}
+button{width:100%;border:0;border-radius:14px;padding:13px;background:#0f172a;color:#fff;font-size:16px;font-weight:800;cursor:pointer}
 button:active{transform:scale(.99)}
-.sticky-refresh{
-  position:fixed;
-  left:12px;
-  right:12px;
-  bottom:12px;
-  z-index:20;
-  max-width:920px;
-  margin:0 auto;
-}
-.grid{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:10px;
-}
-.source{
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:11px;
-  background:#fafafa;
-}
+.sticky-refresh{position:fixed;left:12px;right:12px;bottom:12px;z-index:20;max-width:920px;margin:0 auto}
+.grid{display:grid;grid-template-columns:1fr;gap:10px}
+.source{border:1px solid var(--line);border-radius:14px;padding:11px;background:#fafafa}
 .source-title{font-weight:800;margin-bottom:5px}
 .footer{text-align:center;color:var(--muted);font-size:12px;padding:18px 0 28px}
 a{color:#1d4ed8;font-weight:700;text-decoration:none}
@@ -125,10 +51,28 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 
 <header>
   <h1>Salmon Rivers Intelligence</h1>
-  <div class="build">Build 10118 · Mobile Usability Polish · verified data only</div>
+  <div class="build">Build 10119 · Gold Transition Checkpoint · verified data only</div>
 </header>
 
 <main>
+
+<section class="card">
+  <h2>Gold Transition Checkpoint</h2>
+  <div class="badge good">Checkpoint active</div>
+
+  <div class="row"><div class="label">Current build</div><div class="value">10119</div></div>
+  <div class="row"><div class="label">Runtime</div><div class="value">Single HTML</div></div>
+  <div class="row"><div class="label">Hosting</div><div class="value">GitHub Pages</div></div>
+  <div class="row"><div class="label">Primary live river</div><div class="value">Ribble @ Henthorn</div></div>
+  <div class="row"><div class="label">Verified live source</div><div class="value">EA telemetry</div></div>
+  <div class="row"><div class="label">Blocked values</div><div class="value">Catch, RFCA, fish counters</div></div>
+  <div class="row"><div class="label">Next locked target</div><div class="value">RFCA / Android planning</div></div>
+
+  <p class="small">
+    This build is a clean handoff point. The app remains telemetry-first, source-governed,
+    mobile-friendly, and fail-safe by default.
+  </p>
+</section>
 
 <section class="card">
   <h2>Command Summary</h2>
@@ -160,9 +104,18 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   <div class="row"><div class="label">Confidence</div><div class="value">VERIFIED</div></div>
   <div class="row"><div class="label">Source</div><div class="value">EA 710305</div></div>
 
-  <p class="small">
-    Only verified EA telemetry creates live numeric values.
-  </p>
+  <p class="small">Only verified EA telemetry creates live numeric values.</p>
+</section>
+
+<section class="card">
+  <h2>Rainfall / Catchment</h2>
+
+  <div id="rainBadge" class="badge info">Checking EA rainfall acquisition…</div>
+
+  <div class="row"><div class="label">Rainfall source</div><div id="rainStation" class="value">—</div></div>
+  <div class="row"><div class="label">Latest rainfall</div><div id="rainValue" class="value">—</div></div>
+  <div class="row"><div class="label">Reading time</div><div id="rainTime" class="value">—</div></div>
+  <div class="row"><div class="label">Confidence</div><div class="value">PROVISIONAL</div></div>
 </section>
 
 <section class="card">
@@ -179,43 +132,13 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 </section>
 
 <section class="card">
-  <h2>Rainfall / Catchment</h2>
-
-  <div id="rainBadge" class="badge info">Checking EA rainfall acquisition…</div>
-
-  <div class="row"><div class="label">Rainfall source</div><div id="rainStation" class="value">—</div></div>
-  <div class="row"><div class="label">Latest rainfall</div><div id="rainValue" class="value">—</div></div>
-  <div class="row"><div class="label">Reading time</div><div id="rainTime" class="value">—</div></div>
-  <div class="row"><div class="label">Confidence</div><div class="value">PROVISIONAL</div></div>
-</section>
-
-<section class="card">
   <h2>Display Confidence Model</h2>
 
   <div class="grid">
-    <div class="source">
-      <div class="source-title">VERIFIED</div>
-      <div class="badge good">Highest confidence</div>
-      <p class="small">Live numeric telemetry with stable repeatable traceable endpoints.</p>
-    </div>
-
-    <div class="source">
-      <div class="source-title">PROVISIONAL</div>
-      <div class="badge info">Conditional</div>
-      <p class="small">Traceable but not yet fully hardened or continuously validated.</p>
-    </div>
-
-    <div class="source">
-      <div class="source-title">INVESTIGATION</div>
-      <div class="badge warn">Research only</div>
-      <p class="small">Candidate sources under assessment. Cannot create live values.</p>
-    </div>
-
-    <div class="source">
-      <div class="source-title">BLOCKED</div>
-      <div class="badge blocked">No display permission</div>
-      <p class="small">Weak, unverified, incomplete, speculative, or non-repeatable intelligence.</p>
-    </div>
+    <div class="source"><div class="source-title">VERIFIED</div><div class="badge good">Highest confidence</div><p class="small">Live numeric telemetry with stable repeatable traceable endpoints.</p></div>
+    <div class="source"><div class="source-title">PROVISIONAL</div><div class="badge info">Conditional</div><p class="small">Traceable but not yet fully hardened or continuously validated.</p></div>
+    <div class="source"><div class="source-title">INVESTIGATION</div><div class="badge warn">Research only</div><p class="small">Candidate sources under assessment. Cannot create live values.</p></div>
+    <div class="source"><div class="source-title">BLOCKED</div><div class="badge blocked">No display permission</div><p class="small">Weak, unverified, incomplete, speculative, or non-repeatable intelligence.</p></div>
   </div>
 </section>
 
@@ -278,10 +201,10 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   <h2>Known / Unknown / Next Action</h2>
 
   <div class="row"><div class="label">Known</div><div class="value">EA Henthorn telemetry stable</div></div>
-  <div class="row"><div class="label">Known</div><div class="value">Mobile polish added</div></div>
+  <div class="row"><div class="label">Known</div><div class="value">Gold checkpoint added</div></div>
   <div class="row"><div class="label">Unknown</div><div class="value">Stable RFCA endpoint</div></div>
   <div class="row"><div class="label">Unknown</div><div class="value">Verified Ribble catch totals</div></div>
-  <div class="row"><div class="label">Next action</div><div class="value">Gold transition checkpoint</div></div>
+  <div class="row"><div class="label">Next action</div><div class="value">Transition bundle / Android shell plan</div></div>
 </section>
 
 <section class="card">
@@ -302,11 +225,11 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 </div>
 
 <div class="footer">
-  Salmon Rivers Intelligence · Build 10118 · GitHub Pages intelligence terminal
+  Salmon Rivers Intelligence · Build 10119 · GitHub Pages intelligence terminal
 </div>
 
 <script>
-const BUILD = "10118";
+const BUILD = "10119";
 const HENTHORN_STATION = "710305";
 const HENTHORN_LAT = 53.87;
 const HENTHORN_LONG = -2.39;
@@ -336,11 +259,8 @@ function setBadge(id,text,cls){
 
 function formatDateTime(iso){
   if(!iso) return "—";
-
   const d = new Date(iso);
-
   if(isNaN(d.getTime())) return iso;
-
   return d.toLocaleString("en-GB",{
     weekday:"short",
     day:"2-digit",
@@ -351,20 +271,10 @@ function formatDateTime(iso){
 }
 
 function classifyMovement(current,previous){
-  if(current === null || previous === null){
-    return "Not enough readings";
-  }
-
+  if(current === null || previous === null) return "Not enough readings";
   const diff = current - previous;
-
-  if(Math.abs(diff) < 0.005){
-    return "Steady";
-  }
-
-  if(diff > 0){
-    return "Rising";
-  }
-
+  if(Math.abs(diff) < 0.005) return "Steady";
+  if(diff > 0) return "Rising";
   return "Falling";
 }
 
@@ -419,13 +329,9 @@ async function fetchRecentReadings(){
     "/readings?_sorted&_limit=5";
 
   const res = await fetch(url,{cache:"no-store"});
-
-  if(!res.ok){
-    throw new Error("Recent readings failed");
-  }
+  if(!res.ok) throw new Error("Recent readings failed");
 
   const json = await res.json();
-
   return Array.isArray(json.items) ? json.items : [];
 }
 
@@ -463,41 +369,29 @@ async function loadHenthorn(){
 
   try{
     const res = await fetch(EA_LATEST_URL,{cache:"no-store"});
-
-    if(!res.ok){
-      throw new Error("EA failed");
-    }
+    if(!res.ok) throw new Error("EA failed");
 
     const json = await res.json();
-
     const items = Array.isArray(json.items) ? json.items : [];
 
-    if(items.length === 0){
-      throw new Error("No items");
-    }
+    if(items.length === 0) throw new Error("No items");
 
     const latest = items[0];
     const level = Number(latest.value);
     const time = latest.dateTime || latest.date || "";
 
-    if(!Number.isFinite(level)){
-      throw new Error("Invalid level");
-    }
+    if(!Number.isFinite(level)) throw new Error("Invalid level");
 
     let movement = "Latest only";
 
     try{
       const recent = await fetchRecentReadings();
-
       const sorted = recent
         .filter(r => Number.isFinite(Number(r.value)) && r.dateTime)
         .sort((a,b) => new Date(b.dateTime) - new Date(a.dateTime));
 
       if(sorted.length >= 2){
-        movement = classifyMovement(
-          Number(sorted[0].value),
-          Number(sorted[1].value)
-        );
+        movement = classifyMovement(Number(sorted[0].value),Number(sorted[1].value));
       }
     }catch(e){}
 
@@ -506,14 +400,12 @@ async function loadHenthorn(){
     setText("readingTime",formatDateTime(time));
 
     state.lastSuccess = new Date();
-
     setText("successTime",formatDateTime(state.lastSuccess));
     updateFreshness(time);
 
     setBadge("statusBadge","Live EA telemetry verified","good");
 
     state.telemetryVerified = true;
-
     updateIntegrity();
     updateFusion();
 
@@ -526,7 +418,6 @@ async function loadHenthorn(){
     setBadge("statusBadge","EA telemetry unavailable","bad");
 
     state.telemetryVerified = false;
-
     updateIntegrity();
     updateFusion();
   }
@@ -548,10 +439,7 @@ async function loadRainfall(){
       "&dist=30&_limit=10";
 
     const stationRes = await fetch(stationUrl,{cache:"no-store"});
-
-    if(!stationRes.ok){
-      throw new Error("Rain search failed");
-    }
+    if(!stationRes.ok) throw new Error("Rain search failed");
 
     const stationJson = await stationRes.json();
     const stations = Array.isArray(stationJson.items) ? stationJson.items : [];
@@ -560,7 +448,6 @@ async function loadRainfall(){
 
     for(const station of stations){
       const id = station.notation || station.stationReference || "";
-
       if(!id) continue;
 
       try{
@@ -570,7 +457,6 @@ async function loadRainfall(){
           "/readings?parameter=rainfall&latest";
 
         const rr = await fetch(readingsUrl,{cache:"no-store"});
-
         if(!rr.ok) continue;
 
         const rj = await rr.json();
@@ -579,22 +465,14 @@ async function loadRainfall(){
         if(items.length === 0) continue;
 
         const value = Number(items[0].value);
-
         if(!Number.isFinite(value)) continue;
 
-        verified = {
-          station,
-          reading:items[0],
-          value
-        };
-
+        verified = {station,reading:items[0],value};
         break;
       }catch(e){}
     }
 
-    if(!verified){
-      throw new Error("No verified rainfall");
-    }
+    if(!verified) throw new Error("No verified rainfall");
 
     const stationName =
       verified.station.label ||
@@ -608,7 +486,6 @@ async function loadRainfall(){
     setBadge("rainBadge","EA rainfall verified","good");
 
     state.rainfallVerified = true;
-
     updateIntegrity();
     updateFusion();
 
@@ -620,7 +497,6 @@ async function loadRainfall(){
     setBadge("rainBadge","Rainfall unavailable","bad");
 
     state.rainfallVerified = false;
-
     updateIntegrity();
     updateFusion();
   }
