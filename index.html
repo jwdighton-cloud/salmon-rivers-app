@@ -124,7 +124,7 @@ header p{
     margin-bottom:6px;
 }
 
-.summary-grid,
+.candidate-grid,
 .action-grid{
     display:grid;
     grid-template-columns:1fr;
@@ -132,67 +132,41 @@ header p{
 }
 
 @media(min-width:760px){
-    .summary-grid,
+    .candidate-grid,
     .action-grid{
         grid-template-columns:1fr 1fr 1fr;
     }
 }
 
-.summary-box,
+.candidate-box,
 .action-box{
     border-radius:12px;
     padding:14px;
     border:1px solid #cbd5e1;
 }
 
-.summary-live,
+.temp{
+    background:#ecfeff;
+}
+
+.counter{
+    background:#fff7ed;
+}
+
+.catch{
+    background:#fffbeb;
+}
+
 .known{
     background:#ecfdf5;
 }
 
-.summary-seeking,
 .unknown{
     background:#fff7ed;
 }
 
-.summary-blocked{
-    background:#fef2f2;
-}
-
 .next{
     background:#eff6ff;
-}
-
-.ladder{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:12px;
-}
-
-.ladder-step{
-    border-radius:10px;
-    padding:14px;
-    border:1px solid #d1d5db;
-}
-
-.highest{
-    background:#dcfce7;
-}
-
-.high{
-    background:#eff6ff;
-}
-
-.medium{
-    background:#fef9c3;
-}
-
-.low{
-    background:#fff7ed;
-}
-
-.block{
-    background:#fee2e2;
 }
 
 .status{
@@ -226,6 +200,11 @@ header p{
 
 .blocked{
     background:#991b1b;
+    color:white;
+}
+
+.telemetry{
+    background:#0e7490;
     color:white;
 }
 
@@ -313,6 +292,10 @@ tr:nth-child(even){
     background:#166534;
 }
 
+.button-link.blue{
+    background:#0e7490;
+}
+
 footer{
     text-align:center;
     padding:20px;
@@ -333,7 +316,7 @@ footer{
 
 <header>
     <h1>Salmon Rivers Intelligence</h1>
-    <p>Build 10100 — Source Acquisition Roadmap</p>
+    <p>Build 10101 — RFCA Acquisition Candidate Panel</p>
 </header>
 
 <div class="container">
@@ -369,12 +352,50 @@ footer{
         <div class="note">
             VERIFIED DATA ONLY.<br><br>
             This system reports only traceable intelligence sources.
+            It seeks external data; it does not depend on user-entered catch claims.
             <br><br>
             <strong>Rule: No source = no number.</strong>
         </div>
 
         <div class="warning" id="dataWarning" style="display:none;">
             Live EA telemetry currently unavailable. Use official Henthorn links below.
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>RFCA Acquisition Candidate Panel</h2>
+
+        <div class="candidate-grid">
+
+            <div class="candidate-box temp">
+                <strong>RFCA Temperature / Sonde</strong><br><br>
+                Candidate for water temperature, river-health and fish-welfare context.
+                No value is displayed until a stable traceable acquisition route is confirmed.
+                <div class="status telemetry">BEST NEXT TELEMETRY TARGET</div>
+            </div>
+
+            <div class="candidate-box counter">
+                <strong>RFCA Fish Counter Data</strong><br><br>
+                Potentially high-value migration intelligence.
+                Blocked until a public, dated, traceable source is confirmed.
+                <div class="status blocked">NOT VERIFIED</div>
+            </div>
+
+            <div class="candidate-box catch">
+                <strong>RFCA / Association Catch Reports</strong><br><br>
+                Potential current-season catch intelligence.
+                Must be dated, river-specific and traceable before use.
+                <div class="status candidate">SEEKING SOURCE</div>
+            </div>
+
+        </div>
+
+        <div class="button-row">
+            <a class="button-link green"
+            href="https://www.ribblefisheriesca.co.uk/live-water-quality-monitoring/"
+            target="_blank">Open RFCA Water Quality</a>
         </div>
 
     </div>
@@ -394,7 +415,7 @@ footer{
             <div class="roadmap-step">
                 <strong>2. Investigate RFCA temperature / sonde data</strong>
                 Highest practical next telemetry enhancement if a stable source can be found.
-                <div class="status candidate">NEXT TELEMETRY TARGET</div>
+                <div class="status telemetry">NEXT TELEMETRY TARGET</div>
             </div>
 
             <div class="roadmap-step">
@@ -439,7 +460,7 @@ footer{
 
             <div class="action-box next">
                 <strong>Next Action</strong><br><br>
-                Seek dated current-season evidence from Trout & Salmon, RFCA, clubs, operators and official sources.
+                Investigate RFCA temperature/sonde source stability, then current-season reports.
                 <div class="status crosscheck">SEEK EVIDENCE</div>
             </div>
 
@@ -472,7 +493,7 @@ footer{
                     <td>RFCA Water Temperature / Sonde Data</td>
                     <td>Temperature is critical for fish welfare and activity context.</td>
                     <td>Stable live page, data endpoint, or regularly updated official source.</td>
-                    <td><span class="status candidate">INVESTIGATING</span></td>
+                    <td><span class="status telemetry">INVESTIGATING</span></td>
                 </tr>
 
                 <tr>
@@ -561,7 +582,7 @@ footer{
                     target="_blank">Open RFCA</a>
                 </div>
 
-                <div class="status candidate">INVESTIGATING</div>
+                <div class="status telemetry">INVESTIGATING</div>
 
             </div>
 
@@ -572,7 +593,7 @@ footer{
 </div>
 
 <footer>
-Build 10100 — Source acquisition roadmap and evidence controls.
+Build 10101 — RFCA acquisition candidate panel and source roadmap.
 </footer>
 
 <script>
