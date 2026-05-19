@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10106</title>
+<title>Salmon Rivers Intelligence — Build 10107</title>
 <style>
 :root{
   --bg:#f4f6f8;--card:#fff;--ink:#111827;--muted:#6b7280;--line:#d8dee6;
@@ -45,7 +45,7 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 <body>
 <header>
   <h1>Salmon Rivers Intelligence</h1>
-  <div class="build">Build 10106 · Ribble @ Henthorn · verified data only</div>
+  <div class="build">Build 10107 · Ribble @ Henthorn · verified data only</div>
 </header>
 
 <main>
@@ -90,9 +90,43 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   <div class="row"><div class="label">Operator / association data</div><div class="value">Modelled, blocked</div></div>
   <div class="row"><div class="label">Overall intelligence status</div><div id="fusionOverall" class="value">Checking</div></div>
 
+  <p class="small">Fusion logic does not create conclusions. It separates verified live feeds from candidate sources and blocked intelligence.</p>
+</section>
+
+<section class="card">
+  <h2>Android Studio Transition Plan</h2>
+  <div class="badge info">Phase 2 planning added</div>
+
   <p class="small">
-    Fusion logic does not create conclusions. It separates verified live feeds from candidate sources and blocked intelligence.
+    The current GitHub Pages single-file app remains the operational gold baseline.
+    Android Studio is treated as the next platform wrapper, not a reason to weaken the data rules.
   </p>
+
+  <div class="grid">
+    <div class="source">
+      <div class="source-title">Phase 1 — Current</div>
+      <div class="badge good">GitHub Pages terminal</div>
+      <p class="small">Single index.html. Live EA telemetry. No backend. No database. Fast iteration.</p>
+    </div>
+
+    <div class="source">
+      <div class="source-title">Phase 2 — Next</div>
+      <div class="badge info">Android WebView shell</div>
+      <p class="small">Wrap the existing live app in Android Studio while preserving the same verified data logic.</p>
+    </div>
+
+    <div class="source">
+      <div class="source-title">Native features later</div>
+      <div class="badge warn">Not yet</div>
+      <p class="small">Possible later features: home-screen app, refresh controls, offline last-known verified data, notifications.</p>
+    </div>
+
+    <div class="source">
+      <div class="source-title">Hard rule</div>
+      <div class="badge blocked">No data downgrade</div>
+      <p class="small">Android must not introduce fake caches, invented readings, manual catch totals, or unverified RFCA values.</p>
+    </div>
+  </div>
 </section>
 
 <section class="card">
@@ -100,7 +134,7 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   <div class="badge warn">Model added — values blocked</div>
 
   <p class="small">
-    Operator, club, association, and beat sources are now modelled as candidate intelligence inputs.
+    Operator, club, association, and beat sources are candidate intelligence inputs only.
     They can support the app only when each item is current-season, dated, traceable, river-specific, and non-speculative.
   </p>
 
@@ -183,9 +217,9 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   <div class="row"><div class="label">Known</div><div class="value">EA Henthorn level telemetry</div></div>
   <div class="row"><div class="label">Acquired</div><div class="value">EA rainfall API pathway</div></div>
   <div class="row"><div class="label">Indexed</div><div class="value">Current-season report candidates</div></div>
-  <div class="row"><div class="label">Added</div><div class="value">Operator / association model</div></div>
+  <div class="row"><div class="label">Added</div><div class="value">Android transition plan</div></div>
   <div class="row"><div class="label">Unknown</div><div class="value">Verified Ribble salmon / sea-trout total</div></div>
-  <div class="row"><div class="label">Next action</div><div class="value">Android Studio transition planning</div></div>
+  <div class="row"><div class="label">Next action</div><div class="value">Polish + stability checkpoint</div></div>
 </section>
 
 <section class="card">
@@ -194,6 +228,7 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   <div class="row"><div class="label">Stable RFCA temperature acquisition</div><div class="value">Open gap</div></div>
   <div class="row"><div class="label">Current-season Ribble catch intelligence</div><div class="value">Indexed, blocked</div></div>
   <div class="row"><div class="label">Operator / beat intelligence</div><div class="value">Model added, blocked</div></div>
+  <div class="row"><div class="label">Android Studio shell</div><div class="value">Planned, not built</div></div>
   <div class="row"><div class="label">Rainfall / catchment intelligence</div><div class="value">EA acquisition added</div></div>
 </section>
 
@@ -204,16 +239,17 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   <div class="row"><div class="label">Fishability</div><div class="value">No speculation</div></div>
   <div class="row"><div class="label">Temperature</div><div class="value">No fake values</div></div>
   <div class="row"><div class="label">Fish counters</div><div class="value">No fake values</div></div>
+  <div class="row"><div class="label">Android transition</div><div class="value">No data downgrade</div></div>
 </section>
 
 </main>
 
 <div class="footer">
-  Salmon Rivers Intelligence · Build 10106 · GitHub Pages single-file terminal
+  Salmon Rivers Intelligence · Build 10107 · GitHub Pages single-file terminal
 </div>
 
 <script>
-const BUILD = "10106";
+const BUILD = "10107";
 const HENTHORN_STATION = "710305";
 const HENTHORN_LAT = 53.87;
 const HENTHORN_LONG = -2.39;
