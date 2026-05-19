@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10112</title>
+<title>Salmon Rivers Intelligence — Build 10113</title>
 
 <style>
 :root{
@@ -113,7 +113,7 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 
 <header>
   <h1>Salmon Rivers Intelligence</h1>
-  <div class="build">Build 10112 · RFCA Endpoint Acceptance Test · verified data only</div>
+  <div class="build">Build 10113 · Current-Season Catch Intelligence Gate · verified data only</div>
 </header>
 
 <main>
@@ -143,27 +143,99 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 </section>
 
 <section class="card">
-  <h2>Telemetry Integrity Monitor</h2>
+  <h2>Current-Season Catch Intelligence Gate</h2>
 
-  <div id="integrityBadge" class="badge info">Evaluating integrity state…</div>
+  <div class="badge blocked">Catch totals blocked</div>
 
-  <div class="row"><div class="label">Telemetry state</div><div id="telemetryState" class="value">Checking</div></div>
-  <div class="row"><div class="label">Rainfall acquisition state</div><div id="rainfallState" class="value">Checking</div></div>
-  <div class="row"><div class="label">Data integrity lock</div><div class="value">Active</div></div>
-  <div class="row"><div class="label">Numeric source policy</div><div class="value">Verified-only</div></div>
-  <div class="row"><div class="label">Automatic catch totals</div><div class="value">Blocked</div></div>
-  <div class="row"><div class="label">RFCA live values</div><div class="value">Blocked</div></div>
+  <p class="small">
+    No Ribble salmon or sea-trout total may appear until the complete evidence chain is proven.
+    Editorial discussion and operator commentary do not automatically qualify as numeric intelligence.
+  </p>
+
+  <div class="row"><div class="label">Current season confirmed</div><div class="value">Required</div></div>
+  <div class="row"><div class="label">Date visible</div><div class="value">Required</div></div>
+  <div class="row"><div class="label">River-specific source</div><div class="value">Required</div></div>
+  <div class="row"><div class="label">Traceable publication</div><div class="value">Required</div></div>
+  <div class="row"><div class="label">Repeatable verification</div><div class="value">Required</div></div>
+  <div class="row"><div class="label">Machine-readable feed</div><div class="value">Preferred</div></div>
+  <div class="row"><div class="label">Current status</div><div class="value">Evidence incomplete</div></div>
+
+  <p class="small">
+    Until all gates are satisfied, catch intelligence remains investigative only and cannot generate a figure.
+  </p>
+</section>
+
+<section class="card">
+  <h2>Catch Intelligence Classes</h2>
+
+  <div class="section-divider">EDITORIAL</div>
+
+  <div class="grid">
+    <div class="source">
+      <div class="source-title">Trout & Salmon</div>
+      <div class="badge warn">Tier 1 editorial</div>
+      <p class="small">
+        Valuable contextual intelligence when current and traceable, but not automatically a numeric catch source.
+      </p>
+      <p class="small">
+        <a href="https://www.troutandsalmon.com/" target="_blank" rel="noopener">Open Trout & Salmon</a>
+      </p>
+    </div>
+
+    <div class="source">
+      <div class="source-title">Forum discussions</div>
+      <div class="badge warn">Discussion only</div>
+      <p class="small">
+        Useful for investigation and awareness, but cannot create official catch numbers.
+      </p>
+    </div>
+  </div>
+
+  <div class="section-divider">OPERATOR / ASSOCIATION</div>
+
+  <div class="grid">
+    <div class="source">
+      <div class="source-title">Beat / club reports</div>
+      <div class="badge warn">Candidate only</div>
+      <p class="small">
+        Useful if current-season, dated, and traceable. Still blocked until evidence chain is complete.
+      </p>
+    </div>
+
+    <div class="source">
+      <div class="source-title">Association waters</div>
+      <div class="badge warn">Modelled</div>
+      <p class="small">
+        Helps identify salmon waters and reporting patterns, but not verified totals.
+      </p>
+    </div>
+  </div>
+
+  <div class="section-divider">VERIFIED NUMERIC INTELLIGENCE</div>
+
+  <div class="grid">
+    <div class="source">
+      <div class="source-title">Current-season totals</div>
+      <div class="badge blocked">Not established</div>
+      <p class="small">
+        No accepted verified Ribble total currently available to the app.
+      </p>
+    </div>
+
+    <div class="source">
+      <div class="source-title">Fish-counter totals</div>
+      <div class="badge blocked">No verified feed</div>
+      <p class="small">
+        Fish-counter intelligence remains blocked pending a stable public endpoint.
+      </p>
+    </div>
+  </div>
 </section>
 
 <section class="card">
   <h2>RFCA Endpoint Acceptance Test</h2>
 
   <div class="badge warn">Not passed — RFCA values blocked</div>
-
-  <p class="small">
-    RFCA water-quality monitoring is accepted only as an investigation target at this stage.
-    No RFCA temperature, dissolved oxygen, turbidity, pH, fish-counter, or catch value may appear until every test below is passed.
-  </p>
 
   <div class="row"><div class="label">Stable source URL</div><div class="value">Page only</div></div>
   <div class="row"><div class="label">Machine-readable endpoint</div><div class="value">Not proven</div></div>
@@ -180,65 +252,16 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 </section>
 
 <section class="card">
-  <h2>RFCA Endpoint Discovery</h2>
+  <h2>Telemetry Integrity Monitor</h2>
 
-  <div class="badge warn">Investigation active — values blocked</div>
+  <div id="integrityBadge" class="badge info">Evaluating integrity state…</div>
 
-  <div class="grid">
-    <div class="source">
-      <div class="source-title">RFCA live water-quality page</div>
-      <div class="badge warn">Verified page, not integrated</div>
-      <p class="small">
-        Candidate source for temperature / sonde data. Page exists, but no stable endpoint has been accepted by the app.
-      </p>
-    </div>
-
-    <div class="source">
-      <div class="source-title">RFCA river levels page</div>
-      <div class="badge warn">Context only</div>
-      <p class="small">
-        Useful for manual cross-checking. EA telemetry remains the primary numeric level source.
-      </p>
-      <p class="small">
-        <a href="https://www.ribblefisheriesca.co.uk/river-levels/" target="_blank" rel="noopener">Open RFCA river levels</a>
-      </p>
-    </div>
-
-    <div class="source">
-      <div class="source-title">RFCA fish counters</div>
-      <div class="badge blocked">No endpoint proven</div>
-      <p class="small">
-        No fish-counter value may be shown until a stable public feed is found and verified.
-      </p>
-    </div>
-
-    <div class="source">
-      <div class="source-title">RFCA acceptance status</div>
-      <div class="badge blocked">Fail-safe</div>
-      <p class="small">
-        Until the acceptance test passes, RFCA remains visible for investigation only.
-      </p>
-    </div>
-  </div>
-</section>
-
-<section class="card">
-  <h2>Source Acquisition Roadmap</h2>
-
-  <div class="badge info">Controlled acquisition path</div>
-
-  <div class="row"><div class="label">1. Stable telemetry</div><div class="value">Active</div></div>
-  <div class="row"><div class="label">2. Rainfall / catchment layer</div><div class="value">EA pathway active</div></div>
-  <div class="row"><div class="label">3. RFCA temperature / sonde</div><div class="value">Acceptance test</div></div>
-  <div class="row"><div class="label">4. Current-season reports</div><div class="value">Indexed, blocked</div></div>
-  <div class="row"><div class="label">5. Fish counters</div><div class="value">Blocked pending feed</div></div>
-  <div class="row"><div class="label">6. Operator / association model</div><div class="value">Modelled, blocked</div></div>
-  <div class="row"><div class="label">7. Android Studio wrapper</div><div class="value">Planned only</div></div>
-
-  <p class="small">
-    The roadmap prevents weak sources from being promoted too early.
-    A source must become stable, traceable, current, and verifiable before it can create a number.
-  </p>
+  <div class="row"><div class="label">Telemetry state</div><div id="telemetryState" class="value">Checking</div></div>
+  <div class="row"><div class="label">Rainfall acquisition state</div><div id="rainfallState" class="value">Checking</div></div>
+  <div class="row"><div class="label">Data integrity lock</div><div class="value">Active</div></div>
+  <div class="row"><div class="label">Numeric source policy</div><div class="value">Verified-only</div></div>
+  <div class="row"><div class="label">Automatic catch totals</div><div class="value">Blocked</div></div>
+  <div class="row"><div class="label">RFCA live values</div><div class="value">Blocked</div></div>
 </section>
 
 <section class="card">
@@ -250,63 +273,6 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   <div class="row"><div class="label">Latest rainfall reading</div><div id="rainValue" class="value">—</div></div>
   <div class="row"><div class="label">Reading time</div><div id="rainTime" class="value">—</div></div>
   <div class="row"><div class="label">Governance</div><div class="value">EA rainfall API only</div></div>
-
-  <p class="small">
-    Rainfall is shown only if returned live from the EA rainfall API.
-    If no stable reading is returned, the app shows unavailable.
-  </p>
-</section>
-
-<section class="card">
-  <h2>Intelligence State Separation</h2>
-
-  <div class="section-divider">LIVE VERIFIED</div>
-
-  <div class="grid">
-    <div class="source">
-      <div class="source-title">EA river telemetry</div>
-      <div class="badge good">Live verified</div>
-      <p class="small">Environment Agency live level telemetry for Henthorn.</p>
-    </div>
-
-    <div class="source">
-      <div class="source-title">EA rainfall acquisition</div>
-      <div class="badge good">Governed live source</div>
-      <p class="small">Rainfall values only displayed if directly returned from EA rainfall feeds.</p>
-    </div>
-  </div>
-
-  <div class="section-divider">INVESTIGATION</div>
-
-  <div class="grid">
-    <div class="source">
-      <div class="source-title">RFCA sonde data</div>
-      <div class="badge warn">Acceptance testing</div>
-      <p class="small">Candidate future source. No values accepted yet.</p>
-    </div>
-
-    <div class="source">
-      <div class="source-title">Operator / association reports</div>
-      <div class="badge warn">Modelled</div>
-      <p class="small">Candidate intelligence layer only.</p>
-    </div>
-  </div>
-
-  <div class="section-divider">BLOCKED</div>
-
-  <div class="grid">
-    <div class="source">
-      <div class="source-title">Current-season catch totals</div>
-      <div class="badge blocked">Blocked</div>
-      <p class="small">No verified current-season numeric source established.</p>
-    </div>
-
-    <div class="source">
-      <div class="source-title">Fish counters</div>
-      <div class="badge blocked">Blocked</div>
-      <p class="small">No stable traceable public feed verified.</p>
-    </div>
-  </div>
 </section>
 
 <section class="card">
@@ -317,7 +283,7 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   <div class="row"><div class="label">Known</div><div class="value">RFCA water-quality page exists</div></div>
   <div class="row"><div class="label">Unknown</div><div class="value">Stable RFCA public data endpoint</div></div>
   <div class="row"><div class="label">Unknown</div><div class="value">Verified Ribble salmon totals</div></div>
-  <div class="row"><div class="label">Next action</div><div class="value">Inspect RFCA data delivery mechanism</div></div>
+  <div class="row"><div class="label">Next action</div><div class="value">Evidence-chain mapping</div></div>
 </section>
 
 <section class="card">
@@ -334,11 +300,11 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 </main>
 
 <div class="footer">
-  Salmon Rivers Intelligence · Build 10112 · GitHub Pages intelligence terminal
+  Salmon Rivers Intelligence · Build 10113 · GitHub Pages intelligence terminal
 </div>
 
 <script>
-const BUILD = "10112";
+const BUILD = "10113";
 const HENTHORN_STATION = "710305";
 const HENTHORN_LAT = 53.87;
 const HENTHORN_LONG = -2.39;
