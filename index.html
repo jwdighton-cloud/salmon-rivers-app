@@ -3,733 +3,414 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Salmon Rivers Intelligence</title>
-
+<title>Salmon Rivers Intelligence — Build 10102</title>
 <style>
-
+:root{
+  --bg:#f4f6f8;
+  --card:#ffffff;
+  --ink:#111827;
+  --muted:#6b7280;
+  --line:#d8dee6;
+  --green:#166534;
+  --amber:#92400e;
+  --red:#991b1b;
+  --blue:#1d4ed8;
+  --soft-green:#dcfce7;
+  --soft-amber:#fef3c7;
+  --soft-red:#fee2e2;
+  --soft-blue:#dbeafe;
+}
+*{box-sizing:border-box}
 body{
-    margin:0;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-    background:#f3f5f7;
-    color:#111;
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--ink);
 }
-
 header{
-    background:#0f1720;
-    color:white;
-    text-align:center;
-    padding:18px;
+  background:#0f172a;
+  color:#fff;
+  padding:18px 14px;
+  text-align:center;
 }
-
 header h1{
-    margin:0;
-    font-size:28px;
+  margin:0;
+  font-size:23px;
+  line-height:1.2;
 }
-
-header p{
-    margin-top:8px;
-    color:#b7c1ca;
-    font-size:14px;
+header .build{
+  margin-top:6px;
+  font-size:13px;
+  color:#cbd5e1;
 }
-
-.container{
-    max-width:1150px;
-    margin:auto;
-    padding:14px;
+main{
+  max-width:920px;
+  margin:0 auto;
+  padding:14px;
 }
-
 .card{
-    background:white;
-    border-radius:14px;
-    padding:16px;
-    margin-bottom:16px;
-    box-shadow:0 2px 10px rgba(0,0,0,0.08);
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:14px;
+  margin-bottom:14px;
+  box-shadow:0 1px 4px rgba(0,0,0,.05);
 }
-
-.card h2{
-    margin-top:0;
+h2{
+  font-size:18px;
+  margin:0 0 10px 0;
 }
-
-.metric{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:12px;
-    padding:12px 0;
-    border-bottom:1px solid #e5e7eb;
+h3{
+  font-size:15px;
+  margin:14px 0 8px 0;
 }
-
-.metric:last-child{
-    border-bottom:none;
+.row{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  padding:9px 0;
+  border-top:1px solid #edf0f3;
 }
-
-.label{
-    font-weight:600;
+.row:first-of-type{border-top:none}
+.label{color:var(--muted)}
+.value{font-weight:700;text-align:right}
+.big{
+  font-size:34px;
+  font-weight:800;
+  letter-spacing:-1px;
 }
-
-.value{
-    font-weight:700;
-    text-align:right;
+.badge{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:999px;
+  font-weight:700;
+  font-size:13px;
 }
-
-.neutral{
-    color:#0369a1;
-}
-
-.note{
-    background:#eef6ff;
-    border-left:4px solid #2563eb;
-    padding:12px;
-    border-radius:8px;
-    margin-top:12px;
-    line-height:1.5;
-    font-size:14px;
-}
-
-.warning{
-    background:#fff7ed;
-    border-left:4px solid #ea580c;
-    padding:12px;
-    border-radius:8px;
-    margin-top:12px;
-    line-height:1.5;
-    font-size:14px;
-}
-
-.gate{
-    background:#fef2f2;
-    border-left:4px solid #dc2626;
-    padding:12px;
-    border-radius:8px;
-    margin-top:12px;
-    line-height:1.5;
-    font-size:14px;
-}
-
-.roadmap{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:12px;
-}
-
-.roadmap-step{
-    border:1px solid #cbd5e1;
-    background:#f8fafc;
-    border-radius:12px;
-    padding:14px;
-}
-
-.roadmap-step strong{
-    display:block;
-    margin-bottom:6px;
-}
-
-.candidate-grid,
-.action-grid{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:12px;
-}
-
-@media(min-width:760px){
-    .candidate-grid,
-    .action-grid{
-        grid-template-columns:1fr 1fr 1fr;
-    }
-}
-
-.candidate-box,
-.action-box{
-    border-radius:12px;
-    padding:14px;
-    border:1px solid #cbd5e1;
-}
-
-.temp{
-    background:#ecfeff;
-}
-
-.counter{
-    background:#fff7ed;
-}
-
-.catch{
-    background:#fffbeb;
-}
-
-.known{
-    background:#ecfdf5;
-}
-
-.unknown{
-    background:#fff7ed;
-}
-
-.next{
-    background:#eff6ff;
-}
-
-.status{
-    display:inline-block;
-    margin-top:8px;
-    padding:4px 10px;
-    border-radius:20px;
-    font-size:12px;
-    font-weight:700;
-}
-
-.live{
-    background:#166534;
-    color:white;
-}
-
-.crosscheck{
-    background:#1d4ed8;
-    color:white;
-}
-
-.magazine{
-    background:#854d0e;
-    color:white;
-}
-
-.candidate{
-    background:#92400e;
-    color:white;
-}
-
-.blocked{
-    background:#991b1b;
-    color:white;
-}
-
-.telemetry{
-    background:#0e7490;
-    color:white;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:14px;
-}
-
-@media(min-width:760px){
-    .grid{
-        grid-template-columns:1fr 1fr;
-    }
-}
-
-.panel{
-    background:#f8fafc;
-    border:1px solid #cbd5e1;
-    border-radius:12px;
-    padding:14px;
-}
-
+.good{background:var(--soft-green);color:var(--green)}
+.warn{background:var(--soft-amber);color:var(--amber)}
+.bad{background:var(--soft-red);color:var(--red)}
+.info{background:var(--soft-blue);color:var(--blue)}
+.blocked{background:#f3f4f6;color:#374151}
 .small{
-    font-size:13px;
-    line-height:1.6;
-    color:#475569;
+  font-size:13px;
+  color:var(--muted);
+  line-height:1.45;
 }
-
-.matrix{
-    overflow-x:auto;
+button{
+  width:100%;
+  border:0;
+  border-radius:14px;
+  padding:13px 14px;
+  background:#0f172a;
+  color:#fff;
+  font-size:16px;
+  font-weight:800;
+  cursor:pointer;
 }
-
-table{
-    width:100%;
-    border-collapse:collapse;
-    margin-top:10px;
+button:active{transform:scale(.99)}
+.grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:10px;
 }
-
-th{
-    background:#0f1720;
-    color:white;
-    padding:10px;
-    text-align:left;
-    font-size:13px;
+.source{
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:11px;
+  background:#fafafa;
 }
-
-td{
-    padding:10px;
-    border-bottom:1px solid #e5e7eb;
-    font-size:13px;
-    vertical-align:top;
+.source-title{
+  font-weight:800;
+  margin-bottom:5px;
 }
-
-tr:nth-child(even){
-    background:#f8fafc;
+a{
+  color:#1d4ed8;
+  font-weight:700;
+  text-decoration:none;
 }
-
-.button-row{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-    margin-top:12px;
+.footer{
+  text-align:center;
+  color:var(--muted);
+  font-size:12px;
+  padding:18px 0 28px;
 }
-
-.button-link{
-    display:inline-block;
-    background:#0f1720;
-    color:white;
-    padding:10px 12px;
-    border-radius:10px;
-    font-size:13px;
-    text-decoration:none;
-    font-weight:700;
+@media(min-width:700px){
+  .grid{grid-template-columns:1fr 1fr}
 }
-
-.button-link.secondary{
-    background:#334155;
-}
-
-.button-link.gold{
-    background:#92400e;
-}
-
-.button-link.green{
-    background:#166534;
-}
-
-.button-link.blue{
-    background:#0e7490;
-}
-
-footer{
-    text-align:center;
-    padding:20px;
-    font-size:12px;
-    color:#666;
-}
-
-.refresh{
-    margin-top:10px;
-    color:#64748b;
-    font-size:13px;
-}
-
 </style>
 </head>
 
 <body>
-
 <header>
-    <h1>Salmon Rivers Intelligence</h1>
-    <p>Build 10101 — RFCA Acquisition Candidate Panel</p>
+  <h1>Salmon Rivers Intelligence</h1>
+  <div class="build">Build 10102 · Ribble @ Henthorn · verified data only</div>
 </header>
 
-<div class="container">
+<main>
 
-    <div class="card">
+<section class="card">
+  <h2>River Ribble — Henthorn Live Conditions</h2>
+  <div id="statusBadge" class="badge info">Checking EA telemetry…</div>
 
-        <h2>River Ribble — Henthorn</h2>
+  <div style="margin-top:14px">
+    <div class="label">Latest river level</div>
+    <div id="levelValue" class="big">—</div>
+  </div>
 
-        <div class="metric">
-            <div class="label">EA River Level</div>
-            <div class="value neutral" id="riverLevel">Loading...</div>
-        </div>
+  <div class="row">
+    <div class="label">Movement</div>
+    <div id="movementValue" class="value">—</div>
+  </div>
 
-        <div class="metric">
-            <div class="label">Movement</div>
-            <div class="value neutral" id="movement">Loading...</div>
-        </div>
+  <div class="row">
+    <div class="label">Latest reading time</div>
+    <div id="readingTime" class="value">—</div>
+  </div>
 
-        <div class="metric">
-            <div class="label">Last EA Update</div>
-            <div class="value neutral" id="timestamp">Loading...</div>
-        </div>
+  <div class="row">
+    <div class="label">Data source</div>
+    <div class="value">EA station 710305</div>
+  </div>
 
-        <div class="metric">
-            <div class="label">Data Source Used</div>
-            <div class="value neutral" id="dataSource">Checking...</div>
-        </div>
+  <p class="small">
+    This panel uses Environment Agency telemetry only. It does not invent fishability,
+    catches, temperature, or fish-counter values.
+  </p>
 
-        <div class="refresh">
-            Auto refresh every 5 minutes.
-        </div>
+  <button onclick="loadHenthorn()">Refresh live telemetry</button>
+</section>
 
-        <div class="note">
-            VERIFIED DATA ONLY.<br><br>
-            This system reports only traceable intelligence sources.
-            It seeks external data; it does not depend on user-entered catch claims.
-            <br><br>
-            <strong>Rule: No source = no number.</strong>
-        </div>
+<section class="card">
+  <h2>Known / Unknown / Next Action</h2>
 
-        <div class="warning" id="dataWarning" style="display:none;">
-            Live EA telemetry currently unavailable. Use official Henthorn links below.
-        </div>
+  <div class="row">
+    <div class="label">Known</div>
+    <div class="value">EA Henthorn level telemetry</div>
+  </div>
 
+  <div class="row">
+    <div class="label">Unknown</div>
+    <div class="value">Current verified Ribble salmon catch total</div>
+  </div>
+
+  <div class="row">
+    <div class="label">Next action</div>
+    <div class="value">RFCA acquisition investigation</div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>RFCA Acquisition Investigation</h2>
+  <div class="badge warn">Acquisition target — values blocked</div>
+
+  <p class="small">
+    RFCA is treated as a candidate intelligence source. No RFCA temperature,
+    fish-counter, catch, or river-health number is displayed unless the source becomes
+    stable, traceable, current, and verifiable.
+  </p>
+
+  <div class="grid">
+    <div class="source">
+      <div class="source-title">RFCA temperature / sonde data</div>
+      <div class="badge blocked">No verified endpoint</div>
+      <p class="small">Blocked until a stable public data feed is proven.</p>
     </div>
 
-    <div class="card">
-
-        <h2>RFCA Acquisition Candidate Panel</h2>
-
-        <div class="candidate-grid">
-
-            <div class="candidate-box temp">
-                <strong>RFCA Temperature / Sonde</strong><br><br>
-                Candidate for water temperature, river-health and fish-welfare context.
-                No value is displayed until a stable traceable acquisition route is confirmed.
-                <div class="status telemetry">BEST NEXT TELEMETRY TARGET</div>
-            </div>
-
-            <div class="candidate-box counter">
-                <strong>RFCA Fish Counter Data</strong><br><br>
-                Potentially high-value migration intelligence.
-                Blocked until a public, dated, traceable source is confirmed.
-                <div class="status blocked">NOT VERIFIED</div>
-            </div>
-
-            <div class="candidate-box catch">
-                <strong>RFCA / Association Catch Reports</strong><br><br>
-                Potential current-season catch intelligence.
-                Must be dated, river-specific and traceable before use.
-                <div class="status candidate">SEEKING SOURCE</div>
-            </div>
-
-        </div>
-
-        <div class="button-row">
-            <a class="button-link green"
-            href="https://www.ribblefisheriesca.co.uk/live-water-quality-monitoring/"
-            target="_blank">Open RFCA Water Quality</a>
-        </div>
-
+    <div class="source">
+      <div class="source-title">RFCA fish counters</div>
+      <div class="badge blocked">No verified current feed</div>
+      <p class="small">No fish-counter value will be shown without current traceable data.</p>
     </div>
 
-    <div class="card">
-
-        <h2>Source Acquisition Roadmap</h2>
-
-        <div class="roadmap">
-
-            <div class="roadmap-step">
-                <strong>1. Stabilise Henthorn telemetry</strong>
-                EA river level remains the live baseline and must stay first on screen.
-                <div class="status live">BASELINE</div>
-            </div>
-
-            <div class="roadmap-step">
-                <strong>2. Investigate RFCA temperature / sonde data</strong>
-                Highest practical next telemetry enhancement if a stable source can be found.
-                <div class="status telemetry">NEXT TELEMETRY TARGET</div>
-            </div>
-
-            <div class="roadmap-step">
-                <strong>3. Index Trout & Salmon current-season reports</strong>
-                Use as Tier 1 editorial intelligence for current-season river mentions and catch-report discovery.
-                <div class="status magazine">TIER 1 INTEL</div>
-            </div>
-
-            <div class="roadmap-step">
-                <strong>4. Investigate RFCA fish counters</strong>
-                Highest-value missing migration intelligence, but blocked until a public traceable source is confirmed.
-                <div class="status blocked">HIGH VALUE GAP</div>
-            </div>
-
-            <div class="roadmap-step">
-                <strong>5. Add operator / club / association source models</strong>
-                Future source classes only if dated, current-season and traceable.
-                <div class="status crosscheck">FUTURE SOURCE MODEL</div>
-            </div>
-
-        </div>
-
+    <div class="source">
+      <div class="source-title">RFCA catch intelligence</div>
+      <div class="badge blocked">Current-season gate active</div>
+      <p class="small">Catch intelligence must be dated, current-season, traceable, and river-specific where possible.</p>
     </div>
 
-    <div class="card">
-
-        <h2>Known / Unknown / Next Action</h2>
-
-        <div class="action-grid">
-
-            <div class="action-box known">
-                <strong>Known Now</strong><br><br>
-                Henthorn condition layer is based on official EA telemetry when the API loads.
-                <div class="status live">KNOWN SOURCE</div>
-            </div>
-
-            <div class="action-box unknown">
-                <strong>Unknown / Not Integrated</strong><br><br>
-                Current-season Ribble catch totals, public fish-counter data and stable RFCA temperature acquisition are not yet verified.
-                <div class="status candidate">SOURCE GAP</div>
-            </div>
-
-            <div class="action-box next">
-                <strong>Next Action</strong><br><br>
-                Investigate RFCA temperature/sonde source stability, then current-season reports.
-                <div class="status crosscheck">SEEK EVIDENCE</div>
-            </div>
-
-        </div>
-
+    <div class="source">
+      <div class="source-title">RFCA river-health telemetry</div>
+      <div class="badge blocked">Investigation only</div>
+      <p class="small">No river-health values displayed until verified.</p>
     </div>
+  </div>
 
-    <div class="card">
+  <h3>Manual source links</h3>
+  <p class="small">
+    <a href="https://www.ribblefisheriesca.co.uk/" target="_blank" rel="noopener">Open RFCA website</a>
+  </p>
+</section>
 
-        <h2>Source Gap Register</h2>
+<section class="card">
+  <h2>Source Gap Register</h2>
 
-        <div class="matrix">
+  <div class="row">
+    <div class="label">RFCA fish counters</div>
+    <div class="value">Open gap</div>
+  </div>
 
-            <table>
-                <tr>
-                    <th>Missing Source</th>
-                    <th>Why It Matters</th>
-                    <th>Proof Needed</th>
-                    <th>Current Status</th>
-                </tr>
+  <div class="row">
+    <div class="label">Stable RFCA temperature acquisition</div>
+    <div class="value">Open gap</div>
+  </div>
 
-                <tr>
-                    <td>RFCA Fish Counter Data</td>
-                    <td>Could show migration pulses and fish movement timing.</td>
-                    <td>Public traceable page, feed, report, or verified RFCA publication.</td>
-                    <td><span class="status blocked">NOT VERIFIED</span></td>
-                </tr>
+  <div class="row">
+    <div class="label">Current-season Ribble catch intelligence</div>
+    <div class="value">Open gap</div>
+  </div>
 
-                <tr>
-                    <td>RFCA Water Temperature / Sonde Data</td>
-                    <td>Temperature is critical for fish welfare and activity context.</td>
-                    <td>Stable live page, data endpoint, or regularly updated official source.</td>
-                    <td><span class="status telemetry">INVESTIGATING</span></td>
-                </tr>
+  <div class="row">
+    <div class="label">Operator / beat intelligence</div>
+    <div class="value">Not integrated</div>
+  </div>
 
-                <tr>
-                    <td>Current-Season Ribble Catch Reports</td>
-                    <td>Most important salmon intelligence beyond conditions.</td>
-                    <td>Dated report from Trout & Salmon, RFCA, club, association, operator, or official return.</td>
-                    <td><span class="status candidate">SEEKING</span></td>
-                </tr>
+  <div class="row">
+    <div class="label">Rainfall / catchment intelligence</div>
+    <div class="value">Not integrated</div>
+  </div>
+</section>
 
-                <tr>
-                    <td>Named Operator / Beat Reports</td>
-                    <td>Useful for local beat-level activity and recent observations.</td>
-                    <td>Named operator, current date/season, river/beat reference, traceable source.</td>
-                    <td><span class="status candidate">FUTURE</span></td>
-                </tr>
+<section class="card">
+  <h2>Governance Rules</h2>
 
-                <tr>
-                    <td>Rainfall / Catchment Context</td>
-                    <td>Useful for explaining level movement and future conditions.</td>
-                    <td>Relevant official rainfall feed or stable weather/rainfall data source.</td>
-                    <td><span class="status candidate">FUTURE</span></td>
-                </tr>
+  <div class="row">
+    <div class="label">Core rule</div>
+    <div class="value">No source = no number</div>
+  </div>
 
-            </table>
+  <div class="row">
+    <div class="label">Catch gate</div>
+    <div class="value">Current season only</div>
+  </div>
 
-        </div>
+  <div class="row">
+    <div class="label">Fishability</div>
+    <div class="value">No speculation</div>
+  </div>
 
-    </div>
+  <div class="row">
+    <div class="label">Temperature</div>
+    <div class="value">No fake values</div>
+  </div>
 
-    <div class="card">
+  <div class="row">
+    <div class="label">Fish counters</div>
+    <div class="value">No fake values</div>
+  </div>
+</section>
 
-        <h2>Current-Season Gate</h2>
+</main>
 
-        <div class="gate">
-            Catch-related intelligence is blocked unless it is:
-            <br><br>
-            • current-season<br>
-            • dated<br>
-            • traceable<br>
-            • river-specific where possible<br>
-            • non-speculative
-        </div>
-
-    </div>
-
-    <div class="card">
-
-        <h2>Source Launchpad</h2>
-
-        <div class="grid">
-
-            <div class="panel">
-                <h3>Official Henthorn Telemetry</h3>
-
-                <div class="button-row">
-                    <a class="button-link" href="https://check-for-flooding.service.gov.uk/station/5066" target="_blank">GOV.UK Henthorn</a>
-
-                    <a class="button-link secondary"
-                    href="https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings?_sorted&_limit=10"
-                    target="_blank">EA Measure Feed</a>
-                </div>
-
-                <div class="status live">LIVE BASELINE</div>
-
-            </div>
-
-            <div class="panel">
-                <h3>Trout & Salmon Reports</h3>
-
-                <div class="button-row">
-                    <a class="button-link gold"
-                    href="https://www.troutandsalmon.com/fishing-reports/"
-                    target="_blank">Open Trout & Salmon</a>
-                </div>
-
-                <div class="status magazine">TIER 1</div>
-
-            </div>
-
-            <div class="panel">
-                <h3>RFCA Water Quality</h3>
-
-                <div class="button-row">
-                    <a class="button-link green"
-                    href="https://www.ribblefisheriesca.co.uk/live-water-quality-monitoring/"
-                    target="_blank">Open RFCA</a>
-                </div>
-
-                <div class="status telemetry">INVESTIGATING</div>
-
-            </div>
-
-        </div>
-
-    </div>
-
+<div class="footer">
+  Salmon Rivers Intelligence · Build 10102 · GitHub Pages single-file terminal
 </div>
 
-<footer>
-Build 10101 — RFCA acquisition candidate panel and source roadmap.
-</footer>
-
 <script>
-
-const HENTHORN_MEASURE_URL =
-'https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings?_sorted&_limit=10';
-
-const HENTHORN_STATION_URL =
-'https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=10';
+const BUILD = "10102";
+const HENTHORN_STATION = "710305";
+const EA_LATEST_URL =
+  "https://environment.data.gov.uk/flood-monitoring/id/stations/" +
+  HENTHORN_STATION +
+  "/readings?latest";
 
 function setText(id, value){
-    document.getElementById(id).innerText = value;
+  document.getElementById(id).textContent = value;
 }
 
-async function fetchJson(url){
+function setBadge(text, cls){
+  const badge = document.getElementById("statusBadge");
+  badge.className = "badge " + cls;
+  badge.textContent = text;
+}
 
-    const response = await fetch(url,{
-        cache:'no-store'
-    });
+function formatDateTime(iso){
+  if(!iso) return "—";
+  const d = new Date(iso);
+  if(isNaN(d.getTime())) return iso;
+  return d.toLocaleString("en-GB", {
+    weekday:"short",
+    day:"2-digit",
+    month:"short",
+    hour:"2-digit",
+    minute:"2-digit"
+  });
+}
 
-    if(!response.ok){
-        throw new Error('HTTP ' + response.status);
+function classifyMovement(current, previous){
+  if(current === null || previous === null) return "Not enough readings";
+  const diff = current - previous;
+  if(Math.abs(diff) < 0.005) return "Steady";
+  if(diff > 0) return "Rising";
+  return "Falling";
+}
+
+async function fetchRecentReadings(){
+  const url =
+    "https://environment.data.gov.uk/flood-monitoring/id/stations/" +
+    HENTHORN_STATION +
+    "/readings?_sorted&_limit=5";
+
+  const res = await fetch(url, {cache:"no-store"});
+  if(!res.ok) throw new Error("EA recent readings failed");
+  const json = await res.json();
+  return Array.isArray(json.items) ? json.items : [];
+}
+
+async function loadHenthorn(){
+  setBadge("Checking EA telemetry…", "info");
+  setText("levelValue", "—");
+  setText("movementValue", "—");
+  setText("readingTime", "—");
+
+  try{
+    const latestRes = await fetch(EA_LATEST_URL, {cache:"no-store"});
+    if(!latestRes.ok) throw new Error("EA latest reading failed");
+
+    const latestJson = await latestRes.json();
+    const items = Array.isArray(latestJson.items) ? latestJson.items : [];
+
+    if(items.length === 0){
+      throw new Error("No EA latest reading returned");
     }
 
-    return await response.json();
+    const latest = items[0];
+    const level = Number(latest.value);
+    const time = latest.dateTime || latest.date || "";
 
-}
-
-function extractReadings(data){
-
-    if(!data || !data.items || !Array.isArray(data.items)){
-        return [];
+    if(!Number.isFinite(level)){
+      throw new Error("EA latest reading has no numeric value");
     }
 
-    return data.items
-    .filter(item => item.value !== undefined && item.dateTime)
-    .map(item => ({
-        value:Number(item.value),
-        dateTime:item.dateTime
-    }))
-    .filter(item => !Number.isNaN(item.value))
-    .sort((a,b) => new Date(b.dateTime) - new Date(a.dateTime));
-
-}
-
-function showUnavailable(sourceUsed){
-
-    setText('riverLevel','Unavailable');
-    setText('movement','Unavailable');
-    setText('timestamp','Unavailable');
-    setText('dataSource',sourceUsed || 'Unavailable');
-
-    document.getElementById('dataWarning').style.display='block';
-
-}
-
-async function loadRiverLevel(){
-
-    let readings=[];
-    let sourceUsed='';
+    let movement = "Not enough readings";
 
     try{
+      const recent = await fetchRecentReadings();
+      const sorted = recent
+        .filter(r => Number.isFinite(Number(r.value)) && r.dateTime)
+        .sort((a,b) => new Date(b.dateTime) - new Date(a.dateTime));
 
-        const measureData = await fetchJson(HENTHORN_MEASURE_URL);
-
-        readings = extractReadings(measureData);
-
-        if(readings.length > 0){
-            sourceUsed='EA measure feed';
-        }
-
-    }catch(error){}
-
-    if(readings.length===0){
-
-        try{
-
-            const stationData = await fetchJson(HENTHORN_STATION_URL);
-
-            readings = extractReadings(stationData);
-
-            if(readings.length > 0){
-                sourceUsed='EA station feed';
-            }
-
-        }catch(error){}
-
+      if(sorted.length >= 2){
+        movement = classifyMovement(Number(sorted[0].value), Number(sorted[1].value));
+      }
+    }catch(e){
+      movement = "Latest only";
     }
 
-    if(readings.length===0){
+    setText("levelValue", level.toFixed(3) + " m");
+    setText("movementValue", movement);
+    setText("readingTime", formatDateTime(time));
+    setBadge("Live EA telemetry verified", "good");
 
-        showUnavailable(sourceUsed);
-        return;
-
-    }
-
-    const latest = readings[0];
-    const previous = readings.length > 1 ? readings[1] : null;
-
-    setText('riverLevel', latest.value.toFixed(2)+' m');
-
-    let movement='Steady';
-
-    if(previous){
-
-        if(latest.value > previous.value + 0.01){
-            movement='Rising';
-        }
-
-        if(latest.value < previous.value - 0.01){
-            movement='Falling';
-        }
-
-    }
-
-    setText('movement', movement);
-
-    setText(
-        'timestamp',
-        new Date(latest.dateTime).toLocaleString()
-    );
-
-    setText('dataSource', sourceUsed);
-
-    document.getElementById('dataWarning').style.display='none';
-
+  }catch(err){
+    setText("levelValue", "Unavailable");
+    setText("movementValue", "Unavailable");
+    setText("readingTime", "Unavailable");
+    setBadge("EA telemetry unavailable", "bad");
+  }
 }
 
-loadRiverLevel();
-
-setInterval(() => {
-
-    loadRiverLevel();
-
-}, 300000);
-
+loadHenthorn();
+setInterval(loadHenthorn, 10 * 60 * 1000);
 </script>
 
 </body>
