@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10104</title>
+<title>Salmon Rivers Intelligence — Build 10105</title>
 <style>
 :root{
   --bg:#f4f6f8;--card:#fff;--ink:#111827;--muted:#6b7280;--line:#d8dee6;
@@ -45,7 +45,7 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 <body>
 <header>
   <h1>Salmon Rivers Intelligence</h1>
-  <div class="build">Build 10104 · Ribble @ Henthorn · verified data only</div>
+  <div class="build">Build 10105 · Ribble @ Henthorn · verified data only</div>
 </header>
 
 <main>
@@ -80,11 +80,27 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 </section>
 
 <section class="card">
+  <h2>Source Fusion Logic</h2>
+  <div id="fusionBadge" class="badge info">Evaluating source confidence…</div>
+
+  <div class="row"><div class="label">Level 1 telemetry</div><div id="fusionTelemetry" class="value">Checking</div></div>
+  <div class="row"><div class="label">Rainfall acquisition</div><div id="fusionRainfall" class="value">Checking</div></div>
+  <div class="row"><div class="label">Catch intelligence</div><div class="value">Blocked</div></div>
+  <div class="row"><div class="label">RFCA values</div><div class="value">Blocked</div></div>
+  <div class="row"><div class="label">Overall intelligence status</div><div id="fusionOverall" class="value">Checking</div></div>
+
+  <p class="small">
+    Fusion logic does not create conclusions. It only separates verified live feeds from candidate sources and blocked intelligence.
+    A source can support the app only when it is live or traceable, current, and governed.
+  </p>
+</section>
+
+<section class="card">
   <h2>Current-Season Report Indexing</h2>
   <div class="badge warn">Catch totals blocked</div>
 
   <p class="small">
-    Current-season catch intelligence is now formally indexed, but no Ribble salmon or sea-trout total is displayed until a dated, current-season, traceable, river-specific source is verified.
+    Current-season catch intelligence is indexed, but no Ribble salmon or sea-trout total is displayed until a dated, current-season, traceable, river-specific source is verified.
   </p>
 
   <div class="grid">
@@ -141,8 +157,9 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   <div class="row"><div class="label">Known</div><div class="value">EA Henthorn level telemetry</div></div>
   <div class="row"><div class="label">Acquired</div><div class="value">EA rainfall API pathway</div></div>
   <div class="row"><div class="label">Indexed</div><div class="value">Current-season report candidates</div></div>
+  <div class="row"><div class="label">Added</div><div class="value">Source fusion logic</div></div>
   <div class="row"><div class="label">Unknown</div><div class="value">Verified Ribble salmon / sea-trout total</div></div>
-  <div class="row"><div class="label">Next action</div><div class="value">Source fusion logic</div></div>
+  <div class="row"><div class="label">Next action</div><div class="value">Operator / association modelling</div></div>
 </section>
 
 <section class="card">
@@ -150,7 +167,7 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   <div class="row"><div class="label">RFCA fish counters</div><div class="value">Open gap</div></div>
   <div class="row"><div class="label">Stable RFCA temperature acquisition</div><div class="value">Open gap</div></div>
   <div class="row"><div class="label">Current-season Ribble catch intelligence</div><div class="value">Indexed, blocked</div></div>
-  <div class="row"><div class="label">Operator / beat intelligence</div><div class="value">Not integrated</div></div>
+  <div class="row"><div class="label">Operator / beat intelligence</div><div class="value">Next target</div></div>
   <div class="row"><div class="label">Rainfall / catchment intelligence</div><div class="value">EA acquisition added</div></div>
 </section>
 
@@ -166,14 +183,19 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 </main>
 
 <div class="footer">
-  Salmon Rivers Intelligence · Build 10104 · GitHub Pages single-file terminal
+  Salmon Rivers Intelligence · Build 10105 · GitHub Pages single-file terminal
 </div>
 
 <script>
-const BUILD = "10104";
+const BUILD = "10105";
 const HENTHORN_STATION = "710305";
 const HENTHORN_LAT = 53.87;
 const HENTHORN_LONG = -2.39;
+
+const state = {
+  telemetryVerified:false,
+  rainfallVerified:false
+};
 
 const EA_LATEST_URL =
   "https://environment.data.gov.uk/flood-monitoring/id/stations/" +
@@ -203,6 +225,22 @@ function classifyMovement(current,previous){
   return "Falling";
 }
 
+function updateFusion(){
+  setText("fusionTelemetry", state.telemetryVerified ? "Verified" : "Unavailable");
+  setText("fusionRainfall", state.rainfallVerified ? "Verified" : "Unavailable");
+
+  if(state.telemetryVerified && state.rainfallVerified){
+    setBadge("fusionBadge","Level 1 + rainfall verified","good");
+    setText("fusionOverall","Strong live-data baseline");
+  }else if(state.telemetryVerified){
+    setBadge("fusionBadge","Level 1 telemetry verified","good");
+    setText("fusionOverall","Telemetry live, rainfall unavailable");
+  }else{
+    setBadge("fusionBadge","Live-data baseline degraded","bad");
+    setText("fusionOverall","Telemetry unavailable");
+  }
+}
+
 async function fetchRecentHenthornReadings(){
   const url="https://environment.data.gov.uk/flood-monitoring/id/stations/"+HENTHORN_STATION+"/readings?_sorted&_limit=5";
   const res=await fetch(url,{cache:"no-store"});
@@ -216,6 +254,8 @@ async function loadHenthorn(){
   setText("levelValue","—");
   setText("movementValue","—");
   setText("readingTime","—");
+  state.telemetryVerified=false;
+  updateFusion();
 
   try{
     const latestRes=await fetch(EA_LATEST_URL,{cache:"no-store"});
@@ -249,12 +289,16 @@ async function loadHenthorn(){
     setText("movementValue",movement);
     setText("readingTime",formatDateTime(time));
     setBadge("statusBadge","Live EA telemetry verified","good");
+    state.telemetryVerified=true;
+    updateFusion();
 
   }catch(err){
     setText("levelValue","Unavailable");
     setText("movementValue","Unavailable");
     setText("readingTime","Unavailable");
     setBadge("statusBadge","EA telemetry unavailable","bad");
+    state.telemetryVerified=false;
+    updateFusion();
   }
 }
 
@@ -263,6 +307,8 @@ async function loadRainfall(){
   setText("rainStation","—");
   setText("rainValue","—");
   setText("rainTime","—");
+  state.rainfallVerified=false;
+  updateFusion();
 
   try{
     const stationUrl =
@@ -325,12 +371,16 @@ async function loadRainfall(){
     setText("rainValue",verified.value.toFixed(1)+" "+unit);
     setText("rainTime",formatDateTime(verified.reading.dateTime||verified.reading.date||""));
     setBadge("rainBadge","EA rainfall reading verified","good");
+    state.rainfallVerified=true;
+    updateFusion();
 
   }catch(err){
     setText("rainStation","Unavailable");
     setText("rainValue","Unavailable");
     setText("rainTime","Unavailable");
     setBadge("rainBadge","Rainfall acquisition unavailable","bad");
+    state.rainfallVerified=false;
+    updateFusion();
   }
 }
 
