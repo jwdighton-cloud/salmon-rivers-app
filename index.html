@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10111</title>
+<title>Salmon Rivers Intelligence — Build 10112</title>
 
 <style>
 :root{
@@ -113,7 +113,7 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 
 <header>
   <h1>Salmon Rivers Intelligence</h1>
-  <div class="build">Build 10111 · RFCA Endpoint Discovery · verified data only</div>
+  <div class="build">Build 10112 · RFCA Endpoint Acceptance Test · verified data only</div>
 </header>
 
 <main>
@@ -156,14 +156,33 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 </section>
 
 <section class="card">
+  <h2>RFCA Endpoint Acceptance Test</h2>
+
+  <div class="badge warn">Not passed — RFCA values blocked</div>
+
+  <p class="small">
+    RFCA water-quality monitoring is accepted only as an investigation target at this stage.
+    No RFCA temperature, dissolved oxygen, turbidity, pH, fish-counter, or catch value may appear until every test below is passed.
+  </p>
+
+  <div class="row"><div class="label">Stable source URL</div><div class="value">Page only</div></div>
+  <div class="row"><div class="label">Machine-readable endpoint</div><div class="value">Not proven</div></div>
+  <div class="row"><div class="label">Timestamp available</div><div class="value">Not proven in app</div></div>
+  <div class="row"><div class="label">Units available</div><div class="value">Expected, not integrated</div></div>
+  <div class="row"><div class="label">Station / location clear</div><div class="value">Not integrated</div></div>
+  <div class="row"><div class="label">Refresh behaviour</div><div class="value">Reported, not tested</div></div>
+  <div class="row"><div class="label">Repeatability</div><div class="value">Not proven</div></div>
+  <div class="row"><div class="label">Acceptance result</div><div class="value">Fail safe</div></div>
+
+  <p class="small">
+    <a href="https://www.ribblefisheriesca.co.uk/live-water-quality-monitoring/" target="_blank" rel="noopener">Open RFCA water-quality monitoring</a>
+  </p>
+</section>
+
+<section class="card">
   <h2>RFCA Endpoint Discovery</h2>
 
   <div class="badge warn">Investigation active — values blocked</div>
-
-  <p class="small">
-    RFCA water-quality monitoring is now recorded as a verified investigation target.
-    The app will not display any RFCA number until a stable, traceable, current, machine-readable source is proven.
-  </p>
 
   <div class="grid">
     <div class="source">
@@ -171,9 +190,6 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
       <div class="badge warn">Verified page, not integrated</div>
       <p class="small">
         Candidate source for temperature / sonde data. Page exists, but no stable endpoint has been accepted by the app.
-      </p>
-      <p class="small">
-        <a href="https://www.ribblefisheriesca.co.uk/live-water-quality-monitoring/" target="_blank" rel="noopener">Open RFCA water-quality monitoring</a>
       </p>
     </div>
 
@@ -197,10 +213,10 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
     </div>
 
     <div class="source">
-      <div class="source-title">RFCA acceptance test</div>
-      <div class="badge blocked">Not passed</div>
+      <div class="source-title">RFCA acceptance status</div>
+      <div class="badge blocked">Fail-safe</div>
       <p class="small">
-        Must prove source URL, timestamp, unit, station/location, refresh behaviour, and repeatability.
+        Until the acceptance test passes, RFCA remains visible for investigation only.
       </p>
     </div>
   </div>
@@ -213,7 +229,7 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 
   <div class="row"><div class="label">1. Stable telemetry</div><div class="value">Active</div></div>
   <div class="row"><div class="label">2. Rainfall / catchment layer</div><div class="value">EA pathway active</div></div>
-  <div class="row"><div class="label">3. RFCA temperature / sonde</div><div class="value">Endpoint discovery</div></div>
+  <div class="row"><div class="label">3. RFCA temperature / sonde</div><div class="value">Acceptance test</div></div>
   <div class="row"><div class="label">4. Current-season reports</div><div class="value">Indexed, blocked</div></div>
   <div class="row"><div class="label">5. Fish counters</div><div class="value">Blocked pending feed</div></div>
   <div class="row"><div class="label">6. Operator / association model</div><div class="value">Modelled, blocked</div></div>
@@ -265,7 +281,7 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   <div class="grid">
     <div class="source">
       <div class="source-title">RFCA sonde data</div>
-      <div class="badge warn">Endpoint discovery</div>
+      <div class="badge warn">Acceptance testing</div>
       <p class="small">Candidate future source. No values accepted yet.</p>
     </div>
 
@@ -301,7 +317,7 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   <div class="row"><div class="label">Known</div><div class="value">RFCA water-quality page exists</div></div>
   <div class="row"><div class="label">Unknown</div><div class="value">Stable RFCA public data endpoint</div></div>
   <div class="row"><div class="label">Unknown</div><div class="value">Verified Ribble salmon totals</div></div>
-  <div class="row"><div class="label">Next action</div><div class="value">RFCA endpoint acceptance test</div></div>
+  <div class="row"><div class="label">Next action</div><div class="value">Inspect RFCA data delivery mechanism</div></div>
 </section>
 
 <section class="card">
@@ -312,17 +328,17 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   <div class="row"><div class="label">Catch intelligence</div><div class="value">Current-season gate active</div></div>
   <div class="row"><div class="label">Temperature policy</div><div class="value">Verified only</div></div>
   <div class="row"><div class="label">Fish-counter policy</div><div class="value">Verified only</div></div>
-  <div class="row"><div class="label">RFCA policy</div><div class="value">Endpoint first</div></div>
+  <div class="row"><div class="label">RFCA policy</div><div class="value">Pass test first</div></div>
 </section>
 
 </main>
 
 <div class="footer">
-  Salmon Rivers Intelligence · Build 10111 · GitHub Pages intelligence terminal
+  Salmon Rivers Intelligence · Build 10112 · GitHub Pages intelligence terminal
 </div>
 
 <script>
-const BUILD = "10111";
+const BUILD = "10112";
 const HENTHORN_STATION = "710305";
 const HENTHORN_LAT = 53.87;
 const HENTHORN_LONG = -2.39;
