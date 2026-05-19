@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10109</title>
+<title>Salmon Rivers Intelligence — Build 10110</title>
 
 <style>
 :root{
@@ -12,51 +12,31 @@
   --ink:#111827;
   --muted:#6b7280;
   --line:#d8dee6;
-
   --green:#166534;
   --amber:#92400e;
   --red:#991b1b;
   --blue:#1d4ed8;
-
   --soft-green:#dcfce7;
   --soft-amber:#fef3c7;
   --soft-red:#fee2e2;
   --soft-blue:#dbeafe;
 }
-
 *{box-sizing:border-box}
-
 body{
   margin:0;
   background:var(--bg);
   color:var(--ink);
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
 }
-
 header{
   background:#0f172a;
   color:#fff;
   padding:18px 14px;
   text-align:center;
 }
-
-header h1{
-  margin:0;
-  font-size:23px;
-}
-
-header .build{
-  margin-top:6px;
-  color:#cbd5e1;
-  font-size:13px;
-}
-
-main{
-  max-width:920px;
-  margin:0 auto;
-  padding:14px;
-}
-
+header h1{margin:0;font-size:23px}
+header .build{margin-top:6px;color:#cbd5e1;font-size:13px}
+main{max-width:920px;margin:0 auto;padding:14px}
 .card{
   background:var(--card);
   border:1px solid var(--line);
@@ -65,12 +45,7 @@ main{
   margin-bottom:14px;
   box-shadow:0 1px 4px rgba(0,0,0,.05);
 }
-
-h2{
-  margin:0 0 10px;
-  font-size:18px;
-}
-
+h2{margin:0 0 10px;font-size:18px}
 .row{
   display:flex;
   justify-content:space-between;
@@ -78,26 +53,10 @@ h2{
   padding:9px 0;
   border-top:1px solid #edf0f3;
 }
-
-.row:first-of-type{
-  border-top:none;
-}
-
-.label{
-  color:var(--muted);
-}
-
-.value{
-  font-weight:700;
-  text-align:right;
-}
-
-.big{
-  font-size:36px;
-  font-weight:800;
-  letter-spacing:-1px;
-}
-
+.row:first-of-type{border-top:none}
+.label{color:var(--muted)}
+.value{font-weight:700;text-align:right}
+.big{font-size:36px;font-weight:800;letter-spacing:-1px}
 .badge{
   display:inline-block;
   padding:6px 10px;
@@ -105,38 +64,12 @@ h2{
   font-size:13px;
   font-weight:700;
 }
-
-.good{
-  background:var(--soft-green);
-  color:var(--green);
-}
-
-.warn{
-  background:var(--soft-amber);
-  color:var(--amber);
-}
-
-.bad{
-  background:var(--soft-red);
-  color:var(--red);
-}
-
-.info{
-  background:var(--soft-blue);
-  color:var(--blue);
-}
-
-.blocked{
-  background:#f3f4f6;
-  color:#374151;
-}
-
-.small{
-  font-size:13px;
-  line-height:1.45;
-  color:var(--muted);
-}
-
+.good{background:var(--soft-green);color:var(--green)}
+.warn{background:var(--soft-amber);color:var(--amber)}
+.bad{background:var(--soft-red);color:var(--red)}
+.info{background:var(--soft-blue);color:var(--blue)}
+.blocked{background:#f3f4f6;color:#374151}
+.small{font-size:13px;line-height:1.45;color:var(--muted)}
 button{
   width:100%;
   border:0;
@@ -148,29 +81,19 @@ button{
   font-weight:800;
   cursor:pointer;
 }
-
-button:active{
-  transform:scale(.99);
-}
-
+button:active{transform:scale(.99)}
 .grid{
   display:grid;
   grid-template-columns:1fr;
   gap:10px;
 }
-
 .source{
   border:1px solid var(--line);
   border-radius:14px;
   padding:11px;
   background:#fafafa;
 }
-
-.source-title{
-  font-weight:800;
-  margin-bottom:5px;
-}
-
+.source-title{font-weight:800;margin-bottom:5px}
 .section-divider{
   margin:12px 0 4px;
   font-size:12px;
@@ -178,24 +101,10 @@ button:active{
   color:#6b7280;
   letter-spacing:.08em;
 }
-
-a{
-  color:#1d4ed8;
-  font-weight:700;
-  text-decoration:none;
-}
-
-.footer{
-  text-align:center;
-  color:var(--muted);
-  font-size:12px;
-  padding:18px 0 28px;
-}
-
+a{color:#1d4ed8;font-weight:700;text-decoration:none}
+.footer{text-align:center;color:var(--muted);font-size:12px;padding:18px 0 28px}
 @media(min-width:700px){
-  .grid{
-    grid-template-columns:1fr 1fr;
-  }
+  .grid{grid-template-columns:1fr 1fr}
 }
 </style>
 </head>
@@ -204,248 +113,165 @@ a{
 
 <header>
   <h1>Salmon Rivers Intelligence</h1>
-  <div class="build">
-    Build 10109 · Telemetry Integrity Monitor · verified data only
-  </div>
+  <div class="build">Build 10110 · Source Acquisition Roadmap · verified data only</div>
 </header>
 
 <main>
 
 <section class="card">
-
   <h2>River Ribble — Henthorn Live Conditions</h2>
 
-  <div id="statusBadge" class="badge info">
-    Checking EA telemetry…
-  </div>
+  <div id="statusBadge" class="badge info">Checking EA telemetry…</div>
 
   <div style="margin-top:14px">
     <div class="label">Latest river level</div>
     <div id="levelValue" class="big">—</div>
   </div>
 
-  <div class="row">
-    <div class="label">Movement</div>
-    <div id="movementValue" class="value">—</div>
-  </div>
-
-  <div class="row">
-    <div class="label">Latest reading time</div>
-    <div id="readingTime" class="value">—</div>
-  </div>
-
-  <div class="row">
-    <div class="label">Last successful telemetry refresh</div>
-    <div id="successTime" class="value">—</div>
-  </div>
-
-  <div class="row">
-    <div class="label">Data freshness</div>
-    <div id="freshnessValue" class="value">—</div>
-  </div>
-
-  <div class="row">
-    <div class="label">Primary source</div>
-    <div class="value">EA station 710305</div>
-  </div>
+  <div class="row"><div class="label">Movement</div><div id="movementValue" class="value">—</div></div>
+  <div class="row"><div class="label">Latest reading time</div><div id="readingTime" class="value">—</div></div>
+  <div class="row"><div class="label">Last successful telemetry refresh</div><div id="successTime" class="value">—</div></div>
+  <div class="row"><div class="label">Data freshness</div><div id="freshnessValue" class="value">—</div></div>
+  <div class="row"><div class="label">Primary source</div><div class="value">EA station 710305</div></div>
 
   <p class="small">
     Only verified EA telemetry is permitted to create live numeric values.
     No fishability scores, no fake catches, no speculative classifications.
   </p>
 
-  <button onclick="loadAll()">
-    Refresh live telemetry
-  </button>
-
+  <button onclick="loadAll()">Refresh live telemetry</button>
 </section>
 
 <section class="card">
-
   <h2>Telemetry Integrity Monitor</h2>
 
-  <div id="integrityBadge" class="badge info">
-    Evaluating integrity state…
-  </div>
+  <div id="integrityBadge" class="badge info">Evaluating integrity state…</div>
 
-  <div class="row">
-    <div class="label">Telemetry state</div>
-    <div id="telemetryState" class="value">Checking</div>
-  </div>
-
-  <div class="row">
-    <div class="label">Rainfall acquisition state</div>
-    <div id="rainfallState" class="value">Checking</div>
-  </div>
-
-  <div class="row">
-    <div class="label">Data integrity lock</div>
-    <div class="value">Active</div>
-  </div>
-
-  <div class="row">
-    <div class="label">Numeric source policy</div>
-    <div class="value">Verified-only</div>
-  </div>
-
-  <div class="row">
-    <div class="label">Automatic catch totals</div>
-    <div class="value">Blocked</div>
-  </div>
-
-  <div class="row">
-    <div class="label">RFCA live values</div>
-    <div class="value">Blocked</div>
-  </div>
-
+  <div class="row"><div class="label">Telemetry state</div><div id="telemetryState" class="value">Checking</div></div>
+  <div class="row"><div class="label">Rainfall acquisition state</div><div id="rainfallState" class="value">Checking</div></div>
+  <div class="row"><div class="label">Data integrity lock</div><div class="value">Active</div></div>
+  <div class="row"><div class="label">Numeric source policy</div><div class="value">Verified-only</div></div>
+  <div class="row"><div class="label">Automatic catch totals</div><div class="value">Blocked</div></div>
+  <div class="row"><div class="label">RFCA live values</div><div class="value">Blocked</div></div>
 </section>
 
 <section class="card">
+  <h2>Source Acquisition Roadmap</h2>
 
+  <div class="badge info">Controlled acquisition path</div>
+
+  <div class="row"><div class="label">1. Stable telemetry</div><div class="value">Active</div></div>
+  <div class="row"><div class="label">2. Rainfall / catchment layer</div><div class="value">EA pathway active</div></div>
+  <div class="row"><div class="label">3. RFCA temperature / sonde</div><div class="value">Investigation only</div></div>
+  <div class="row"><div class="label">4. Current-season reports</div><div class="value">Indexed, blocked</div></div>
+  <div class="row"><div class="label">5. Fish counters</div><div class="value">Blocked pending feed</div></div>
+  <div class="row"><div class="label">6. Operator / association model</div><div class="value">Modelled, blocked</div></div>
+  <div class="row"><div class="label">7. Android Studio wrapper</div><div class="value">Planned only</div></div>
+
+  <p class="small">
+    The roadmap prevents weak sources from being promoted too early.
+    A source must become stable, traceable, current, and verifiable before it can create a number.
+  </p>
+</section>
+
+<section class="card">
+  <h2>Rainfall / Catchment Intelligence</h2>
+
+  <div id="rainBadge" class="badge info">Checking EA rainfall acquisition…</div>
+
+  <div class="row"><div class="label">Nearest rainfall source</div><div id="rainStation" class="value">—</div></div>
+  <div class="row"><div class="label">Latest rainfall reading</div><div id="rainValue" class="value">—</div></div>
+  <div class="row"><div class="label">Reading time</div><div id="rainTime" class="value">—</div></div>
+  <div class="row"><div class="label">Governance</div><div class="value">EA rainfall API only</div></div>
+
+  <p class="small">
+    Rainfall is shown only if returned live from the EA rainfall API.
+    If no stable reading is returned, the app shows unavailable.
+  </p>
+</section>
+
+<section class="card">
   <h2>Intelligence State Separation</h2>
 
   <div class="section-divider">LIVE VERIFIED</div>
 
   <div class="grid">
-
     <div class="source">
       <div class="source-title">EA river telemetry</div>
       <div class="badge good">Live verified</div>
-      <p class="small">
-        Environment Agency live level telemetry for Henthorn.
-      </p>
+      <p class="small">Environment Agency live level telemetry for Henthorn.</p>
     </div>
 
     <div class="source">
       <div class="source-title">EA rainfall acquisition</div>
       <div class="badge good">Governed live source</div>
-      <p class="small">
-        Rainfall values only displayed if directly returned from EA rainfall feeds.
-      </p>
+      <p class="small">Rainfall values only displayed if directly returned from EA rainfall feeds.</p>
     </div>
-
   </div>
 
   <div class="section-divider">INVESTIGATION</div>
 
   <div class="grid">
-
     <div class="source">
       <div class="source-title">RFCA sonde data</div>
       <div class="badge warn">Investigation</div>
-      <p class="small">
-        Candidate future source. No values accepted yet.
-      </p>
+      <p class="small">Candidate future source. No values accepted yet.</p>
     </div>
 
     <div class="source">
       <div class="source-title">Operator / association reports</div>
       <div class="badge warn">Modelled</div>
-      <p class="small">
-        Candidate intelligence layer only.
-      </p>
+      <p class="small">Candidate intelligence layer only.</p>
     </div>
-
   </div>
 
   <div class="section-divider">BLOCKED</div>
 
   <div class="grid">
-
     <div class="source">
       <div class="source-title">Current-season catch totals</div>
       <div class="badge blocked">Blocked</div>
-      <p class="small">
-        No verified current-season numeric source established.
-      </p>
+      <p class="small">No verified current-season numeric source established.</p>
     </div>
 
     <div class="source">
       <div class="source-title">Fish counters</div>
       <div class="badge blocked">Blocked</div>
-      <p class="small">
-        No stable traceable public feed verified.
-      </p>
+      <p class="small">No stable traceable public feed verified.</p>
     </div>
-
   </div>
-
 </section>
 
 <section class="card">
-
   <h2>Known / Unknown / Next Action</h2>
 
-  <div class="row">
-    <div class="label">Known</div>
-    <div class="value">EA Henthorn telemetry stable</div>
-  </div>
-
-  <div class="row">
-    <div class="label">Known</div>
-    <div class="value">Rainfall acquisition working</div>
-  </div>
-
-  <div class="row">
-    <div class="label">Unknown</div>
-    <div class="value">Verified Ribble salmon totals</div>
-  </div>
-
-  <div class="row">
-    <div class="label">Unknown</div>
-    <div class="value">Stable RFCA public endpoints</div>
-  </div>
-
-  <div class="row">
-    <div class="label">Next action</div>
-    <div class="value">RFCA endpoint discovery</div>
-  </div>
-
+  <div class="row"><div class="label">Known</div><div class="value">EA Henthorn telemetry stable</div></div>
+  <div class="row"><div class="label">Known</div><div class="value">Rainfall acquisition pathway active</div></div>
+  <div class="row"><div class="label">Unknown</div><div class="value">Verified Ribble salmon totals</div></div>
+  <div class="row"><div class="label">Unknown</div><div class="value">Stable RFCA public endpoints</div></div>
+  <div class="row"><div class="label">Next action</div><div class="value">RFCA endpoint discovery</div></div>
 </section>
 
 <section class="card">
-
   <h2>Governance Rules</h2>
 
-  <div class="row">
-    <div class="label">Core rule</div>
-    <div class="value">No source = no number</div>
-  </div>
-
-  <div class="row">
-    <div class="label">Fishability</div>
-    <div class="value">No speculation</div>
-  </div>
-
-  <div class="row">
-    <div class="label">Catch intelligence</div>
-    <div class="value">Current-season gate active</div>
-  </div>
-
-  <div class="row">
-    <div class="label">Temperature policy</div>
-    <div class="value">Verified only</div>
-  </div>
-
-  <div class="row">
-    <div class="label">Fish-counter policy</div>
-    <div class="value">Verified only</div>
-  </div>
-
+  <div class="row"><div class="label">Core rule</div><div class="value">No source = no number</div></div>
+  <div class="row"><div class="label">Fishability</div><div class="value">No speculation</div></div>
+  <div class="row"><div class="label">Catch intelligence</div><div class="value">Current-season gate active</div></div>
+  <div class="row"><div class="label">Temperature policy</div><div class="value">Verified only</div></div>
+  <div class="row"><div class="label">Fish-counter policy</div><div class="value">Verified only</div></div>
+  <div class="row"><div class="label">Android transition</div><div class="value">No data downgrade</div></div>
 </section>
 
 </main>
 
 <div class="footer">
-  Salmon Rivers Intelligence · Build 10109 · GitHub Pages intelligence terminal
+  Salmon Rivers Intelligence · Build 10110 · GitHub Pages intelligence terminal
 </div>
 
 <script>
-
-const BUILD = "10109";
-
+const BUILD = "10110";
 const HENTHORN_STATION = "710305";
-
 const HENTHORN_LAT = 53.87;
 const HENTHORN_LONG = -2.39;
 
@@ -461,21 +287,20 @@ const EA_LATEST_URL =
   "/readings?latest";
 
 function setText(id,value){
-  document.getElementById(id).textContent = value;
+  const el = document.getElementById(id);
+  if(el) el.textContent = value;
 }
 
 function setBadge(id,text,cls){
   const el = document.getElementById(id);
+  if(!el) return;
   el.className = "badge " + cls;
   el.textContent = text;
 }
 
 function formatDateTime(iso){
-
   if(!iso) return "—";
-
   const d = new Date(iso);
-
   if(isNaN(d.getTime())) return iso;
 
   return d.toLocaleString("en-GB",{
@@ -488,7 +313,6 @@ function formatDateTime(iso){
 }
 
 function classifyMovement(current,previous){
-
   if(current === null || previous === null){
     return "Not enough readings";
   }
@@ -507,45 +331,19 @@ function classifyMovement(current,previous){
 }
 
 function updateIntegrity(){
-
-  setText(
-    "telemetryState",
-    state.telemetryVerified ? "Verified" : "Unavailable"
-  );
-
-  setText(
-    "rainfallState",
-    state.rainfallVerified ? "Verified" : "Unavailable"
-  );
+  setText("telemetryState", state.telemetryVerified ? "Verified" : "Unavailable");
+  setText("rainfallState", state.rainfallVerified ? "Verified" : "Unavailable");
 
   if(state.telemetryVerified && state.rainfallVerified){
-
-    setBadge(
-      "integrityBadge",
-      "Integrity strong",
-      "good"
-    );
-
+    setBadge("integrityBadge","Integrity strong","good");
   }else if(state.telemetryVerified){
-
-    setBadge(
-      "integrityBadge",
-      "Telemetry verified",
-      "good"
-    );
-
+    setBadge("integrityBadge","Telemetry verified","good");
   }else{
-
-    setBadge(
-      "integrityBadge",
-      "Integrity degraded",
-      "bad"
-    );
+    setBadge("integrityBadge","Integrity degraded","bad");
   }
 }
 
 async function fetchRecentReadings(){
-
   const url =
     "https://environment.data.gov.uk/flood-monitoring/id/stations/" +
     HENTHORN_STATION +
@@ -559,13 +357,10 @@ async function fetchRecentReadings(){
 
   const json = await res.json();
 
-  return Array.isArray(json.items)
-    ? json.items
-    : [];
+  return Array.isArray(json.items) ? json.items : [];
 }
 
 function updateFreshness(readingIso){
-
   if(!readingIso){
     setText("freshnessValue","Unknown");
     return;
@@ -574,49 +369,30 @@ function updateFreshness(readingIso){
   const now = new Date();
   const reading = new Date(readingIso);
 
-  const mins =
-    Math.floor((now - reading) / 60000);
+  if(isNaN(reading.getTime())){
+    setText("freshnessValue","Unknown");
+    return;
+  }
+
+  const mins = Math.floor((now - reading) / 60000);
 
   if(mins <= 30){
-
-    setText(
-      "freshnessValue",
-      "Fresh telemetry"
-    );
-
+    setText("freshnessValue","Fresh telemetry");
   }else if(mins <= 120){
-
-    setText(
-      "freshnessValue",
-      "Aging telemetry"
-    );
-
+    setText("freshnessValue","Aging telemetry");
   }else{
-
-    setText(
-      "freshnessValue",
-      "Stale telemetry"
-    );
+    setText("freshnessValue","Stale telemetry");
   }
 }
 
 async function loadHenthorn(){
-
-  setBadge(
-    "statusBadge",
-    "Checking EA telemetry…",
-    "info"
-  );
+  setBadge("statusBadge","Checking EA telemetry…","info");
 
   state.telemetryVerified = false;
   updateIntegrity();
 
   try{
-
-    const res = await fetch(
-      EA_LATEST_URL,
-      {cache:"no-store"}
-    );
+    const res = await fetch(EA_LATEST_URL,{cache:"no-store"});
 
     if(!res.ok){
       throw new Error("EA failed");
@@ -624,24 +400,15 @@ async function loadHenthorn(){
 
     const json = await res.json();
 
-    const items =
-      Array.isArray(json.items)
-      ? json.items
-      : [];
+    const items = Array.isArray(json.items) ? json.items : [];
 
     if(items.length === 0){
       throw new Error("No items");
     }
 
     const latest = items[0];
-
-    const level =
-      Number(latest.value);
-
-    const time =
-      latest.dateTime ||
-      latest.date ||
-      "";
+    const level = Number(latest.value);
+    const time = latest.dateTime || latest.date || "";
 
     if(!Number.isFinite(level)){
       throw new Error("Invalid level");
@@ -650,98 +417,54 @@ async function loadHenthorn(){
     let movement = "Latest only";
 
     try{
+      const recent = await fetchRecentReadings();
 
-      const recent =
-        await fetchRecentReadings();
-
-      const sorted =
-        recent
-          .filter(r =>
-            Number.isFinite(Number(r.value)) &&
-            r.dateTime
-          )
-          .sort(
-            (a,b) =>
-              new Date(b.dateTime) -
-              new Date(a.dateTime)
-          );
+      const sorted = recent
+        .filter(r => Number.isFinite(Number(r.value)) && r.dateTime)
+        .sort((a,b) => new Date(b.dateTime) - new Date(a.dateTime));
 
       if(sorted.length >= 2){
-
-        movement =
-          classifyMovement(
-            Number(sorted[0].value),
-            Number(sorted[1].value)
-          );
+        movement = classifyMovement(
+          Number(sorted[0].value),
+          Number(sorted[1].value)
+        );
       }
-
     }catch(e){}
 
-    setText(
-      "levelValue",
-      level.toFixed(3) + " m"
-    );
-
-    setText(
-      "movementValue",
-      movement
-    );
-
-    setText(
-      "readingTime",
-      formatDateTime(time)
-    );
+    setText("levelValue",level.toFixed(3) + " m");
+    setText("movementValue",movement);
+    setText("readingTime",formatDateTime(time));
 
     state.lastSuccess = new Date();
 
-    setText(
-      "successTime",
-      formatDateTime(state.lastSuccess)
-    );
-
+    setText("successTime",formatDateTime(state.lastSuccess));
     updateFreshness(time);
 
-    setBadge(
-      "statusBadge",
-      "Live EA telemetry verified",
-      "good"
-    );
+    setBadge("statusBadge","Live EA telemetry verified","good");
 
     state.telemetryVerified = true;
-
     updateIntegrity();
 
   }catch(err){
-
     setText("levelValue","Unavailable");
     setText("movementValue","Unavailable");
     setText("readingTime","Unavailable");
+    setText("freshnessValue","Unknown");
 
-    setBadge(
-      "statusBadge",
-      "EA telemetry unavailable",
-      "bad"
-    );
+    setBadge("statusBadge","EA telemetry unavailable","bad");
 
     state.telemetryVerified = false;
-
     updateIntegrity();
   }
 }
 
 async function loadRainfall(){
-
   state.rainfallVerified = false;
   updateIntegrity();
 
-  setBadge(
-    "rainBadge",
-    "Checking EA rainfall acquisition…",
-    "info"
-  );
+  setBadge("rainBadge","Checking EA rainfall acquisition…","info");
 
   try{
-
     const stationUrl =
       "https://environment.data.gov.uk/flood-monitoring/id/stations" +
       "?parameter=rainfall" +
@@ -749,55 +472,38 @@ async function loadRainfall(){
       "&long=" + encodeURIComponent(HENTHORN_LONG) +
       "&dist=30&_limit=10";
 
-    const stationRes =
-      await fetch(stationUrl,{cache:"no-store"});
+    const stationRes = await fetch(stationUrl,{cache:"no-store"});
 
     if(!stationRes.ok){
       throw new Error("Rain search failed");
     }
 
-    const stationJson =
-      await stationRes.json();
-
-    const stations =
-      Array.isArray(stationJson.items)
-      ? stationJson.items
-      : [];
+    const stationJson = await stationRes.json();
+    const stations = Array.isArray(stationJson.items) ? stationJson.items : [];
 
     let verified = null;
 
     for(const station of stations){
-
-      const id =
-        station.notation ||
-        station.stationReference ||
-        "";
+      const id = station.notation || station.stationReference || "";
 
       if(!id) continue;
 
       try{
-
         const readingsUrl =
           "https://environment.data.gov.uk/flood-monitoring/id/stations/" +
           encodeURIComponent(id) +
           "/readings?parameter=rainfall&latest";
 
-        const rr =
-          await fetch(readingsUrl,{cache:"no-store"});
+        const rr = await fetch(readingsUrl,{cache:"no-store"});
 
         if(!rr.ok) continue;
 
         const rj = await rr.json();
-
-        const items =
-          Array.isArray(rj.items)
-          ? rj.items
-          : [];
+        const items = Array.isArray(rj.items) ? rj.items : [];
 
         if(items.length === 0) continue;
 
-        const value =
-          Number(items[0].value);
+        const value = Number(items[0].value);
 
         if(!Number.isFinite(value)) continue;
 
@@ -808,7 +514,6 @@ async function loadRainfall(){
         };
 
         break;
-
       }catch(e){}
     }
 
@@ -821,47 +526,23 @@ async function loadRainfall(){
       verified.station.notation ||
       "EA rainfall station";
 
-    setText(
-      "rainStation",
-      stationName
-    );
+    setText("rainStation",stationName);
+    setText("rainValue",verified.value.toFixed(1) + " mm");
+    setText("rainTime",formatDateTime(verified.reading.dateTime));
 
-    setText(
-      "rainValue",
-      verified.value.toFixed(1) + " mm"
-    );
-
-    setText(
-      "rainTime",
-      formatDateTime(
-        verified.reading.dateTime
-      )
-    );
-
-    setBadge(
-      "rainBadge",
-      "EA rainfall verified",
-      "good"
-    );
+    setBadge("rainBadge","EA rainfall verified","good");
 
     state.rainfallVerified = true;
-
     updateIntegrity();
 
   }catch(err){
-
     setText("rainStation","Unavailable");
     setText("rainValue","Unavailable");
     setText("rainTime","Unavailable");
 
-    setBadge(
-      "rainBadge",
-      "Rainfall unavailable",
-      "bad"
-    );
+    setBadge("rainBadge","Rainfall unavailable","bad");
 
     state.rainfallVerified = false;
-
     updateIntegrity();
   }
 }
@@ -872,12 +553,7 @@ function loadAll(){
 }
 
 loadAll();
-
-setInterval(
-  loadAll,
-  10 * 60 * 1000
-);
-
+setInterval(loadAll,10 * 60 * 1000);
 </script>
 
 </body>
