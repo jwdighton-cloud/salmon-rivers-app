@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10116</title>
+<title>Salmon Rivers Intelligence — Build 10117</title>
 
 <style>
 :root{
@@ -94,13 +94,6 @@ button:active{transform:scale(.99)}
   background:#fafafa;
 }
 .source-title{font-weight:800;margin-bottom:5px}
-.section-divider{
-  margin:12px 0 4px;
-  font-size:12px;
-  font-weight:800;
-  color:#6b7280;
-  letter-spacing:.08em;
-}
 .footer{text-align:center;color:var(--muted);font-size:12px;padding:18px 0 28px}
 a{color:#1d4ed8;font-weight:700;text-decoration:none}
 @media(min-width:700px){
@@ -113,10 +106,28 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 
 <header>
   <h1>Salmon Rivers Intelligence</h1>
-  <div class="build">Build 10116 · Source Fusion Governance · verified data only</div>
+  <div class="build">Build 10117 · Operational Command Summary · verified data only</div>
 </header>
 
 <main>
+
+<section class="card">
+  <h2>Operational Command Summary</h2>
+
+  <div id="commandBadge" class="badge info">Checking live baseline…</div>
+
+  <div class="row"><div class="label">Primary river</div><div class="value">Ribble @ Henthorn</div></div>
+  <div class="row"><div class="label">Live level source</div><div class="value">EA verified</div></div>
+  <div class="row"><div class="label">Rainfall source</div><div id="summaryRain" class="value">Checking</div></div>
+  <div class="row"><div class="label">Catch intelligence</div><div class="value">Blocked</div></div>
+  <div class="row"><div class="label">RFCA values</div><div class="value">Blocked</div></div>
+  <div class="row"><div class="label">App rule</div><div class="value">No source = no number</div></div>
+
+  <p class="small">
+    This is the command view: it shows what is genuinely live, what is only investigative,
+    and what is deliberately blocked.
+  </p>
+</section>
 
 <section class="card">
   <h2>River Ribble — Henthorn Live Conditions</h2>
@@ -148,55 +159,28 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 
   <div id="fusionBadge" class="badge info">Evaluating fusion state…</div>
 
-  <p class="small">
-    Fusion governance controls how sources may combine. Weak or investigative sources cannot upgrade themselves
-    by being grouped together. Only verified sources can create numeric confidence.
-  </p>
-
   <div class="row"><div class="label">EA level telemetry</div><div id="fusionLevel" class="value">Checking</div></div>
   <div class="row"><div class="label">EA rainfall</div><div id="fusionRainfall" class="value">Checking</div></div>
   <div class="row"><div class="label">RFCA sonde / temperature</div><div class="value">Investigation only</div></div>
   <div class="row"><div class="label">Catch totals</div><div class="value">Blocked</div></div>
   <div class="row"><div class="label">Fish counters</div><div class="value">Blocked</div></div>
   <div class="row"><div class="label">Fusion result</div><div id="fusionResult" class="value">Checking</div></div>
+
+  <p class="small">
+    Weak or investigative sources cannot upgrade themselves by being grouped together.
+    Verified sources remain separate from investigation material.
+  </p>
 </section>
 
 <section class="card">
-  <h2>Fusion Rules</h2>
+  <h2>Rainfall / Catchment Intelligence</h2>
 
-  <div class="grid">
-    <div class="source">
-      <div class="source-title">Allowed fusion</div>
-      <div class="badge good">Verified + verified</div>
-      <p class="small">
-        EA level telemetry may be read alongside EA rainfall when both return live values.
-      </p>
-    </div>
+  <div id="rainBadge" class="badge info">Checking EA rainfall acquisition…</div>
 
-    <div class="source">
-      <div class="source-title">Partial fusion</div>
-      <div class="badge info">Verified + unavailable</div>
-      <p class="small">
-        If rainfall is unavailable, level telemetry remains valid on its own.
-      </p>
-    </div>
-
-    <div class="source">
-      <div class="source-title">Investigation fusion</div>
-      <div class="badge warn">Not numeric</div>
-      <p class="small">
-        RFCA, operator reports, and editorial intelligence may guide investigation only.
-      </p>
-    </div>
-
-    <div class="source">
-      <div class="source-title">Blocked fusion</div>
-      <div class="badge blocked">Never promote</div>
-      <p class="small">
-        Multiple weak sources cannot be combined to invent a catch total, fishability score, or temperature.
-      </p>
-    </div>
-  </div>
+  <div class="row"><div class="label">Nearest rainfall source</div><div id="rainStation" class="value">—</div></div>
+  <div class="row"><div class="label">Latest rainfall reading</div><div id="rainValue" class="value">—</div></div>
+  <div class="row"><div class="label">Reading time</div><div id="rainTime" class="value">—</div></div>
+  <div class="row"><div class="label">Confidence class</div><div class="value">PROVISIONAL</div></div>
 </section>
 
 <section class="card">
@@ -246,36 +230,6 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 </section>
 
 <section class="card">
-  <h2>Value Promotion Rules</h2>
-
-  <div class="grid">
-    <div class="source">
-      <div class="source-title">Live EA telemetry</div>
-      <div class="badge good">VERIFIED</div>
-      <p class="small">Stable live numeric endpoint with repeatable retrieval.</p>
-    </div>
-
-    <div class="source">
-      <div class="source-title">EA rainfall</div>
-      <div class="badge info">PROVISIONAL</div>
-      <p class="small">Accepted only when current rainfall values are returned live.</p>
-    </div>
-
-    <div class="source">
-      <div class="source-title">RFCA sonde values</div>
-      <div class="badge warn">INVESTIGATION</div>
-      <p class="small">Endpoint discovery and repeatability still under investigation.</p>
-    </div>
-
-    <div class="source">
-      <div class="source-title">Catch totals</div>
-      <div class="badge blocked">BLOCKED</div>
-      <p class="small">No accepted current-season verified Ribble total.</p>
-    </div>
-  </div>
-</section>
-
-<section class="card">
   <h2>Current-Season Catch Intelligence Gate</h2>
 
   <div class="badge blocked">Catch totals blocked</div>
@@ -319,24 +273,13 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 </section>
 
 <section class="card">
-  <h2>Rainfall / Catchment Intelligence</h2>
-
-  <div id="rainBadge" class="badge info">Checking EA rainfall acquisition…</div>
-
-  <div class="row"><div class="label">Nearest rainfall source</div><div id="rainStation" class="value">—</div></div>
-  <div class="row"><div class="label">Latest rainfall reading</div><div id="rainValue" class="value">—</div></div>
-  <div class="row"><div class="label">Reading time</div><div id="rainTime" class="value">—</div></div>
-  <div class="row"><div class="label">Confidence class</div><div class="value">PROVISIONAL</div></div>
-</section>
-
-<section class="card">
   <h2>Known / Unknown / Next Action</h2>
 
   <div class="row"><div class="label">Known</div><div class="value">EA Henthorn telemetry stable</div></div>
-  <div class="row"><div class="label">Known</div><div class="value">Source fusion governance added</div></div>
+  <div class="row"><div class="label">Known</div><div class="value">Operational summary added</div></div>
   <div class="row"><div class="label">Unknown</div><div class="value">Stable RFCA endpoint</div></div>
   <div class="row"><div class="label">Unknown</div><div class="value">Verified Ribble catch totals</div></div>
-  <div class="row"><div class="label">Next action</div><div class="value">Operational polish</div></div>
+  <div class="row"><div class="label">Next action</div><div class="value">Mobile usability polish</div></div>
 </section>
 
 <section class="card">
@@ -353,11 +296,11 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 </main>
 
 <div class="footer">
-  Salmon Rivers Intelligence · Build 10116 · GitHub Pages intelligence terminal
+  Salmon Rivers Intelligence · Build 10117 · GitHub Pages intelligence terminal
 </div>
 
 <script>
-const BUILD = "10116";
+const BUILD = "10117";
 const HENTHORN_STATION = "710305";
 const HENTHORN_LAT = 53.87;
 const HENTHORN_LONG = -2.39;
@@ -432,6 +375,18 @@ function updateIntegrity(){
   }
 }
 
+function updateCommandSummary(){
+  setText("summaryRain", state.rainfallVerified ? "EA provisional live" : "Unavailable");
+
+  if(state.telemetryVerified && state.rainfallVerified){
+    setBadge("commandBadge","Live baseline strong","good");
+  }else if(state.telemetryVerified){
+    setBadge("commandBadge","Telemetry live, rainfall unavailable","info");
+  }else{
+    setBadge("commandBadge","Live baseline degraded","bad");
+  }
+}
+
 function updateFusion(){
   setText("fusionLevel", state.telemetryVerified ? "VERIFIED" : "Unavailable");
   setText("fusionRainfall", state.rainfallVerified ? "PROVISIONAL" : "Unavailable");
@@ -446,6 +401,8 @@ function updateFusion(){
     setBadge("fusionBadge","Fusion blocked: no verified telemetry","bad");
     setText("fusionResult","No live baseline");
   }
+
+  updateCommandSummary();
 }
 
 async function fetchRecentReadings(){
