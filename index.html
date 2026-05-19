@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10107</title>
+<title>Salmon Rivers Intelligence — Build 10108</title>
 <style>
 :root{
   --bg:#f4f6f8;--card:#fff;--ink:#111827;--muted:#6b7280;--line:#d8dee6;
@@ -45,7 +45,7 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 <body>
 <header>
   <h1>Salmon Rivers Intelligence</h1>
-  <div class="build">Build 10107 · Ribble @ Henthorn · verified data only</div>
+  <div class="build">Build 10108 · Gold Stability Checkpoint · verified data only</div>
 </header>
 
 <main>
@@ -65,6 +65,22 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 
   <p class="small">Level and movement use Environment Agency telemetry only. No fishability, catch, temperature, or fish-counter value is invented.</p>
   <button onclick="loadAll()">Refresh live data</button>
+</section>
+
+<section class="card">
+  <h2>Gold Stability Checkpoint</h2>
+  <div class="badge good">Data integrity lock active</div>
+
+  <div class="row"><div class="label">Build status</div><div class="value">Stable checkpoint</div></div>
+  <div class="row"><div class="label">Primary live river</div><div class="value">Ribble @ Henthorn</div></div>
+  <div class="row"><div class="label">Live numeric values allowed</div><div class="value">EA verified only</div></div>
+  <div class="row"><div class="label">Blocked numeric values</div><div class="value">Catch, RFCA, fish counters</div></div>
+  <div class="row"><div class="label">Architecture</div><div class="value">Single HTML file</div></div>
+
+  <p class="small">
+    This checkpoint preserves the project’s hard rule: no source means no number.
+    Candidate sources are visible for investigation, but they cannot create figures or recommendations.
+  </p>
 </section>
 
 <section class="card">
@@ -91,81 +107,6 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   <div class="row"><div class="label">Overall intelligence status</div><div id="fusionOverall" class="value">Checking</div></div>
 
   <p class="small">Fusion logic does not create conclusions. It separates verified live feeds from candidate sources and blocked intelligence.</p>
-</section>
-
-<section class="card">
-  <h2>Android Studio Transition Plan</h2>
-  <div class="badge info">Phase 2 planning added</div>
-
-  <p class="small">
-    The current GitHub Pages single-file app remains the operational gold baseline.
-    Android Studio is treated as the next platform wrapper, not a reason to weaken the data rules.
-  </p>
-
-  <div class="grid">
-    <div class="source">
-      <div class="source-title">Phase 1 — Current</div>
-      <div class="badge good">GitHub Pages terminal</div>
-      <p class="small">Single index.html. Live EA telemetry. No backend. No database. Fast iteration.</p>
-    </div>
-
-    <div class="source">
-      <div class="source-title">Phase 2 — Next</div>
-      <div class="badge info">Android WebView shell</div>
-      <p class="small">Wrap the existing live app in Android Studio while preserving the same verified data logic.</p>
-    </div>
-
-    <div class="source">
-      <div class="source-title">Native features later</div>
-      <div class="badge warn">Not yet</div>
-      <p class="small">Possible later features: home-screen app, refresh controls, offline last-known verified data, notifications.</p>
-    </div>
-
-    <div class="source">
-      <div class="source-title">Hard rule</div>
-      <div class="badge blocked">No data downgrade</div>
-      <p class="small">Android must not introduce fake caches, invented readings, manual catch totals, or unverified RFCA values.</p>
-    </div>
-  </div>
-</section>
-
-<section class="card">
-  <h2>Operator / Association Modelling</h2>
-  <div class="badge warn">Model added — values blocked</div>
-
-  <p class="small">
-    Operator, club, association, and beat sources are candidate intelligence inputs only.
-    They can support the app only when each item is current-season, dated, traceable, river-specific, and non-speculative.
-  </p>
-
-  <div class="grid">
-    <div class="source">
-      <div class="source-title">Catch-report groups</div>
-      <div class="badge warn">Candidate only</div>
-      <p class="small">Useful for manual review. Not accepted as automatic catch totals.</p>
-      <p class="small"><a href="https://www.facebook.com/groups/511047772383310/" target="_blank" rel="noopener">Open Ribble Catch Reports</a></p>
-    </div>
-
-    <div class="source">
-      <div class="source-title">Angling association beat pages</div>
-      <div class="badge warn">Candidate only</div>
-      <p class="small">Useful for beat mapping and access context. Not a current catch total source.</p>
-      <p class="small"><a href="https://www.yorkshireflyfishers.co.uk/river_ribble.htm" target="_blank" rel="noopener">Open Yorkshire Fly Fishers Ribble beat</a></p>
-    </div>
-
-    <div class="source">
-      <div class="source-title">Association waters</div>
-      <div class="badge warn">Candidate only</div>
-      <p class="small">May identify waters with salmon and sea trout, but does not provide verified current totals.</p>
-      <p class="small"><a href="https://www.bradfordcityaa.co.uk/river-ribble-skirbeck/" target="_blank" rel="noopener">Open Bradford City AA Skirbeck</a></p>
-    </div>
-
-    <div class="source">
-      <div class="source-title">Operator / beat reports</div>
-      <div class="badge blocked">No trusted feed yet</div>
-      <p class="small">Future integration requires repeatable source format and current-season date checks.</p>
-    </div>
-  </div>
 </section>
 
 <section class="card">
@@ -213,23 +154,67 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 </section>
 
 <section class="card">
+  <h2>Operator / Association Modelling</h2>
+  <div class="badge warn">Model added — values blocked</div>
+
+  <p class="small">
+    Operator, club, association, and beat sources are candidate intelligence inputs only.
+    They can support the app only when each item is current-season, dated, traceable, river-specific, and non-speculative.
+  </p>
+
+  <div class="grid">
+    <div class="source">
+      <div class="source-title">Catch-report groups</div>
+      <div class="badge warn">Candidate only</div>
+      <p class="small">Useful for manual review. Not accepted as automatic catch totals.</p>
+      <p class="small"><a href="https://www.facebook.com/groups/511047772383310/" target="_blank" rel="noopener">Open Ribble Catch Reports</a></p>
+    </div>
+
+    <div class="source">
+      <div class="source-title">Angling association beat pages</div>
+      <div class="badge warn">Candidate only</div>
+      <p class="small">Useful for beat mapping and access context. Not a current catch total source.</p>
+      <p class="small"><a href="https://www.yorkshireflyfishers.co.uk/river_ribble.htm" target="_blank" rel="noopener">Open Yorkshire Fly Fishers Ribble beat</a></p>
+    </div>
+
+    <div class="source">
+      <div class="source-title">Association waters</div>
+      <div class="badge warn">Candidate only</div>
+      <p class="small">May identify waters with salmon and sea trout, but does not provide verified current totals.</p>
+      <p class="small"><a href="https://www.bradfordcityaa.co.uk/river-ribble-skirbeck/" target="_blank" rel="noopener">Open Bradford City AA Skirbeck</a></p>
+    </div>
+
+    <div class="source">
+      <div class="source-title">Operator / beat reports</div>
+      <div class="badge blocked">No trusted feed yet</div>
+      <p class="small">Future integration requires repeatable source format and current-season date checks.</p>
+    </div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>Android Studio Transition Plan</h2>
+  <div class="badge info">Phase 2 planned, not built</div>
+
+  <div class="row"><div class="label">Current app</div><div class="value">GitHub Pages</div></div>
+  <div class="row"><div class="label">Next platform</div><div class="value">Android WebView shell</div></div>
+  <div class="row"><div class="label">Backend</div><div class="value">None</div></div>
+  <div class="row"><div class="label">Data downgrade allowed</div><div class="value">No</div></div>
+
+  <p class="small">
+    Android Studio remains a future wrapper around the current verified terminal.
+    The same rules must apply: no fake caches, invented readings, manual catch totals, or unverified RFCA values.
+  </p>
+</section>
+
+<section class="card">
   <h2>Known / Unknown / Next Action</h2>
   <div class="row"><div class="label">Known</div><div class="value">EA Henthorn level telemetry</div></div>
   <div class="row"><div class="label">Acquired</div><div class="value">EA rainfall API pathway</div></div>
   <div class="row"><div class="label">Indexed</div><div class="value">Current-season report candidates</div></div>
-  <div class="row"><div class="label">Added</div><div class="value">Android transition plan</div></div>
+  <div class="row"><div class="label">Stabilised</div><div class="value">Gold checkpoint added</div></div>
   <div class="row"><div class="label">Unknown</div><div class="value">Verified Ribble salmon / sea-trout total</div></div>
-  <div class="row"><div class="label">Next action</div><div class="value">Polish + stability checkpoint</div></div>
-</section>
-
-<section class="card">
-  <h2>Source Gap Register</h2>
-  <div class="row"><div class="label">RFCA fish counters</div><div class="value">Open gap</div></div>
-  <div class="row"><div class="label">Stable RFCA temperature acquisition</div><div class="value">Open gap</div></div>
-  <div class="row"><div class="label">Current-season Ribble catch intelligence</div><div class="value">Indexed, blocked</div></div>
-  <div class="row"><div class="label">Operator / beat intelligence</div><div class="value">Model added, blocked</div></div>
-  <div class="row"><div class="label">Android Studio shell</div><div class="value">Planned, not built</div></div>
-  <div class="row"><div class="label">Rainfall / catchment intelligence</div><div class="value">EA acquisition added</div></div>
+  <div class="row"><div class="label">Next action</div><div class="value">RFCA endpoint investigation</div></div>
 </section>
 
 <section class="card">
@@ -245,11 +230,11 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 </main>
 
 <div class="footer">
-  Salmon Rivers Intelligence · Build 10107 · GitHub Pages single-file terminal
+  Salmon Rivers Intelligence · Build 10108 · Single-file GitHub Pages terminal
 </div>
 
 <script>
-const BUILD = "10107";
+const BUILD = "10108";
 const HENTHORN_STATION = "710305";
 const HENTHORN_LAT = 53.87;
 const HENTHORN_LONG = -2.39;
