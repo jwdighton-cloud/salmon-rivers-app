@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10117</title>
+<title>Salmon Rivers Intelligence — Build 10118</title>
 
 <style>
 :root{
@@ -31,32 +31,40 @@ body{
 header{
   background:#0f172a;
   color:#fff;
-  padding:18px 14px;
+  padding:16px 12px;
   text-align:center;
+  position:sticky;
+  top:0;
+  z-index:10;
 }
-header h1{margin:0;font-size:23px}
-header .build{margin-top:6px;color:#cbd5e1;font-size:13px}
-main{max-width:920px;margin:0 auto;padding:14px}
+header h1{margin:0;font-size:22px}
+header .build{margin-top:5px;color:#cbd5e1;font-size:12px}
+main{
+  max-width:920px;
+  margin:0 auto;
+  padding:12px;
+  padding-bottom:82px;
+}
 .card{
   background:var(--card);
   border:1px solid var(--line);
   border-radius:16px;
-  padding:14px;
-  margin-bottom:14px;
+  padding:13px;
+  margin-bottom:12px;
   box-shadow:0 1px 4px rgba(0,0,0,.05);
 }
-h2{margin:0 0 10px;font-size:18px}
+h2{margin:0 0 9px;font-size:17px}
 .row{
   display:flex;
   justify-content:space-between;
-  gap:12px;
-  padding:9px 0;
+  gap:10px;
+  padding:8px 0;
   border-top:1px solid #edf0f3;
 }
 .row:first-of-type{border-top:none}
-.label{color:var(--muted)}
-.value{font-weight:700;text-align:right}
-.big{font-size:36px;font-weight:800;letter-spacing:-1px}
+.label{color:var(--muted);font-size:14px}
+.value{font-weight:700;text-align:right;font-size:14px}
+.big{font-size:38px;font-weight:800;letter-spacing:-1px}
 .badge{
   display:inline-block;
   padding:6px 10px;
@@ -69,7 +77,7 @@ h2{margin:0 0 10px;font-size:18px}
 .bad{background:var(--soft-red);color:var(--red)}
 .info{background:var(--soft-blue);color:var(--blue)}
 .blocked{background:#f3f4f6;color:#374151}
-.small{font-size:13px;line-height:1.45;color:var(--muted)}
+.small{font-size:13px;line-height:1.42;color:var(--muted)}
 button{
   width:100%;
   border:0;
@@ -82,6 +90,15 @@ button{
   cursor:pointer;
 }
 button:active{transform:scale(.99)}
+.sticky-refresh{
+  position:fixed;
+  left:12px;
+  right:12px;
+  bottom:12px;
+  z-index:20;
+  max-width:920px;
+  margin:0 auto;
+}
 .grid{
   display:grid;
   grid-template-columns:1fr;
@@ -98,6 +115,8 @@ button:active{transform:scale(.99)}
 a{color:#1d4ed8;font-weight:700;text-decoration:none}
 @media(min-width:700px){
   .grid{grid-template-columns:1fr 1fr}
+  main{padding:14px 14px 86px}
+  .sticky-refresh{left:50%;transform:translateX(-50%);width:min(920px,calc(100% - 24px))}
 }
 </style>
 </head>
@@ -106,52 +125,44 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 
 <header>
   <h1>Salmon Rivers Intelligence</h1>
-  <div class="build">Build 10117 · Operational Command Summary · verified data only</div>
+  <div class="build">Build 10118 · Mobile Usability Polish · verified data only</div>
 </header>
 
 <main>
 
 <section class="card">
-  <h2>Operational Command Summary</h2>
+  <h2>Command Summary</h2>
 
   <div id="commandBadge" class="badge info">Checking live baseline…</div>
 
   <div class="row"><div class="label">Primary river</div><div class="value">Ribble @ Henthorn</div></div>
-  <div class="row"><div class="label">Live level source</div><div class="value">EA verified</div></div>
-  <div class="row"><div class="label">Rainfall source</div><div id="summaryRain" class="value">Checking</div></div>
+  <div class="row"><div class="label">Live level</div><div id="summaryLevel" class="value">Checking</div></div>
+  <div class="row"><div class="label">Rainfall</div><div id="summaryRain" class="value">Checking</div></div>
   <div class="row"><div class="label">Catch intelligence</div><div class="value">Blocked</div></div>
   <div class="row"><div class="label">RFCA values</div><div class="value">Blocked</div></div>
-  <div class="row"><div class="label">App rule</div><div class="value">No source = no number</div></div>
-
-  <p class="small">
-    This is the command view: it shows what is genuinely live, what is only investigative,
-    and what is deliberately blocked.
-  </p>
+  <div class="row"><div class="label">Rule</div><div class="value">No source = no number</div></div>
 </section>
 
 <section class="card">
-  <h2>River Ribble — Henthorn Live Conditions</h2>
+  <h2>Henthorn Live Conditions</h2>
 
   <div id="statusBadge" class="badge info">Checking EA telemetry…</div>
 
-  <div style="margin-top:14px">
+  <div style="margin-top:12px">
     <div class="label">Latest river level</div>
     <div id="levelValue" class="big">—</div>
   </div>
 
   <div class="row"><div class="label">Movement</div><div id="movementValue" class="value">—</div></div>
-  <div class="row"><div class="label">Latest reading time</div><div id="readingTime" class="value">—</div></div>
-  <div class="row"><div class="label">Last successful telemetry refresh</div><div id="successTime" class="value">—</div></div>
-  <div class="row"><div class="label">Data freshness</div><div id="freshnessValue" class="value">—</div></div>
-  <div class="row"><div class="label">Confidence class</div><div class="value">VERIFIED</div></div>
-  <div class="row"><div class="label">Primary source</div><div class="value">EA station 710305</div></div>
+  <div class="row"><div class="label">Reading time</div><div id="readingTime" class="value">—</div></div>
+  <div class="row"><div class="label">Last refresh</div><div id="successTime" class="value">—</div></div>
+  <div class="row"><div class="label">Freshness</div><div id="freshnessValue" class="value">—</div></div>
+  <div class="row"><div class="label">Confidence</div><div class="value">VERIFIED</div></div>
+  <div class="row"><div class="label">Source</div><div class="value">EA 710305</div></div>
 
   <p class="small">
-    Only verified EA telemetry is permitted to create live numeric values.
-    No fishability scores, no fake catches, no speculative classifications.
+    Only verified EA telemetry creates live numeric values.
   </p>
-
-  <button onclick="loadAll()">Refresh live telemetry</button>
 </section>
 
 <section class="card">
@@ -161,32 +172,25 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 
   <div class="row"><div class="label">EA level telemetry</div><div id="fusionLevel" class="value">Checking</div></div>
   <div class="row"><div class="label">EA rainfall</div><div id="fusionRainfall" class="value">Checking</div></div>
-  <div class="row"><div class="label">RFCA sonde / temperature</div><div class="value">Investigation only</div></div>
+  <div class="row"><div class="label">RFCA temperature</div><div class="value">Investigation only</div></div>
   <div class="row"><div class="label">Catch totals</div><div class="value">Blocked</div></div>
   <div class="row"><div class="label">Fish counters</div><div class="value">Blocked</div></div>
   <div class="row"><div class="label">Fusion result</div><div id="fusionResult" class="value">Checking</div></div>
-
-  <p class="small">
-    Weak or investigative sources cannot upgrade themselves by being grouped together.
-    Verified sources remain separate from investigation material.
-  </p>
 </section>
 
 <section class="card">
-  <h2>Rainfall / Catchment Intelligence</h2>
+  <h2>Rainfall / Catchment</h2>
 
   <div id="rainBadge" class="badge info">Checking EA rainfall acquisition…</div>
 
-  <div class="row"><div class="label">Nearest rainfall source</div><div id="rainStation" class="value">—</div></div>
-  <div class="row"><div class="label">Latest rainfall reading</div><div id="rainValue" class="value">—</div></div>
+  <div class="row"><div class="label">Rainfall source</div><div id="rainStation" class="value">—</div></div>
+  <div class="row"><div class="label">Latest rainfall</div><div id="rainValue" class="value">—</div></div>
   <div class="row"><div class="label">Reading time</div><div id="rainTime" class="value">—</div></div>
-  <div class="row"><div class="label">Confidence class</div><div class="value">PROVISIONAL</div></div>
+  <div class="row"><div class="label">Confidence</div><div class="value">PROVISIONAL</div></div>
 </section>
 
 <section class="card">
   <h2>Display Confidence Model</h2>
-
-  <div class="badge info">Confidence hierarchy active</div>
 
   <div class="grid">
     <div class="source">
@@ -216,43 +220,41 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 </section>
 
 <section class="card">
-  <h2>Evidence-Chain Mapping</h2>
+  <h2>Evidence Chain</h2>
 
-  <div class="badge info">Promotion path controlled</div>
-
-  <div class="row"><div class="label">1. Source discovered</div><div class="value">Candidate only</div></div>
-  <div class="row"><div class="label">2. Source traceable</div><div class="value">Required</div></div>
-  <div class="row"><div class="label">3. Current timestamp</div><div class="value">Required</div></div>
-  <div class="row"><div class="label">4. Unit / meaning clear</div><div class="value">Required</div></div>
-  <div class="row"><div class="label">5. River / station clear</div><div class="value">Required</div></div>
-  <div class="row"><div class="label">6. Repeatable refresh</div><div class="value">Required</div></div>
-  <div class="row"><div class="label">7. Display permitted</div><div class="value">Only after pass</div></div>
+  <div class="row"><div class="label">Source discovered</div><div class="value">Candidate only</div></div>
+  <div class="row"><div class="label">Source traceable</div><div class="value">Required</div></div>
+  <div class="row"><div class="label">Current timestamp</div><div class="value">Required</div></div>
+  <div class="row"><div class="label">Unit clear</div><div class="value">Required</div></div>
+  <div class="row"><div class="label">River / station clear</div><div class="value">Required</div></div>
+  <div class="row"><div class="label">Repeatable refresh</div><div class="value">Required</div></div>
+  <div class="row"><div class="label">Display permitted</div><div class="value">Only after pass</div></div>
 </section>
 
 <section class="card">
-  <h2>Current-Season Catch Intelligence Gate</h2>
+  <h2>Catch Intelligence Gate</h2>
 
   <div class="badge blocked">Catch totals blocked</div>
 
-  <div class="row"><div class="label">Current season confirmed</div><div class="value">Required</div></div>
+  <div class="row"><div class="label">Current season</div><div class="value">Required</div></div>
   <div class="row"><div class="label">Date visible</div><div class="value">Required</div></div>
-  <div class="row"><div class="label">River-specific source</div><div class="value">Required</div></div>
+  <div class="row"><div class="label">River-specific</div><div class="value">Required</div></div>
   <div class="row"><div class="label">Traceable publication</div><div class="value">Required</div></div>
   <div class="row"><div class="label">Repeatable verification</div><div class="value">Required</div></div>
-  <div class="row"><div class="label">Current status</div><div class="value">Evidence incomplete</div></div>
+  <div class="row"><div class="label">Status</div><div class="value">Evidence incomplete</div></div>
 </section>
 
 <section class="card">
-  <h2>RFCA Endpoint Acceptance Test</h2>
+  <h2>RFCA Acceptance Test</h2>
 
   <div class="badge warn">Not passed — RFCA values blocked</div>
 
   <div class="row"><div class="label">Stable source URL</div><div class="value">Page only</div></div>
-  <div class="row"><div class="label">Machine-readable endpoint</div><div class="value">Not proven</div></div>
-  <div class="row"><div class="label">Timestamp available</div><div class="value">Not proven in app</div></div>
-  <div class="row"><div class="label">Units available</div><div class="value">Expected, not integrated</div></div>
+  <div class="row"><div class="label">Machine endpoint</div><div class="value">Not proven</div></div>
+  <div class="row"><div class="label">Timestamp</div><div class="value">Not proven</div></div>
+  <div class="row"><div class="label">Units</div><div class="value">Expected, not integrated</div></div>
   <div class="row"><div class="label">Repeatability</div><div class="value">Not proven</div></div>
-  <div class="row"><div class="label">Acceptance result</div><div class="value">Fail safe</div></div>
+  <div class="row"><div class="label">Result</div><div class="value">Fail safe</div></div>
 
   <p class="small">
     <a href="https://www.ribblefisheriesca.co.uk/live-water-quality-monitoring/" target="_blank" rel="noopener">
@@ -262,24 +264,24 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 </section>
 
 <section class="card">
-  <h2>Telemetry Integrity Monitor</h2>
+  <h2>Telemetry Integrity</h2>
 
   <div id="integrityBadge" class="badge info">Evaluating integrity state…</div>
 
-  <div class="row"><div class="label">Telemetry state</div><div id="telemetryState" class="value">Checking</div></div>
-  <div class="row"><div class="label">Rainfall acquisition state</div><div id="rainfallState" class="value">Checking</div></div>
-  <div class="row"><div class="label">Data integrity lock</div><div class="value">Active</div></div>
-  <div class="row"><div class="label">Numeric source policy</div><div class="value">Verified-only</div></div>
+  <div class="row"><div class="label">Telemetry</div><div id="telemetryState" class="value">Checking</div></div>
+  <div class="row"><div class="label">Rainfall</div><div id="rainfallState" class="value">Checking</div></div>
+  <div class="row"><div class="label">Integrity lock</div><div class="value">Active</div></div>
+  <div class="row"><div class="label">Numeric policy</div><div class="value">Verified-only</div></div>
 </section>
 
 <section class="card">
   <h2>Known / Unknown / Next Action</h2>
 
   <div class="row"><div class="label">Known</div><div class="value">EA Henthorn telemetry stable</div></div>
-  <div class="row"><div class="label">Known</div><div class="value">Operational summary added</div></div>
+  <div class="row"><div class="label">Known</div><div class="value">Mobile polish added</div></div>
   <div class="row"><div class="label">Unknown</div><div class="value">Stable RFCA endpoint</div></div>
   <div class="row"><div class="label">Unknown</div><div class="value">Verified Ribble catch totals</div></div>
-  <div class="row"><div class="label">Next action</div><div class="value">Mobile usability polish</div></div>
+  <div class="row"><div class="label">Next action</div><div class="value">Gold transition checkpoint</div></div>
 </section>
 
 <section class="card">
@@ -288,19 +290,23 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   <div class="row"><div class="label">Core rule</div><div class="value">No source = no number</div></div>
   <div class="row"><div class="label">Fusion rule</div><div class="value">Weak + weak ≠ verified</div></div>
   <div class="row"><div class="label">Fishability</div><div class="value">No speculation</div></div>
-  <div class="row"><div class="label">Temperature policy</div><div class="value">Verified only</div></div>
-  <div class="row"><div class="label">Fish-counter policy</div><div class="value">Verified only</div></div>
+  <div class="row"><div class="label">Temperature</div><div class="value">Verified only</div></div>
+  <div class="row"><div class="label">Fish counters</div><div class="value">Verified only</div></div>
   <div class="row"><div class="label">Evidence chain</div><div class="value">Mandatory</div></div>
 </section>
 
 </main>
 
+<div class="sticky-refresh">
+  <button onclick="loadAll()">Refresh verified data</button>
+</div>
+
 <div class="footer">
-  Salmon Rivers Intelligence · Build 10117 · GitHub Pages intelligence terminal
+  Salmon Rivers Intelligence · Build 10118 · GitHub Pages intelligence terminal
 </div>
 
 <script>
-const BUILD = "10117";
+const BUILD = "10118";
 const HENTHORN_STATION = "710305";
 const HENTHORN_LAT = 53.87;
 const HENTHORN_LONG = -2.39;
@@ -376,6 +382,7 @@ function updateIntegrity(){
 }
 
 function updateCommandSummary(){
+  setText("summaryLevel", state.telemetryVerified ? "EA verified live" : "Unavailable");
   setText("summaryRain", state.rainfallVerified ? "EA provisional live" : "Unavailable");
 
   if(state.telemetryVerified && state.rainfallVerified){
