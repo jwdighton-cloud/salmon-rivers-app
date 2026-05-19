@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10103</title>
+<title>Salmon Rivers Intelligence — Build 10104</title>
 <style>
 :root{
   --bg:#f4f6f8;--card:#fff;--ink:#111827;--muted:#6b7280;--line:#d8dee6;
@@ -45,7 +45,7 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 <body>
 <header>
   <h1>Salmon Rivers Intelligence</h1>
-  <div class="build">Build 10103 · Ribble @ Henthorn · verified data only</div>
+  <div class="build">Build 10104 · Ribble @ Henthorn · verified data only</div>
 </header>
 
 <main>
@@ -76,10 +76,45 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   <div class="row"><div class="label">Reading time</div><div id="rainTime" class="value">—</div></div>
   <div class="row"><div class="label">Governance</div><div class="value">EA rainfall API only</div></div>
 
+  <p class="small">Rainfall is shown only if returned live from the EA rainfall API. If no stable reading is returned, the app shows unavailable.</p>
+</section>
+
+<section class="card">
+  <h2>Current-Season Report Indexing</h2>
+  <div class="badge warn">Catch totals blocked</div>
+
   <p class="small">
-    This panel is an acquisition layer. Rainfall is shown only if returned live from the EA rainfall API.
-    If no stable reading is returned, the app shows unavailable rather than guessing.
+    Current-season catch intelligence is now formally indexed, but no Ribble salmon or sea-trout total is displayed until a dated, current-season, traceable, river-specific source is verified.
   </p>
+
+  <div class="grid">
+    <div class="source">
+      <div class="source-title">River Ribble 2026 discussion</div>
+      <div class="badge warn">Candidate only</div>
+      <p class="small">Useful for manual intelligence review, but not accepted as a numeric total source.</p>
+      <p class="small"><a href="https://www.salmonfishingforum.com/threads/river-ribble-2026.292508/" target="_blank" rel="noopener">Open source</a></p>
+    </div>
+
+    <div class="source">
+      <div class="source-title">River Ribble Catch Reports group</div>
+      <div class="badge warn">Candidate only</div>
+      <p class="small">May contain catch reports, but values remain blocked unless individually verified and dated.</p>
+      <p class="small"><a href="https://www.facebook.com/groups/511047772383310/" target="_blank" rel="noopener">Open source</a></p>
+    </div>
+
+    <div class="source">
+      <div class="source-title">Trout & Salmon editorial intelligence</div>
+      <div class="badge warn">Tier 1 editorial, not live total</div>
+      <p class="small">Accepted for context when current and traceable, but not used to invent totals.</p>
+      <p class="small"><a href="https://www.troutandsalmon.com/" target="_blank" rel="noopener">Open source</a></p>
+    </div>
+
+    <div class="source">
+      <div class="source-title">Operator / beat reports</div>
+      <div class="badge blocked">Not integrated</div>
+      <p class="small">Future source model required before values can be displayed.</p>
+    </div>
+  </div>
 </section>
 
 <section class="card">
@@ -104,16 +139,17 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 <section class="card">
   <h2>Known / Unknown / Next Action</h2>
   <div class="row"><div class="label">Known</div><div class="value">EA Henthorn level telemetry</div></div>
-  <div class="row"><div class="label">New acquisition</div><div class="value">EA rainfall API</div></div>
-  <div class="row"><div class="label">Unknown</div><div class="value">Current verified Ribble salmon catch total</div></div>
-  <div class="row"><div class="label">Next action</div><div class="value">Current-season report indexing</div></div>
+  <div class="row"><div class="label">Acquired</div><div class="value">EA rainfall API pathway</div></div>
+  <div class="row"><div class="label">Indexed</div><div class="value">Current-season report candidates</div></div>
+  <div class="row"><div class="label">Unknown</div><div class="value">Verified Ribble salmon / sea-trout total</div></div>
+  <div class="row"><div class="label">Next action</div><div class="value">Source fusion logic</div></div>
 </section>
 
 <section class="card">
   <h2>Source Gap Register</h2>
   <div class="row"><div class="label">RFCA fish counters</div><div class="value">Open gap</div></div>
   <div class="row"><div class="label">Stable RFCA temperature acquisition</div><div class="value">Open gap</div></div>
-  <div class="row"><div class="label">Current-season Ribble catch intelligence</div><div class="value">Open gap</div></div>
+  <div class="row"><div class="label">Current-season Ribble catch intelligence</div><div class="value">Indexed, blocked</div></div>
   <div class="row"><div class="label">Operator / beat intelligence</div><div class="value">Not integrated</div></div>
   <div class="row"><div class="label">Rainfall / catchment intelligence</div><div class="value">EA acquisition added</div></div>
 </section>
@@ -130,11 +166,11 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 </main>
 
 <div class="footer">
-  Salmon Rivers Intelligence · Build 10103 · GitHub Pages single-file terminal
+  Salmon Rivers Intelligence · Build 10104 · GitHub Pages single-file terminal
 </div>
 
 <script>
-const BUILD = "10103";
+const BUILD = "10104";
 const HENTHORN_STATION = "710305";
 const HENTHORN_LAT = 53.87;
 const HENTHORN_LONG = -2.39;
