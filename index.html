@@ -4,48 +4,179 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Salmon Rivers Intelligence — Build 10142</title>
+
 <style>
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:#f4f6f8;color:#111}
-header{background:#0b1f33;color:#fff;text-align:center;padding:18px 14px}
-h1{margin:0;font-size:26px}.build{font-size:13px;opacity:.85;margin-top:4px}
-main{max-width:980px;margin:0 auto;padding:14px}
-.card{background:#fff;border:1px solid #d8dde3;border-radius:16px;padding:16px;margin:12px 0}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
-.box{border:1px solid #d8dde3;border-radius:12px;padding:12px;background:#fbfcfd}
-.big{font-size:38px;font-weight:800}.muted{color:#667085}.small{font-size:12px}
-.ok{color:#0f7b0f}.warn{color:#a15c00}.bad{color:#a40000}
-.pill{display:inline-block;border-radius:999px;padding:7px 11px;font-size:13px;font-weight:800;background:#eef2f6;margin:3px 4px 3px 0}
-button{border:0;border-radius:12px;background:#0b5cad;color:#fff;padding:13px 18px;font-weight:900;font-size:15px}
-table{width:100%;border-collapse:collapse;font-size:13px}
-th,td{border-bottom:1px solid #d8dde3;padding:8px;text-align:left;vertical-align:top}
-th{background:#f0f3f6}
-footer{text-align:center;color:#667085;font-size:12px;padding:18px}
+:root{
+--bg:#f4f6f8;
+--card:#ffffff;
+--line:#d8dde3;
+--text:#111;
+--muted:#667085;
+--ok:#0f7b0f;
+--warn:#a15c00;
+--bad:#a40000;
+--blue:#0b5cad;
+}
+
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+background:var(--bg);
+color:var(--text);
+}
+
+header{
+background:#0b1f33;
+color:#fff;
+text-align:center;
+padding:18px 14px;
+}
+
+h1{
+margin:0;
+font-size:26px;
+}
+
+.build{
+font-size:13px;
+opacity:.85;
+margin-top:4px;
+}
+
+main{
+max-width:980px;
+margin:0 auto;
+padding:14px;
+}
+
+.card{
+background:var(--card);
+border:1px solid var(--line);
+border-radius:16px;
+padding:16px;
+margin:12px 0;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+gap:12px;
+}
+
+.box{
+border:1px solid var(--line);
+border-radius:12px;
+padding:12px;
+background:#fbfcfd;
+}
+
+.big{
+font-size:38px;
+font-weight:800;
+}
+
+.muted{
+color:var(--muted);
+}
+
+.small{
+font-size:12px;
+}
+
+.ok{color:var(--ok)}
+.warn{color:var(--warn)}
+.bad{color:var(--bad)}
+
+.pill{
+display:inline-block;
+border-radius:999px;
+padding:7px 11px;
+font-size:13px;
+font-weight:800;
+background:#eef2f6;
+margin:3px 4px 3px 0;
+}
+
+button{
+border:0;
+border-radius:12px;
+background:var(--blue);
+color:#fff;
+padding:13px 18px;
+font-weight:900;
+font-size:15px;
+cursor:pointer;
+}
+
+button:active{
+transform:scale(.98);
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+font-size:13px;
+}
+
+th,td{
+border-bottom:1px solid var(--line);
+padding:8px;
+text-align:left;
+vertical-align:top;
+}
+
+th{
+background:#f0f3f6;
+}
+
+footer{
+text-align:center;
+color:var(--muted);
+font-size:12px;
+padding:18px;
+}
 </style>
 </head>
 
 <body>
+
 <header>
 <h1>Salmon Rivers Intelligence</h1>
-<div class="build">GOLD BUILD 10142 — EA Dual-Route Acquisition Lock</div>
+<div class="build">
+GOLD BUILD 10142 — EA Dual-Route Acquisition Lock
+</div>
 </header>
 
 <main>
 
 <section class="card">
-<h2>River Ribble @ Henthorn — Official EA Telemetry</h2>
-<div id="status" class="pill">Initialising…</div>
+
+<h2>
+River Ribble @ Henthorn — Official EA Telemetry
+</h2>
+
+<div id="status" class="pill">
+Initialising…
+</div>
 
 <div class="grid">
+
 <div class="box">
 <div class="muted">Latest level</div>
 <div id="level" class="big">—</div>
-<div class="small muted">EA Henthorn station 710305</div>
+<div class="small muted">
+EA Henthorn station 710305
+</div>
 </div>
 
 <div class="box">
 <div class="muted">Movement</div>
 <div id="trend" class="big">—</div>
-<div id="trendDetail" class="small muted">Awaiting readings</div>
+<div id="trendDetail" class="small muted">
+Awaiting readings
+</div>
 </div>
 
 <div class="box">
@@ -53,45 +184,131 @@ footer{text-align:center;color:#667085;font-size:12px;padding:18px}
 <div id="time" style="font-weight:800">—</div>
 <div id="freshness" class="small muted">—</div>
 </div>
+
 </div>
 
 <br>
-<button id="refreshBtn" type="button">REFRESH NOW</button>
-<div id="refreshState" class="small muted">Refresh control ready</div>
-<div id="refreshClicks" class="small muted">Refresh clicks: 0</div>
-<div id="dataProof" class="small muted">EA proof: waiting</div>
-</section>
 
-<section class="card">
-<h2>EA Acquisition Diagnostics</h2>
-<table>
-<thead><tr><th>Route</th><th>Status</th><th>Evidence</th></tr></thead>
-<tbody>
-<tr><td>Primary readings endpoint</td><td id="diagPrimary" class="warn">Waiting</td><td id="diagPrimaryEvidence">—</td></tr>
-<tr><td>Fallback station latestReading</td><td id="diagFallback" class="warn">Waiting</td><td id="diagFallbackEvidence">—</td></tr>
-</tbody>
-</table>
-</section>
+<button id="refreshBtn">
+REFRESH NOW
+</button>
 
-<section class="card">
-<h2>Source Quality Score</h2>
-<div class="grid">
-<div class="box"><div class="muted">Verified source score</div><div id="qualityScore" class="big">—</div></div>
-<div class="box"><div class="muted">Meaning</div><div id="qualityMeaning" class="warn">Awaiting EA check</div></div>
-<div class="box"><div class="muted">Governance</div><div class="bad">NOT a fishability score</div></div>
+<div id="refreshState" class="small muted">
+Refresh control ready
 </div>
+
+<div id="refreshClicks" class="small muted">
+Refresh clicks: 0
+</div>
+
+<div id="dataProof" class="small muted">
+EA proof: waiting
+</div>
+
 </section>
 
 <section class="card">
+
+<h2>EA Acquisition Diagnostics</h2>
+
+<table>
+
+<thead>
+<tr>
+<th>Route</th>
+<th>Status</th>
+<th>Evidence</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>Primary readings endpoint</td>
+<td id="diagPrimary" class="warn">
+Waiting
+</td>
+<td id="diagPrimaryEvidence">
+—
+</td>
+</tr>
+
+<tr>
+<td>Fallback station latestReading</td>
+<td id="diagFallback" class="warn">
+Waiting
+</td>
+<td id="diagFallbackEvidence">
+—
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</section>
+
+<section class="card">
+
+<h2>Source Quality Score</h2>
+
+<div class="grid">
+
+<div class="box">
+<div class="muted">
+Verified source score
+</div>
+<div id="qualityScore" class="big">
+—
+</div>
+</div>
+
+<div class="box">
+<div class="muted">
+Meaning
+</div>
+<div id="qualityMeaning" class="warn">
+Awaiting EA check
+</div>
+</div>
+
+<div class="box">
+<div class="muted">
+Governance
+</div>
+<div class="bad">
+NOT a fishability score
+</div>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
 <h2>RFCA Acquisition Status</h2>
-<div class="pill warn">Primary strategic acquisition target</div>
-<div class="pill bad">RFCA values blocked until machine-readable</div>
-<p>No RFCA numeric values are permitted unless stable, traceable, current, machine-readable and verifiable.</p>
+
+<div class="pill warn">
+Primary strategic acquisition target
+</div>
+
+<div class="pill bad">
+RFCA values blocked until machine-readable
+</div>
+
+<p>
+No RFCA numeric values are permitted unless stable, traceable, current, machine-readable and verifiable.
+</p>
+
 </section>
 
 </main>
 
-<footer>Build 10142 · NO SOURCE = NO NUMBER</footer>
+<footer>
+Build 10142 · NO SOURCE = NO NUMBER
+</footer>
 
 <script>
 const EA_READINGS =
@@ -102,188 +319,504 @@ const EA_STATION =
 
 let clicks = 0;
 
-function id(x){return document.getElementById(x)}
-function txt(x,v){const e=id(x);if(e)e.textContent=v}
-function cls(x,v){const e=id(x);if(e)e.className=v}
+function id(x){
+return document.getElementById(x);
+}
+
+function txt(x,v){
+const e = id(x);
+if(e) e.textContent = v;
+}
+
+function cls(x,v){
+const e = id(x);
+if(e) e.className = v;
+}
 
 function nowText(){
-return new Date().toLocaleString("en-GB",{dateStyle:"medium",timeStyle:"medium"});
+return new Date().toLocaleString(
+"en-GB",
+{
+dateStyle:"medium",
+timeStyle:"medium"
+}
+);
 }
 
 function displayTime(iso){
-return new Date(iso).toLocaleString("en-GB",{dateStyle:"medium",timeStyle:"short"});
+return new Date(iso).toLocaleString(
+"en-GB",
+{
+dateStyle:"medium",
+timeStyle:"short"
+}
+);
 }
 
 function ageMinutes(iso){
-return Math.round((Date.now()-new Date(iso).getTime())/60000);
+return Math.round(
+(Date.now()-new Date(iso).getTime())/60000
+);
 }
 
 function bust(url){
-return url + (url.includes("?") ? "&" : "?") + "_cb=" + Date.now() + "_" + Math.random().toString(16).slice(2);
+return url +
+(url.includes("?") ? "&" : "?") +
+"_cb=" + Date.now() +
+"_" +
+Math.random().toString(16).slice(2);
 }
 
 async function getJson(url){
-const r = await fetch(bust(url),{
+
+const r = await fetch(
+bust(url),
+{
 cache:"no-store",
-headers:{"Accept":"application/json"}
-});
-if(!r.ok) throw new Error("HTTP " + r.status);
+headers:{
+"Accept":"application/json"
+}
+}
+);
+
+if(!r.ok){
+throw new Error("HTTP " + r.status);
+}
+
 return await r.json();
 }
 
 function cleanReadings(items){
+
 return (items || [])
-.map(x=>({value:Number(x.value),time:x.dateTime,source:x.measure || ""}))
-.filter(x=>Number.isFinite(x.value) && x.time)
-.sort((a,b)=>new Date(a.time)-new Date(b.time));
+.map(x => ({
+value:Number(x.value),
+time:x.dateTime
+}))
+.filter(x =>
+Number.isFinite(x.value) &&
+x.time
+)
+.sort(
+(a,b)=>
+new Date(a.time)-new Date(b.time)
+);
 }
 
 function analyseTrend(readings){
+
 if(readings.length < 2){
-return {label:"Unknown",detail:"Not enough EA readings"};
+return {
+label:"Unknown",
+detail:"Not enough EA readings"
+};
 }
 
-const latest = readings[readings.length-1];
-const previous = readings[readings.length-2];
-const delta = latest.value - previous.value;
+const latest =
+readings[readings.length-1];
+
+const previous =
+readings[readings.length-2];
+
+const delta =
+latest.value - previous.value;
+
 const threshold = 0.005;
 
 if(delta > threshold){
-return {label:"Rising",detail:"Latest delta +" + delta.toFixed(3) + " m from previous EA reading"};
+return {
+label:"Rising",
+detail:
+"Latest delta +" +
+delta.toFixed(3) +
+" m from previous EA reading"
+};
 }
 
 if(delta < -threshold){
-return {label:"Falling",detail:"Latest delta " + delta.toFixed(3) + " m from previous EA reading"};
+return {
+label:"Falling",
+detail:
+"Latest delta " +
+delta.toFixed(3) +
+" m from previous EA reading"
+};
 }
 
 const sample = readings.slice(-6);
+
 if(sample.length >= 2){
-const multi = sample[sample.length-1].value - sample[0].value;
+
+const multi =
+sample[sample.length-1].value -
+sample[0].value;
+
 if(multi > threshold){
-return {label:"Rising",detail:"Multi-reading rise +" + multi.toFixed(3) + " m"};
+return {
+label:"Rising",
+detail:
+"Multi-reading rise +" +
+multi.toFixed(3) +
+" m"
+};
 }
+
 if(multi < -threshold){
-return {label:"Falling",detail:"Multi-reading fall " + multi.toFixed(3) + " m"};
+return {
+label:"Falling",
+detail:
+"Multi-reading fall " +
+multi.toFixed(3) +
+" m"
+};
 }
 }
 
-return {label:"Steady",detail:"No material latest or multi-reading movement"};
+return {
+label:"Steady",
+detail:
+"No material latest or multi-reading movement"
+};
 }
 
 async function primaryReadingsRoute(){
-const j = await getJson(EA_READINGS);
-if(!j || !Array.isArray(j.items)){
-throw new Error("No items array returned");
+
+const j = await getJson(
+EA_READINGS
+);
+
+if(
+!j ||
+!Array.isArray(j.items)
+){
+throw new Error(
+"No items array returned"
+);
 }
-const readings = cleanReadings(j.items);
+
+const readings =
+cleanReadings(j.items);
+
 if(!readings.length){
-throw new Error("No numeric readings parsed");
+throw new Error(
+"No numeric readings parsed"
+);
 }
+
 return readings;
 }
 
 async function fallbackStationRoute(){
-const j = await getJson(EA_STATION);
+
+const j = await getJson(
+EA_STATION
+);
+
 const station = j.items || {};
-let measures = station.measures || station.measure || [];
+
+let measures =
+station.measures ||
+station.measure ||
+[];
 
 if(!Array.isArray(measures)){
 measures = [measures];
 }
 
-const candidates = measures
-.map(m => m && m.latestReading ? m.latestReading : null)
+const candidates =
+measures
+.map(m =>
+m && m.latestReading
+? m.latestReading
+: null
+)
 .filter(Boolean)
-.map(r => ({value:Number(r.value),time:r.dateTime,source:r.measure || "station latestReading"}))
-.filter(r => Number.isFinite(r.value) && r.time)
-.sort((a,b)=>new Date(a.time)-new Date(b.time));
+.map(r => ({
+value:Number(r.value),
+time:r.dateTime
+}))
+.filter(r =>
+Number.isFinite(r.value) &&
+r.time
+)
+.sort(
+(a,b)=>
+new Date(a.time)-new Date(b.time)
+);
 
 if(!candidates.length){
-throw new Error("No station latestReading found");
+throw new Error(
+"No station latestReading found"
+);
 }
 
 return candidates;
 }
 
-function renderTelemetry(readings,routeName){
-const latest = readings[readings.length-1];
-const trend = analyseTrend(readings);
+function renderTelemetry(
+readings,
+routeName
+){
 
-txt("level",latest.value.toFixed(3) + " m");
-txt("time",displayTime(latest.time));
-txt("freshness",ageMinutes(latest.time) + " minutes old");
-txt("trend",trend.label);
-txt("trendDetail",trend.detail);
+const latest =
+readings[readings.length-1];
 
-cls("status","pill ok");
-txt("status","EA telemetry live via " + routeName);
+const trend =
+analyseTrend(readings);
 
-txt("qualityScore","40/100");
-cls("qualityMeaning","warn");
-txt("qualityMeaning","Core EA telemetry verified; RFCA, catch, rainfall and operator intelligence still missing");
+txt(
+"level",
+latest.value.toFixed(3) + " m"
+);
 
-txt("dataProof","EA proof: " + readings.length + " reading(s) parsed; latest " + latest.value.toFixed(3) + " m at " + latest.time);
+txt(
+"time",
+displayTime(latest.time)
+);
+
+txt(
+"freshness",
+ageMinutes(latest.time) +
+" minutes old"
+);
+
+txt(
+"trend",
+trend.label
+);
+
+txt(
+"trendDetail",
+trend.detail
+);
+
+cls(
+"status",
+"pill ok"
+);
+
+txt(
+"status",
+"EA telemetry live via " +
+routeName
+);
+
+txt(
+"qualityScore",
+"40/100"
+);
+
+cls(
+"qualityMeaning",
+"warn"
+);
+
+txt(
+"qualityMeaning",
+"Core EA telemetry verified"
+);
+
+txt(
+"dataProof",
+"EA proof: " +
+readings.length +
+" reading(s) parsed; latest " +
+latest.value.toFixed(3) +
+" m at " +
+latest.time
+);
 }
 
 async function refreshEA(){
-txt("refreshState","Refresh running: " + nowText());
-cls("status","pill warn");
-txt("status","Checking EA routes…");
+
+txt(
+"refreshState",
+"Refresh running: " +
+nowText()
+);
+
+cls(
+"status",
+"pill warn"
+);
+
+txt(
+"status",
+"Checking EA routes…"
+);
 
 let readings = null;
 
 try{
-readings = await primaryReadingsRoute();
-cls("diagPrimary","ok");
-txt("diagPrimary","OK");
-txt("diagPrimaryEvidence",readings.length + " readings parsed");
-renderTelemetry(readings,"readings endpoint");
+
+readings =
+await primaryReadingsRoute();
+
+cls(
+"diagPrimary",
+"ok"
+);
+
+txt(
+"diagPrimary",
+"OK"
+);
+
+txt(
+"diagPrimaryEvidence",
+readings.length +
+" readings parsed"
+);
+
+renderTelemetry(
+readings,
+"readings endpoint"
+);
+
 }
 catch(e1){
-cls("diagPrimary","bad");
-txt("diagPrimary","Failed");
-txt("diagPrimaryEvidence",String(e1.message || e1));
+
+cls(
+"diagPrimary",
+"bad"
+);
+
+txt(
+"diagPrimary",
+"Failed"
+);
+
+txt(
+"diagPrimaryEvidence",
+String(e1.message || e1)
+);
 
 try{
-readings = await fallbackStationRoute();
-cls("diagFallback","ok");
-txt("diagFallback","OK");
-txt("diagFallbackEvidence",readings.length + " latestReading value(s) parsed");
-renderTelemetry(readings,"station fallback");
+
+readings =
+await fallbackStationRoute();
+
+cls(
+"diagFallback",
+"ok"
+);
+
+txt(
+"diagFallback",
+"OK"
+);
+
+txt(
+"diagFallbackEvidence",
+readings.length +
+" latestReading value(s) parsed"
+);
+
+renderTelemetry(
+readings,
+"station fallback"
+);
+
 }
 catch(e2){
-cls("diagFallback","bad");
-txt("diagFallback","Failed");
-txt("diagFallbackEvidence",String(e2.message || e2));
 
-cls("status","pill bad");
-txt("status","EA telemetry unavailable");
+cls(
+"diagFallback",
+"bad"
+);
+
+txt(
+"diagFallback",
+"Failed"
+);
+
+txt(
+"diagFallbackEvidence",
+String(e2.message || e2)
+);
+
+cls(
+"status",
+"pill bad"
+);
+
+txt(
+"status",
+"EA telemetry unavailable"
+);
+
 txt("level","—");
 txt("trend","—");
-txt("trendDetail","Both EA acquisition routes failed");
+
+txt(
+"trendDetail",
+"Both EA acquisition routes failed"
+);
+
 txt("time","—");
 txt("freshness","—");
-txt("qualityScore","0/100");
-cls("qualityMeaning","bad");
-txt("qualityMeaning","EA telemetry not acquired");
-txt("dataProof","EA proof: failed both routes");
+
+txt(
+"qualityScore",
+"0/100"
+);
+
+cls(
+"qualityMeaning",
+"bad"
+);
+
+txt(
+"qualityMeaning",
+"EA telemetry not acquired"
+);
+
+txt(
+"dataProof",
+"EA proof: failed both routes"
+);
 }
 }
 
-txt("refreshState","Last refresh completed: " + nowText());
+txt(
+"refreshState",
+"Last refresh completed: " +
+nowText()
+);
 }
 
 function manualRefresh(){
+
 clicks++;
-txt("refreshClicks","Refresh clicks: " + clicks);
+
+txt(
+"refreshClicks",
+"Refresh clicks: " +
+clicks
+);
+
 refreshEA();
 }
 
-document.addEventListener("DOMContentLoaded",function(){
-id("refreshBtn").addEventListener("click",manualRefresh);
+document.addEventListener(
+"DOMContentLoaded",
+function(){
+
+id("refreshBtn")
+.addEventListener(
+"click",
+manualRefresh
+);
+
 manualRefresh();
-setInterval(manualRefresh,15*60*1000);
-});
+
+setInterval(
+manualRefresh,
+15 * 60 * 1000
+);
+
+}
+);
 </script>
 
 </body>
