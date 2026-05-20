@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10147</title>
+<title>Salmon Rivers Intelligence — Build 10148</title>
 <style>
 :root{--bg:#f4f6f8;--card:#fff;--line:#d8dde3;--text:#111;--muted:#667085;--ok:#0f7b0f;--warn:#a15c00;--bad:#a40000;--blue:#0b5cad}
 *{box-sizing:border-box}
@@ -21,6 +21,7 @@ button{border:0;border-radius:12px;background:var(--blue);color:#fff;padding:13p
 table{width:100%;border-collapse:collapse;font-size:13px}
 th,td{border-bottom:1px solid var(--line);padding:8px;text-align:left;vertical-align:top}
 th{background:#f0f3f6}
+a{color:var(--blue);font-weight:800}
 footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 </style>
 </head>
@@ -28,7 +29,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 
 <header>
 <h1>Salmon Rivers Intelligence</h1>
-<div class="build">GOLD BUILD 10147 — Verified Source Score v2</div>
+<div class="build">GOLD BUILD 10148 — RFCA Acquisition Candidate Ledger</div>
 </header>
 
 <main>
@@ -41,7 +42,6 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 <div id="coreLock" class="pill ok">EA core protected</div>
 
 <div class="grid">
-
 <div class="box">
 <div class="muted">Latest level</div>
 <div id="level" class="big">—</div>
@@ -59,7 +59,6 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 <div id="time" style="font-weight:800">—</div>
 <div id="freshness" class="small muted">—</div>
 </div>
-
 </div>
 
 <br>
@@ -70,70 +69,97 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 <div id="refreshClicks" class="small muted">Refresh clicks: 0</div>
 <div id="dataProof" class="small muted">EA proof: waiting</div>
 <div id="lastGoodProof" class="small muted">Last-good telemetry cache: empty</div>
-
 </section>
 
 <section class="card">
-
 <h2>Rainfall Reading Verification Gate</h2>
 
-<div id="rainStatus" class="pill warn">
-Rainfall consumer waiting
-</div>
+<div id="rainStatus" class="pill warn">Rainfall consumer waiting</div>
 
 <div class="grid">
-
 <div class="box">
 <div class="muted">Verified rainfall</div>
 <div id="rainValue" class="big">—</div>
-<div id="rainMeta" class="small muted">
-No verified rainfall reading displayed
-</div>
+<div id="rainMeta" class="small muted">No verified rainfall reading displayed</div>
 </div>
 
 <div class="box">
 <div class="muted">Discovery stage</div>
-<div id="rainDiscovery" class="warn">
-Waiting
-</div>
+<div id="rainDiscovery" class="warn">Waiting</div>
 </div>
 
 <div class="box">
 <div class="muted">Reading stage</div>
-<div id="rainReadingStage" class="warn">
-Blocked until verified
+<div id="rainReadingStage" class="warn">Blocked until verified</div>
 </div>
 </div>
 
-</div>
+<table>
+<thead><tr><th>Candidate</th><th>Status</th><th>Evidence</th></tr></thead>
+<tbody id="rainRows">
+<tr><td>EA rainfall discovery</td><td class="warn">Waiting</td><td>—</td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="card">
+<h2>RFCA Acquisition Candidate Ledger</h2>
+
+<div class="pill warn">Primary strategic acquisition target</div>
+<div class="pill bad">No RFCA numeric values displayed</div>
+
+<p class="small muted">
+RFCA is treated as an acquisition candidate only. Temperature, sonde, fish-counter, catch or river-health values remain blocked until a stable machine-readable source is proven.
+</p>
 
 <table>
 <thead>
 <tr>
-<th>Candidate</th>
-<th>Status</th>
-<th>Evidence</th>
+<th>RFCA Candidate</th>
+<th>Potential Value</th>
+<th>Gate Status</th>
+<th>Display Rule</th>
 </tr>
 </thead>
-
-<tbody id="rainRows">
+<tbody>
 <tr>
-<td>EA rainfall discovery</td>
-<td class="warn">Waiting</td>
-<td>—</td>
+<td>Temperature / sonde data</td>
+<td>Fish welfare and water-condition intelligence</td>
+<td class="warn">Investigate machine-readable endpoint</td>
+<td class="bad">No value displayed</td>
+</tr>
+<tr>
+<td>Fish-counter telemetry</td>
+<td>Migration intelligence</td>
+<td class="warn">Investigate availability</td>
+<td class="bad">No value displayed</td>
+</tr>
+<tr>
+<td>Catch intelligence</td>
+<td>Current-season Ribble context</td>
+<td class="warn">Needs dated attributable feed</td>
+<td class="bad">No totals displayed</td>
+</tr>
+<tr>
+<td>River-health telemetry</td>
+<td>Environmental context</td>
+<td class="warn">Candidate only</td>
+<td class="bad">No value displayed</td>
 </tr>
 </tbody>
-
 </table>
 
+<p class="small">
+<a href="https://www.ribblefisheriesca.co.uk/live-water-quality-monitoring/" target="_blank" rel="noopener">
+Open RFCA live water-quality monitoring
+</a>
+</p>
 </section>
 
 <section class="card">
-
 <h2>Verified Source Score v2</h2>
 
 <div class="grid">
-
 <div class="box">
 <div class="muted">Verified source score</div>
 <div id="qualityScore" class="big">—</div>
@@ -141,118 +167,44 @@ Blocked until verified
 
 <div class="box">
 <div class="muted">Meaning</div>
-<div id="qualityMeaning" class="warn">
-Awaiting checks
-</div>
+<div id="qualityMeaning" class="warn">Awaiting checks</div>
 </div>
 
 <div class="box">
 <div class="muted">Governance</div>
-<div class="bad">
-NOT a fishability score
+<div class="bad">NOT a fishability score</div>
 </div>
-</div>
-
 </div>
 
 <table>
-<thead>
-<tr>
-<th>Source</th>
-<th>Weight</th>
-<th>Status</th>
-</tr>
-</thead>
-
+<thead><tr><th>Source</th><th>Weight</th><th>Status</th></tr></thead>
 <tbody>
-
-<tr>
-<td>EA live telemetry</td>
-<td>40</td>
-<td id="scoreTelemetry" class="warn">Waiting</td>
-</tr>
-
-<tr>
-<td>Verified rainfall reading</td>
-<td>20</td>
-<td id="scoreRainfall" class="warn">Waiting</td>
-</tr>
-
-<tr>
-<td>RFCA machine-readable data</td>
-<td>20</td>
-<td class="warn">Not integrated</td>
-</tr>
-
-<tr>
-<td>Current-season catch intelligence</td>
-<td>15</td>
-<td class="warn">Not integrated</td>
-</tr>
-
-<tr>
-<td>Operator / beat intelligence</td>
-<td>5</td>
-<td class="warn">Not integrated</td>
-</tr>
-
+<tr><td>EA live telemetry</td><td>40</td><td id="scoreTelemetry" class="warn">Waiting</td></tr>
+<tr><td>Verified rainfall reading</td><td>20</td><td id="scoreRainfall" class="warn">Waiting</td></tr>
+<tr><td>RFCA machine-readable data</td><td>20</td><td id="scoreRFCA" class="warn">Not integrated</td></tr>
+<tr><td>Current-season catch intelligence</td><td>15</td><td class="warn">Not integrated</td></tr>
+<tr><td>Operator / beat intelligence</td><td>5</td><td class="warn">Not integrated</td></tr>
 </tbody>
-
 </table>
-
 </section>
 
 <section class="card">
-
 <h2>Core Telemetry Freeze Status</h2>
-
 <table>
-
-<thead>
-<tr>
-<th>Component</th>
-<th>Status</th>
-<th>Rule</th>
-</tr>
-</thead>
-
+<thead><tr><th>Component</th><th>Status</th><th>Rule</th></tr></thead>
 <tbody>
-
-<tr>
-<td>EA acquisition routes</td>
-<td class="ok">Frozen</td>
-<td>No feature build may alter EA fetch paths casually</td>
-</tr>
-
-<tr>
-<td>Trend engine</td>
-<td class="ok">Frozen</td>
-<td>Latest delta first, multi-reading fallback</td>
-</tr>
-
-<tr>
-<td>Rainfall module</td>
-<td class="ok">Isolated</td>
-<td>Read-only consumer; cannot mutate telemetry core</td>
-</tr>
-
-<tr>
-<td>Rainfall numbers</td>
-<td class="warn">Gated</td>
-<td>Displayed only if a live reading endpoint verifies</td>
-</tr>
-
+<tr><td>EA acquisition routes</td><td class="ok">Frozen</td><td>No feature build may alter EA fetch paths casually</td></tr>
+<tr><td>Trend engine</td><td class="ok">Frozen</td><td>Latest delta first, multi-reading fallback</td></tr>
+<tr><td>Rainfall module</td><td class="ok">Isolated</td><td>Read-only consumer; cannot mutate telemetry core</td></tr>
+<tr><td>RFCA ledger</td><td class="ok">Isolated</td><td>Candidate tracking only; cannot mutate telemetry core</td></tr>
+<tr><td>RFCA numbers</td><td class="bad">Blocked</td><td>No machine-readable source = no number</td></tr>
 </tbody>
-
 </table>
-
 </section>
 
 </main>
 
-<footer>
-Build 10147 · NO SOURCE = NO NUMBER · EA CORE FROZEN
-</footer>
+<footer>Build 10148 · NO SOURCE = NO NUMBER · EA CORE FROZEN</footer>
 
 <script>
 const TelemetryCore=(function(){
@@ -279,14 +231,11 @@ return url+
 }
 
 async function getJson(url){
-
 const r=await fetch(
 bust(url),
 {
 cache:"no-store",
-headers:{
-"Accept":"application/json"
-}
+headers:{"Accept":"application/json"}
 }
 );
 
@@ -298,7 +247,6 @@ return await r.json();
 }
 
 function cleanReadings(items){
-
 return(items||[])
 .map(x=>({
 value:Number(x.value),
@@ -308,73 +256,46 @@ time:x.dateTime
 Number.isFinite(x.value)&&
 x.time
 )
-.sort(
-(a,b)=>
-new Date(a.time)-new Date(b.time)
-);
+.sort((a,b)=>new Date(a.time)-new Date(b.time));
 }
 
 function analyseTrend(readings){
 
 if(readings.length<2){
-return{
-label:"Unknown",
-detail:"Not enough EA readings"
-};
+return{label:"Unknown",detail:"Not enough EA readings"};
 }
 
 const latest=readings[readings.length-1];
 const previous=readings[readings.length-2];
-
 const delta=latest.value-previous.value;
-
 const threshold=0.005;
 
 if(delta>threshold){
-return{
-label:"Rising",
-detail:"Latest delta +"+delta.toFixed(3)+" m from previous EA reading"
-};
+return{label:"Rising",detail:"Latest delta +"+delta.toFixed(3)+" m from previous EA reading"};
 }
 
 if(delta<-threshold){
-return{
-label:"Falling",
-detail:"Latest delta "+delta.toFixed(3)+" m from previous EA reading"
-};
+return{label:"Falling",detail:"Latest delta "+delta.toFixed(3)+" m from previous EA reading"};
 }
 
 const sample=readings.slice(-6);
 
 if(sample.length>=2){
-
-const multi=
-sample[sample.length-1].value-
-sample[0].value;
+const multi=sample[sample.length-1].value-sample[0].value;
 
 if(multi>threshold){
-return{
-label:"Rising",
-detail:"Multi-reading rise +"+multi.toFixed(3)+" m"
-};
+return{label:"Rising",detail:"Multi-reading rise +"+multi.toFixed(3)+" m"};
 }
 
 if(multi<-threshold){
-return{
-label:"Falling",
-detail:"Multi-reading fall "+multi.toFixed(3)+" m"
-};
+return{label:"Falling",detail:"Multi-reading fall "+multi.toFixed(3)+" m"};
 }
 }
 
-return{
-label:"Steady",
-detail:"No material latest or multi-reading movement"
-};
+return{label:"Steady",detail:"No material latest or multi-reading movement"};
 }
 
 async function primaryRoute(){
-
 const j=await getJson(EA_READINGS);
 
 if(!j||!Array.isArray(j.items)){
@@ -391,27 +312,17 @@ return readings;
 }
 
 async function fallbackRoute(){
-
 const j=await getJson(EA_STATION);
-
 const station=j.items||{};
 
-let measures=
-station.measures||
-station.measure||
-[];
+let measures=station.measures||station.measure||[];
 
 if(!Array.isArray(measures)){
 measures=[measures];
 }
 
-const candidates=
-measures
-.map(m=>
-m&&m.latestReading
-?m.latestReading
-:null
-)
+const candidates=measures
+.map(m=>m&&m.latestReading?m.latestReading:null)
 .filter(Boolean)
 .map(r=>({
 value:Number(r.value),
@@ -421,10 +332,7 @@ time:r.dateTime
 Number.isFinite(r.value)&&
 r.time
 )
-.sort(
-(a,b)=>
-new Date(a.time)-new Date(b.time)
-);
+.sort((a,b)=>new Date(a.time)-new Date(b.time));
 
 if(!candidates.length){
 throw new Error("No station latestReading found");
@@ -441,25 +349,18 @@ let primaryError=null;
 let fallbackError=null;
 
 try{
-
 readings=await primaryRoute();
 route="Primary readings endpoint";
-
 }
 catch(e1){
-
 primaryError=e1;
 
 try{
-
 readings=await fallbackRoute();
 route="Fallback station latestReading";
-
 }
 catch(e2){
-
 fallbackError=e2;
-
 }
 }
 
@@ -499,7 +400,6 @@ fallback:fallbackError?String(fallbackError.message||fallbackError):null
 };
 
 if(state.lastGoodReadings){
-
 const cached=state.lastGoodReadings;
 
 return{
@@ -540,15 +440,10 @@ getJson
 
 const RainfallConsumer=(function(){
 
-const HENTHORN_STATION=
-"https://environment.data.gov.uk/flood-monitoring/id/stations/710305.json";
+const HENTHORN_STATION="https://environment.data.gov.uk/flood-monitoring/id/stations/710305.json";
 
 function stationMeasures(station){
-
-let measures=
-station.measures||
-station.measure||
-[];
+let measures=station.measures||station.measure||[];
 
 if(!Array.isArray(measures)){
 measures=[measures];
@@ -558,37 +453,26 @@ return measures;
 }
 
 function measureUrl(m){
-
 return typeof m==="string"
 ?m
 :(m&&m["@id"]
 ?m["@id"]
-:(m&&m.id
-?m.id
-:null));
+:(m&&m.id?m.id:null));
 }
 
 async function tryReadingForMeasure(url){
 
 if(!url)return null;
 
-const readingUrl=
-url.replace(/\/$/,"")+
-"/readings.json?_sorted&_limit=1";
-
-const j=
-await TelemetryCore.getJson(readingUrl);
-
+const readingUrl=url.replace(/\/$/,"")+"/readings.json?_sorted&_limit=1";
+const j=await TelemetryCore.getJson(readingUrl);
 const item=(j.items||[])[0];
 
 if(!item)return null;
 
 const value=Number(item.value);
 
-if(
-!Number.isFinite(value)||
-!item.dateTime
-){
+if(!Number.isFinite(value)||!item.dateTime){
 return null;
 }
 
@@ -601,11 +485,8 @@ url:readingUrl
 
 async function discoverAndVerify(){
 
-const stationJson=
-await TelemetryCore.getJson(HENTHORN_STATION);
-
+const stationJson=await TelemetryCore.getJson(HENTHORN_STATION);
 const station=stationJson.items||{};
-
 const lat=station.lat||station.latitude;
 const long=station.long||station.longitude;
 
@@ -620,9 +501,7 @@ encodeURIComponent(lat)+
 encodeURIComponent(long)+
 "&dist=25";
 
-const rj=
-await TelemetryCore.getJson(url);
-
+const rj=await TelemetryCore.getJson(url);
 const found=(rj.items||[]).slice(0,6);
 
 if(!found.length){
@@ -630,7 +509,6 @@ throw new Error("No nearby EA rainfall station candidates acquired");
 }
 
 const rows=[];
-
 let verified=null;
 
 for(const s of found){
@@ -640,14 +518,8 @@ let result=null;
 for(const m of stationMeasures(s)){
 
 try{
-
-result=
-await tryReadingForMeasure(
-measureUrl(m)
-);
-
+result=await tryReadingForMeasure(measureUrl(m));
 if(result)break;
-
 }
 catch(e){}
 }
@@ -680,10 +552,9 @@ discoverAndVerify
 
 let clicks=0;
 let rainfallVerified=false;
+let rfcaVerified=false;
 
-function id(x){
-return document.getElementById(x);
-}
+function id(x){return document.getElementById(x)}
 
 function txt(x,v){
 const e=id(x);
@@ -696,46 +567,28 @@ if(e)e.className=v;
 }
 
 function nowText(){
-return new Date().toLocaleString(
-"en-GB",
-{
-dateStyle:"medium",
-timeStyle:"medium"
-}
-);
+return new Date().toLocaleString("en-GB",{dateStyle:"medium",timeStyle:"medium"});
 }
 
 function displayTime(iso){
-return new Date(iso).toLocaleString(
-"en-GB",
-{
-dateStyle:"medium",
-timeStyle:"short"
-}
-);
+return new Date(iso).toLocaleString("en-GB",{dateStyle:"medium",timeStyle:"short"});
 }
 
 function ageMinutes(iso){
-return Math.round(
-(Date.now()-new Date(iso).getTime())/60000
-);
+return Math.round((Date.now()-new Date(iso).getTime())/60000);
 }
 
 function esc(s){
-
-return String(s).replace(
-/[&<>"']/g,
-m=>({
+return String(s).replace(/[&<>"']/g,m=>({
 "&":"&amp;",
 "<":"&lt;",
 ">":"&gt;",
 "\"":"&quot;",
 "'":"&#039;"
-}[m])
-);
+}[m]));
 }
 
-function updateSourceScore(telemetryOk,rainOk){
+function updateSourceScore(telemetryOk,rainOk,rfcaOk){
 
 let score=0;
 
@@ -759,37 +612,33 @@ cls("scoreRainfall","warn");
 txt("scoreRainfall","Not verified");
 }
 
-txt("qualityScore",score+"/100");
-
-if(score>=60){
-
-cls("qualityMeaning","ok");
-
-txt(
-"qualityMeaning",
-"EA telemetry and rainfall verified"
-);
-
-}
-else if(score>=40){
-
-cls("qualityMeaning","warn");
-
-txt(
-"qualityMeaning",
-"Only core EA telemetry verified"
-);
-
+if(rfcaOk){
+score+=20;
+cls("scoreRFCA","ok");
+txt("scoreRFCA","Verified");
 }
 else{
+cls("scoreRFCA","warn");
+txt("scoreRFCA","Not integrated");
+}
 
+txt("qualityScore",score+"/100");
+
+if(score>=80){
+cls("qualityMeaning","ok");
+txt("qualityMeaning","EA telemetry, rainfall and RFCA verified");
+}
+else if(score>=60){
+cls("qualityMeaning","ok");
+txt("qualityMeaning","EA telemetry and rainfall verified");
+}
+else if(score>=40){
+cls("qualityMeaning","warn");
+txt("qualityMeaning","Only core EA telemetry verified");
+}
+else{
 cls("qualityMeaning","bad");
-
-txt(
-"qualityMeaning",
-"No verified live telemetry"
-);
-
+txt("qualityMeaning","No verified live telemetry");
 }
 }
 
@@ -798,134 +647,50 @@ function renderTelemetry(result){
 if(!result.ok){
 
 cls("status","pill bad");
-
-txt(
-"status",
-"EA telemetry unavailable"
-);
-
-cls(
-"telemetryConfidence",
-"pill bad"
-);
-
-txt(
-"telemetryConfidence",
-"No telemetry confidence"
-);
+txt("status","EA telemetry unavailable");
+cls("telemetryConfidence","pill bad");
+txt("telemetryConfidence","No telemetry confidence");
 
 txt("level","—");
 txt("trend","—");
-
-txt(
-"trendDetail",
-"Both EA routes failed and no cache exists"
-);
-
+txt("trendDetail","Both EA routes failed and no cache exists");
 txt("time","—");
 txt("freshness","—");
 
-txt(
-"dataProof",
-"EA proof: failed both routes"
-);
+txt("dataProof","EA proof: failed both routes");
 
-updateSourceScore(false,rainfallVerified);
+updateSourceScore(false,rainfallVerified,rfcaVerified);
 
 return;
 }
 
 const latest=result.latest;
 const trend=result.trend;
+const mins=ageMinutes(latest.time);
 
-const mins=
-ageMinutes(latest.time);
-
-txt(
-"level",
-latest.value.toFixed(3)+" m"
-);
-
-txt(
-"time",
-displayTime(latest.time)
-);
-
-txt(
-"freshness",
-mins+" minutes old"
-);
-
-txt(
-"trend",
-trend.label
-);
-
-txt(
-"trendDetail",
-trend.detail
-);
+txt("level",latest.value.toFixed(3)+" m");
+txt("time",displayTime(latest.time));
+txt("freshness",mins+" minutes old");
+txt("trend",trend.label);
+txt("trendDetail",trend.detail);
 
 if(result.cached){
-
-cls(
-"status",
-"pill warn"
-);
-
-txt(
-"status",
-"Using cached last-good telemetry"
-);
-
-cls(
-"telemetryConfidence",
-"pill warn"
-);
-
-txt(
-"telemetryConfidence",
-"Telemetry confidence reduced — cached data"
-);
-
+cls("status","pill warn");
+txt("status","Using cached last-good telemetry");
+cls("telemetryConfidence","pill warn");
+txt("telemetryConfidence","Telemetry confidence reduced — cached data");
 }
 else{
-
-cls(
-"status",
-"pill ok"
-);
-
-txt(
-"status",
-"EA telemetry live via "+result.route
-);
+cls("status","pill ok");
+txt("status","EA telemetry live via "+result.route);
 
 if(mins<=30){
-
-cls(
-"telemetryConfidence",
-"pill ok"
-);
-
-txt(
-"telemetryConfidence",
-"Telemetry confidence HIGH"
-);
-
+cls("telemetryConfidence","pill ok");
+txt("telemetryConfidence","Telemetry confidence HIGH");
 }
 else{
-
-cls(
-"telemetryConfidence",
-"pill warn"
-);
-
-txt(
-"telemetryConfidence",
-"Telemetry stale warning"
-);
-
+cls("telemetryConfidence","pill warn");
+txt("telemetryConfidence","Telemetry stale warning");
 }
 }
 
@@ -939,7 +704,7 @@ latest.value.toFixed(3)+
 latest.time
 );
 
-updateSourceScore(true,rainfallVerified);
+updateSourceScore(true,rainfallVerified,rfcaVerified);
 }
 
 async function renderRainfall(){
@@ -948,63 +713,24 @@ rainfallVerified=false;
 
 try{
 
-cls(
-"rainStatus",
-"pill warn"
-);
+cls("rainStatus","pill warn");
+txt("rainStatus","Checking rainfall candidates");
 
-txt(
-"rainStatus",
-"Checking rainfall candidates"
-);
+const result=await RainfallConsumer.discoverAndVerify();
 
-const result=
-await RainfallConsumer.discoverAndVerify();
+txt("rainDiscovery","Station candidates acquired");
+cls("rainDiscovery","ok");
 
-txt(
-"rainDiscovery",
-"Station candidates acquired"
-);
-
-cls(
-"rainDiscovery",
-"ok"
-);
-
-id("rainRows").innerHTML=
-result.rows.map(r=>{
+id("rainRows").innerHTML=result.rows.map(r=>{
 
 const s=r.station;
-
-const name=
-esc(
-s.label||
-s.stationReference||
-"EA rainfall station"
-);
+const name=esc(s.label||s.stationReference||"EA rainfall station");
 
 if(r.reading){
-
-return"<tr><td>"+
-name+
-"</td><td class='ok'>Reading verified</td><td>"+
-esc(
-r.reading.value+
-" mm at "+
-r.reading.time
-)+
-"</td></tr>";
+return"<tr><td>"+name+"</td><td class='ok'>Reading verified</td><td>"+esc(r.reading.value+" mm at "+r.reading.time)+"</td></tr>";
 }
 
-return"<tr><td>"+
-name+
-"</td><td class='warn'>Station only</td><td>"+
-esc(
-s.stationReference||
-s["@id"]||
-"No reading endpoint verified"
-)+
-"</td></tr>";
+return"<tr><td>"+name+"</td><td class='warn'>Station only</td><td>"+esc(s.stationReference||s["@id"]||"No reading endpoint verified")+"</td></tr>";
 
 }).join("");
 
@@ -1015,38 +741,17 @@ rainfallVerified=true;
 const reading=result.verified.reading;
 const station=result.verified.station;
 
-cls(
-"rainStatus",
-"pill ok"
-);
+cls("rainStatus","pill ok");
+txt("rainStatus","Rainfall reading verified");
 
-txt(
-"rainStatus",
-"Rainfall reading verified"
-);
+txt("rainReadingStage","Live rainfall reading acquired");
+cls("rainReadingStage","ok");
 
-txt(
-"rainReadingStage",
-"Live rainfall reading acquired"
-);
-
-cls(
-"rainReadingStage",
-"ok"
-);
-
-txt(
-"rainValue",
-Number(reading.value).toFixed(1)+" mm"
-);
+txt("rainValue",Number(reading.value).toFixed(1)+" mm");
 
 txt(
 "rainMeta",
-(
-station.label||
-station.stationReference||
-"EA rainfall station"
-)+
+(station.label||station.stationReference||"EA rainfall station")+
 " · "+
 displayTime(reading.time)
 );
@@ -1054,73 +759,29 @@ displayTime(reading.time)
 }
 else{
 
-cls(
-"rainStatus",
-"pill warn"
-);
+cls("rainStatus","pill warn");
+txt("rainStatus","Rainfall candidates found; no verified reading");
 
-txt(
-"rainStatus",
-"Rainfall candidates found; no verified reading"
-);
-
-txt(
-"rainReadingStage",
-"No live rainfall reading verified"
-);
-
-cls(
-"rainReadingStage",
-"warn"
-);
+txt("rainReadingStage","No live rainfall reading verified");
+cls("rainReadingStage","warn");
 
 txt("rainValue","—");
-
-txt(
-"rainMeta",
-"No verified rainfall number displayed"
-);
-
+txt("rainMeta","No verified rainfall number displayed");
 }
 }
 catch(e){
 
-cls(
-"rainStatus",
-"pill warn"
-);
+cls("rainStatus","pill warn");
+txt("rainStatus","Rainfall discovery unavailable");
 
-txt(
-"rainStatus",
-"Rainfall discovery unavailable"
-);
+txt("rainDiscovery","Safe fallback");
+cls("rainDiscovery","warn");
 
-txt(
-"rainDiscovery",
-"Safe fallback"
-);
-
-cls(
-"rainDiscovery",
-"warn"
-);
-
-txt(
-"rainReadingStage",
-"Blocked"
-);
-
-cls(
-"rainReadingStage",
-"warn"
-);
+txt("rainReadingStage","Blocked");
+cls("rainReadingStage","warn");
 
 txt("rainValue","—");
-
-txt(
-"rainMeta",
-"No verified rainfall number displayed"
-);
+txt("rainMeta","No verified rainfall number displayed");
 
 id("rainRows").innerHTML=
 "<tr><td>EA rainfall discovery</td><td class='warn'>Safe fallback</td><td>"+
@@ -1133,70 +794,36 @@ async function manualRefresh(){
 
 clicks++;
 
-txt(
-"refreshClicks",
-"Refresh clicks: "+clicks
-);
+txt("refreshClicks","Refresh clicks: "+clicks);
+txt("refreshState","Refresh running: "+nowText());
 
-txt(
-"refreshState",
-"Refresh running: "+nowText()
-);
-
-const result=
-await TelemetryCore.refresh();
+const result=await TelemetryCore.refresh();
 
 await renderRainfall();
 
 renderTelemetry(result);
 
-const state=
-TelemetryCore.getState();
+const state=TelemetryCore.getState();
 
 if(state.lastGoodReadings){
-
-txt(
-"lastGoodProof",
-"Last-good telemetry cache active: "+
-state.lastGoodReadings.length+
-" reading(s)"
-);
-
+txt("lastGoodProof","Last-good telemetry cache active: "+state.lastGoodReadings.length+" reading(s)");
 }
 else{
-
-txt(
-"lastGoodProof",
-"Last-good telemetry cache: empty"
-);
-
+txt("lastGoodProof","Last-good telemetry cache: empty");
 }
 
-txt(
-"refreshState",
-"Last refresh completed: "+nowText()
-);
+txt("refreshState","Last refresh completed: "+nowText());
 }
 
-document.addEventListener(
-"DOMContentLoaded",
-function(){
+document.addEventListener("DOMContentLoaded",function(){
 
-id("refreshBtn")
-.addEventListener(
-"click",
-manualRefresh
-);
+id("refreshBtn").addEventListener("click",manualRefresh);
 
 manualRefresh();
 
-setInterval(
-manualRefresh,
-15*60*1000
-);
+setInterval(manualRefresh,15*60*1000);
 
-}
-);
+});
 </script>
 
 </body>
