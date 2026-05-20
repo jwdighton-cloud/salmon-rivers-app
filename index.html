@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10136</title>
+<title>Salmon Rivers Intelligence — Build 10137</title>
 <style>
 :root{--bg:#f4f6f8;--card:#fff;--ink:#111;--muted:#667085;--ok:#0f7b0f;--warn:#a15c00;--bad:#a40000;--line:#d8dde3;--blue:#0b5cad}
 body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
@@ -27,7 +27,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 <body>
 <header>
 <h1>Salmon Rivers Intelligence</h1>
-<div class="build">GOLD BUILD 10136 — Source Quality Scoring Layer</div>
+<div class="build">GOLD BUILD 10137 — Acquisition Priority Queue</div>
 </header>
 
 <main>
@@ -44,28 +44,28 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 </section>
 
 <section class="card">
+<h2>Acquisition Priority Queue</h2>
+<div id="priorityStatus" class="pill warn">Building acquisition queue…</div>
+<p class="small muted">This queue ranks missing intelligence sources by usefulness and maturity gap. It does not create numbers.</p>
+<table>
+<thead><tr><th>Priority</th><th>Target</th><th>Reason</th><th>Status</th></tr></thead>
+<tbody id="priorityRows">
+<tr><td>1</td><td>RFCA sonde / temperature endpoint</td><td>Highest-value missing welfare and condition signal</td><td class="warn">Acquire machine-readable feed</td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="card">
 <h2>Source Quality Score</h2>
 <div id="qualityStatus" class="pill warn">Calculating source maturity…</div>
 <div class="grid">
-<div class="box">
-<strong>Verified live source score</strong><br>
-<div id="qualityScore" class="big">—</div>
-<div id="qualitySummary" class="small muted">Awaiting source checks</div>
-</div>
-<div class="box">
-<strong>Score meaning</strong><br>
-<span id="qualityMeaning" class="warn">Not yet assessed</span>
-</div>
-<div class="box">
-<strong>Governance lock</strong><br>
-<span class="bad">Score is not a fishing recommendation</span>
-</div>
+<div class="box"><strong>Verified live source score</strong><br><div id="qualityScore" class="big">—</div><div id="qualitySummary" class="small muted">Awaiting source checks</div></div>
+<div class="box"><strong>Score meaning</strong><br><span id="qualityMeaning" class="warn">Not yet assessed</span></div>
+<div class="box"><strong>Governance lock</strong><br><span class="bad">Score is not a fishing recommendation</span></div>
 </div>
 <table>
 <thead><tr><th>Input</th><th>Weight</th><th>Status</th><th>Contribution</th></tr></thead>
-<tbody id="qualityRows">
-<tr><td>Level telemetry</td><td>40</td><td>Checking</td><td>—</td></tr>
-</tbody>
+<tbody id="qualityRows"></tbody>
 </table>
 </section>
 
@@ -79,35 +79,6 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 <div class="box"><strong>RFCA water quality</strong><br><span class="bad">Blocked until machine-readable</span></div>
 <div class="box"><strong>Catch intelligence</strong><br><span id="fusionCatch" class="bad">No verified current-season feed</span></div>
 <div class="box"><strong>Operator / beat intelligence</strong><br><span id="fusionOperator" class="bad">No verified beat feed</span></div>
-</div>
-</section>
-
-<section class="card">
-<h2>Operator / Beat Intelligence Gate</h2>
-<div class="pill warn">Henthorn beat focus active</div>
-<div class="pill bad">No operator reports promoted to live intelligence</div>
-<p>Operator, club, beat, forum, or social reports are not allowed to become numbers or recommendations unless they are dated, attributable, current-season, and traceable.</p>
-<table>
-<thead><tr><th>Source type</th><th>Potential use</th><th>Gate status</th></tr></thead>
-<tbody>
-<tr><td>Named beat / operator report</td><td>Beat-specific context if dated and attributable</td><td class="warn">Acquisition target</td></tr>
-<tr><td>Club or association note</td><td>Local condition and access intelligence</td><td class="warn">Allowed only with clear source/date</td></tr>
-<tr><td>Forum or social report</td><td>Weak supporting context only</td><td class="bad">Blocked from numeric use</td></tr>
-<tr><td>Private anecdote / rumour</td><td>No app intelligence use</td><td class="bad">Blocked</td></tr>
-<tr><td>Verified operator feed</td><td>Future Level 4 intelligence</td><td class="warn">Not integrated yet</td></tr>
-</tbody>
-</table>
-</section>
-
-<section class="card">
-<h2>Current-Season Catch Intelligence Gate</h2>
-<div class="pill bad">No catch numbers displayed</div>
-<div class="pill warn">Acquisition framework active</div>
-<p>This app must not show salmon or sea-trout totals unless the source is verified, current-season, traceable, and suitable for display.</p>
-<div class="grid">
-<div class="box"><strong>Salmon totals</strong><br><div class="big">—</div><div class="small muted">Blocked: no verified current-season feed integrated</div></div>
-<div class="box"><strong>Sea-trout totals</strong><br><div class="big">—</div><div class="small muted">Blocked: no verified current-season feed integrated</div></div>
-<div class="box"><strong>Latest verified catch report</strong><br><span class="bad">Unavailable</span><br><span class="small muted">No source = no number</span></div>
 </div>
 </section>
 
@@ -130,8 +101,22 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 <h2>RFCA Acquisition Status</h2>
 <div class="pill warn">Primary strategic acquisition target</div>
 <div class="pill bad">RFCA numeric values blocked</div>
-<p>RFCA remains a candidate acquisition source. RFCA numeric values remain blocked until a stable machine-readable endpoint is proven.</p>
+<p>RFCA remains the top strategic acquisition target. No RFCA numeric value is displayed until a stable machine-readable endpoint is proven.</p>
 <p class="small"><a href="https://www.ribblefisheriesca.co.uk/live-water-quality-monitoring/" target="_blank" rel="noopener">Open RFCA live water-quality monitoring page</a></p>
+</section>
+
+<section class="card">
+<h2>Current-Season Catch Intelligence Gate</h2>
+<div class="pill bad">No catch numbers displayed</div>
+<div class="pill warn">Acquisition framework active</div>
+<p>This app must not show salmon or sea-trout totals unless the source is verified, current-season, traceable, and suitable for display.</p>
+</section>
+
+<section class="card">
+<h2>Operator / Beat Intelligence Gate</h2>
+<div class="pill warn">Henthorn beat focus active</div>
+<div class="pill bad">No operator reports promoted to live intelligence</div>
+<p>Operator or beat reports are not promoted unless they are dated, attributable, current-season, and traceable.</p>
 </section>
 
 <section class="card">
@@ -151,14 +136,14 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 <section class="card">
 <h2>Known / Unknown / Next Action</h2>
 <div class="grid">
-<div class="box"><strong>Known</strong><br>Henthorn is the live beat focus; EA level telemetry is the verified numeric core.</div>
-<div class="box"><strong>Unknown</strong><br>No verified operator, RFCA, fish-counter, or catch feed has been integrated.</div>
-<div class="box"><strong>Next action</strong><br>Use the source score to guide acquisition priorities, not to recommend fishing.</div>
+<div class="box"><strong>Known</strong><br>EA Henthorn level telemetry is the verified numeric core.</div>
+<div class="box"><strong>Unknown</strong><br>RFCA machine-readable sonde, fish-counter, catch, and operator feeds are not integrated.</div>
+<div class="box"><strong>Next action</strong><br>Use the acquisition queue to pursue the highest-value missing sources first.</div>
 </div>
 </section>
 </main>
 
-<footer>Build 10136 · NO SOURCE = NO NUMBER</footer>
+<footer>Build 10137 · NO SOURCE = NO NUMBER</footer>
 
 <script>
 const EA_MEASURE="https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings?_sorted&_limit=24";
@@ -166,13 +151,15 @@ const EA_STATION="https://environment.data.gov.uk/flood-monitoring/id/stations/7
 
 let sourceState={level:false,rainfall:false,rfca:false,catch:false,operator:false};
 
-const qualityWeights={
-  level:40,
-  rainfall:20,
-  rfca:20,
-  catch:15,
-  operator:5
-};
+const qualityWeights={level:40,rainfall:20,rfca:20,catch:15,operator:5};
+
+const acquisitionTargets=[
+  {key:"rfca",target:"RFCA sonde / temperature endpoint",reason:"Highest-value missing welfare and water-quality signal",status:"Acquire stable machine-readable feed"},
+  {key:"rainfall",target:"Verified rainfall reading chain",reason:"Needed for catchment context and source fusion maturity",status:"Promote only when live reading verifies"},
+  {key:"catch",target:"Current-season Ribble catch intelligence",reason:"Most important fishing intelligence after live conditions",status:"Find dated attributable current-season source"},
+  {key:"operator",target:"Henthorn / Ribble operator or beat reports",reason:"Adds local context once traceable and dated",status:"Identify reliable beat-level source"},
+  {key:"rfca",target:"RFCA fish-counter telemetry",reason:"High-value migration intelligence if available",status:"Investigate machine-readable availability"}
+];
 
 function el(id){return document.getElementById(id)}
 function setText(id,text){el(id).textContent=text}
@@ -181,13 +168,19 @@ function ageMinutes(iso){return Math.round((Date.now()-new Date(iso).getTime())/
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]))}
 
 function sourceLabel(key){
-  return {
-    level:"Level telemetry",
-    rainfall:"Rainfall telemetry",
-    rfca:"RFCA water quality",
-    catch:"Current-season catch intelligence",
-    operator:"Operator / beat intelligence"
-  }[key] || key;
+  return {level:"Level telemetry",rainfall:"Rainfall telemetry",rfca:"RFCA water quality",catch:"Current-season catch intelligence",operator:"Operator / beat intelligence"}[key] || key;
+}
+
+function updatePriorityQueue(){
+  const missing=acquisitionTargets.filter(t=>!sourceState[t.key]);
+  el("priorityRows").innerHTML=missing.map((t,i)=>`<tr><td>${i+1}</td><td>${escapeHtml(t.target)}</td><td>${escapeHtml(t.reason)}</td><td class="warn">${escapeHtml(t.status)}</td></tr>`).join("");
+  if(missing.length){
+    el("priorityStatus").className="pill warn";
+    setText("priorityStatus",`${missing.length} acquisition targets open`);
+  }else{
+    el("priorityStatus").className="pill ok";
+    setText("priorityStatus","All tracked acquisition targets verified");
+  }
 }
 
 function updateQualityScore(){
@@ -202,22 +195,17 @@ function updateQualityScore(){
   el("qualityRows").innerHTML=rows.join("");
   setText("qualityScore",score+"/100");
   if(score>=80){
-    el("qualityStatus").className="pill ok";
-    setText("qualityStatus","High source maturity");
-    el("qualityMeaning").className="ok";
-    setText("qualityMeaning","Multiple verified live inputs");
+    el("qualityStatus").className="pill ok"; setText("qualityStatus","High source maturity");
+    el("qualityMeaning").className="ok"; setText("qualityMeaning","Multiple verified live inputs");
   }else if(score>=40){
-    el("qualityStatus").className="pill warn";
-    setText("qualityStatus","Partial source maturity");
-    el("qualityMeaning").className="warn";
-    setText("qualityMeaning","Core telemetry present; major intelligence gaps remain");
+    el("qualityStatus").className="pill warn"; setText("qualityStatus","Partial source maturity");
+    el("qualityMeaning").className="warn"; setText("qualityMeaning","Core telemetry present; major intelligence gaps remain");
   }else{
-    el("qualityStatus").className="pill bad";
-    setText("qualityStatus","Low source maturity");
-    el("qualityMeaning").className="bad";
-    setText("qualityMeaning","Insufficient verified source coverage");
+    el("qualityStatus").className="pill bad"; setText("qualityStatus","Low source maturity");
+    el("qualityMeaning").className="bad"; setText("qualityMeaning","Insufficient verified source coverage");
   }
   setText("qualitySummary","Score measures source coverage only. It is not a fishability score.");
+  updatePriorityQueue();
 }
 
 function updateFusion(){
@@ -245,11 +233,11 @@ function updateFusion(){
 function analyseTrend(items){
   const vals=items.map(x=>({v:Number(x.value),t:x.dateTime})).filter(x=>Number.isFinite(x.v));
   if(vals.length<2)return {label:"Unknown",detail:"Not enough readings"};
-  const latest=vals[vals.length-1], prev=vals[vals.length-2], delta=latest.v-prev.v, threshold=0.005;
+  const latest=vals[vals.length-1],prev=vals[vals.length-2],delta=latest.v-prev.v,threshold=0.005;
   if(Math.abs(delta)>=threshold){
     return delta>0?{label:"Rising",detail:`Latest delta +${delta.toFixed(3)} m from previous reading`}:{label:"Falling",detail:`Latest delta ${delta.toFixed(3)} m from previous reading`};
   }
-  const sample=vals.slice(-6), multi=sample[sample.length-1].v-sample[0].v;
+  const sample=vals.slice(-6),multi=sample[sample.length-1].v-sample[0].v;
   if(Math.abs(multi)>=threshold){
     return multi>0?{label:"Rising",detail:`Multi-reading rise +${multi.toFixed(3)} m across recent readings`}:{label:"Falling",detail:`Multi-reading fall ${multi.toFixed(3)} m across recent readings`};
   }
@@ -264,32 +252,21 @@ async function loadHenthorn(){
     const j=await r.json();
     const items=(j.items||[]).sort((a,b)=>new Date(a.dateTime)-new Date(b.dateTime));
     if(!items.length)throw new Error("No EA readings returned");
-    const latest=items[items.length-1], level=Number(latest.value);
+    const latest=items[items.length-1],level=Number(latest.value);
     if(!Number.isFinite(level))throw new Error("Latest EA level was not numeric");
-
     setText("level",level.toFixed(3)+" m");
     setText("time",fmtDate(latest.dateTime));
     setText("freshness",`${ageMinutes(latest.dateTime)} minutes old`);
-
     const trend=analyseTrend(items);
-    setText("trend",trend.label);
-    setText("trendDetail",trend.detail);
-
-    el("status").className="pill ok";
-    setText("status","EA telemetry live");
-    el("ledgerLevel").className="ok";
-    setText("ledgerLevel","Live official machine-readable source");
+    setText("trend",trend.label); setText("trendDetail",trend.detail);
+    el("status").className="pill ok"; setText("status","EA telemetry live");
+    el("ledgerLevel").className="ok"; setText("ledgerLevel","Live official machine-readable source");
     sourceState.level=true;
   }catch(e){
-    el("status").className="pill bad";
-    setText("status","EA telemetry unavailable");
-    setText("level","—");
-    setText("trend","—");
-    setText("trendDetail","No verified live reading acquired");
-    setText("time","—");
-    setText("freshness",String(e.message||e));
-    el("ledgerLevel").className="bad";
-    setText("ledgerLevel","Verification failed safely");
+    el("status").className="pill bad"; setText("status","EA telemetry unavailable");
+    setText("level","—"); setText("trend","—"); setText("trendDetail","No verified live reading acquired");
+    setText("time","—"); setText("freshness",String(e.message||e));
+    el("ledgerLevel").className="bad"; setText("ledgerLevel","Verification failed safely");
   }
   updateFusion();
 }
@@ -304,7 +281,7 @@ async function tryRainReadingForMeasure(measureUrl){
   const url=measureUrl.replace(/\/$/,"")+"/readings?_sorted&_limit=1";
   const r=await fetch(url,{cache:"no-store"});
   if(!r.ok)return null;
-  const j=await r.json(), item=(j.items||[])[0];
+  const j=await r.json(),item=(j.items||[])[0];
   if(!item)return null;
   const value=Number(item.value);
   if(!Number.isFinite(value))return null;
@@ -317,24 +294,18 @@ async function loadRainfall(){
   try{
     const sr=await fetch(EA_STATION,{cache:"no-store"});
     if(!sr.ok)throw new Error("Henthorn station lookup failed");
-    const sj=await sr.json(), station=sj.items || {};
-    const lat=station.lat || station.latitude, long=station.long || station.longitude;
+    const sj=await sr.json(),station=sj.items || {};
+    const lat=station.lat || station.latitude,long=station.long || station.longitude;
     if(!lat||!long)throw new Error("No Henthorn coordinates acquired");
-
     const discoveryUrl=`https://environment.data.gov.uk/flood-monitoring/id/stations?parameter=rainfall&lat=${encodeURIComponent(lat)}&long=${encodeURIComponent(long)}&dist=25`;
     const rr=await fetch(discoveryUrl,{cache:"no-store"});
     if(!rr.ok)throw new Error("Rainfall discovery HTTP "+rr.status);
-    const rj=await rr.json(), found=(rj.items||[]).slice(0,6);
+    const rj=await rr.json(),found=(rj.items||[]).slice(0,6);
     if(!found.length)throw new Error("No nearby EA rainfall station acquired");
-
-    setText("rainStage1","Station candidates acquired");
-    el("rainStage1").className="ok";
-
-    let verified=null;
-    const rendered=[];
+    setText("rainStage1","Station candidates acquired"); el("rainStage1").className="ok";
+    let verified=null; const rendered=[];
     for(const s of found){
-      const measures=candidateMeasuresFromStation(s);
-      let result=null;
+      const measures=candidateMeasuresFromStation(s); let result=null;
       for(const m of measures){
         const measureUrl=typeof m==="string"?m:(m["@id"]||m.id);
         result=await tryRainReadingForMeasure(measureUrl);
@@ -343,52 +314,34 @@ async function loadRainfall(){
       if(result && !verified)verified={station:s,result};
       rendered.push(`<tr><td>${escapeHtml(s.label||s.stationReference||"EA rainfall station")}</td><td class="${result?"ok":"warn"}">${result?"Reading verified":"Station only"}</td><td>${result?escapeHtml(result.value+" at "+fmtDate(result.dateTime)):escapeHtml(s.stationReference||s["@id"]||"No readings endpoint verified")}</td></tr>`);
     }
-
     rows.innerHTML=rendered.join("");
-
     if(verified){
       sourceState.rainfall=true;
-      el("rainGate").className="pill ok";
-      setText("rainGate","Rainfall reading verified");
+      el("rainGate").className="pill ok"; setText("rainGate","Rainfall reading verified");
       setText("rainSummary","A nearby EA rainfall station and latest machine-readable rainfall reading were acquired.");
-      setText("rainStage2","Live reading acquired");
-      el("rainStage2").className="ok";
+      setText("rainStage2","Live reading acquired"); el("rainStage2").className="ok";
       setText("rainValue",Number(verified.result.value).toFixed(1)+" mm");
       setText("rainMeta",`${verified.station.label||verified.station.stationReference||"EA rainfall station"} · ${fmtDate(verified.result.dateTime)}`);
-      el("ledgerRain").className="ok";
-      setText("ledgerRain","Live rainfall reading verified");
+      el("ledgerRain").className="ok"; setText("ledgerRain","Live rainfall reading verified");
     }else{
-      el("rainGate").className="pill warn";
-      setText("rainGate","Rainfall station found; reading not verified");
+      el("rainGate").className="pill warn"; setText("rainGate","Rainfall station found; reading not verified");
       setText("rainSummary","Station discovery succeeded, but no rainfall number is displayed because a live reading was not verified.");
-      setText("rainStage2","No verified reading");
-      el("rainStage2").className="warn";
-      setText("rainValue","—");
-      setText("rainMeta","No verified rainfall number displayed");
-      el("ledgerRain").className="warn";
-      setText("ledgerRain","Station discovery only");
+      setText("rainStage2","No verified reading"); el("rainStage2").className="warn";
+      setText("rainValue","—"); setText("rainMeta","No verified rainfall number displayed");
+      el("ledgerRain").className="warn"; setText("ledgerRain","Station discovery only");
     }
   }catch(e){
-    el("rainGate").className="pill warn";
-    setText("rainGate","Rainfall not yet authoritative");
-    setText("rainStage1","No verified station chain");
-    el("rainStage1").className="warn";
-    setText("rainStage2","Blocked");
-    el("rainStage2").className="warn";
-    setText("rainValue","—");
-    setText("rainMeta","No verified rainfall number displayed");
+    el("rainGate").className="pill warn"; setText("rainGate","Rainfall not yet authoritative");
+    setText("rainStage1","No verified station chain"); el("rainStage1").className="warn";
+    setText("rainStage2","Blocked"); el("rainStage2").className="warn";
+    setText("rainValue","—"); setText("rainMeta","No verified rainfall number displayed");
     rows.innerHTML=`<tr><td>EA rainfall discovery</td><td class="warn">Safe fallback</td><td>${escapeHtml(String(e.message||e))}</td></tr>`;
-    el("ledgerRain").className="warn";
-    setText("ledgerRain","Verification failed safely");
+    el("ledgerRain").className="warn"; setText("ledgerRain","Verification failed safely");
   }
   updateFusion();
 }
 
-async function loadAll(){
-  await loadHenthorn();
-  await loadRainfall();
-}
-
+async function loadAll(){await loadHenthorn();await loadRainfall();}
 loadAll();
 setInterval(loadAll,15*60*1000);
 </script>
