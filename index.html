@@ -3,661 +3,226 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10140</title>
-
+<title>Salmon Rivers Intelligence — Build 10141</title>
 <style>
-:root{
---bg:#f4f6f8;
---card:#ffffff;
---line:#d8dde3;
---text:#111;
---muted:#667085;
---ok:#0f7b0f;
---warn:#a15c00;
---bad:#a40000;
---blue:#0b5cad;
-}
-
-*{box-sizing:border-box}
-
-body{
-margin:0;
-font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-background:var(--bg);
-color:var(--text);
-}
-
-header{
-background:#0b1f33;
-color:#fff;
-padding:18px 14px;
-text-align:center;
-}
-
-h1{
-margin:0;
-font-size:26px;
-}
-
-.build{
-margin-top:4px;
-font-size:13px;
-opacity:.85;
-}
-
-main{
-max-width:1000px;
-margin:0 auto;
-padding:14px;
-}
-
-.card{
-background:var(--card);
-border:1px solid var(--line);
-border-radius:16px;
-padding:16px;
-margin:12px 0;
-box-shadow:0 2px 8px rgba(0,0,0,.04);
-}
-
-h2{
-margin:0 0 12px;
-font-size:20px;
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-gap:12px;
-}
-
-.box{
-border:1px solid var(--line);
-border-radius:12px;
-padding:12px;
-background:#fbfcfd;
-}
-
-.big{
-font-size:38px;
-font-weight:800;
-}
-
-.muted{
-color:var(--muted);
-}
-
-.ok{color:var(--ok)}
-.warn{color:var(--warn)}
-.bad{color:var(--bad)}
-
-.pill{
-display:inline-block;
-padding:7px 11px;
-border-radius:999px;
-font-size:13px;
-font-weight:800;
-background:#eef2f6;
-margin:3px 4px 3px 0;
-}
-
-button{
-border:0;
-background:var(--blue);
-color:white;
-font-weight:900;
-font-size:15px;
-padding:13px 18px;
-border-radius:12px;
-cursor:pointer;
-}
-
-button:active{
-transform:scale(.98);
-}
-
-table{
-width:100%;
-border-collapse:collapse;
-font-size:13px;
-}
-
-th,td{
-padding:8px;
-border-bottom:1px solid var(--line);
-text-align:left;
-vertical-align:top;
-}
-
-th{
-background:#f0f3f6;
-}
-
-.small{
-font-size:12px;
-}
-
-footer{
-padding:20px;
-text-align:center;
-font-size:12px;
-color:var(--muted);
-}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:#f4f6f8;color:#111}
+header{background:#0b1f33;color:white;text-align:center;padding:18px 14px}
+h1{margin:0;font-size:26px}.build{font-size:13px;opacity:.85;margin-top:4px}
+main{max-width:980px;margin:0 auto;padding:14px}
+.card{background:white;border:1px solid #d8dde3;border-radius:16px;padding:16px;margin:12px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.box{border:1px solid #d8dde3;border-radius:12px;padding:12px;background:#fbfcfd}
+.big{font-size:38px;font-weight:800}
+.pill{display:inline-block;border-radius:999px;padding:7px 11px;font-size:13px;font-weight:800;background:#eef2f6;margin:3px 4px 3px 0}
+.ok{color:#0f7b0f}.warn{color:#a15c00}.bad{color:#a40000}.muted{color:#667085}.small{font-size:12px}
+button{border:0;border-radius:12px;background:#0b5cad;color:white;padding:13px 18px;font-weight:900;font-size:15px}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{border-bottom:1px solid #d8dde3;padding:8px;text-align:left;vertical-align:top}th{background:#f0f3f6}
+footer{text-align:center;color:#667085;font-size:12px;padding:18px}
 </style>
 </head>
-
 <body>
-
 <header>
 <h1>Salmon Rivers Intelligence</h1>
-<div class="build">
-GOLD BUILD 10140 — Stable Refresh Architecture
-</div>
+<div class="build">GOLD BUILD 10141 — EA JSON Acquisition Fix</div>
 </header>
 
 <main>
-
 <section class="card">
-<h2>River Ribble @ Henthorn — Official Live Telemetry</h2>
-
-<div id="status" class="pill">
-Waiting for refresh…
-</div>
+<h2>River Ribble @ Henthorn — Official Live EA Telemetry</h2>
+<div id="status" class="pill">Initialising…</div>
 
 <div class="grid">
-
 <div class="box">
 <div class="muted">Latest level</div>
 <div id="level" class="big">—</div>
-<div class="small muted">EA station 710305</div>
+<div class="small muted">EA Henthorn station 710305</div>
 </div>
 
 <div class="box">
 <div class="muted">Movement</div>
 <div id="trend" class="big">—</div>
-<div id="trendDetail" class="small muted">
-Awaiting readings
-</div>
+<div id="trendDetail" class="small muted">Awaiting readings</div>
 </div>
 
 <div class="box">
 <div class="muted">Latest timestamp</div>
-<div id="time" style="font-weight:800;">—</div>
+<div id="time" style="font-weight:800">—</div>
 <div id="freshness" class="small muted">—</div>
 </div>
-
 </div>
 
 <br>
+<button id="refreshBtn" type="button">REFRESH NOW</button>
+<div id="refreshState" class="small muted">Refresh control ready</div>
+<div id="refreshClicks" class="small muted">Refresh clicks: 0</div>
+<div id="dataProof" class="small muted">EA data proof: waiting</div>
+</section>
 
-<button id="refreshBtn">
-REFRESH NOW
-</button>
-
-<div id="refreshState" class="small muted">
-Refresh control initialising…
+<section class="card">
+<h2>Source Quality Score</h2>
+<div class="grid">
+<div class="box"><div class="muted">Verified source score</div><div id="qualityScore" class="big">—</div></div>
+<div class="box"><div class="muted">Meaning</div><div id="qualityMeaning" class="warn">Awaiting EA check</div></div>
+<div class="box"><div class="muted">Governance</div><div class="bad">NOT a fishability score</div></div>
 </div>
-
-<div id="refreshClicks" class="small muted">
-Refresh clicks: 0
-</div>
-
 </section>
 
 <section class="card">
 <h2>Acquisition Priority Queue</h2>
-
-<div class="pill warn">
-RFCA remains primary acquisition target
-</div>
-
 <table>
-<thead>
-<tr>
-<th>Priority</th>
-<th>Target</th>
-<th>Reason</th>
-</tr>
-</thead>
-
+<thead><tr><th>Priority</th><th>Target</th><th>Status</th></tr></thead>
 <tbody>
-<tr>
-<td>1</td>
-<td>RFCA sonde / temperature feed</td>
-<td>Highest-value missing welfare signal</td>
-</tr>
-
-<tr>
-<td>2</td>
-<td>RFCA fish-counter telemetry</td>
-<td>Migration intelligence</td>
-</tr>
-
-<tr>
-<td>3</td>
-<td>Current-season Ribble catches</td>
-<td>Core fishing intelligence</td>
-</tr>
-
-<tr>
-<td>4</td>
-<td>Verified beat/operator reports</td>
-<td>Local Henthorn intelligence</td>
-</tr>
-
-<tr>
-<td>5</td>
-<td>Rainfall maturity</td>
-<td>Catchment trend intelligence</td>
-</tr>
-
+<tr><td>1</td><td>RFCA sonde / temperature feed</td><td class="warn">Acquire machine-readable feed</td></tr>
+<tr><td>2</td><td>RFCA fish-counter telemetry</td><td class="warn">Investigate availability</td></tr>
+<tr><td>3</td><td>Current-season Ribble catches</td><td class="warn">Find dated attributable source</td></tr>
+<tr><td>4</td><td>Verified beat/operator reports</td><td class="warn">Henthorn context target</td></tr>
+<tr><td>5</td><td>Rainfall maturity</td><td class="warn">Secondary acquisition</td></tr>
 </tbody>
 </table>
 </section>
 
 <section class="card">
-<h2>Source Quality Score</h2>
-
-<div class="grid">
-
-<div class="box">
-<div class="muted">Verified source score</div>
-<div id="qualityScore" class="big">—</div>
-<div class="small muted">
-Source maturity only
-</div>
-</div>
-
-<div class="box">
-<div class="muted">Meaning</div>
-<div id="qualityMeaning" class="warn">
-Awaiting checks
-</div>
-</div>
-
-<div class="box">
-<div class="muted">Governance</div>
-<div class="bad">
-NOT a fishability score
-</div>
-</div>
-
-</div>
-
-</section>
-
-<section class="card">
-<h2>Rainfall Verification Gate</h2>
-
-<div id="rainGate" class="pill warn">
-Checking rainfall acquisition…
-</div>
-
-<div class="grid">
-
-<div class="box">
-<div class="muted">Rainfall status</div>
-<div id="rainValue" class="big">—</div>
-<div id="rainMeta" class="small muted">
-No verified rainfall reading
-</div>
-</div>
-
-<div class="box">
-<div class="muted">Discovery stage</div>
-<div id="rainStage1" class="warn">
-Checking
-</div>
-</div>
-
-<div class="box">
-<div class="muted">Reading stage</div>
-<div id="rainStage2" class="warn">
-Blocked until verified
-</div>
-</div>
-
-</div>
-
-</section>
-
-<section class="card">
 <h2>RFCA Acquisition Status</h2>
-
-<div class="pill warn">
-Primary strategic acquisition target
-</div>
-
-<div class="pill bad">
-RFCA values blocked until machine-readable
-</div>
-
-<p>
-No RFCA numeric values are permitted into the live intelligence system unless they are stable, traceable, current, machine-readable and verifiable.
-</p>
-
-<p class="small">
-<a href="https://www.ribblefisheriesca.co.uk/live-water-quality-monitoring/" target="_blank">
-Open RFCA live water-quality monitoring
-</a>
-</p>
-
+<div class="pill warn">Primary strategic acquisition target</div>
+<div class="pill bad">RFCA values blocked until machine-readable</div>
+<p>No RFCA numeric values are permitted unless stable, traceable, current, machine-readable and verifiable.</p>
 </section>
-
 </main>
 
-<footer>
-Build 10140 · NO SOURCE = NO NUMBER
-</footer>
+<footer>Build 10141 · NO SOURCE = NO NUMBER</footer>
 
 <script>
-const EA_MEASURE =
-"https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings?_sorted&_limit=24";
+const EA_READINGS_JSON =
+"https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings.json?_sorted&_limit=24";
 
-const EA_STATION =
-"https://environment.data.gov.uk/flood-monitoring/id/stations/710305";
+let clicks = 0;
 
-let refreshClicks = 0;
+function id(x){return document.getElementById(x)}
+function txt(x,v){const e=id(x);if(e)e.textContent=v}
+function cls(x,v){const e=id(x);if(e)e.className=v}
 
-function byId(id){
-return document.getElementById(id);
-}
-
-function setText(id,text){
-const el = byId(id);
-if(el) el.textContent = text;
-}
-
-function setClass(id,value){
-const el = byId(id);
-if(el) el.className = value;
-}
-
-function nowText(){
-return new Date().toLocaleString(
-"en-GB",
-{
-dateStyle:"medium",
-timeStyle:"medium"
-}
-);
+function now(){
+return new Date().toLocaleString("en-GB",{dateStyle:"medium",timeStyle:"medium"});
 }
 
 function bust(url){
-const sep = url.includes("?") ? "&" : "?";
-return url + sep + "_cb=" + Date.now();
+return url + (url.includes("?") ? "&" : "?") + "_cb=" + Date.now();
 }
 
-async function getJson(url){
-const r = await fetch(
-bust(url),
-{
+async function getEAReadings(){
+const r = await fetch(bust(EA_READINGS_JSON),{
+method:"GET",
 cache:"no-store",
-mode:"cors"
-}
-);
-
-if(!r.ok){
-throw new Error("HTTP " + r.status);
-}
-
-return await r.json();
+headers:{"Accept":"application/json"}
+});
+if(!r.ok) throw new Error("EA HTTP " + r.status);
+const j = await r.json();
+if(!j || !Array.isArray(j.items)) throw new Error("EA JSON did not contain readings");
+return j.items;
 }
 
 function analyseTrend(items){
+const readings = items
+.map(x=>({value:Number(x.value),time:x.dateTime}))
+.filter(x=>Number.isFinite(x.value) && x.time)
+.sort((a,b)=>new Date(a.time)-new Date(b.time));
 
-const vals = items
-.map(x => Number(x.value))
-.filter(v => Number.isFinite(v));
-
-if(vals.length < 2){
-return {
-label:"Unknown",
-detail:"Not enough readings"
-};
+if(readings.length < 2){
+return {label:"Unknown",detail:"Not enough EA readings"};
 }
 
-const latest = vals[vals.length-1];
-const prev = vals[vals.length-2];
+const latest = readings[readings.length-1];
+const previous = readings[readings.length-2];
+const delta = latest.value - previous.value;
+const threshold = 0.005;
 
-const delta = latest - prev;
-
-if(delta > 0.005){
-return {
-label:"Rising",
-detail:"Latest delta +" + delta.toFixed(3) + " m"
-};
+if(delta > threshold){
+return {label:"Rising",detail:"Latest delta +" + delta.toFixed(3) + " m from previous EA reading"};
 }
 
-if(delta < -0.005){
-return {
-label:"Falling",
-detail:"Latest delta " + delta.toFixed(3) + " m"
-};
+if(delta < -threshold){
+return {label:"Falling",detail:"Latest delta " + delta.toFixed(3) + " m from previous EA reading"};
 }
 
-return {
-label:"Steady",
-detail:"No material latest movement"
-};
+const sample = readings.slice(-6);
+const multi = sample[sample.length-1].value - sample[0].value;
+
+if(multi > threshold){
+return {label:"Rising",detail:"Multi-reading rise +" + multi.toFixed(3) + " m"};
 }
 
-async function refreshTelemetry(){
+if(multi < -threshold){
+return {label:"Falling",detail:"Multi-reading fall " + multi.toFixed(3) + " m"};
+}
 
-setText(
-"refreshState",
-"Refresh running: " + nowText()
-);
+return {label:"Steady",detail:"No material latest or multi-reading movement"};
+}
+
+async function refreshEA(){
+txt("refreshState","Refresh running: " + now());
+cls("status","pill warn");
+txt("status","Checking EA JSON…");
 
 try{
+const items = await getEAReadings();
+const readings = items
+.map(x=>({value:Number(x.value),time:x.dateTime}))
+.filter(x=>Number.isFinite(x.value) && x.time)
+.sort((a,b)=>new Date(a.time)-new Date(b.time));
 
-const j = await getJson(EA_MEASURE);
+if(!readings.length) throw new Error("No valid EA numeric readings");
 
-const items = (j.items || [])
-.sort(
-(a,b)=>
-new Date(a.dateTime)-new Date(b.dateTime)
-);
+const latest = readings[readings.length-1];
 
-if(!items.length){
-throw new Error("No EA readings");
-}
+txt("level",latest.value.toFixed(3) + " m");
+txt("time",new Date(latest.time).toLocaleString("en-GB",{dateStyle:"medium",timeStyle:"short"}));
 
-const latest = items[items.length-1];
-
-const level = Number(latest.value);
-
-if(!Number.isFinite(level)){
-throw new Error("Invalid EA level");
-}
-
-setText(
-"level",
-level.toFixed(3) + " m"
-);
-
-setText(
-"time",
-new Date(latest.dateTime).toLocaleString(
-"en-GB",
-{
-dateStyle:"medium",
-timeStyle:"short"
-}
-)
-);
-
-const mins =
-Math.round(
-(Date.now()-new Date(latest.dateTime).getTime())
-/60000
-);
-
-setText(
-"freshness",
-mins + " minutes old"
-);
+const mins = Math.round((Date.now() - new Date(latest.time).getTime()) / 60000);
+txt("freshness",mins + " minutes old");
 
 const trend = analyseTrend(items);
+txt("trend",trend.label);
+txt("trendDetail",trend.detail);
 
-setText("trend",trend.label);
-setText("trendDetail",trend.detail);
+cls("status","pill ok");
+txt("status","EA telemetry live");
 
-setClass("status","pill ok");
-setText("status","EA telemetry live");
+txt("qualityScore","40/100");
+cls("qualityMeaning","warn");
+txt("qualityMeaning","Core EA telemetry verified; other intelligence sources still missing");
 
-setText(
-"qualityScore",
-"40/100"
-);
-
-setClass(
-"qualityMeaning",
-"warn"
-);
-
-setText(
-"qualityMeaning",
-"Only core telemetry verified"
-);
-
+txt("dataProof","EA data proof: " + readings.length + " readings parsed; latest " + latest.value.toFixed(3) + " m at " + latest.time);
+txt("refreshState","Last refresh completed: " + now());
 }
-catch(err){
-
-setClass("status","pill bad");
-
-setText(
-"status",
-"Telemetry unavailable"
-);
-
-setText("level","—");
-setText("trend","—");
-setText("trendDetail",String(err));
-setText("time","—");
-setText("freshness","—");
-
-setText(
-"qualityScore",
-"0/100"
-);
-
-setClass(
-"qualityMeaning",
-"bad"
-);
-
-setText(
-"qualityMeaning",
-"Telemetry unavailable"
-);
-}
-
-try{
-
-const sj = await getJson(EA_STATION);
-
-const station = sj.items || {};
-
-if(
-station.lat ||
-station.latitude
-){
-
-setClass(
-"rainGate",
-"pill warn"
-);
-
-setText(
-"rainGate",
-"Rainfall candidates discovered"
-);
-
-setClass(
-"rainStage1",
-"ok"
-);
-
-setText(
-"rainStage1",
-"Station discovery working"
-);
-
-setClass(
-"rainStage2",
-"warn"
-);
-
-setText(
-"rainStage2",
-"Numeric rainfall blocked pending verification"
-);
-
+catch(e){
+cls("status","pill bad");
+txt("status","EA telemetry unavailable");
+txt("level","—");
+txt("trend","—");
+txt("trendDetail",String(e.message || e));
+txt("time","—");
+txt("freshness","—");
+txt("qualityScore","0/100");
+cls("qualityMeaning","bad");
+txt("qualityMeaning","EA telemetry not acquired");
+txt("dataProof","EA data proof: failed — " + String(e.message || e));
+txt("refreshState","Refresh failed: " + now());
 }
 }
-catch(err){
 
-setClass(
-"rainGate",
-"pill warn"
-);
-
-setText(
-"rainGate",
-"Rainfall discovery unavailable"
-);
-}
-
-setText(
-"refreshState",
-"Last refresh completed: " + nowText()
-);
-}
-
-async function manualRefresh(){
-
-refreshClicks++;
-
-setText(
-"refreshClicks",
-"Refresh clicks: " + refreshClicks
-);
-
-await refreshTelemetry();
+function manualRefresh(){
+clicks++;
+txt("refreshClicks","Refresh clicks: " + clicks);
+refreshEA();
 }
 
 window.manualRefresh = manualRefresh;
 
-document.addEventListener(
-"DOMContentLoaded",
-function(){
-
-const btn = byId("refreshBtn");
-
-if(btn){
-
-btn.onclick = function(){
+document.addEventListener("DOMContentLoaded",function(){
+id("refreshBtn").addEventListener("click",manualRefresh);
 manualRefresh();
-};
-
-}
-
-setText(
-"refreshState",
-"Refresh control ready: " + nowText()
-);
-
-manualRefresh();
-
-setInterval(
-manualRefresh,
-15 * 60 * 1000
-);
-
-}
-);
+setInterval(manualRefresh,15*60*1000);
+});
 </script>
-
 </body>
 </html>
