@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10132</title>
+<title>Salmon Rivers Intelligence — Build 10133</title>
 <style>
 :root{--bg:#f4f6f8;--card:#fff;--ink:#111;--muted:#667085;--ok:#0f7b0f;--warn:#a15c00;--bad:#a40000;--line:#d8dde3;--blue:#0b5cad}
 body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
@@ -30,7 +30,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 <body>
 <header>
 <h1>Salmon Rivers Intelligence</h1>
-<div class="build">GOLD BUILD 10132 — Rainfall Verification Gate</div>
+<div class="build">GOLD BUILD 10133 — Verified Input Fusion Panel</div>
 </header>
 
 <main>
@@ -56,6 +56,31 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 </div>
 <button onclick="loadAll()">Refresh now</button>
 <p class="small muted">No fishability recommendation. Verified telemetry only.</p>
+</section>
+
+<section class="card">
+<h2>Verified Input Fusion Panel</h2>
+<div id="fusionStatus" class="pill warn">Assessing verified inputs…</div>
+<p id="fusionText">This panel shows source maturity only. It does not make a fishing recommendation.</p>
+
+<div class="grid">
+<div class="box">
+<strong>Level telemetry</strong><br>
+<span id="fusionLevel" class="warn">Checking</span>
+</div>
+<div class="box">
+<strong>Rainfall telemetry</strong><br>
+<span id="fusionRain" class="warn">Provisional</span>
+</div>
+<div class="box">
+<strong>RFCA water quality</strong><br>
+<span class="bad">Blocked until machine-readable</span>
+</div>
+<div class="box">
+<strong>Catch intelligence</strong><br>
+<span class="bad">No verified current-season feed</span>
+</div>
+</div>
 </section>
 
 <section class="card">
@@ -98,7 +123,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 <table>
 <thead><tr><th>Source</th><th>Class</th><th>Use</th><th>Status</th></tr></thead>
 <tbody>
-<tr><td>EA Henthorn telemetry</td><td>Level 1</td><td>Level and movement</td><td class="ok">Live official machine-readable source</td></tr>
+<tr><td>EA Henthorn telemetry</td><td>Level 1</td><td>Level and movement</td><td id="ledgerLevel" class="warn">Checking</td></tr>
 <tr><td>EA rainfall discovery</td><td>Level 1 candidate</td><td>Rainfall intelligence</td><td id="ledgerRain" class="warn">Verification pending</td></tr>
 <tr><td>RFCA live water-quality page</td><td>Acquisition candidate</td><td>Temperature / sonde / river health</td><td class="bad">Blocked until machine-readable</td></tr>
 <tr><td>Great Mitton</td><td>Weather anchor candidate</td><td>Future weather modelling</td><td class="warn">Not authoritative telemetry yet</td></tr>
@@ -111,23 +136,54 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 <h2>Known / Unknown / Next Action</h2>
 <div class="grid">
 <div class="box"><strong>Known</strong><br>EA Henthorn level telemetry is live and official.</div>
-<div class="box"><strong>Unknown</strong><br>Rainfall reading maturity depends on acquiring a valid readings endpoint, not merely finding a station.</div>
-<div class="box"><strong>Next action</strong><br>Promote rainfall from provisional to verified only after live rainfall readings are successfully parsed.</div>
+<div class="box"><strong>Unknown</strong><br>Rainfall and RFCA maturity remain separate from level telemetry maturity.</div>
+<div class="box"><strong>Next action</strong><br>Promote only verified live inputs into the fusion panel; keep blocked sources visible but non-numeric.</div>
 </div>
 </section>
 </main>
 
-<footer>Build 10132 · NO SOURCE = NO NUMBER</footer>
+<footer>Build 10133 · NO SOURCE = NO NUMBER</footer>
 
 <script>
 const EA_MEASURE="https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings?_sorted&_limit=24";
 const EA_STATION="https://environment.data.gov.uk/flood-monitoring/id/stations/710305";
+
+let sourceState={
+  level:false,
+  rainfall:false,
+  rfca:false,
+  catch:false
+};
 
 function el(id){return document.getElementById(id)}
 function setText(id,text){el(id).textContent=text}
 function fmtDate(iso){return iso?new Date(iso).toLocaleString("en-GB",{dateStyle:"medium",timeStyle:"short"}):"—"}
 function ageMinutes(iso){return Math.round((Date.now()-new Date(iso).getTime())/60000)}
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]))}
+
+function updateFusion(){
+  setText("fusionLevel",sourceState.level?"Verified live":"Unavailable");
+  el("fusionLevel").className=sourceState.level?"ok":"bad";
+
+  setText("fusionRain",sourceState.rainfall?"Verified live":"Provisional / not verified");
+  el("fusionRain").className=sourceState.rainfall?"ok":"warn";
+
+  const verifiedCount=[sourceState.level,sourceState.rainfall,sourceState.rfca,sourceState.catch].filter(Boolean).length;
+
+  if(sourceState.level && !sourceState.rainfall){
+    el("fusionStatus").className="pill warn";
+    setText("fusionStatus","Partial verified input set");
+    setText("fusionText","Level telemetry is verified. Rainfall, RFCA and catch intelligence are not mature enough to support fused river intelligence.");
+  }else if(sourceState.level && sourceState.rainfall){
+    el("fusionStatus").className="pill ok";
+    setText("fusionStatus","Two verified live inputs");
+    setText("fusionText","Level and rainfall are verified live inputs. RFCA and catch intelligence remain blocked until independently verified.");
+  }else{
+    el("fusionStatus").className="pill bad";
+    setText("fusionStatus","No verified live core input");
+    setText("fusionText","The app has not acquired the minimum verified telemetry needed for live river intelligence.");
+  }
+}
 
 function analyseTrend(items){
   const vals=items.map(x=>({v:Number(x.value),t:x.dateTime})).filter(x=>Number.isFinite(x.v));
@@ -152,6 +208,7 @@ function analyseTrend(items){
 }
 
 async function loadHenthorn(){
+  sourceState.level=false;
   try{
     const r=await fetch(EA_MEASURE,{cache:"no-store"});
     if(!r.ok)throw new Error("EA HTTP "+r.status);
@@ -160,14 +217,21 @@ async function loadHenthorn(){
     if(!items.length)throw new Error("No EA readings returned");
     const latest=items[items.length-1];
     const level=Number(latest.value);
-    setText("level",Number.isFinite(level)?level.toFixed(3)+" m":"—");
+    if(!Number.isFinite(level))throw new Error("Latest EA level was not numeric");
+
+    setText("level",level.toFixed(3)+" m");
     setText("time",fmtDate(latest.dateTime));
     setText("freshness",`${ageMinutes(latest.dateTime)} minutes old`);
+
     const trend=analyseTrend(items);
     setText("trend",trend.label);
     setText("trendDetail",trend.detail);
+
     el("status").className="pill ok";
     setText("status","EA telemetry live");
+    el("ledgerLevel").className="ok";
+    setText("ledgerLevel","Live official machine-readable source");
+    sourceState.level=true;
   }catch(e){
     el("status").className="pill bad";
     setText("status","EA telemetry unavailable");
@@ -176,7 +240,10 @@ async function loadHenthorn(){
     setText("trendDetail","No verified live reading acquired");
     setText("time","—");
     setText("freshness",String(e.message||e));
+    el("ledgerLevel").className="bad";
+    setText("ledgerLevel","Verification failed safely");
   }
+  updateFusion();
 }
 
 function candidateMeasuresFromStation(station){
@@ -198,6 +265,7 @@ async function tryRainReadingForMeasure(measureUrl){
 }
 
 async function loadRainfall(){
+  sourceState.rainfall=false;
   const rows=el("rainRows");
   try{
     const sr=await fetch(EA_STATION,{cache:"no-store"});
@@ -235,6 +303,7 @@ async function loadRainfall(){
     rows.innerHTML=rendered.join("");
 
     if(verified){
+      sourceState.rainfall=true;
       el("rainGate").className="pill ok";
       setText("rainGate","Rainfall reading verified");
       setText("rainSummary","A nearby EA rainfall station and latest machine-readable rainfall reading were acquired.");
@@ -268,6 +337,7 @@ async function loadRainfall(){
     el("ledgerRain").className="warn";
     setText("ledgerRain","Verification failed safely");
   }
+  updateFusion();
 }
 
 async function loadAll(){
