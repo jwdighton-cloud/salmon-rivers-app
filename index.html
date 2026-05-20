@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10142</title>
+<title>Salmon Rivers Intelligence — Build 10143</title>
 
 <style>
 :root{
@@ -145,7 +145,7 @@ padding:18px;
 <header>
 <h1>Salmon Rivers Intelligence</h1>
 <div class="build">
-GOLD BUILD 10142 — EA Dual-Route Acquisition Lock
+GOLD BUILD 10143 — EA Stability Layer
 </div>
 </header>
 
@@ -159,6 +159,10 @@ River Ribble @ Henthorn — Official EA Telemetry
 
 <div id="status" class="pill">
 Initialising…
+</div>
+
+<div id="telemetryConfidence" class="pill warn">
+Telemetry confidence pending
 </div>
 
 <div class="grid">
@@ -205,11 +209,17 @@ Refresh clicks: 0
 EA proof: waiting
 </div>
 
+<div id="lastGoodProof" class="small muted">
+Last-good telemetry cache: empty
+</div>
+
 </section>
 
 <section class="card">
 
-<h2>EA Acquisition Diagnostics</h2>
+<h2>
+EA Acquisition Diagnostics
+</h2>
 
 <table>
 
@@ -243,6 +253,16 @@ Waiting
 </td>
 </tr>
 
+<tr>
+<td>Locked active route</td>
+<td id="diagLocked" class="warn">
+None
+</td>
+<td id="diagLockedEvidence">
+No stable route established yet
+</td>
+</tr>
+
 </tbody>
 
 </table>
@@ -251,7 +271,9 @@ Waiting
 
 <section class="card">
 
-<h2>Source Quality Score</h2>
+<h2>
+Source Quality Score
+</h2>
 
 <div class="grid">
 
@@ -286,28 +308,10 @@ NOT a fishability score
 
 </section>
 
-<section class="card">
-
-<h2>RFCA Acquisition Status</h2>
-
-<div class="pill warn">
-Primary strategic acquisition target
-</div>
-
-<div class="pill bad">
-RFCA values blocked until machine-readable
-</div>
-
-<p>
-No RFCA numeric values are permitted unless stable, traceable, current, machine-readable and verifiable.
-</p>
-
-</section>
-
 </main>
 
 <footer>
-Build 10142 · NO SOURCE = NO NUMBER
+Build 10143 · NO SOURCE = NO NUMBER
 </footer>
 
 <script>
@@ -318,6 +322,9 @@ const EA_STATION =
 "https://environment.data.gov.uk/flood-monitoring/id/stations/710305.json";
 
 let clicks = 0;
+
+let lastGoodTelemetry = null;
+let lockedRoute = null;
 
 function id(x){
 return document.getElementById(x);
@@ -362,7 +369,8 @@ return Math.round(
 function bust(url){
 return url +
 (url.includes("?") ? "&" : "?") +
-"_cb=" + Date.now() +
+"_cb=" +
+Date.now() +
 "_" +
 Math.random().toString(16).slice(2);
 }
@@ -380,7 +388,9 @@ headers:{
 );
 
 if(!r.ok){
-throw new Error("HTTP " + r.status);
+throw new Error(
+"HTTP " + r.status
+);
 }
 
 return await r.json();
@@ -481,7 +491,8 @@ detail:
 
 async function primaryReadingsRoute(){
 
-const j = await getJson(
+const j =
+await getJson(
 EA_READINGS
 );
 
@@ -508,11 +519,13 @@ return readings;
 
 async function fallbackStationRoute(){
 
-const j = await getJson(
+const j =
+await getJson(
 EA_STATION
 );
 
-const station = j.items || {};
+const station =
+j.items || {};
 
 let measures =
 station.measures ||
@@ -555,7 +568,8 @@ return candidates;
 
 function renderTelemetry(
 readings,
-routeName
+routeName,
+cached=false
 ){
 
 const latest =
@@ -574,10 +588,12 @@ txt(
 displayTime(latest.time)
 );
 
+const mins =
+ageMinutes(latest.time);
+
 txt(
 "freshness",
-ageMinutes(latest.time) +
-" minutes old"
+mins + " minutes old"
 );
 
 txt(
@@ -590,6 +606,31 @@ txt(
 trend.detail
 );
 
+if(cached){
+
+cls(
+"status",
+"pill warn"
+);
+
+txt(
+"status",
+"Using cached last-good telemetry"
+);
+
+cls(
+"telemetryConfidence",
+"pill warn"
+);
+
+txt(
+"telemetryConfidence",
+"Telemetry confidence reduced — cached data"
+);
+
+}
+else{
+
 cls(
 "status",
 "pill ok"
@@ -600,6 +641,33 @@ txt(
 "EA telemetry live via " +
 routeName
 );
+
+if(mins <= 30){
+
+cls(
+"telemetryConfidence",
+"pill ok"
+);
+
+txt(
+"telemetryConfidence",
+"Telemetry confidence HIGH"
+);
+
+}
+else{
+
+cls(
+"telemetryConfidence",
+"pill warn"
+);
+
+txt(
+"telemetryConfidence",
+"Telemetry stale warning"
+);
+}
+}
 
 txt(
 "qualityScore",
@@ -627,6 +695,40 @@ latest.time
 );
 }
 
+function updateLockedRoute(){
+
+txt(
+"diagLocked",
+lockedRoute || "None"
+);
+
+if(lockedRoute){
+
+cls(
+"diagLocked",
+"ok"
+);
+
+txt(
+"diagLockedEvidence",
+"Stable telemetry route locked"
+);
+
+}
+else{
+
+cls(
+"diagLocked",
+"warn"
+);
+
+txt(
+"diagLockedEvidence",
+"No stable route established yet"
+);
+}
+}
+
 async function refreshEA(){
 
 txt(
@@ -635,22 +737,15 @@ txt(
 nowText()
 );
 
-cls(
-"status",
-"pill warn"
-);
-
-txt(
-"status",
-"Checking EA routes…"
-);
-
 let readings = null;
 
 try{
 
 readings =
 await primaryReadingsRoute();
+
+lockedRoute =
+"Primary readings endpoint";
 
 cls(
 "diagPrimary",
@@ -670,7 +765,7 @@ readings.length +
 
 renderTelemetry(
 readings,
-"readings endpoint"
+"primary endpoint"
 );
 
 }
@@ -696,6 +791,9 @@ try{
 readings =
 await fallbackStationRoute();
 
+lockedRoute =
+"Fallback station latestReading";
+
 cls(
 "diagFallback",
 "ok"
@@ -709,7 +807,7 @@ txt(
 txt(
 "diagFallbackEvidence",
 readings.length +
-" latestReading value(s) parsed"
+" latestReading values parsed"
 );
 
 renderTelemetry(
@@ -735,6 +833,17 @@ txt(
 String(e2.message || e2)
 );
 
+if(lastGoodTelemetry){
+
+renderTelemetry(
+lastGoodTelemetry,
+"cached",
+true
+);
+
+}
+else{
+
 cls(
 "status",
 "pill bad"
@@ -745,12 +854,22 @@ txt(
 "EA telemetry unavailable"
 );
 
+cls(
+"telemetryConfidence",
+"pill bad"
+);
+
+txt(
+"telemetryConfidence",
+"No telemetry confidence"
+);
+
 txt("level","—");
 txt("trend","—");
 
 txt(
 "trendDetail",
-"Both EA acquisition routes failed"
+"Both EA routes failed"
 );
 
 txt("time","—");
@@ -777,6 +896,20 @@ txt(
 );
 }
 }
+}
+
+if(readings){
+
+lastGoodTelemetry = readings;
+
+txt(
+"lastGoodProof",
+"Last-good telemetry cache updated: " +
+nowText()
+);
+}
+
+updateLockedRoute();
 
 txt(
 "refreshState",
