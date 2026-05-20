@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10119</title>
+<title>Salmon Rivers Intelligence — Build 10120</title>
 
 <style>
 :root{
@@ -51,7 +51,7 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 
 <header>
   <h1>Salmon Rivers Intelligence</h1>
-  <div class="build">Build 10119 · Gold Transition Checkpoint · verified data only</div>
+  <div class="build">Build 10120 · Trend Correction Build · verified data only</div>
 </header>
 
 <main>
@@ -60,17 +60,15 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   <h2>Gold Transition Checkpoint</h2>
   <div class="badge good">Checkpoint active</div>
 
-  <div class="row"><div class="label">Current build</div><div class="value">10119</div></div>
+  <div class="row"><div class="label">Current build</div><div class="value">10120</div></div>
+  <div class="row"><div class="label">Correction</div><div class="value">Trend logic hardened</div></div>
   <div class="row"><div class="label">Runtime</div><div class="value">Single HTML</div></div>
-  <div class="row"><div class="label">Hosting</div><div class="value">GitHub Pages</div></div>
   <div class="row"><div class="label">Primary live river</div><div class="value">Ribble @ Henthorn</div></div>
   <div class="row"><div class="label">Verified live source</div><div class="value">EA telemetry</div></div>
   <div class="row"><div class="label">Blocked values</div><div class="value">Catch, RFCA, fish counters</div></div>
-  <div class="row"><div class="label">Next locked target</div><div class="value">RFCA / Android planning</div></div>
 
   <p class="small">
-    This build is a clean handoff point. The app remains telemetry-first, source-governed,
-    mobile-friendly, and fail-safe by default.
+    Build 10120 corrects the movement logic. The app no longer calls a river steady merely because each rise is small.
   </p>
 </section>
 
@@ -98,13 +96,16 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   </div>
 
   <div class="row"><div class="label">Movement</div><div id="movementValue" class="value">—</div></div>
+  <div class="row"><div class="label">Trend evidence</div><div id="trendEvidence" class="value">—</div></div>
   <div class="row"><div class="label">Reading time</div><div id="readingTime" class="value">—</div></div>
   <div class="row"><div class="label">Last refresh</div><div id="successTime" class="value">—</div></div>
   <div class="row"><div class="label">Freshness</div><div id="freshnessValue" class="value">—</div></div>
   <div class="row"><div class="label">Confidence</div><div class="value">VERIFIED</div></div>
   <div class="row"><div class="label">Source</div><div class="value">EA 710305</div></div>
 
-  <p class="small">Only verified EA telemetry creates live numeric values.</p>
+  <p class="small">
+    Movement now uses a recent-reading trend check. Any confirmed upward sequence is shown as Rising.
+  </p>
 </section>
 
 <section class="card">
@@ -129,6 +130,23 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   <div class="row"><div class="label">Catch totals</div><div class="value">Blocked</div></div>
   <div class="row"><div class="label">Fish counters</div><div class="value">Blocked</div></div>
   <div class="row"><div class="label">Fusion result</div><div id="fusionResult" class="value">Checking</div></div>
+</section>
+
+<section class="card">
+  <h2>Movement Logic Rules</h2>
+
+  <div class="badge good">Corrected in 10120</div>
+
+  <div class="row"><div class="label">Latest > previous</div><div class="value">Rising</div></div>
+  <div class="row"><div class="label">Recent sequence upward</div><div class="value">Rising</div></div>
+  <div class="row"><div class="label">Latest < previous</div><div class="value">Falling</div></div>
+  <div class="row"><div class="label">Recent sequence downward</div><div class="value">Falling</div></div>
+  <div class="row"><div class="label">No meaningful sequence</div><div class="value">Steady</div></div>
+  <div class="row"><div class="label">Insufficient readings</div><div class="value">Latest only</div></div>
+
+  <p class="small">
+    The app no longer uses a broad 0.005m dead-zone that can hide a genuine rising river.
+  </p>
 </section>
 
 <section class="card">
@@ -201,21 +219,21 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   <h2>Known / Unknown / Next Action</h2>
 
   <div class="row"><div class="label">Known</div><div class="value">EA Henthorn telemetry stable</div></div>
-  <div class="row"><div class="label">Known</div><div class="value">Gold checkpoint added</div></div>
+  <div class="row"><div class="label">Corrected</div><div class="value">Trend logic</div></div>
   <div class="row"><div class="label">Unknown</div><div class="value">Stable RFCA endpoint</div></div>
   <div class="row"><div class="label">Unknown</div><div class="value">Verified Ribble catch totals</div></div>
-  <div class="row"><div class="label">Next action</div><div class="value">Transition bundle / Android shell plan</div></div>
+  <div class="row"><div class="label">Next action</div><div class="value">Verify against live EA trend</div></div>
 </section>
 
 <section class="card">
   <h2>Governance Rules</h2>
 
   <div class="row"><div class="label">Core rule</div><div class="value">No source = no number</div></div>
+  <div class="row"><div class="label">Trend rule</div><div class="value">Do not hide a rise</div></div>
   <div class="row"><div class="label">Fusion rule</div><div class="value">Weak + weak ≠ verified</div></div>
   <div class="row"><div class="label">Fishability</div><div class="value">No speculation</div></div>
   <div class="row"><div class="label">Temperature</div><div class="value">Verified only</div></div>
   <div class="row"><div class="label">Fish counters</div><div class="value">Verified only</div></div>
-  <div class="row"><div class="label">Evidence chain</div><div class="value">Mandatory</div></div>
 </section>
 
 </main>
@@ -225,11 +243,11 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 </div>
 
 <div class="footer">
-  Salmon Rivers Intelligence · Build 10119 · GitHub Pages intelligence terminal
+  Salmon Rivers Intelligence · Build 10120 · Trend Correction Build
 </div>
 
 <script>
-const BUILD = "10119";
+const BUILD = "10120";
 const HENTHORN_STATION = "710305";
 const HENTHORN_LAT = 53.87;
 const HENTHORN_LONG = -2.39;
@@ -270,12 +288,67 @@ function formatDateTime(iso){
   });
 }
 
-function classifyMovement(current,previous){
-  if(current === null || previous === null) return "Not enough readings";
-  const diff = current - previous;
-  if(Math.abs(diff) < 0.005) return "Steady";
-  if(diff > 0) return "Rising";
-  return "Falling";
+function classifyMovementFromReadings(readings){
+  const clean = readings
+    .filter(r => Number.isFinite(Number(r.value)) && r.dateTime)
+    .map(r => ({
+      value:Number(r.value),
+      time:new Date(r.dateTime)
+    }))
+    .filter(r => !isNaN(r.time.getTime()))
+    .sort((a,b) => a.time - b.time);
+
+  if(clean.length < 2){
+    return {
+      movement:"Latest only",
+      evidence:"Insufficient readings"
+    };
+  }
+
+  const latest = clean[clean.length - 1];
+  const previous = clean[clean.length - 2];
+  const oldest = clean[0];
+
+  const latestDiff = latest.value - previous.value;
+  const windowDiff = latest.value - oldest.value;
+
+  let rises = 0;
+  let falls = 0;
+  let flats = 0;
+
+  for(let i = 1; i < clean.length; i++){
+    const d = clean[i].value - clean[i - 1].value;
+
+    if(d > 0){
+      rises++;
+    }else if(d < 0){
+      falls++;
+    }else{
+      flats++;
+    }
+  }
+
+  const evidence =
+    "Δlast " + latestDiff.toFixed(3) + "m / Δwindow " + windowDiff.toFixed(3) + "m";
+
+  if(latestDiff > 0 || (windowDiff > 0 && rises >= falls)){
+    return {
+      movement:"Rising",
+      evidence:evidence
+    };
+  }
+
+  if(latestDiff < 0 || (windowDiff < 0 && falls >= rises)){
+    return {
+      movement:"Falling",
+      evidence:evidence
+    };
+  }
+
+  return {
+    movement:"Steady",
+    evidence:evidence
+  };
 }
 
 function updateIntegrity(){
@@ -326,7 +399,7 @@ async function fetchRecentReadings(){
   const url =
     "https://environment.data.gov.uk/flood-monitoring/id/stations/" +
     HENTHORN_STATION +
-    "/readings?_sorted&_limit=5";
+    "/readings?_sorted&_limit=8";
 
   const res = await fetch(url,{cache:"no-store"});
   if(!res.ok) throw new Error("Recent readings failed");
@@ -383,20 +456,21 @@ async function loadHenthorn(){
     if(!Number.isFinite(level)) throw new Error("Invalid level");
 
     let movement = "Latest only";
+    let evidence = "Latest reading only";
 
     try{
       const recent = await fetchRecentReadings();
-      const sorted = recent
-        .filter(r => Number.isFinite(Number(r.value)) && r.dateTime)
-        .sort((a,b) => new Date(b.dateTime) - new Date(a.dateTime));
-
-      if(sorted.length >= 2){
-        movement = classifyMovement(Number(sorted[0].value),Number(sorted[1].value));
-      }
-    }catch(e){}
+      const trend = classifyMovementFromReadings(recent);
+      movement = trend.movement;
+      evidence = trend.evidence;
+    }catch(e){
+      movement = "Latest only";
+      evidence = "Recent trend unavailable";
+    }
 
     setText("levelValue",level.toFixed(3) + " m");
     setText("movementValue",movement);
+    setText("trendEvidence",evidence);
     setText("readingTime",formatDateTime(time));
 
     state.lastSuccess = new Date();
@@ -412,6 +486,7 @@ async function loadHenthorn(){
   }catch(err){
     setText("levelValue","Unavailable");
     setText("movementValue","Unavailable");
+    setText("trendEvidence","Unavailable");
     setText("readingTime","Unavailable");
     setText("freshnessValue","Unknown");
 
