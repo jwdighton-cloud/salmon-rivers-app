@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10145</title>
+<title>Salmon Rivers Intelligence — Build 10146</title>
 <style>
 :root{--bg:#f4f6f8;--card:#fff;--line:#d8dde3;--text:#111;--muted:#667085;--ok:#0f7b0f;--warn:#a15c00;--bad:#a40000;--blue:#0b5cad}
 *{box-sizing:border-box}
@@ -24,11 +24,10 @@ th{background:#f0f3f6}
 footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 </style>
 </head>
-
 <body>
 <header>
 <h1>Salmon Rivers Intelligence</h1>
-<div class="build">GOLD BUILD 10145 — Rainfall Consumer Module</div>
+<div class="build">GOLD BUILD 10146 — Rainfall Reading Verification Gate</div>
 </header>
 
 <main>
@@ -54,12 +53,12 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 </section>
 
 <section class="card">
-<h2>Rainfall Consumer Module</h2>
+<h2>Rainfall Reading Verification Gate</h2>
 <div id="rainStatus" class="pill warn">Rainfall consumer waiting</div>
 <div class="grid">
-<div class="box"><div class="muted">Rainfall value</div><div id="rainValue" class="big">—</div><div id="rainMeta" class="small muted">No verified rainfall reading displayed</div></div>
-<div class="box"><div class="muted">Discovery state</div><div id="rainDiscovery" class="warn">Waiting</div></div>
-<div class="box"><div class="muted">Governance</div><div class="bad">Rainfall cannot alter EA core</div></div>
+<div class="box"><div class="muted">Verified rainfall</div><div id="rainValue" class="big">—</div><div id="rainMeta" class="small muted">No verified rainfall reading displayed</div></div>
+<div class="box"><div class="muted">Discovery stage</div><div id="rainDiscovery" class="warn">Waiting</div></div>
+<div class="box"><div class="muted">Reading stage</div><div id="rainReadingStage" class="warn">Blocked until verified</div></div>
 </div>
 <table>
 <thead><tr><th>Candidate</th><th>Status</th><th>Evidence</th></tr></thead>
@@ -75,7 +74,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 <tr><td>EA acquisition routes</td><td class="ok">Frozen</td><td>No feature build may alter EA fetch paths casually</td></tr>
 <tr><td>Trend engine</td><td class="ok">Frozen</td><td>Latest delta first, multi-reading fallback</td></tr>
 <tr><td>Rainfall module</td><td class="ok">Isolated</td><td>Read-only consumer; cannot mutate telemetry core</td></tr>
-<tr><td>Future modules</td><td class="warn">Read-only consumers</td><td>RFCA, catch and operator modules read telemetry state only</td></tr>
+<tr><td>Rainfall numbers</td><td class="warn">Gated</td><td>Displayed only if a live reading endpoint verifies</td></tr>
 </tbody>
 </table>
 </section>
@@ -102,7 +101,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 </section>
 
 </main>
-<footer>Build 10145 · NO SOURCE = NO NUMBER · EA CORE FROZEN</footer>
+<footer>Build 10146 · NO SOURCE = NO NUMBER · EA CORE FROZEN</footer>
 
 <script>
 const TelemetryCore=(function(){
@@ -133,24 +132,64 @@ if(state.lastGoodReadings){const cached=state.lastGoodReadings;return{ok:true,ro
 return{ok:false,route:null,readings:[],latest:null,trend:null,primaryError,fallbackError,cached:false}
 }
 function getState(){return JSON.parse(JSON.stringify(state))}
-return{refresh,getState,getJson,bust};
+return{refresh,getState,getJson};
 })();
 
 const RainfallConsumer=(function(){
-const EA_STATION="https://environment.data.gov.uk/flood-monitoring/id/stations/710305.json";
-async function discover(){
-const j=await TelemetryCore.getJson(EA_STATION);
-const station=j.items||{};
+const HENTHORN_STATION="https://environment.data.gov.uk/flood-monitoring/id/stations/710305.json";
+
+function stationMeasures(station){
+let measures=station.measures||station.measure||[];
+if(!Array.isArray(measures))measures=[measures];
+return measures;
+}
+
+function measureUrl(m){
+return typeof m==="string"?m:(m&&m["@id"]?m["@id"]:(m&&m.id?m.id:null));
+}
+
+async function tryReadingForMeasure(url){
+if(!url)return null;
+const readingUrl=url.replace(/\/$/,"")+"/readings.json?_sorted&_limit=1";
+const j=await TelemetryCore.getJson(readingUrl);
+const item=(j.items||[])[0];
+if(!item)return null;
+const value=Number(item.value);
+if(!Number.isFinite(value)||!item.dateTime)return null;
+return{value:value,time:item.dateTime,url:readingUrl};
+}
+
+async function discoverAndVerify(){
+const stationJson=await TelemetryCore.getJson(HENTHORN_STATION);
+const station=stationJson.items||{};
 const lat=station.lat||station.latitude;
 const long=station.long||station.longitude;
 if(!lat||!long)throw new Error("No Henthorn coordinates acquired");
+
 const url="https://environment.data.gov.uk/flood-monitoring/id/stations.json?parameter=rainfall&lat="+encodeURIComponent(lat)+"&long="+encodeURIComponent(long)+"&dist=25";
 const rj=await TelemetryCore.getJson(url);
 const found=(rj.items||[]).slice(0,6);
 if(!found.length)throw new Error("No nearby EA rainfall station candidates acquired");
-return found;
+
+const rows=[];
+let verified=null;
+
+for(const s of found){
+let result=null;
+for(const m of stationMeasures(s)){
+try{
+result=await tryReadingForMeasure(measureUrl(m));
+if(result)break;
+}catch(e){}
 }
-return{discover};
+if(result&&!verified)verified={station:s,reading:result};
+rows.push({station:s,reading:result});
+}
+
+return{candidates:found,rows,verified};
+}
+
+return{discoverAndVerify};
 })();
 
 let clicks=0;
@@ -171,6 +210,7 @@ else{cls("status","pill ok");txt("status","EA telemetry live via "+result.route)
 txt("qualityScore","40/100");cls("qualityMeaning","warn");txt("qualityMeaning","Core EA telemetry verified");
 txt("dataProof","EA proof: "+result.readings.length+" reading(s) parsed; latest "+latest.value.toFixed(3)+" m at "+latest.time);
 }
+
 function renderDiagnostics(result){
 if(result.primaryError){cls("diagPrimary","bad");txt("diagPrimary","Failed");txt("diagPrimaryEvidence",String(result.primaryError.message||result.primaryError))}
 else if(result.route==="Primary readings endpoint"){cls("diagPrimary","ok");txt("diagPrimary","OK");txt("diagPrimaryEvidence",result.readings.length+" readings parsed")}
@@ -181,20 +221,44 @@ else{cls("diagFallback","warn");txt("diagFallback","Standby");txt("diagFallbackE
 if(result.ok){cls("diagLocked","ok");txt("diagLocked",result.route);txt("diagLockedEvidence","Telemetry route protected by frozen core module")}
 else{cls("diagLocked","bad");txt("diagLocked","None");txt("diagLockedEvidence","No working telemetry route")}
 }
+
 async function renderRainfall(){
 try{
-cls("rainStatus","pill warn");txt("rainStatus","Discovering rainfall candidates");
-const found=await RainfallConsumer.discover();
+cls("rainStatus","pill warn");txt("rainStatus","Checking rainfall candidates");
+const result=await RainfallConsumer.discoverAndVerify();
+
 txt("rainDiscovery","Station candidates acquired");cls("rainDiscovery","ok");
-txt("rainValue","—");txt("rainMeta","No numeric rainfall promoted yet");
-cls("rainStatus","pill warn");txt("rainStatus","Rainfall candidates found; numeric reading blocked");
-id("rainRows").innerHTML=found.map(s=>"<tr><td>"+esc(s.label||s.stationReference||"EA rainfall station")+"</td><td class='warn'>Candidate only</td><td>"+esc(s.stationReference||s["@id"]||"No reference")+"</td></tr>").join("");
+
+id("rainRows").innerHTML=result.rows.map(r=>{
+const s=r.station;
+const name=esc(s.label||s.stationReference||"EA rainfall station");
+if(r.reading){
+return"<tr><td>"+name+"</td><td class='ok'>Reading verified</td><td>"+esc(r.reading.value+" mm at "+r.reading.time)+"</td></tr>";
+}
+return"<tr><td>"+name+"</td><td class='warn'>Station only</td><td>"+esc(s.stationReference||s['@id']||"No reading endpoint verified")+"</td></tr>";
+}).join("");
+
+if(result.verified){
+const reading=result.verified.reading;
+const station=result.verified.station;
+cls("rainStatus","pill ok");txt("rainStatus","Rainfall reading verified");
+txt("rainReadingStage","Live rainfall reading acquired");cls("rainReadingStage","ok");
+txt("rainValue",Number(reading.value).toFixed(1)+" mm");
+txt("rainMeta",(station.label||station.stationReference||"EA rainfall station")+" · "+displayTime(reading.time));
+}else{
+cls("rainStatus","pill warn");txt("rainStatus","Rainfall candidates found; no verified reading");
+txt("rainReadingStage","No live rainfall reading verified");cls("rainReadingStage","warn");
+txt("rainValue","—");txt("rainMeta","No verified rainfall number displayed");
+}
 }catch(e){
 cls("rainStatus","pill warn");txt("rainStatus","Rainfall discovery unavailable");
 txt("rainDiscovery","Safe fallback");cls("rainDiscovery","warn");
+txt("rainReadingStage","Blocked");cls("rainReadingStage","warn");
+txt("rainValue","—");txt("rainMeta","No verified rainfall number displayed");
 id("rainRows").innerHTML="<tr><td>EA rainfall discovery</td><td class='warn'>Safe fallback</td><td>"+esc(String(e.message||e))+"</td></tr>";
 }
 }
+
 async function manualRefresh(){
 clicks++;txt("refreshClicks","Refresh clicks: "+clicks);txt("refreshState","Refresh running: "+nowText());
 const result=await TelemetryCore.refresh();
@@ -204,6 +268,7 @@ if(state.lastGoodReadings){txt("lastGoodProof","Last-good telemetry cache active
 await renderRainfall();
 txt("refreshState","Last refresh completed: "+nowText());
 }
+
 document.addEventListener("DOMContentLoaded",function(){
 id("refreshBtn").addEventListener("click",manualRefresh);
 manualRefresh();
