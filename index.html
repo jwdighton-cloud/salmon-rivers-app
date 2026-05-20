@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10131</title>
+<title>Salmon Rivers Intelligence — Build 10132</title>
 <style>
 :root{--bg:#f4f6f8;--card:#fff;--ink:#111;--muted:#667085;--ok:#0f7b0f;--warn:#a15c00;--bad:#a40000;--line:#d8dde3;--blue:#0b5cad}
 body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
@@ -13,17 +13,15 @@ h1{margin:0;font-size:24px}
 main{max-width:980px;margin:0 auto;padding:14px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:12px 0;box-shadow:0 2px 8px rgba(0,0,0,.04)}
 h2{font-size:19px;margin:0 0 10px}
-h3{font-size:16px;margin:14px 0 8px}
 .big{font-size:38px;font-weight:800}
-.row{display:flex;gap:10px;flex-wrap:wrap}
-.pill{display:inline-block;border-radius:999px;padding:7px 11px;font-size:13px;font-weight:700;background:#eef2f6;margin:3px 4px 3px 0}
-.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.muted{color:var(--muted)}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
 .box{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fbfcfd}
+.pill{display:inline-block;border-radius:999px;padding:7px 11px;font-size:13px;font-weight:800;background:#eef2f6;margin:3px 4px 3px 0}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.muted{color:var(--muted)}
 table{width:100%;border-collapse:collapse;font-size:13px}
 th,td{border-bottom:1px solid var(--line);text-align:left;padding:8px;vertical-align:top}
 th{background:#f0f3f6}
-button{border:0;border-radius:10px;background:#0b5cad;color:#fff;padding:10px 14px;font-weight:800}
+button{border:0;border-radius:10px;background:#0b5cad;color:white;padding:10px 14px;font-weight:800}
 a{color:var(--blue);font-weight:700}
 .small{font-size:12px}
 footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
@@ -32,12 +30,12 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 <body>
 <header>
 <h1>Salmon Rivers Intelligence</h1>
-<div class="build">GOLD BASELINE BUILD 10131 — RFCA Acquisition Evidence Layer</div>
+<div class="build">GOLD BUILD 10132 — Rainfall Verification Gate</div>
 </header>
 
 <main>
 <section class="card">
-<h2>River Ribble @ Henthorn — Live Official Telemetry</h2>
+<h2>River Ribble @ Henthorn — Official Live Telemetry</h2>
 <div id="status" class="pill">Checking EA source…</div>
 <div class="grid">
 <div class="box">
@@ -56,44 +54,55 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 <div id="freshness" class="small muted">—</div>
 </div>
 </div>
-<p class="small muted">No fishability recommendation is made here. This screen reports verified telemetry only.</p>
 <button onclick="loadAll()">Refresh now</button>
+<p class="small muted">No fishability recommendation. Verified telemetry only.</p>
 </section>
 
 <section class="card">
-<h2>RFCA Acquisition Status</h2>
-<div class="pill warn">Primary strategic acquisition target</div>
-<div class="pill bad">RFCA live values blocked until machine-readable</div>
-<p>RFCA water-quality monitoring is treated as a candidate source only. The app must not display temperature, dissolved oxygen, turbidity, pH, conductivity, fish-counter values, or catch numbers unless the feed is stable, traceable, current, verifiable, and machine-readable.</p>
+<h2>Rainfall Verification Gate</h2>
+<div id="rainGate" class="pill warn">Checking rainfall source chain…</div>
+<p id="rainSummary">Rainfall will only be displayed when the app has both a machine-readable station and a current machine-readable rainfall reading.</p>
+
 <div class="grid">
-<div class="box"><strong>RFCA temperature / sonde data</strong><br><span class="bad">Not yet authorised for numeric display</span></div>
-<div class="box"><strong>RFCA fish counters</strong><br><span class="bad">No verified machine-readable feed integrated</span></div>
-<div class="box"><strong>RFCA catch intelligence</strong><br><span class="bad">No verified current-season feed integrated</span></div>
-<div class="box"><strong>RFCA river-health telemetry</strong><br><span class="warn">Acquisition investigation active</span></div>
+<div class="box">
+<strong>Stage 1 — Station discovery</strong><br>
+<span id="rainStage1" class="warn">Checking</span>
 </div>
-<p class="small"><a href="https://www.ribblefisheriesca.co.uk/live-water-quality-monitoring/" target="_blank" rel="noopener">Open RFCA live water-quality monitoring page</a></p>
-</section>
+<div class="box">
+<strong>Stage 2 — Reading acquisition</strong><br>
+<span id="rainStage2" class="warn">Blocked until verified</span>
+</div>
+<div class="box">
+<strong>Rainfall value</strong><br>
+<div id="rainValue" class="big">—</div>
+<div id="rainMeta" class="small muted">No verified rainfall number yet</div>
+</div>
+</div>
 
-<section class="card">
-<h2>Rainfall Acquisition</h2>
-<div id="rainStatus" class="pill warn">Provisional live acquisition</div>
-<p id="rainText">Rainfall source discovery will run safely. If no machine-readable EA rainfall feed is acquired, no rainfall number will be displayed.</p>
 <table>
-<thead><tr><th>Source</th><th>Status</th><th>Result</th></tr></thead>
+<thead><tr><th>Candidate</th><th>Verification status</th><th>Evidence</th></tr></thead>
 <tbody id="rainRows"><tr><td>EA rainfall discovery</td><td>Checking</td><td>—</td></tr></tbody>
 </table>
 </section>
 
 <section class="card">
+<h2>RFCA Acquisition Status</h2>
+<div class="pill warn">Primary strategic acquisition target</div>
+<div class="pill bad">RFCA numeric values blocked</div>
+<p>RFCA remains a candidate acquisition source. No RFCA temperature, sonde, fish-counter, catch, or river-health value is displayed until it is stable, traceable, machine-readable, current, and verifiable.</p>
+<p class="small"><a href="https://www.ribblefisheriesca.co.uk/live-water-quality-monitoring/" target="_blank" rel="noopener">Open RFCA live water-quality monitoring page</a></p>
+</section>
+
+<section class="card">
 <h2>Source Evidence Ledger</h2>
 <table>
-<thead><tr><th>Source</th><th>Class</th><th>Use</th><th>Evidence status</th></tr></thead>
-<tbody id="ledger">
-<tr><td>EA Henthorn telemetry</td><td>Level 1</td><td>Live river level and movement</td><td class="ok">Machine-readable official telemetry</td></tr>
-<tr><td>EA rainfall API discovery</td><td>Level 1 candidate</td><td>Rainfall intelligence</td><td class="warn">Provisional; only shown if acquired</td></tr>
-<tr><td>RFCA live water-quality page</td><td>Acquisition candidate</td><td>Temperature / sonde / river health</td><td class="bad">Values blocked until machine-readable</td></tr>
-<tr><td>Great Mitton</td><td>Weather anchor candidate</td><td>Future weather modelling</td><td class="warn">Not authoritative live telemetry yet</td></tr>
-<tr><td>Current-season catch reports</td><td>Level 2 candidate</td><td>Salmon and sea-trout intelligence</td><td class="bad">No verified feed integrated</td></tr>
+<thead><tr><th>Source</th><th>Class</th><th>Use</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>EA Henthorn telemetry</td><td>Level 1</td><td>Level and movement</td><td class="ok">Live official machine-readable source</td></tr>
+<tr><td>EA rainfall discovery</td><td>Level 1 candidate</td><td>Rainfall intelligence</td><td id="ledgerRain" class="warn">Verification pending</td></tr>
+<tr><td>RFCA live water-quality page</td><td>Acquisition candidate</td><td>Temperature / sonde / river health</td><td class="bad">Blocked until machine-readable</td></tr>
+<tr><td>Great Mitton</td><td>Weather anchor candidate</td><td>Future weather modelling</td><td class="warn">Not authoritative telemetry yet</td></tr>
+<tr><td>Current-season catch reports</td><td>Level 2 candidate</td><td>Salmon / sea-trout intelligence</td><td class="bad">No verified current-season feed integrated</td></tr>
 </tbody>
 </table>
 </section>
@@ -101,54 +110,48 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 <section class="card">
 <h2>Known / Unknown / Next Action</h2>
 <div class="grid">
-<div class="box"><strong>Known</strong><br>EA Henthorn level telemetry is live and machine-readable.</div>
-<div class="box"><strong>Unknown</strong><br>RFCA live data endpoint structure is not yet proven inside the app.</div>
-<div class="box"><strong>Next action</strong><br>Acquire RFCA machine-readable sonde endpoint or keep all RFCA values blocked.</div>
+<div class="box"><strong>Known</strong><br>EA Henthorn level telemetry is live and official.</div>
+<div class="box"><strong>Unknown</strong><br>Rainfall reading maturity depends on acquiring a valid readings endpoint, not merely finding a station.</div>
+<div class="box"><strong>Next action</strong><br>Promote rainfall from provisional to verified only after live rainfall readings are successfully parsed.</div>
 </div>
 </section>
 </main>
 
-<footer>
-Build 10131 · Governance enforced: NO SOURCE = NO NUMBER
-</footer>
+<footer>Build 10132 · NO SOURCE = NO NUMBER</footer>
 
 <script>
-const BUILD="10131";
 const EA_MEASURE="https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings?_sorted&_limit=24";
 const EA_STATION="https://environment.data.gov.uk/flood-monitoring/id/stations/710305";
 
-function setText(id,text){document.getElementById(id).textContent=text}
-function cls(el,c){el.className=c}
-function fmtDate(iso){
-  if(!iso)return "—";
-  return new Date(iso).toLocaleString("en-GB",{dateStyle:"medium",timeStyle:"short"});
-}
-function ageMinutes(iso){
-  return Math.round((Date.now()-new Date(iso).getTime())/60000);
-}
+function el(id){return document.getElementById(id)}
+function setText(id,text){el(id).textContent=text}
+function fmtDate(iso){return iso?new Date(iso).toLocaleString("en-GB",{dateStyle:"medium",timeStyle:"short"}):"—"}
+function ageMinutes(iso){return Math.round((Date.now()-new Date(iso).getTime())/60000)}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]))}
+
 function analyseTrend(items){
   const vals=items.map(x=>({v:Number(x.value),t:x.dateTime})).filter(x=>Number.isFinite(x.v));
-  if(vals.length<2)return {label:"Unknown",className:"pill warn",detail:"Not enough readings"};
+  if(vals.length<2)return {label:"Unknown",detail:"Not enough readings",cls:"pill warn"};
   const latest=vals[vals.length-1];
   const prev=vals[vals.length-2];
   const delta=latest.v-prev.v;
   const threshold=0.005;
   if(Math.abs(delta)>=threshold){
     return delta>0
-      ?{label:"Rising",className:"pill warn",detail:`Latest delta +${delta.toFixed(3)} m from previous reading`}
-      :{label:"Falling",className:"pill ok",detail:`Latest delta ${delta.toFixed(3)} m from previous reading`};
+      ?{label:"Rising",detail:`Latest delta +${delta.toFixed(3)} m from previous reading`,cls:"pill warn"}
+      :{label:"Falling",detail:`Latest delta ${delta.toFixed(3)} m from previous reading`,cls:"pill ok"};
   }
   const sample=vals.slice(-6);
   const multi=sample[sample.length-1].v-sample[0].v;
   if(Math.abs(multi)>=threshold){
     return multi>0
-      ?{label:"Rising",className:"pill warn",detail:`Multi-reading rise +${multi.toFixed(3)} m across recent readings`}
-      :{label:"Falling",className:"pill ok",detail:`Multi-reading fall ${multi.toFixed(3)} m across recent readings`};
+      ?{label:"Rising",detail:`Multi-reading rise +${multi.toFixed(3)} m across recent readings`,cls:"pill warn"}
+      :{label:"Falling",detail:`Multi-reading fall ${multi.toFixed(3)} m across recent readings`,cls:"pill ok"};
   }
-  return {label:"Steady",className:"pill",detail:"No material latest or multi-reading movement detected"};
+  return {label:"Steady",detail:"No material latest or multi-reading movement detected",cls:"pill"};
 }
+
 async function loadHenthorn(){
-  const status=document.getElementById("status");
   try{
     const r=await fetch(EA_MEASURE,{cache:"no-store"});
     if(!r.ok)throw new Error("EA HTTP "+r.status);
@@ -159,16 +162,15 @@ async function loadHenthorn(){
     const level=Number(latest.value);
     setText("level",Number.isFinite(level)?level.toFixed(3)+" m":"—");
     setText("time",fmtDate(latest.dateTime));
-    const mins=ageMinutes(latest.dateTime);
-    setText("freshness",Number.isFinite(mins)?`${mins} minutes old`:"Freshness unknown");
+    setText("freshness",`${ageMinutes(latest.dateTime)} minutes old`);
     const trend=analyseTrend(items);
     setText("trend",trend.label);
     setText("trendDetail",trend.detail);
-    cls(status,"pill ok");
-    status.textContent="EA telemetry live";
+    el("status").className="pill ok";
+    setText("status","EA telemetry live");
   }catch(e){
-    cls(status,"pill bad");
-    status.textContent="EA telemetry unavailable";
+    el("status").className="pill bad";
+    setText("status","EA telemetry unavailable");
     setText("level","—");
     setText("trend","—");
     setText("trendDetail","No verified live reading acquired");
@@ -176,39 +178,103 @@ async function loadHenthorn(){
     setText("freshness",String(e.message||e));
   }
 }
+
+function candidateMeasuresFromStation(station){
+  const measures=station.measures || station.measure || [];
+  return Array.isArray(measures)?measures:[measures];
+}
+
+async function tryRainReadingForMeasure(measureUrl){
+  if(!measureUrl)return null;
+  const url=measureUrl.replace(/\/$/,"")+"/readings?_sorted&_limit=1";
+  const r=await fetch(url,{cache:"no-store"});
+  if(!r.ok)return null;
+  const j=await r.json();
+  const item=(j.items||[])[0];
+  if(!item)return null;
+  const value=Number(item.value);
+  if(!Number.isFinite(value))return null;
+  return {value, dateTime:item.dateTime, url};
+}
+
 async function loadRainfall(){
-  const rows=document.getElementById("rainRows");
-  const rainStatus=document.getElementById("rainStatus");
+  const rows=el("rainRows");
   try{
     const sr=await fetch(EA_STATION,{cache:"no-store"});
-    if(!sr.ok)throw new Error("Station lookup failed");
+    if(!sr.ok)throw new Error("Henthorn station lookup failed");
     const sj=await sr.json();
-    const station=sj.items;
-    const lat=station.lat||station.latitude;
-    const long=station.long||station.longitude;
-    if(!lat||!long)throw new Error("No station coordinates acquired");
-    const url=`https://environment.data.gov.uk/flood-monitoring/id/stations?parameter=rainfall&lat=${encodeURIComponent(lat)}&long=${encodeURIComponent(long)}&dist=25`;
-    const rr=await fetch(url,{cache:"no-store"});
+    const station=sj.items || {};
+    const lat=station.lat || station.latitude;
+    const long=station.long || station.longitude;
+    if(!lat||!long)throw new Error("No Henthorn coordinates acquired");
+
+    const discoveryUrl=`https://environment.data.gov.uk/flood-monitoring/id/stations?parameter=rainfall&lat=${encodeURIComponent(lat)}&long=${encodeURIComponent(long)}&dist=25`;
+    const rr=await fetch(discoveryUrl,{cache:"no-store"});
     if(!rr.ok)throw new Error("Rainfall discovery HTTP "+rr.status);
     const rj=await rr.json();
-    const found=(rj.items||[]).slice(0,5);
+    const found=(rj.items||[]).slice(0,6);
     if(!found.length)throw new Error("No nearby EA rainfall station acquired");
-    rainStatus.className="pill ok";
-    rainStatus.textContent="EA rainfall candidates acquired";
-    rows.innerHTML=found.map(s=>`<tr><td>${escapeHtml(s.label||s.stationReference||"EA rainfall station")}</td><td class="warn">Candidate only</td><td>${escapeHtml(s.stationReference||s["@id"]||"No reference")}</td></tr>`).join("");
+
+    setText("rainStage1","Station candidates acquired");
+    el("rainStage1").className="ok";
+
+    let verified=null;
+    const rendered=[];
+    for(const s of found){
+      const measures=candidateMeasuresFromStation(s);
+      let result=null;
+      for(const m of measures){
+        const measureUrl=typeof m==="string"?m:(m["@id"]||m.id);
+        result=await tryRainReadingForMeasure(measureUrl);
+        if(result)break;
+      }
+      if(result && !verified)verified={station:s,result};
+      rendered.push(`<tr><td>${escapeHtml(s.label||s.stationReference||"EA rainfall station")}</td><td class="${result?"ok":"warn"}">${result?"Reading verified":"Station only"}</td><td>${result?escapeHtml(result.value+" at "+fmtDate(result.dateTime)):escapeHtml(s.stationReference||s["@id"]||"No readings endpoint verified")}</td></tr>`);
+    }
+
+    rows.innerHTML=rendered.join("");
+
+    if(verified){
+      el("rainGate").className="pill ok";
+      setText("rainGate","Rainfall reading verified");
+      setText("rainSummary","A nearby EA rainfall station and latest machine-readable rainfall reading were acquired.");
+      setText("rainStage2","Live reading acquired");
+      el("rainStage2").className="ok";
+      setText("rainValue",Number(verified.result.value).toFixed(1)+" mm");
+      setText("rainMeta",`${verified.station.label||verified.station.stationReference||"EA rainfall station"} · ${fmtDate(verified.result.dateTime)}`);
+      el("ledgerRain").className="ok";
+      setText("ledgerRain","Live rainfall reading verified");
+    }else{
+      el("rainGate").className="pill warn";
+      setText("rainGate","Rainfall station found; reading not verified");
+      setText("rainSummary","Station discovery succeeded, but no rainfall number is displayed because a live reading was not verified.");
+      setText("rainStage2","No verified reading");
+      el("rainStage2").className="warn";
+      setText("rainValue","—");
+      setText("rainMeta","No verified rainfall number displayed");
+      el("ledgerRain").className="warn";
+      setText("ledgerRain","Station discovery only");
+    }
   }catch(e){
-    rainStatus.className="pill warn";
-    rainStatus.textContent="Rainfall not yet authoritative";
-    rows.innerHTML=`<tr><td>EA rainfall discovery</td><td class="warn">Safe fallback</td><td>No rainfall number displayed: ${escapeHtml(String(e.message||e))}</td></tr>`;
+    el("rainGate").className="pill warn";
+    setText("rainGate","Rainfall not yet authoritative");
+    setText("rainStage1","No verified station chain");
+    el("rainStage1").className="warn";
+    setText("rainStage2","Blocked");
+    el("rainStage2").className="warn";
+    setText("rainValue","—");
+    setText("rainMeta","No verified rainfall number displayed");
+    rows.innerHTML=`<tr><td>EA rainfall discovery</td><td class="warn">Safe fallback</td><td>${escapeHtml(String(e.message||e))}</td></tr>`;
+    el("ledgerRain").className="warn";
+    setText("ledgerRain","Verification failed safely");
   }
 }
-function escapeHtml(s){
-  return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]));
-}
+
 async function loadAll(){
   await loadHenthorn();
   await loadRainfall();
 }
+
 loadAll();
 setInterval(loadAll,15*60*1000);
 </script>
