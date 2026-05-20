@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10128</title>
+<title>Salmon Rivers Intelligence — Build 10129</title>
 <style>
 :root{--bg:#f4f6f8;--card:#fff;--ink:#111827;--muted:#6b7280;--line:#d8dee6;--green:#166534;--amber:#92400e;--red:#991b1b;--blue:#1d4ed8;--soft-green:#dcfce7;--soft-amber:#fef3c7;--soft-red:#fee2e2;--soft-blue:#dbeafe}
 *{box-sizing:border-box}
@@ -41,10 +41,53 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 <body>
 <header>
   <h1>Salmon Rivers Intelligence</h1>
-  <div class="build">Build 10128 · Acquisition Urgency Ranking · verified data only</div>
+  <div class="build">Build 10129 · Acquisition Workflow Board · verified data only</div>
 </header>
 
 <main>
+
+<section class="card">
+  <h2>Acquisition Workflow Board</h2>
+  <div class="badge info">Next actions controlled</div>
+
+  <div class="grid">
+    <div class="source">
+      <div class="source-title">RFCA temperature / sonde</div>
+      <div class="badge warn">Investigate endpoint</div>
+      <div class="row"><div class="label">Priority</div><div class="value">Highest</div></div>
+      <div class="row"><div class="label">Current state</div><div class="value">Page known</div></div>
+      <div class="row"><div class="label">Next action</div><div class="value">Find machine feed</div></div>
+      <div class="row"><div class="label">Display</div><div class="value">Blocked</div></div>
+    </div>
+
+    <div class="source">
+      <div class="source-title">Great Mitton weather</div>
+      <div class="badge warn">Acquire source</div>
+      <div class="row"><div class="label">Priority</div><div class="value">High</div></div>
+      <div class="row"><div class="label">Current state</div><div class="value">Anchor only</div></div>
+      <div class="row"><div class="label">Next action</div><div class="value">Select verified feed</div></div>
+      <div class="row"><div class="label">Display</div><div class="value">Blocked</div></div>
+    </div>
+
+    <div class="source">
+      <div class="source-title">Current-season catch</div>
+      <div class="badge blocked">Evidence missing</div>
+      <div class="row"><div class="label">Priority</div><div class="value">High</div></div>
+      <div class="row"><div class="label">Current state</div><div class="value">Blocked</div></div>
+      <div class="row"><div class="label">Next action</div><div class="value">Find dated source</div></div>
+      <div class="row"><div class="label">Display</div><div class="value">Blocked</div></div>
+    </div>
+
+    <div class="source">
+      <div class="source-title">Fish counters</div>
+      <div class="badge blocked">Unacquired</div>
+      <div class="row"><div class="label">Priority</div><div class="value">Medium</div></div>
+      <div class="row"><div class="label">Current state</div><div class="value">Unknown feed</div></div>
+      <div class="row"><div class="label">Next action</div><div class="value">Confirm existence</div></div>
+      <div class="row"><div class="label">Display</div><div class="value">Blocked</div></div>
+    </div>
+  </div>
+</section>
 
 <section class="card">
   <h2>Acquisition Urgency Ranking</h2>
@@ -54,9 +97,6 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   <div class="row"><div class="label">3. Current-season catch intelligence</div><div class="value">High priority</div></div>
   <div class="row"><div class="label">4. RFCA fish counters</div><div class="value">Medium priority</div></div>
   <div class="row"><div class="label">5. Operator / beat reports</div><div class="value">Medium priority</div></div>
-  <p class="small">
-    Urgency is based on operational value and current absence. No missing source is allowed to create a number until verified.
-  </p>
 </section>
 
 <section class="card">
@@ -67,9 +107,6 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   <div class="row"><div class="label">Rainfall priority</div><div id="priorityRainfall" class="value">Checking</div></div>
   <div class="row"><div class="label">Missing intelligence</div><div id="priorityMissing" class="value">Checking</div></div>
   <div class="row"><div class="label">Acquisition urgency</div><div id="priorityAcquisition" class="value">Checking</div></div>
-  <p class="small">
-    This panel ranks evidence and gaps only. It does not predict fishing quality.
-  </p>
 </section>
 
 <section class="card">
@@ -123,16 +160,6 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 </section>
 
 <section class="card">
-  <h2>Missing Critical Intelligence</h2>
-  <div class="badge warn">Important gaps remain</div>
-  <div class="row"><div class="label">Water temperature</div><div class="value">Missing</div></div>
-  <div class="row"><div class="label">RFCA sonde endpoint</div><div class="value">Not proven</div></div>
-  <div class="row"><div class="label">Fish counters</div><div class="value">Unacquired</div></div>
-  <div class="row"><div class="label">Current-season catch totals</div><div class="value">Blocked</div></div>
-  <div class="row"><div class="label">Verified weather feed</div><div class="value">Not integrated</div></div>
-</section>
-
-<section class="card">
   <h2>Source Acquisition Registry</h2>
   <div class="badge good">Registry active</div>
   <div class="grid">
@@ -150,15 +177,14 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   <div class="row"><div class="label">River</div><div class="value">River Ribble</div></div>
   <div class="row"><div class="label">Primary gauge</div><div class="value">EA Henthorn 710305</div></div>
   <div class="row"><div class="label">Weather anchor</div><div class="value">Great Mitton</div></div>
-  <div class="row"><div class="label">Registry state</div><div class="value">ACTIVE</div></div>
 </section>
 
 <section class="card">
   <h2>Governance Rules</h2>
   <div class="row"><div class="label">Core rule</div><div class="value">No source = no number</div></div>
+  <div class="row"><div class="label">Workflow rule</div><div class="value">Next action before integration</div></div>
   <div class="row"><div class="label">Priority rule</div><div class="value">Rank evidence, do not predict</div></div>
   <div class="row"><div class="label">Trend rule</div><div class="value">Do not hide a rise</div></div>
-  <div class="row"><div class="label">Weather rule</div><div class="value">Anchor only until verified</div></div>
 </section>
 
 </main>
@@ -167,10 +193,10 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   <button onclick="loadAll()">Refresh verified data</button>
 </div>
 
-<div class="footer">Salmon Rivers Intelligence · Build 10128 · Acquisition Urgency Ranking</div>
+<div class="footer">Salmon Rivers Intelligence · Build 10129 · Acquisition Workflow Board</div>
 
 <script>
-const BUILD="10128";
+const BUILD="10129";
 const HENTHORN_STATION="710305";
 const HENTHORN_LAT=53.87;
 const HENTHORN_LONG=-2.39;
