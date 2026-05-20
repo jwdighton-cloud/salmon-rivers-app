@@ -3,17 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10134</title>
+<title>Salmon Rivers Intelligence — Build 10135</title>
 <style>
 :root{--bg:#f4f6f8;--card:#fff;--ink:#111;--muted:#667085;--ok:#0f7b0f;--warn:#a15c00;--bad:#a40000;--line:#d8dde3;--blue:#0b5cad}
 body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
 header{padding:18px 14px;background:#0b1f33;color:white;text-align:center}
-h1{margin:0;font-size:24px}
-.build{font-size:13px;opacity:.85;margin-top:4px}
+h1{margin:0;font-size:24px}.build{font-size:13px;opacity:.85;margin-top:4px}
 main{max-width:980px;margin:0 auto;padding:14px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:12px 0;box-shadow:0 2px 8px rgba(0,0,0,.04)}
-h2{font-size:19px;margin:0 0 10px}
-.big{font-size:38px;font-weight:800}
+h2{font-size:19px;margin:0 0 10px}.big{font-size:38px;font-weight:800}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
 .box{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fbfcfd}
 .pill{display:inline-block;border-radius:999px;padding:7px 11px;font-size:13px;font-weight:800;background:#eef2f6;margin:3px 4px 3px 0}
@@ -22,15 +20,14 @@ table{width:100%;border-collapse:collapse;font-size:13px}
 th,td{border-bottom:1px solid var(--line);text-align:left;padding:8px;vertical-align:top}
 th{background:#f0f3f6}
 button{border:0;border-radius:10px;background:#0b5cad;color:white;padding:10px 14px;font-weight:800}
-a{color:var(--blue);font-weight:700}
-.small{font-size:12px}
+a{color:var(--blue);font-weight:700}.small{font-size:12px}
 footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 </style>
 </head>
 <body>
 <header>
 <h1>Salmon Rivers Intelligence</h1>
-<div class="build">GOLD BUILD 10134 — Current-Season Catch Intelligence Gate</div>
+<div class="build">GOLD BUILD 10135 — Operator / Beat Intelligence Gate</div>
 </header>
 
 <main>
@@ -38,21 +35,9 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 <h2>River Ribble @ Henthorn — Official Live Telemetry</h2>
 <div id="status" class="pill">Checking EA source…</div>
 <div class="grid">
-<div class="box">
-<div class="muted">Latest level</div>
-<div id="level" class="big">—</div>
-<div class="small muted">Source: EA station 710305</div>
-</div>
-<div class="box">
-<div class="muted">Movement</div>
-<div id="trend" class="big">—</div>
-<div id="trendDetail" class="small muted">Awaiting readings</div>
-</div>
-<div class="box">
-<div class="muted">Latest timestamp</div>
-<div id="time" style="font-weight:800">—</div>
-<div id="freshness" class="small muted">—</div>
-</div>
+<div class="box"><div class="muted">Latest level</div><div id="level" class="big">—</div><div class="small muted">Source: EA station 710305</div></div>
+<div class="box"><div class="muted">Movement</div><div id="trend" class="big">—</div><div id="trendDetail" class="small muted">Awaiting readings</div></div>
+<div class="box"><div class="muted">Latest timestamp</div><div id="time" style="font-weight:800">—</div><div id="freshness" class="small muted">—</div></div>
 </div>
 <button onclick="loadAll()">Refresh now</button>
 <p class="small muted">No fishability recommendation. Verified telemetry only.</p>
@@ -62,62 +47,54 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 <h2>Verified Input Fusion Panel</h2>
 <div id="fusionStatus" class="pill warn">Assessing verified inputs…</div>
 <p id="fusionText">This panel shows source maturity only. It does not make a fishing recommendation.</p>
-
 <div class="grid">
 <div class="box"><strong>Level telemetry</strong><br><span id="fusionLevel" class="warn">Checking</span></div>
 <div class="box"><strong>Rainfall telemetry</strong><br><span id="fusionRain" class="warn">Provisional</span></div>
 <div class="box"><strong>RFCA water quality</strong><br><span class="bad">Blocked until machine-readable</span></div>
 <div class="box"><strong>Catch intelligence</strong><br><span id="fusionCatch" class="bad">No verified current-season feed</span></div>
+<div class="box"><strong>Operator / beat intelligence</strong><br><span id="fusionOperator" class="bad">No verified beat feed</span></div>
 </div>
+</section>
+
+<section class="card">
+<h2>Operator / Beat Intelligence Gate</h2>
+<div class="pill warn">Henthorn beat focus active</div>
+<div class="pill bad">No operator reports promoted to live intelligence</div>
+<p>Operator, club, beat, forum, or social reports are not allowed to become numbers or recommendations unless they are dated, attributable, current-season, and traceable. Henthorn remains the fishing beat focus, but only official telemetry is currently numeric.</p>
+
+<table>
+<thead><tr><th>Source type</th><th>Potential use</th><th>Gate status</th></tr></thead>
+<tbody>
+<tr><td>Named beat / operator report</td><td>Beat-specific context if dated and attributable</td><td class="warn">Acquisition target</td></tr>
+<tr><td>Club or association note</td><td>Local condition and access intelligence</td><td class="warn">Allowed only with clear source/date</td></tr>
+<tr><td>Forum or social report</td><td>Weak supporting context only</td><td class="bad">Blocked from numeric use</td></tr>
+<tr><td>Private anecdote / rumour</td><td>No app intelligence use</td><td class="bad">Blocked</td></tr>
+<tr><td>Verified operator feed</td><td>Future Level 4 intelligence</td><td class="warn">Not integrated yet</td></tr>
+</tbody>
+</table>
 </section>
 
 <section class="card">
 <h2>Current-Season Catch Intelligence Gate</h2>
 <div class="pill bad">No catch numbers displayed</div>
 <div class="pill warn">Acquisition framework active</div>
-<p>This app must not show salmon or sea-trout totals unless the source is verified, current-season, traceable, and suitable for display. Historical or unclear reports are blocked from numeric use.</p>
-
+<p>This app must not show salmon or sea-trout totals unless the source is verified, current-season, traceable, and suitable for display.</p>
 <div class="grid">
-<div class="box">
-<strong>Salmon totals</strong><br>
-<div class="big">—</div>
-<div class="small muted">Blocked: no verified current-season feed integrated</div>
+<div class="box"><strong>Salmon totals</strong><br><div class="big">—</div><div class="small muted">Blocked: no verified current-season feed integrated</div></div>
+<div class="box"><strong>Sea-trout totals</strong><br><div class="big">—</div><div class="small muted">Blocked: no verified current-season feed integrated</div></div>
+<div class="box"><strong>Latest verified catch report</strong><br><span class="bad">Unavailable</span><br><span class="small muted">No source = no number</span></div>
 </div>
-<div class="box">
-<strong>Sea-trout totals</strong><br>
-<div class="big">—</div>
-<div class="small muted">Blocked: no verified current-season feed integrated</div>
-</div>
-<div class="box">
-<strong>Latest verified catch report</strong><br>
-<span class="bad">Unavailable</span><br>
-<span class="small muted">No source = no number</span>
-</div>
-</div>
-
-<table>
-<thead><tr><th>Candidate source class</th><th>Allowed use</th><th>Gate status</th></tr></thead>
-<tbody>
-<tr><td>Official current-season returns</td><td>Numeric totals if machine-readable or clearly traceable</td><td class="warn">Acquisition target</td></tr>
-<tr><td>Verified current-season association reports</td><td>Summary intelligence if dated and attributable</td><td class="warn">Acquisition target</td></tr>
-<tr><td>Trout &amp; Salmon editorial reports</td><td>Editorial intelligence, not automatic totals</td><td class="warn">Tier 1 editorial candidate</td></tr>
-<tr><td>Operator / beat reports</td><td>Beat-level context if dated and attributable</td><td class="warn">Not integrated yet</td></tr>
-<tr><td>Old, vague, undated, forum, or social claims</td><td>No numeric use</td><td class="bad">Blocked</td></tr>
-</tbody>
-</table>
 </section>
 
 <section class="card">
 <h2>Rainfall Verification Gate</h2>
 <div id="rainGate" class="pill warn">Checking rainfall source chain…</div>
 <p id="rainSummary">Rainfall will only be displayed when the app has both a machine-readable station and a current machine-readable rainfall reading.</p>
-
 <div class="grid">
 <div class="box"><strong>Stage 1 — Station discovery</strong><br><span id="rainStage1" class="warn">Checking</span></div>
 <div class="box"><strong>Stage 2 — Reading acquisition</strong><br><span id="rainStage2" class="warn">Blocked until verified</span></div>
 <div class="box"><strong>Rainfall value</strong><br><div id="rainValue" class="big">—</div><div id="rainMeta" class="small muted">No verified rainfall number yet</div></div>
 </div>
-
 <table>
 <thead><tr><th>Candidate</th><th>Verification status</th><th>Evidence</th></tr></thead>
 <tbody id="rainRows"><tr><td>EA rainfall discovery</td><td>Checking</td><td>—</td></tr></tbody>
@@ -128,7 +105,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 <h2>RFCA Acquisition Status</h2>
 <div class="pill warn">Primary strategic acquisition target</div>
 <div class="pill bad">RFCA numeric values blocked</div>
-<p>RFCA remains a candidate acquisition source. No RFCA temperature, sonde, fish-counter, catch, or river-health value is displayed until it is stable, traceable, machine-readable, current, and verifiable.</p>
+<p>RFCA represents fishery interests in the Ribble catchment and provides river-condition resources, but RFCA numeric values remain blocked until a stable machine-readable endpoint is proven. :contentReference[oaicite:0]{index=0}</p>
 <p class="small"><a href="https://www.ribblefisheriesca.co.uk/live-water-quality-monitoring/" target="_blank" rel="noopener">Open RFCA live water-quality monitoring page</a></p>
 </section>
 
@@ -140,7 +117,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 <tr><td>EA Henthorn telemetry</td><td>Level 1</td><td>Level and movement</td><td id="ledgerLevel" class="warn">Checking</td></tr>
 <tr><td>EA rainfall discovery</td><td>Level 1 candidate</td><td>Rainfall intelligence</td><td id="ledgerRain" class="warn">Verification pending</td></tr>
 <tr><td>RFCA live water-quality page</td><td>Acquisition candidate</td><td>Temperature / sonde / river health</td><td class="bad">Blocked until machine-readable</td></tr>
-<tr><td>Great Mitton</td><td>Weather anchor candidate</td><td>Future weather modelling</td><td class="warn">Not authoritative telemetry yet</td></tr>
+<tr><td>Operator / beat intelligence</td><td>Level 4 candidate</td><td>Henthorn context</td><td class="bad">Gate active; no verified feed integrated</td></tr>
 <tr><td>Current-season catch intelligence</td><td>Level 2 candidate</td><td>Salmon / sea-trout totals and reports</td><td class="bad">Gate active; no verified feed integrated</td></tr>
 </tbody>
 </table>
@@ -149,20 +126,19 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 <section class="card">
 <h2>Known / Unknown / Next Action</h2>
 <div class="grid">
-<div class="box"><strong>Known</strong><br>EA Henthorn level telemetry is the current verified live core.</div>
-<div class="box"><strong>Unknown</strong><br>No verified current-season Ribble catch feed has been integrated into the app.</div>
-<div class="box"><strong>Next action</strong><br>Find a current-season, dated, attributable catch source before displaying any salmon or sea-trout number.</div>
+<div class="box"><strong>Known</strong><br>Henthorn is the live beat focus; EA level telemetry is the verified numeric core.</div>
+<div class="box"><strong>Unknown</strong><br>No verified operator or beat-level feed has been integrated.</div>
+<div class="box"><strong>Next action</strong><br>Identify a dated, attributable Henthorn/Ribble operator source before promoting any beat intelligence.</div>
 </div>
 </section>
 </main>
 
-<footer>Build 10134 · NO SOURCE = NO NUMBER</footer>
+<footer>Build 10135 · NO SOURCE = NO NUMBER</footer>
 
 <script>
 const EA_MEASURE="https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings?_sorted&_limit=24";
 const EA_STATION="https://environment.data.gov.uk/flood-monitoring/id/stations/710305";
-
-let sourceState={level:false,rainfall:false,rfca:false,catch:false};
+let sourceState={level:false,rainfall:false,rfca:false,catch:false,operator:false};
 
 function el(id){return document.getElementById(id)}
 function setText(id,text){el(id).textContent=text}
@@ -171,23 +147,19 @@ function ageMinutes(iso){return Math.round((Date.now()-new Date(iso).getTime())/
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]))}
 
 function updateFusion(){
-  setText("fusionLevel",sourceState.level?"Verified live":"Unavailable");
-  el("fusionLevel").className=sourceState.level?"ok":"bad";
-
-  setText("fusionRain",sourceState.rainfall?"Verified live":"Provisional / not verified");
-  el("fusionRain").className=sourceState.rainfall?"ok":"warn";
-
-  setText("fusionCatch",sourceState.catch?"Verified current-season":"No verified current-season feed");
-  el("fusionCatch").className=sourceState.catch?"ok":"bad";
+  setText("fusionLevel",sourceState.level?"Verified live":"Unavailable"); el("fusionLevel").className=sourceState.level?"ok":"bad";
+  setText("fusionRain",sourceState.rainfall?"Verified live":"Provisional / not verified"); el("fusionRain").className=sourceState.rainfall?"ok":"warn";
+  setText("fusionCatch",sourceState.catch?"Verified current-season":"No verified current-season feed"); el("fusionCatch").className=sourceState.catch?"ok":"bad";
+  setText("fusionOperator",sourceState.operator?"Verified beat feed":"No verified beat feed"); el("fusionOperator").className=sourceState.operator?"ok":"bad";
 
   if(sourceState.level && sourceState.rainfall){
     el("fusionStatus").className="pill ok";
     setText("fusionStatus","Two verified live inputs");
-    setText("fusionText","Level and rainfall are verified live inputs. RFCA and catch intelligence remain blocked until independently verified.");
+    setText("fusionText","Level and rainfall are verified live inputs. RFCA, catch, and operator intelligence remain blocked until independently verified.");
   }else if(sourceState.level){
     el("fusionStatus").className="pill warn";
     setText("fusionStatus","Partial verified input set");
-    setText("fusionText","Level telemetry is verified. Rainfall, RFCA and catch intelligence are not mature enough to support fused river intelligence.");
+    setText("fusionText","Level telemetry is verified. Rainfall, RFCA, catch, and operator intelligence are not mature enough to support fused river intelligence.");
   }else{
     el("fusionStatus").className="pill bad";
     setText("fusionStatus","No verified live core input");
@@ -198,21 +170,13 @@ function updateFusion(){
 function analyseTrend(items){
   const vals=items.map(x=>({v:Number(x.value),t:x.dateTime})).filter(x=>Number.isFinite(x.v));
   if(vals.length<2)return {label:"Unknown",detail:"Not enough readings"};
-  const latest=vals[vals.length-1];
-  const prev=vals[vals.length-2];
-  const delta=latest.v-prev.v;
-  const threshold=0.005;
+  const latest=vals[vals.length-1], prev=vals[vals.length-2], delta=latest.v-prev.v, threshold=0.005;
   if(Math.abs(delta)>=threshold){
-    return delta>0
-      ?{label:"Rising",detail:`Latest delta +${delta.toFixed(3)} m from previous reading`}
-      :{label:"Falling",detail:`Latest delta ${delta.toFixed(3)} m from previous reading`};
+    return delta>0?{label:"Rising",detail:`Latest delta +${delta.toFixed(3)} m from previous reading`}:{label:"Falling",detail:`Latest delta ${delta.toFixed(3)} m from previous reading`};
   }
-  const sample=vals.slice(-6);
-  const multi=sample[sample.length-1].v-sample[0].v;
+  const sample=vals.slice(-6), multi=sample[sample.length-1].v-sample[0].v;
   if(Math.abs(multi)>=threshold){
-    return multi>0
-      ?{label:"Rising",detail:`Multi-reading rise +${multi.toFixed(3)} m across recent readings`}
-      :{label:"Falling",detail:`Multi-reading fall ${multi.toFixed(3)} m across recent readings`};
+    return multi>0?{label:"Rising",detail:`Multi-reading rise +${multi.toFixed(3)} m across recent readings`}:{label:"Falling",detail:`Multi-reading fall ${multi.toFixed(3)} m across recent readings`};
   }
   return {label:"Steady",detail:"No material latest or multi-reading movement detected"};
 }
@@ -225,33 +189,21 @@ async function loadHenthorn(){
     const j=await r.json();
     const items=(j.items||[]).sort((a,b)=>new Date(a.dateTime)-new Date(b.dateTime));
     if(!items.length)throw new Error("No EA readings returned");
-    const latest=items[items.length-1];
-    const level=Number(latest.value);
+    const latest=items[items.length-1], level=Number(latest.value);
     if(!Number.isFinite(level))throw new Error("Latest EA level was not numeric");
-
     setText("level",level.toFixed(3)+" m");
     setText("time",fmtDate(latest.dateTime));
     setText("freshness",`${ageMinutes(latest.dateTime)} minutes old`);
-
     const trend=analyseTrend(items);
-    setText("trend",trend.label);
-    setText("trendDetail",trend.detail);
-
-    el("status").className="pill ok";
-    setText("status","EA telemetry live");
-    el("ledgerLevel").className="ok";
-    setText("ledgerLevel","Live official machine-readable source");
+    setText("trend",trend.label); setText("trendDetail",trend.detail);
+    el("status").className="pill ok"; setText("status","EA telemetry live");
+    el("ledgerLevel").className="ok"; setText("ledgerLevel","Live official machine-readable source");
     sourceState.level=true;
   }catch(e){
-    el("status").className="pill bad";
-    setText("status","EA telemetry unavailable");
-    setText("level","—");
-    setText("trend","—");
-    setText("trendDetail","No verified live reading acquired");
-    setText("time","—");
-    setText("freshness",String(e.message||e));
-    el("ledgerLevel").className="bad";
-    setText("ledgerLevel","Verification failed safely");
+    el("status").className="pill bad"; setText("status","EA telemetry unavailable");
+    setText("level","—"); setText("trend","—"); setText("trendDetail","No verified live reading acquired");
+    setText("time","—"); setText("freshness",String(e.message||e));
+    el("ledgerLevel").className="bad"; setText("ledgerLevel","Verification failed safely");
   }
   updateFusion();
 }
@@ -260,47 +212,35 @@ function candidateMeasuresFromStation(station){
   const measures=station.measures || station.measure || [];
   return Array.isArray(measures)?measures:[measures];
 }
-
 async function tryRainReadingForMeasure(measureUrl){
   if(!measureUrl)return null;
   const url=measureUrl.replace(/\/$/,"")+"/readings?_sorted&_limit=1";
   const r=await fetch(url,{cache:"no-store"});
   if(!r.ok)return null;
-  const j=await r.json();
-  const item=(j.items||[])[0];
+  const j=await r.json(), item=(j.items||[])[0];
   if(!item)return null;
   const value=Number(item.value);
   if(!Number.isFinite(value))return null;
   return {value,dateTime:item.dateTime,url};
 }
-
 async function loadRainfall(){
   sourceState.rainfall=false;
   const rows=el("rainRows");
   try{
     const sr=await fetch(EA_STATION,{cache:"no-store"});
     if(!sr.ok)throw new Error("Henthorn station lookup failed");
-    const sj=await sr.json();
-    const station=sj.items || {};
-    const lat=station.lat || station.latitude;
-    const long=station.long || station.longitude;
+    const sj=await sr.json(), station=sj.items || {};
+    const lat=station.lat || station.latitude, long=station.long || station.longitude;
     if(!lat||!long)throw new Error("No Henthorn coordinates acquired");
-
     const discoveryUrl=`https://environment.data.gov.uk/flood-monitoring/id/stations?parameter=rainfall&lat=${encodeURIComponent(lat)}&long=${encodeURIComponent(long)}&dist=25`;
     const rr=await fetch(discoveryUrl,{cache:"no-store"});
     if(!rr.ok)throw new Error("Rainfall discovery HTTP "+rr.status);
-    const rj=await rr.json();
-    const found=(rj.items||[]).slice(0,6);
+    const rj=await rr.json(), found=(rj.items||[]).slice(0,6);
     if(!found.length)throw new Error("No nearby EA rainfall station acquired");
-
-    setText("rainStage1","Station candidates acquired");
-    el("rainStage1").className="ok";
-
-    let verified=null;
-    const rendered=[];
+    setText("rainStage1","Station candidates acquired"); el("rainStage1").className="ok";
+    let verified=null; const rendered=[];
     for(const s of found){
-      const measures=candidateMeasuresFromStation(s);
-      let result=null;
+      const measures=candidateMeasuresFromStation(s); let result=null;
       for(const m of measures){
         const measureUrl=typeof m==="string"?m:(m["@id"]||m.id);
         result=await tryRainReadingForMeasure(measureUrl);
@@ -309,52 +249,34 @@ async function loadRainfall(){
       if(result && !verified)verified={station:s,result};
       rendered.push(`<tr><td>${escapeHtml(s.label||s.stationReference||"EA rainfall station")}</td><td class="${result?"ok":"warn"}">${result?"Reading verified":"Station only"}</td><td>${result?escapeHtml(result.value+" at "+fmtDate(result.dateTime)):escapeHtml(s.stationReference||s["@id"]||"No readings endpoint verified")}</td></tr>`);
     }
-
     rows.innerHTML=rendered.join("");
-
     if(verified){
       sourceState.rainfall=true;
-      el("rainGate").className="pill ok";
-      setText("rainGate","Rainfall reading verified");
+      el("rainGate").className="pill ok"; setText("rainGate","Rainfall reading verified");
       setText("rainSummary","A nearby EA rainfall station and latest machine-readable rainfall reading were acquired.");
-      setText("rainStage2","Live reading acquired");
-      el("rainStage2").className="ok";
+      setText("rainStage2","Live reading acquired"); el("rainStage2").className="ok";
       setText("rainValue",Number(verified.result.value).toFixed(1)+" mm");
       setText("rainMeta",`${verified.station.label||verified.station.stationReference||"EA rainfall station"} · ${fmtDate(verified.result.dateTime)}`);
-      el("ledgerRain").className="ok";
-      setText("ledgerRain","Live rainfall reading verified");
+      el("ledgerRain").className="ok"; setText("ledgerRain","Live rainfall reading verified");
     }else{
-      el("rainGate").className="pill warn";
-      setText("rainGate","Rainfall station found; reading not verified");
+      el("rainGate").className="pill warn"; setText("rainGate","Rainfall station found; reading not verified");
       setText("rainSummary","Station discovery succeeded, but no rainfall number is displayed because a live reading was not verified.");
-      setText("rainStage2","No verified reading");
-      el("rainStage2").className="warn";
-      setText("rainValue","—");
-      setText("rainMeta","No verified rainfall number displayed");
-      el("ledgerRain").className="warn";
-      setText("ledgerRain","Station discovery only");
+      setText("rainStage2","No verified reading"); el("rainStage2").className="warn";
+      setText("rainValue","—"); setText("rainMeta","No verified rainfall number displayed");
+      el("ledgerRain").className="warn"; setText("ledgerRain","Station discovery only");
     }
   }catch(e){
-    el("rainGate").className="pill warn";
-    setText("rainGate","Rainfall not yet authoritative");
-    setText("rainStage1","No verified station chain");
-    el("rainStage1").className="warn";
-    setText("rainStage2","Blocked");
-    el("rainStage2").className="warn";
-    setText("rainValue","—");
-    setText("rainMeta","No verified rainfall number displayed");
+    el("rainGate").className="pill warn"; setText("rainGate","Rainfall not yet authoritative");
+    setText("rainStage1","No verified station chain"); el("rainStage1").className="warn";
+    setText("rainStage2","Blocked"); el("rainStage2").className="warn";
+    setText("rainValue","—"); setText("rainMeta","No verified rainfall number displayed");
     rows.innerHTML=`<tr><td>EA rainfall discovery</td><td class="warn">Safe fallback</td><td>${escapeHtml(String(e.message||e))}</td></tr>`;
-    el("ledgerRain").className="warn";
-    setText("ledgerRain","Verification failed safely");
+    el("ledgerRain").className="warn"; setText("ledgerRain","Verification failed safely");
   }
   updateFusion();
 }
 
-async function loadAll(){
-  await loadHenthorn();
-  await loadRainfall();
-}
-
+async function loadAll(){await loadHenthorn();await loadRainfall();}
 loadAll();
 setInterval(loadAll,15*60*1000);
 </script>
