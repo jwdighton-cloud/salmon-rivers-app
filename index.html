@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10149</title>
+<title>Salmon Rivers Intelligence — Build 10150</title>
 <style>
 :root{--bg:#f4f6f8;--card:#fff;--line:#d8dde3;--text:#111;--muted:#667085;--ok:#0f7b0f;--warn:#a15c00;--bad:#a40000;--blue:#0b5cad}
 *{box-sizing:border-box}
@@ -29,7 +29,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 
 <header>
 <h1>Salmon Rivers Intelligence</h1>
-<div class="build">GOLD BUILD 10149 — Current-Season Catch Intelligence Gate</div>
+<div class="build">GOLD BUILD 10150 — Operator / Beat Intelligence Gate</div>
 </header>
 
 <main>
@@ -173,6 +173,30 @@ Salmon and sea-trout totals remain blocked until a source is verified, current-s
 </section>
 
 <section class="card">
+<h2>Operator / Beat Intelligence Gate</h2>
+
+<div class="pill warn">Henthorn beat focus active</div>
+<div class="pill bad">No operator claim promoted to live intelligence</div>
+
+<p class="small muted">
+Operator, club, association, beat, forum, social, or private reports remain non-numeric unless they are dated, attributable, current-season, traceable and suitable for display.
+</p>
+
+<table>
+<thead>
+<tr><th>Source type</th><th>Potential future use</th><th>Gate status</th><th>Display rule</th></tr>
+</thead>
+<tbody>
+<tr><td>Named operator report</td><td>Beat-level fishing context</td><td class="warn">Needs dated attributable source</td><td class="bad">No number displayed</td></tr>
+<tr><td>Club / association note</td><td>Access, local condition, or catch context</td><td class="warn">Candidate only</td><td class="bad">No automatic promotion</td></tr>
+<tr><td>Beat report for Henthorn</td><td>Primary local context</td><td class="warn">Target source class</td><td class="bad">Blocked until verified</td></tr>
+<tr><td>Forum / social report</td><td>Weak supporting context only</td><td class="bad">Not trusted for numbers</td><td class="bad">No numeric use</td></tr>
+<tr><td>Private anecdote / rumour</td><td>No app intelligence use</td><td class="bad">Blocked</td><td class="bad">No display</td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="card">
 <h2>Verified Source Score v2</h2>
 
 <div class="grid">
@@ -199,7 +223,7 @@ Salmon and sea-trout totals remain blocked until a source is verified, current-s
 <tr><td>Verified rainfall reading</td><td>20</td><td id="scoreRainfall" class="warn">Waiting</td></tr>
 <tr><td>RFCA machine-readable data</td><td>20</td><td id="scoreRFCA" class="warn">Not integrated</td></tr>
 <tr><td>Current-season catch intelligence</td><td>15</td><td id="scoreCatch" class="warn">Not integrated</td></tr>
-<tr><td>Operator / beat intelligence</td><td>5</td><td class="warn">Not integrated</td></tr>
+<tr><td>Operator / beat intelligence</td><td>5</td><td id="scoreOperator" class="warn">Not integrated</td></tr>
 </tbody>
 </table>
 </section>
@@ -214,14 +238,14 @@ Salmon and sea-trout totals remain blocked until a source is verified, current-s
 <tr><td>Rainfall module</td><td class="ok">Isolated</td><td>Read-only consumer; cannot mutate telemetry core</td></tr>
 <tr><td>RFCA ledger</td><td class="ok">Isolated</td><td>Candidate tracking only; cannot mutate telemetry core</td></tr>
 <tr><td>Catch gate</td><td class="ok">Isolated</td><td>Current-season source gate only; cannot mutate telemetry core</td></tr>
-<tr><td>Catch numbers</td><td class="bad">Blocked</td><td>No verified current-season source = no number</td></tr>
+<tr><td>Operator gate</td><td class="ok">Isolated</td><td>Beat intelligence gate only; cannot mutate telemetry core</td></tr>
 </tbody>
 </table>
 </section>
 
 </main>
 
-<footer>Build 10149 · NO SOURCE = NO NUMBER · EA CORE FROZEN</footer>
+<footer>Build 10150 · NO SOURCE = NO NUMBER · EA CORE FROZEN</footer>
 
 <script>
 const TelemetryCore=(function(){
@@ -571,6 +595,7 @@ let clicks=0;
 let rainfallVerified=false;
 let rfcaVerified=false;
 let catchVerified=false;
+let operatorVerified=false;
 
 function id(x){return document.getElementById(x)}
 
@@ -606,7 +631,7 @@ return String(s).replace(/[&<>"']/g,m=>({
 }[m]));
 }
 
-function updateSourceScore(telemetryOk,rainOk,rfcaOk,catchOk){
+function updateSourceScore(telemetryOk,rainOk,rfcaOk,catchOk,operatorOk){
 
 let score=0;
 
@@ -650,9 +675,23 @@ cls("scoreCatch","warn");
 txt("scoreCatch","Not integrated");
 }
 
+if(operatorOk){
+score+=5;
+cls("scoreOperator","ok");
+txt("scoreOperator","Verified");
+}
+else{
+cls("scoreOperator","warn");
+txt("scoreOperator","Not integrated");
+}
+
 txt("qualityScore",score+"/100");
 
-if(score>=95){
+if(score>=100){
+cls("qualityMeaning","ok");
+txt("qualityMeaning","Full tracked source maturity");
+}
+else if(score>=95){
 cls("qualityMeaning","ok");
 txt("qualityMeaning","High source maturity");
 }
@@ -691,7 +730,7 @@ txt("freshness","—");
 
 txt("dataProof","EA proof: failed both routes");
 
-updateSourceScore(false,rainfallVerified,rfcaVerified,catchVerified);
+updateSourceScore(false,rainfallVerified,rfcaVerified,catchVerified,operatorVerified);
 
 return;
 }
@@ -736,7 +775,7 @@ latest.value.toFixed(3)+
 latest.time
 );
 
-updateSourceScore(true,rainfallVerified,rfcaVerified,catchVerified);
+updateSourceScore(true,rainfallVerified,rfcaVerified,catchVerified,operatorVerified);
 }
 
 async function renderRainfall(){
