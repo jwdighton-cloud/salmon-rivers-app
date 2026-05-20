@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10122</title>
+<title>Salmon Rivers Intelligence — Build 10123</title>
 
 <style>
 :root{
@@ -51,25 +51,42 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 
 <header>
   <h1>Salmon Rivers Intelligence</h1>
-  <div class="build">Build 10122 · Trend Verification Hardening · verified data only</div>
+  <div class="build">Build 10123 · Beat Intelligence Node · verified data only</div>
 </header>
 
 <main>
 
 <section class="card">
-  <h2>Gold Correction Checkpoint</h2>
-  <div class="badge good">Trend verification hardened</div>
+  <h2>Beat Intelligence Node</h2>
+  <div class="badge good">Prototype node active</div>
 
-  <div class="row"><div class="label">Current build</div><div class="value">10122</div></div>
-  <div class="row"><div class="label">Correction state</div><div class="value">Trend diagnostics added</div></div>
+  <div class="row"><div class="label">Beat / stretch</div><div class="value">Henthorn</div></div>
+  <div class="row"><div class="label">River</div><div class="value">River Ribble</div></div>
+  <div class="row"><div class="label">Primary gauge</div><div class="value">EA Henthorn 710305</div></div>
+  <div class="row"><div class="label">Local weather anchor</div><div class="value">Great Mitton</div></div>
+  <div class="row"><div class="label">Rainfall acquisition</div><div class="value">EA pathway</div></div>
+  <div class="row"><div class="label">RFCA relationship</div><div class="value">Investigation</div></div>
+  <div class="row"><div class="label">Catch intelligence</div><div class="value">Blocked pending proof</div></div>
+
+  <p class="small">
+    This is the first beat-centric intelligence model. Great Mitton is recorded as the local weather anchor,
+    but no live weather number is displayed until a stable verified weather feed is selected.
+  </p>
+</section>
+
+<section class="card">
+  <h2>Gold Correction Checkpoint</h2>
+  <div class="badge good">Trend verification retained</div>
+
+  <div class="row"><div class="label">Current build</div><div class="value">10123</div></div>
+  <div class="row"><div class="label">Trend logic</div><div class="value">10122 retained</div></div>
   <div class="row"><div class="label">Runtime</div><div class="value">Single HTML</div></div>
   <div class="row"><div class="label">Primary live river</div><div class="value">Ribble @ Henthorn</div></div>
   <div class="row"><div class="label">Verified live source</div><div class="value">EA telemetry</div></div>
   <div class="row"><div class="label">Blocked values</div><div class="value">Catch, RFCA, fish counters</div></div>
 
   <p class="small">
-    Build 10122 makes the trend decision auditable on screen. It shows the latest movement, window movement,
-    and the number of rising/falling steps used to classify the river.
+    Build 10123 keeps the corrected trend diagnostics and adds beat-level metadata only. No new unverified live values are introduced.
   </p>
 </section>
 
@@ -78,12 +95,12 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 
   <div id="commandBadge" class="badge info">Checking live baseline…</div>
 
-  <div class="row"><div class="label">Primary river</div><div class="value">Ribble @ Henthorn</div></div>
+  <div class="row"><div class="label">Primary beat</div><div class="value">Henthorn</div></div>
   <div class="row"><div class="label">Live level</div><div id="summaryLevel" class="value">Checking</div></div>
   <div class="row"><div class="label">Movement</div><div id="summaryMovement" class="value">Checking</div></div>
   <div class="row"><div class="label">Rainfall</div><div id="summaryRain" class="value">Checking</div></div>
+  <div class="row"><div class="label">Weather anchor</div><div class="value">Great Mitton</div></div>
   <div class="row"><div class="label">Catch intelligence</div><div class="value">Blocked</div></div>
-  <div class="row"><div class="label">RFCA values</div><div class="value">Blocked</div></div>
   <div class="row"><div class="label">Rule</div><div class="value">No source = no number</div></div>
 </section>
 
@@ -124,7 +141,21 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   <div class="row"><div class="label">Newest reading in window</div><div id="trendNewest" class="value">—</div></div>
 
   <p class="small">
-    This panel exists because movement is operationally important. It is not hidden behind a vague “steady” label.
+    Movement is operationally important, so the trend decision remains visible and auditable.
+  </p>
+</section>
+
+<section class="card">
+  <h2>Beat Weather Anchor</h2>
+  <div class="badge warn">Metadata only — no live weather value</div>
+
+  <div class="row"><div class="label">Selected local anchor</div><div class="value">Great Mitton</div></div>
+  <div class="row"><div class="label">Use case</div><div class="value">Weather / rainfall context</div></div>
+  <div class="row"><div class="label">Live weather feed</div><div class="value">Not integrated</div></div>
+  <div class="row"><div class="label">Display permission</div><div class="value">Blocked until verified</div></div>
+
+  <p class="small">
+    Great Mitton is useful for Henthorn-specific weather modelling, but the app will not show a weather number until a stable source, timestamp, unit, and refresh behaviour are verified.
   </p>
 </section>
 
@@ -140,33 +171,47 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 </section>
 
 <section class="card">
+  <h2>Beat Scaling Model</h2>
+
+  <div class="grid">
+    <div class="source">
+      <div class="source-title">Beat</div>
+      <div class="badge good">Primary unit</div>
+      <p class="small">The app will scale by beat or stretch first, not by vague whole-river summaries.</p>
+    </div>
+
+    <div class="source">
+      <div class="source-title">Gauge</div>
+      <div class="badge good">Telemetry anchor</div>
+      <p class="small">Each beat needs a primary live gauge or a declared fallback.</p>
+    </div>
+
+    <div class="source">
+      <div class="source-title">Weather anchor</div>
+      <div class="badge warn">Source model</div>
+      <p class="small">Each beat should have the nearest useful weather/rainfall source recorded.</p>
+    </div>
+
+    <div class="source">
+      <div class="source-title">Catch source</div>
+      <div class="badge blocked">Blocked</div>
+      <p class="small">Catch figures remain blocked until current-season, dated, traceable evidence exists.</p>
+    </div>
+  </div>
+</section>
+
+<section class="card">
   <h2>Source Fusion Governance</h2>
 
   <div id="fusionBadge" class="badge info">Evaluating fusion state…</div>
 
   <div class="row"><div class="label">EA level telemetry</div><div id="fusionLevel" class="value">Checking</div></div>
   <div class="row"><div class="label">EA rainfall</div><div id="fusionRainfall" class="value">Checking</div></div>
+  <div class="row"><div class="label">Weather anchor</div><div class="value">Metadata only</div></div>
   <div class="row"><div class="label">RFCA temperature</div><div class="value">Investigation only</div></div>
   <div class="row"><div class="label">Catch totals</div><div class="value">Blocked</div></div>
   <div class="row"><div class="label">Fish counters</div><div class="value">Blocked</div></div>
   <div class="row"><div class="label">Fusion result</div><div id="fusionResult" class="value">Checking</div></div>
-</section>
-
-<section class="card">
-  <h2>Movement Logic Rules</h2>
-
-  <div class="badge good">Gold correction active</div>
-
-  <div class="row"><div class="label">Latest reading higher</div><div class="value">Rising</div></div>
-  <div class="row"><div class="label">Recent window upward</div><div class="value">Rising</div></div>
-  <div class="row"><div class="label">Latest reading lower</div><div class="value">Falling</div></div>
-  <div class="row"><div class="label">Recent window downward</div><div class="value">Falling</div></div>
-  <div class="row"><div class="label">Mixed / no direction</div><div class="value">Steady</div></div>
-  <div class="row"><div class="label">Insufficient readings</div><div class="value">Latest only</div></div>
-
-  <p class="small">
-    The old 0.005m dead-zone is gone. Small but real upward movement is treated as Rising.
-  </p>
 </section>
 
 <section class="card">
@@ -200,6 +245,7 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   <div class="row"><div class="label">Current season</div><div class="value">Required</div></div>
   <div class="row"><div class="label">Date visible</div><div class="value">Required</div></div>
   <div class="row"><div class="label">River-specific</div><div class="value">Required</div></div>
+  <div class="row"><div class="label">Beat relevance</div><div class="value">Required where possible</div></div>
   <div class="row"><div class="label">Traceable publication</div><div class="value">Required</div></div>
   <div class="row"><div class="label">Repeatable verification</div><div class="value">Required</div></div>
   <div class="row"><div class="label">Status</div><div class="value">Evidence incomplete</div></div>
@@ -239,11 +285,11 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   <h2>Known / Unknown / Next Action</h2>
 
   <div class="row"><div class="label">Known</div><div class="value">EA Henthorn telemetry stable</div></div>
-  <div class="row"><div class="label">Corrected</div><div class="value">Movement trend integrity</div></div>
-  <div class="row"><div class="label">Added</div><div class="value">Trend verification panel</div></div>
+  <div class="row"><div class="label">Known</div><div class="value">Henthorn beat node modelled</div></div>
+  <div class="row"><div class="label">Known</div><div class="value">Great Mitton weather anchor recorded</div></div>
   <div class="row"><div class="label">Unknown</div><div class="value">Stable RFCA endpoint</div></div>
   <div class="row"><div class="label">Unknown</div><div class="value">Verified Ribble catch totals</div></div>
-  <div class="row"><div class="label">Next action</div><div class="value">Verify against live EA display</div></div>
+  <div class="row"><div class="label">Next action</div><div class="value">Weather source acquisition model</div></div>
 </section>
 
 <section class="card">
@@ -251,10 +297,11 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 
   <div class="row"><div class="label">Core rule</div><div class="value">No source = no number</div></div>
   <div class="row"><div class="label">Trend rule</div><div class="value">Do not hide a rise</div></div>
+  <div class="row"><div class="label">Beat rule</div><div class="value">Beat first, river second</div></div>
+  <div class="row"><div class="label">Weather rule</div><div class="value">Anchor only until verified</div></div>
   <div class="row"><div class="label">Fusion rule</div><div class="value">Weak + weak ≠ verified</div></div>
   <div class="row"><div class="label">Fishability</div><div class="value">No speculation</div></div>
   <div class="row"><div class="label">Temperature</div><div class="value">Verified only</div></div>
-  <div class="row"><div class="label">Fish counters</div><div class="value">Verified only</div></div>
 </section>
 
 </main>
@@ -264,11 +311,11 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 </div>
 
 <div class="footer">
-  Salmon Rivers Intelligence · Build 10122 · Trend Verification Hardening
+  Salmon Rivers Intelligence · Build 10123 · Beat Intelligence Node
 </div>
 
 <script>
-const BUILD = "10122";
+const BUILD = "10123";
 const HENTHORN_STATION = "710305";
 const HENTHORN_LAT = 53.87;
 const HENTHORN_LONG = -2.39;
