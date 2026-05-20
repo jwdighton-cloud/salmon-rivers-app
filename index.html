@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10148</title>
+<title>Salmon Rivers Intelligence — Build 10149</title>
 <style>
 :root{--bg:#f4f6f8;--card:#fff;--line:#d8dde3;--text:#111;--muted:#667085;--ok:#0f7b0f;--warn:#a15c00;--bad:#a40000;--blue:#0b5cad}
 *{box-sizing:border-box}
@@ -29,7 +29,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 
 <header>
 <h1>Salmon Rivers Intelligence</h1>
-<div class="build">GOLD BUILD 10148 — RFCA Acquisition Candidate Ledger</div>
+<div class="build">GOLD BUILD 10149 — Current-Season Catch Intelligence Gate</div>
 </header>
 
 <main>
@@ -108,44 +108,15 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 <div class="pill warn">Primary strategic acquisition target</div>
 <div class="pill bad">No RFCA numeric values displayed</div>
 
-<p class="small muted">
-RFCA is treated as an acquisition candidate only. Temperature, sonde, fish-counter, catch or river-health values remain blocked until a stable machine-readable source is proven.
-</p>
-
 <table>
 <thead>
-<tr>
-<th>RFCA Candidate</th>
-<th>Potential Value</th>
-<th>Gate Status</th>
-<th>Display Rule</th>
-</tr>
+<tr><th>RFCA Candidate</th><th>Potential Value</th><th>Gate Status</th><th>Display Rule</th></tr>
 </thead>
 <tbody>
-<tr>
-<td>Temperature / sonde data</td>
-<td>Fish welfare and water-condition intelligence</td>
-<td class="warn">Investigate machine-readable endpoint</td>
-<td class="bad">No value displayed</td>
-</tr>
-<tr>
-<td>Fish-counter telemetry</td>
-<td>Migration intelligence</td>
-<td class="warn">Investigate availability</td>
-<td class="bad">No value displayed</td>
-</tr>
-<tr>
-<td>Catch intelligence</td>
-<td>Current-season Ribble context</td>
-<td class="warn">Needs dated attributable feed</td>
-<td class="bad">No totals displayed</td>
-</tr>
-<tr>
-<td>River-health telemetry</td>
-<td>Environmental context</td>
-<td class="warn">Candidate only</td>
-<td class="bad">No value displayed</td>
-</tr>
+<tr><td>Temperature / sonde data</td><td>Fish welfare and water-condition intelligence</td><td class="warn">Investigate machine-readable endpoint</td><td class="bad">No value displayed</td></tr>
+<tr><td>Fish-counter telemetry</td><td>Migration intelligence</td><td class="warn">Investigate availability</td><td class="bad">No value displayed</td></tr>
+<tr><td>Catch intelligence</td><td>Current-season Ribble context</td><td class="warn">Needs dated attributable feed</td><td class="bad">No totals displayed</td></tr>
+<tr><td>River-health telemetry</td><td>Environmental context</td><td class="warn">Candidate only</td><td class="bad">No value displayed</td></tr>
 </tbody>
 </table>
 
@@ -154,6 +125,51 @@ RFCA is treated as an acquisition candidate only. Temperature, sonde, fish-count
 Open RFCA live water-quality monitoring
 </a>
 </p>
+</section>
+
+<section class="card">
+<h2>Current-Season Catch Intelligence Gate</h2>
+
+<div class="pill bad">No catch totals displayed</div>
+<div class="pill warn">Current-season gate active</div>
+
+<p class="small muted">
+Salmon and sea-trout totals remain blocked until a source is verified, current-season, dated, attributable, and suitable for display.
+</p>
+
+<div class="grid">
+<div class="box">
+<div class="muted">Salmon total</div>
+<div class="big">—</div>
+<div class="small muted">No verified current-season source</div>
+</div>
+
+<div class="box">
+<div class="muted">Sea-trout total</div>
+<div class="big">—</div>
+<div class="small muted">No verified current-season source</div>
+</div>
+
+<div class="box">
+<div class="muted">Latest verified catch report</div>
+<div class="bad">Unavailable</div>
+<div class="small muted">No source = no number</div>
+</div>
+</div>
+
+<table>
+<thead>
+<tr><th>Candidate source class</th><th>Allowed future use</th><th>Gate status</th></tr>
+</thead>
+<tbody>
+<tr><td>Official current-season returns</td><td>Numeric totals if dated, traceable and suitable</td><td class="warn">Acquisition target</td></tr>
+<tr><td>RFCA catch intelligence</td><td>Current-season context if machine-readable or clearly attributable</td><td class="warn">Candidate only</td></tr>
+<tr><td>Association / club reports</td><td>Summary intelligence if dated and attributable</td><td class="warn">Candidate only</td></tr>
+<tr><td>Trout &amp; Salmon editorial reports</td><td>Editorial intelligence, not automatic totals</td><td class="warn">Tier 1 editorial candidate</td></tr>
+<tr><td>Operator / beat reports</td><td>Beat-level context if dated and attributable</td><td class="warn">Not integrated</td></tr>
+<tr><td>Old, vague, undated, forum or social claims</td><td>No numeric use</td><td class="bad">Blocked</td></tr>
+</tbody>
+</table>
 </section>
 
 <section class="card">
@@ -182,7 +198,7 @@ Open RFCA live water-quality monitoring
 <tr><td>EA live telemetry</td><td>40</td><td id="scoreTelemetry" class="warn">Waiting</td></tr>
 <tr><td>Verified rainfall reading</td><td>20</td><td id="scoreRainfall" class="warn">Waiting</td></tr>
 <tr><td>RFCA machine-readable data</td><td>20</td><td id="scoreRFCA" class="warn">Not integrated</td></tr>
-<tr><td>Current-season catch intelligence</td><td>15</td><td class="warn">Not integrated</td></tr>
+<tr><td>Current-season catch intelligence</td><td>15</td><td id="scoreCatch" class="warn">Not integrated</td></tr>
 <tr><td>Operator / beat intelligence</td><td>5</td><td class="warn">Not integrated</td></tr>
 </tbody>
 </table>
@@ -197,14 +213,15 @@ Open RFCA live water-quality monitoring
 <tr><td>Trend engine</td><td class="ok">Frozen</td><td>Latest delta first, multi-reading fallback</td></tr>
 <tr><td>Rainfall module</td><td class="ok">Isolated</td><td>Read-only consumer; cannot mutate telemetry core</td></tr>
 <tr><td>RFCA ledger</td><td class="ok">Isolated</td><td>Candidate tracking only; cannot mutate telemetry core</td></tr>
-<tr><td>RFCA numbers</td><td class="bad">Blocked</td><td>No machine-readable source = no number</td></tr>
+<tr><td>Catch gate</td><td class="ok">Isolated</td><td>Current-season source gate only; cannot mutate telemetry core</td></tr>
+<tr><td>Catch numbers</td><td class="bad">Blocked</td><td>No verified current-season source = no number</td></tr>
 </tbody>
 </table>
 </section>
 
 </main>
 
-<footer>Build 10148 · NO SOURCE = NO NUMBER · EA CORE FROZEN</footer>
+<footer>Build 10149 · NO SOURCE = NO NUMBER · EA CORE FROZEN</footer>
 
 <script>
 const TelemetryCore=(function(){
@@ -553,6 +570,7 @@ discoverAndVerify
 let clicks=0;
 let rainfallVerified=false;
 let rfcaVerified=false;
+let catchVerified=false;
 
 function id(x){return document.getElementById(x)}
 
@@ -588,7 +606,7 @@ return String(s).replace(/[&<>"']/g,m=>({
 }[m]));
 }
 
-function updateSourceScore(telemetryOk,rainOk,rfcaOk){
+function updateSourceScore(telemetryOk,rainOk,rfcaOk,catchOk){
 
 let score=0;
 
@@ -622,9 +640,23 @@ cls("scoreRFCA","warn");
 txt("scoreRFCA","Not integrated");
 }
 
+if(catchOk){
+score+=15;
+cls("scoreCatch","ok");
+txt("scoreCatch","Verified");
+}
+else{
+cls("scoreCatch","warn");
+txt("scoreCatch","Not integrated");
+}
+
 txt("qualityScore",score+"/100");
 
-if(score>=80){
+if(score>=95){
+cls("qualityMeaning","ok");
+txt("qualityMeaning","High source maturity");
+}
+else if(score>=80){
 cls("qualityMeaning","ok");
 txt("qualityMeaning","EA telemetry, rainfall and RFCA verified");
 }
@@ -659,7 +691,7 @@ txt("freshness","—");
 
 txt("dataProof","EA proof: failed both routes");
 
-updateSourceScore(false,rainfallVerified,rfcaVerified);
+updateSourceScore(false,rainfallVerified,rfcaVerified,catchVerified);
 
 return;
 }
@@ -704,7 +736,7 @@ latest.value.toFixed(3)+
 latest.time
 );
 
-updateSourceScore(true,rainfallVerified,rfcaVerified);
+updateSourceScore(true,rainfallVerified,rfcaVerified,catchVerified);
 }
 
 async function renderRainfall(){
