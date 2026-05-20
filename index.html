@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10121</title>
+<title>Salmon Rivers Intelligence — Build 10122</title>
 
 <style>
 :root{
@@ -51,24 +51,25 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 
 <header>
   <h1>Salmon Rivers Intelligence</h1>
-  <div class="build">Build 10121 · Corrected EA Trend Alignment · verified data only</div>
+  <div class="build">Build 10122 · Trend Verification Hardening · verified data only</div>
 </header>
 
 <main>
 
 <section class="card">
   <h2>Gold Correction Checkpoint</h2>
-  <div class="badge good">Trend integrity hardened</div>
+  <div class="badge good">Trend verification hardened</div>
 
-  <div class="row"><div class="label">Current build</div><div class="value">10121</div></div>
-  <div class="row"><div class="label">Correction</div><div class="value">Rising detection hardened</div></div>
+  <div class="row"><div class="label">Current build</div><div class="value">10122</div></div>
+  <div class="row"><div class="label">Correction state</div><div class="value">Trend diagnostics added</div></div>
   <div class="row"><div class="label">Runtime</div><div class="value">Single HTML</div></div>
   <div class="row"><div class="label">Primary live river</div><div class="value">Ribble @ Henthorn</div></div>
   <div class="row"><div class="label">Verified live source</div><div class="value">EA telemetry</div></div>
   <div class="row"><div class="label">Blocked values</div><div class="value">Catch, RFCA, fish counters</div></div>
 
   <p class="small">
-    Build 10121 treats movement as critical telemetry. A river must not be shown as steady when the recent EA readings show a rise.
+    Build 10122 makes the trend decision auditable on screen. It shows the latest movement, window movement,
+    and the number of rising/falling steps used to classify the river.
   </p>
 </section>
 
@@ -79,6 +80,7 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 
   <div class="row"><div class="label">Primary river</div><div class="value">Ribble @ Henthorn</div></div>
   <div class="row"><div class="label">Live level</div><div id="summaryLevel" class="value">Checking</div></div>
+  <div class="row"><div class="label">Movement</div><div id="summaryMovement" class="value">Checking</div></div>
   <div class="row"><div class="label">Rainfall</div><div id="summaryRain" class="value">Checking</div></div>
   <div class="row"><div class="label">Catch intelligence</div><div class="value">Blocked</div></div>
   <div class="row"><div class="label">RFCA values</div><div class="value">Blocked</div></div>
@@ -96,8 +98,10 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   </div>
 
   <div class="row"><div class="label">Movement</div><div id="movementValue" class="value">—</div></div>
-  <div class="row"><div class="label">Trend evidence</div><div id="trendEvidence" class="value">—</div></div>
   <div class="row"><div class="label">Trend confidence</div><div id="trendConfidence" class="value">—</div></div>
+  <div class="row"><div class="label">Latest delta</div><div id="trendLatestDelta" class="value">—</div></div>
+  <div class="row"><div class="label">Window delta</div><div id="trendWindowDelta" class="value">—</div></div>
+  <div class="row"><div class="label">Trend steps</div><div id="trendSteps" class="value">—</div></div>
   <div class="row"><div class="label">Reading time</div><div id="readingTime" class="value">—</div></div>
   <div class="row"><div class="label">Last refresh</div><div id="successTime" class="value">—</div></div>
   <div class="row"><div class="label">Freshness</div><div id="freshnessValue" class="value">—</div></div>
@@ -105,7 +109,22 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   <div class="row"><div class="label">Source</div><div class="value">EA 710305</div></div>
 
   <p class="small">
-    Movement now uses the recent EA reading window. “Steady” is only shown when there is no confirmed directional trend.
+    A positive latest delta is Rising. A negative latest delta is Falling. Steady is only used when both latest and window evidence show no direction.
+  </p>
+</section>
+
+<section class="card">
+  <h2>Trend Verification Panel</h2>
+
+  <div id="trendBadge" class="badge info">Awaiting telemetry…</div>
+
+  <div class="row"><div class="label">Decision rule</div><div id="trendRule" class="value">—</div></div>
+  <div class="row"><div class="label">Readings used</div><div id="trendReadingsUsed" class="value">—</div></div>
+  <div class="row"><div class="label">Oldest reading in window</div><div id="trendOldest" class="value">—</div></div>
+  <div class="row"><div class="label">Newest reading in window</div><div id="trendNewest" class="value">—</div></div>
+
+  <p class="small">
+    This panel exists because movement is operationally important. It is not hidden behind a vague “steady” label.
   </p>
 </section>
 
@@ -146,7 +165,7 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   <div class="row"><div class="label">Insufficient readings</div><div class="value">Latest only</div></div>
 
   <p class="small">
-    The old 0.005m dead-zone has been removed. Small but real upward movement is now treated as rising.
+    The old 0.005m dead-zone is gone. Small but real upward movement is treated as Rising.
   </p>
 </section>
 
@@ -221,6 +240,7 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 
   <div class="row"><div class="label">Known</div><div class="value">EA Henthorn telemetry stable</div></div>
   <div class="row"><div class="label">Corrected</div><div class="value">Movement trend integrity</div></div>
+  <div class="row"><div class="label">Added</div><div class="value">Trend verification panel</div></div>
   <div class="row"><div class="label">Unknown</div><div class="value">Stable RFCA endpoint</div></div>
   <div class="row"><div class="label">Unknown</div><div class="value">Verified Ribble catch totals</div></div>
   <div class="row"><div class="label">Next action</div><div class="value">Verify against live EA display</div></div>
@@ -244,11 +264,11 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 </div>
 
 <div class="footer">
-  Salmon Rivers Intelligence · Build 10121 · Corrected EA Trend Alignment
+  Salmon Rivers Intelligence · Build 10122 · Trend Verification Hardening
 </div>
 
 <script>
-const BUILD = "10121";
+const BUILD = "10122";
 const HENTHORN_STATION = "710305";
 const HENTHORN_LAT = 53.87;
 const HENTHORN_LONG = -2.39;
@@ -256,7 +276,8 @@ const HENTHORN_LONG = -2.39;
 const state = {
   telemetryVerified:false,
   rainfallVerified:false,
-  lastSuccess:null
+  lastSuccess:null,
+  movement:"Checking"
 };
 
 const EA_LATEST_URL =
@@ -289,12 +310,19 @@ function formatDateTime(iso){
   });
 }
 
+function signedMetres(value){
+  if(!Number.isFinite(value)) return "—";
+  const prefix = value > 0 ? "+" : "";
+  return prefix + value.toFixed(3) + " m";
+}
+
 function classifyMovementFromReadings(readings){
   const clean = readings
     .filter(r => Number.isFinite(Number(r.value)) && r.dateTime)
     .map(r => ({
       value:Number(r.value),
-      time:new Date(r.dateTime)
+      time:new Date(r.dateTime),
+      iso:r.dateTime
     }))
     .filter(r => !isNaN(r.time.getTime()))
     .sort((a,b) => a.time - b.time);
@@ -302,8 +330,16 @@ function classifyMovementFromReadings(readings){
   if(clean.length < 2){
     return {
       movement:"Latest only",
-      evidence:"Insufficient readings",
-      confidence:"LOW"
+      confidence:"LOW",
+      rule:"Insufficient readings",
+      latestDelta:null,
+      windowDelta:null,
+      rises:0,
+      falls:0,
+      flats:0,
+      readingsUsed:clean.length,
+      oldest:"—",
+      newest:"—"
     };
   }
 
@@ -327,51 +363,85 @@ function classifyMovementFromReadings(readings){
   const previous = clean[clean.length - 2];
   const oldest = clean[0];
 
-  const latestDiff = latest.value - previous.value;
-  const windowDiff = latest.value - oldest.value;
+  const latestDelta = latest.value - previous.value;
+  const windowDelta = latest.value - oldest.value;
 
-  const evidence =
-    "Δlast " + latestDiff.toFixed(3) +
-    "m / Δwindow " + windowDiff.toFixed(3) +
-    "m / rises " + rises +
-    " / falls " + falls;
-
-  if(latestDiff > 0){
+  if(latestDelta > 0){
     return {
       movement:"Rising",
-      evidence:evidence,
-      confidence:(rises >= falls && rises >= 2) ? "HIGH" : "MEDIUM"
+      confidence:(rises >= falls && rises >= 2) ? "HIGH" : "MEDIUM",
+      rule:"Latest reading is higher",
+      latestDelta,
+      windowDelta,
+      rises,
+      falls,
+      flats,
+      readingsUsed:clean.length,
+      oldest:oldest.iso,
+      newest:latest.iso
     };
   }
 
-  if(latestDiff < 0){
+  if(latestDelta < 0){
     return {
       movement:"Falling",
-      evidence:evidence,
-      confidence:(falls >= rises && falls >= 2) ? "HIGH" : "MEDIUM"
+      confidence:(falls >= rises && falls >= 2) ? "HIGH" : "MEDIUM",
+      rule:"Latest reading is lower",
+      latestDelta,
+      windowDelta,
+      rises,
+      falls,
+      flats,
+      readingsUsed:clean.length,
+      oldest:oldest.iso,
+      newest:latest.iso
     };
   }
 
-  if(windowDiff > 0 && rises > falls){
+  if(windowDelta > 0 && rises > falls){
     return {
       movement:"Rising",
-      evidence:evidence,
-      confidence:rises >= 2 ? "MEDIUM" : "LOW"
+      confidence:rises >= 2 ? "MEDIUM" : "LOW",
+      rule:"Window trend is upward",
+      latestDelta,
+      windowDelta,
+      rises,
+      falls,
+      flats,
+      readingsUsed:clean.length,
+      oldest:oldest.iso,
+      newest:latest.iso
     };
   }
 
-  if(windowDiff < 0 && falls > rises){
+  if(windowDelta < 0 && falls > rises){
     return {
       movement:"Falling",
-      evidence:evidence,
-      confidence:falls >= 2 ? "MEDIUM" : "LOW"
+      confidence:falls >= 2 ? "MEDIUM" : "LOW",
+      rule:"Window trend is downward",
+      latestDelta,
+      windowDelta,
+      rises,
+      falls,
+      flats,
+      readingsUsed:clean.length,
+      oldest:oldest.iso,
+      newest:latest.iso
     };
   }
 
   return {
     movement:"Steady",
-    evidence:evidence,
-    confidence:"LOW"
+    confidence:"LOW",
+    rule:"No directional trend confirmed",
+    latestDelta,
+    windowDelta,
+    rises,
+    falls,
+    flats,
+    readingsUsed:clean.length,
+    oldest:oldest.iso,
+    newest:latest.iso
   };
 }
 
@@ -390,6 +460,7 @@ function updateIntegrity(){
 
 function updateCommandSummary(){
   setText("summaryLevel", state.telemetryVerified ? "EA verified live" : "Unavailable");
+  setText("summaryMovement", state.telemetryVerified ? state.movement : "Unavailable");
   setText("summaryRain", state.rainfallVerified ? "EA provisional live" : "Unavailable");
 
   if(state.telemetryVerified && state.rainfallVerified){
@@ -417,6 +488,28 @@ function updateFusion(){
   }
 
   updateCommandSummary();
+}
+
+function updateTrendPanel(trend){
+  setText("movementValue",trend.movement);
+  setText("trendConfidence",trend.confidence);
+  setText("trendLatestDelta",trend.latestDelta === null ? "—" : signedMetres(trend.latestDelta));
+  setText("trendWindowDelta",trend.windowDelta === null ? "—" : signedMetres(trend.windowDelta));
+  setText("trendSteps","↑ " + trend.rises + " / ↓ " + trend.falls + " / = " + trend.flats);
+  setText("trendRule",trend.rule);
+  setText("trendReadingsUsed",String(trend.readingsUsed));
+  setText("trendOldest",formatDateTime(trend.oldest));
+  setText("trendNewest",formatDateTime(trend.newest));
+
+  if(trend.movement === "Rising"){
+    setBadge("trendBadge","Trend verified: Rising","good");
+  }else if(trend.movement === "Falling"){
+    setBadge("trendBadge","Trend verified: Falling","info");
+  }else if(trend.movement === "Steady"){
+    setBadge("trendBadge","Trend: Steady / low movement","warn");
+  }else{
+    setBadge("trendBadge","Trend unavailable","bad");
+  }
 }
 
 async function fetchRecentReadings(){
@@ -461,6 +554,7 @@ async function loadHenthorn(){
   setBadge("statusBadge","Checking EA telemetry…","info");
 
   state.telemetryVerified = false;
+  state.movement = "Checking";
   updateIntegrity();
   updateFusion();
 
@@ -479,40 +573,22 @@ async function loadHenthorn(){
 
     if(!Number.isFinite(level)) throw new Error("Invalid latest level");
 
-    let movement = "Latest only";
-    let evidence = "Latest reading only";
-    let confidence = "LOW";
+    const recent = await fetchRecentReadings();
+    const recentWithLatest = recent.slice();
 
-    try{
-      const recent = await fetchRecentReadings();
+    const hasLatestAlready = recentWithLatest.some(r =>
+      r.dateTime === latest.dateTime &&
+      Number(r.value) === level
+    );
 
-      const recentWithLatest = recent.slice();
-
-      const hasLatestAlready = recentWithLatest.some(r =>
-        r.dateTime === latest.dateTime &&
-        Number(r.value) === level
-      );
-
-      if(!hasLatestAlready){
-        recentWithLatest.push(latest);
-      }
-
-      const trend = classifyMovementFromReadings(recentWithLatest);
-
-      movement = trend.movement;
-      evidence = trend.evidence;
-      confidence = trend.confidence || "LOW";
-
-    }catch(e){
-      movement = "Latest only";
-      evidence = "Recent trend unavailable";
-      confidence = "LOW";
+    if(!hasLatestAlready){
+      recentWithLatest.push(latest);
     }
 
+    const trend = classifyMovementFromReadings(recentWithLatest);
+
     setText("levelValue",level.toFixed(3) + " m");
-    setText("movementValue",movement);
-    setText("trendEvidence",evidence);
-    setText("trendConfidence",confidence);
+    updateTrendPanel(trend);
     setText("readingTime",formatDateTime(time));
 
     state.lastSuccess = new Date();
@@ -522,20 +598,31 @@ async function loadHenthorn(){
     setBadge("statusBadge","Live EA telemetry verified","good");
 
     state.telemetryVerified = true;
+    state.movement = trend.movement;
+
     updateIntegrity();
     updateFusion();
 
   }catch(err){
     setText("levelValue","Unavailable");
     setText("movementValue","Unavailable");
-    setText("trendEvidence","Unavailable");
     setText("trendConfidence","Unavailable");
+    setText("trendLatestDelta","Unavailable");
+    setText("trendWindowDelta","Unavailable");
+    setText("trendSteps","Unavailable");
+    setText("trendRule","Unavailable");
+    setText("trendReadingsUsed","Unavailable");
+    setText("trendOldest","Unavailable");
+    setText("trendNewest","Unavailable");
     setText("readingTime","Unavailable");
     setText("freshnessValue","Unknown");
 
     setBadge("statusBadge","EA telemetry unavailable","bad");
+    setBadge("trendBadge","Trend unavailable","bad");
 
     state.telemetryVerified = false;
+    state.movement = "Unavailable";
+
     updateIntegrity();
     updateFusion();
   }
