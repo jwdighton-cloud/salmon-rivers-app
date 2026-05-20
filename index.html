@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10144</title>
+<title>Salmon Rivers Intelligence — Build 10145</title>
 <style>
 :root{--bg:#f4f6f8;--card:#fff;--line:#d8dde3;--text:#111;--muted:#667085;--ok:#0f7b0f;--warn:#a15c00;--bad:#a40000;--blue:#0b5cad}
 *{box-sizing:border-box}
@@ -18,7 +18,6 @@ main{max-width:980px;margin:0 auto;padding:14px}
 .ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}
 .pill{display:inline-block;border-radius:999px;padding:7px 11px;font-size:13px;font-weight:800;background:#eef2f6;margin:3px 4px 3px 0}
 button{border:0;border-radius:12px;background:var(--blue);color:#fff;padding:13px 18px;font-weight:900;font-size:15px;cursor:pointer}
-button:active{transform:scale(.98)}
 table{width:100%;border-collapse:collapse;font-size:13px}
 th,td{border-bottom:1px solid var(--line);padding:8px;text-align:left;vertical-align:top}
 th{background:#f0f3f6}
@@ -29,42 +28,25 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 <body>
 <header>
 <h1>Salmon Rivers Intelligence</h1>
-<div class="build">GOLD BUILD 10144 — Core Telemetry Freeze</div>
+<div class="build">GOLD BUILD 10145 — Rainfall Consumer Module</div>
 </header>
 
 <main>
 
 <section class="card">
 <h2>River Ribble @ Henthorn — Protected Core Telemetry</h2>
-
 <div id="status" class="pill">Initialising…</div>
 <div id="telemetryConfidence" class="pill warn">Telemetry confidence pending</div>
 <div id="coreLock" class="pill ok">EA core protected</div>
 
 <div class="grid">
-<div class="box">
-<div class="muted">Latest level</div>
-<div id="level" class="big">—</div>
-<div class="small muted">EA Henthorn station 710305</div>
-</div>
-
-<div class="box">
-<div class="muted">Movement</div>
-<div id="trend" class="big">—</div>
-<div id="trendDetail" class="small muted">Awaiting readings</div>
-</div>
-
-<div class="box">
-<div class="muted">Latest timestamp</div>
-<div id="time" style="font-weight:800">—</div>
-<div id="freshness" class="small muted">—</div>
-</div>
+<div class="box"><div class="muted">Latest level</div><div id="level" class="big">—</div><div class="small muted">EA Henthorn station 710305</div></div>
+<div class="box"><div class="muted">Movement</div><div id="trend" class="big">—</div><div id="trendDetail" class="small muted">Awaiting readings</div></div>
+<div class="box"><div class="muted">Latest timestamp</div><div id="time" style="font-weight:800">—</div><div id="freshness" class="small muted">—</div></div>
 </div>
 
 <br>
-
 <button id="refreshBtn">REFRESH NOW</button>
-
 <div id="refreshState" class="small muted">Refresh control ready</div>
 <div id="refreshClicks" class="small muted">Refresh clicks: 0</div>
 <div id="dataProof" class="small muted">EA proof: waiting</div>
@@ -72,17 +54,28 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 </section>
 
 <section class="card">
+<h2>Rainfall Consumer Module</h2>
+<div id="rainStatus" class="pill warn">Rainfall consumer waiting</div>
+<div class="grid">
+<div class="box"><div class="muted">Rainfall value</div><div id="rainValue" class="big">—</div><div id="rainMeta" class="small muted">No verified rainfall reading displayed</div></div>
+<div class="box"><div class="muted">Discovery state</div><div id="rainDiscovery" class="warn">Waiting</div></div>
+<div class="box"><div class="muted">Governance</div><div class="bad">Rainfall cannot alter EA core</div></div>
+</div>
+<table>
+<thead><tr><th>Candidate</th><th>Status</th><th>Evidence</th></tr></thead>
+<tbody id="rainRows"><tr><td>EA rainfall discovery</td><td class="warn">Waiting</td><td>—</td></tr></tbody>
+</table>
+</section>
+
+<section class="card">
 <h2>Core Telemetry Freeze Status</h2>
 <table>
-<thead>
-<tr><th>Component</th><th>Status</th><th>Rule</th></tr>
-</thead>
+<thead><tr><th>Component</th><th>Status</th><th>Rule</th></tr></thead>
 <tbody>
 <tr><td>EA acquisition routes</td><td class="ok">Frozen</td><td>No feature build may alter EA fetch paths casually</td></tr>
 <tr><td>Trend engine</td><td class="ok">Frozen</td><td>Latest delta first, multi-reading fallback</td></tr>
-<tr><td>Refresh control</td><td class="ok">Frozen</td><td>Manual + scheduled refresh use the same protected telemetry module</td></tr>
-<tr><td>Last-good cache</td><td class="ok">Active</td><td>Transient EA failure must not blank valid previous telemetry</td></tr>
-<tr><td>Future modules</td><td class="warn">Read-only consumers</td><td>Rainfall, RFCA, catch and operator modules read telemetry state only</td></tr>
+<tr><td>Rainfall module</td><td class="ok">Isolated</td><td>Read-only consumer; cannot mutate telemetry core</td></tr>
+<tr><td>Future modules</td><td class="warn">Read-only consumers</td><td>RFCA, catch and operator modules read telemetry state only</td></tr>
 </tbody>
 </table>
 </section>
@@ -90,9 +83,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 <section class="card">
 <h2>EA Acquisition Diagnostics</h2>
 <table>
-<thead>
-<tr><th>Route</th><th>Status</th><th>Evidence</th></tr>
-</thead>
+<thead><tr><th>Route</th><th>Status</th><th>Evidence</th></tr></thead>
 <tbody>
 <tr><td>Primary readings endpoint</td><td id="diagPrimary" class="warn">Waiting</td><td id="diagPrimaryEvidence">—</td></tr>
 <tr><td>Fallback station latestReading</td><td id="diagFallback" class="warn">Waiting</td><td id="diagFallbackEvidence">—</td></tr>
@@ -102,455 +93,122 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 </section>
 
 <section class="card">
-<h2>Protected Telemetry State</h2>
-<table>
-<thead>
-<tr><th>Field</th><th>Value</th></tr>
-</thead>
-<tbody>
-<tr><td>Core ready</td><td id="stateReady">false</td></tr>
-<tr><td>Latest route</td><td id="stateRoute">—</td></tr>
-<tr><td>Latest level</td><td id="stateLevel">—</td></tr>
-<tr><td>Latest trend</td><td id="stateTrend">—</td></tr>
-<tr><td>Latest reading time</td><td id="stateReadingTime">—</td></tr>
-<tr><td>Last successful refresh</td><td id="stateRefreshTime">—</td></tr>
-</tbody>
-</table>
-</section>
-
-<section class="card">
 <h2>Source Quality Score</h2>
 <div class="grid">
 <div class="box"><div class="muted">Verified source score</div><div id="qualityScore" class="big">—</div></div>
-<div class="box"><div class="muted">Meaning</div><div id="qualityMeaning" class="warn">Awaiting EA check</div></div>
+<div class="box"><div class="muted">Meaning</div><div id="qualityMeaning" class="warn">Awaiting checks</div></div>
 <div class="box"><div class="muted">Governance</div><div class="bad">NOT a fishability score</div></div>
 </div>
 </section>
 
-<section class="card">
-<h2>Future Intelligence Modules</h2>
-<table>
-<thead>
-<tr><th>Module</th><th>Status</th><th>Access to EA core</th></tr>
-</thead>
-<tbody>
-<tr><td>Rainfall maturity</td><td class="warn">Next acquisition target</td><td>Read-only</td></tr>
-<tr><td>RFCA sonde / temperature</td><td class="warn">Primary strategic acquisition target</td><td>Read-only</td></tr>
-<tr><td>RFCA fish counters</td><td class="warn">Investigation target</td><td>Read-only</td></tr>
-<tr><td>Current-season catches</td><td class="warn">No verified feed integrated</td><td>Read-only</td></tr>
-<tr><td>Operator / beat intelligence</td><td class="warn">No verified feed integrated</td><td>Read-only</td></tr>
-</tbody>
-</table>
-</section>
-
 </main>
-
-<footer>Build 10144 · NO SOURCE = NO NUMBER · EA CORE FROZEN</footer>
+<footer>Build 10145 · NO SOURCE = NO NUMBER · EA CORE FROZEN</footer>
 
 <script>
-const TelemetryCore = (function(){
+const TelemetryCore=(function(){
+const EA_READINGS="https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings.json?_sorted&_limit=24";
+const EA_STATION="https://environment.data.gov.uk/flood-monitoring/id/stations/710305.json";
+let state={ready:false,route:null,readings:[],latest:null,trend:null,lastSuccessfulRefresh:null,lastGoodReadings:null,lastError:null};
 
-const EA_READINGS =
-"https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings.json?_sorted&_limit=24";
-
-const EA_STATION =
-"https://environment.data.gov.uk/flood-monitoring/id/stations/710305.json";
-
-let state = {
-ready:false,
-route:null,
-readings:[],
-latest:null,
-trend:null,
-lastSuccessfulRefresh:null,
-lastGoodReadings:null,
-lastError:null
-};
-
-function bust(url){
-return url +
-(url.includes("?") ? "&" : "?") +
-"_cb=" +
-Date.now() +
-"_" +
-Math.random().toString(16).slice(2);
-}
-
-async function getJson(url){
-const r = await fetch(
-bust(url),
-{
-cache:"no-store",
-headers:{"Accept":"application/json"}
-}
-);
-if(!r.ok){
-throw new Error("HTTP " + r.status);
-}
-return await r.json();
-}
-
-function cleanReadings(items){
-return (items || [])
-.map(x => ({
-value:Number(x.value),
-time:x.dateTime
-}))
-.filter(x =>
-Number.isFinite(x.value) &&
-x.time
-)
-.sort((a,b)=>new Date(a.time)-new Date(b.time));
-}
-
+function bust(url){return url+(url.includes("?")?"&":"?")+"_cb="+Date.now()+"_"+Math.random().toString(16).slice(2)}
+async function getJson(url){const r=await fetch(bust(url),{cache:"no-store",headers:{"Accept":"application/json"}});if(!r.ok)throw new Error("HTTP "+r.status);return await r.json()}
+function cleanReadings(items){return(items||[]).map(x=>({value:Number(x.value),time:x.dateTime})).filter(x=>Number.isFinite(x.value)&&x.time).sort((a,b)=>new Date(a.time)-new Date(b.time))}
 function analyseTrend(readings){
-if(readings.length < 2){
-return {label:"Unknown",detail:"Not enough EA readings"};
+if(readings.length<2)return{label:"Unknown",detail:"Not enough EA readings"};
+const latest=readings[readings.length-1],previous=readings[readings.length-2],delta=latest.value-previous.value,threshold=0.005;
+if(delta>threshold)return{label:"Rising",detail:"Latest delta +"+delta.toFixed(3)+" m from previous EA reading"};
+if(delta<-threshold)return{label:"Falling",detail:"Latest delta "+delta.toFixed(3)+" m from previous EA reading"};
+const sample=readings.slice(-6);
+if(sample.length>=2){const multi=sample[sample.length-1].value-sample[0].value;if(multi>threshold)return{label:"Rising",detail:"Multi-reading rise +"+multi.toFixed(3)+" m"};if(multi<-threshold)return{label:"Falling",detail:"Multi-reading fall "+multi.toFixed(3)+" m"}}
+return{label:"Steady",detail:"No material latest or multi-reading movement"};
 }
-
-const latest = readings[readings.length-1];
-const previous = readings[readings.length-2];
-const delta = latest.value - previous.value;
-const threshold = 0.005;
-
-if(delta > threshold){
-return {
-label:"Rising",
-detail:"Latest delta +" + delta.toFixed(3) + " m from previous EA reading"
-};
-}
-
-if(delta < -threshold){
-return {
-label:"Falling",
-detail:"Latest delta " + delta.toFixed(3) + " m from previous EA reading"
-};
-}
-
-const sample = readings.slice(-6);
-
-if(sample.length >= 2){
-const multi = sample[sample.length-1].value - sample[0].value;
-
-if(multi > threshold){
-return {
-label:"Rising",
-detail:"Multi-reading rise +" + multi.toFixed(3) + " m"
-};
-}
-
-if(multi < -threshold){
-return {
-label:"Falling",
-detail:"Multi-reading fall " + multi.toFixed(3) + " m"
-};
-}
-}
-
-return {
-label:"Steady",
-detail:"No material latest or multi-reading movement"
-};
-}
-
-async function primaryRoute(){
-const j = await getJson(EA_READINGS);
-if(!j || !Array.isArray(j.items)){
-throw new Error("No items array returned");
-}
-const readings = cleanReadings(j.items);
-if(!readings.length){
-throw new Error("No numeric readings parsed");
-}
-return readings;
-}
-
-async function fallbackRoute(){
-const j = await getJson(EA_STATION);
-const station = j.items || {};
-let measures = station.measures || station.measure || [];
-
-if(!Array.isArray(measures)){
-measures = [measures];
-}
-
-const candidates = measures
-.map(m => m && m.latestReading ? m.latestReading : null)
-.filter(Boolean)
-.map(r => ({
-value:Number(r.value),
-time:r.dateTime
-}))
-.filter(r =>
-Number.isFinite(r.value) &&
-r.time
-)
-.sort((a,b)=>new Date(a.time)-new Date(b.time));
-
-if(!candidates.length){
-throw new Error("No station latestReading found");
-}
-
-return candidates;
-}
-
+async function primaryRoute(){const j=await getJson(EA_READINGS);if(!j||!Array.isArray(j.items))throw new Error("No items array returned");const readings=cleanReadings(j.items);if(!readings.length)throw new Error("No numeric readings parsed");return readings}
+async function fallbackRoute(){const j=await getJson(EA_STATION);const station=j.items||{};let measures=station.measures||station.measure||[];if(!Array.isArray(measures))measures=[measures];const candidates=measures.map(m=>m&&m.latestReading?m.latestReading:null).filter(Boolean).map(r=>({value:Number(r.value),time:r.dateTime})).filter(r=>Number.isFinite(r.value)&&r.time).sort((a,b)=>new Date(a.time)-new Date(b.time));if(!candidates.length)throw new Error("No station latestReading found");return candidates}
 async function refresh(){
-let route = null;
-let readings = null;
-let primaryError = null;
-let fallbackError = null;
-
-try{
-readings = await primaryRoute();
-route = "Primary readings endpoint";
+let route=null,readings=null,primaryError=null,fallbackError=null;
+try{readings=await primaryRoute();route="Primary readings endpoint"}catch(e1){primaryError=e1;try{readings=await fallbackRoute();route="Fallback station latestReading"}catch(e2){fallbackError=e2}}
+if(readings&&readings.length){const latest=readings[readings.length-1],trend=analyseTrend(readings);state={ready:true,route,readings,latest,trend,lastSuccessfulRefresh:new Date().toISOString(),lastGoodReadings:readings,lastError:null};return{ok:true,route,readings,latest,trend,primaryError,fallbackError,cached:false}}
+state.ready=false;state.lastError={primary:primaryError?String(primaryError.message||primaryError):null,fallback:fallbackError?String(fallbackError.message||fallbackError):null};
+if(state.lastGoodReadings){const cached=state.lastGoodReadings;return{ok:true,route:"Cached last-good telemetry",readings:cached,latest:cached[cached.length-1],trend:analyseTrend(cached),primaryError,fallbackError,cached:true}}
+return{ok:false,route:null,readings:[],latest:null,trend:null,primaryError,fallbackError,cached:false}
 }
-catch(e1){
-primaryError = e1;
-try{
-readings = await fallbackRoute();
-route = "Fallback station latestReading";
-}
-catch(e2){
-fallbackError = e2;
-}
-}
-
-if(readings && readings.length){
-const latest = readings[readings.length-1];
-const trend = analyseTrend(readings);
-
-state.ready = true;
-state.route = route;
-state.readings = readings;
-state.latest = latest;
-state.trend = trend;
-state.lastSuccessfulRefresh = new Date().toISOString();
-state.lastGoodReadings = readings;
-state.lastError = null;
-
-return {
-ok:true,
-route,
-readings,
-latest,
-trend,
-primaryError,
-fallbackError,
-cached:false
-};
-}
-
-state.ready = false;
-state.lastError = {
-primary: primaryError ? String(primaryError.message || primaryError) : null,
-fallback: fallbackError ? String(fallbackError.message || fallbackError) : null
-};
-
-if(state.lastGoodReadings){
-const cached = state.lastGoodReadings;
-return {
-ok:true,
-route:"Cached last-good telemetry",
-readings:cached,
-latest:cached[cached.length-1],
-trend:analyseTrend(cached),
-primaryError,
-fallbackError,
-cached:true
-};
-}
-
-return {
-ok:false,
-route:null,
-readings:[],
-latest:null,
-trend:null,
-primaryError,
-fallbackError,
-cached:false
-};
-}
-
-function getState(){
-return JSON.parse(JSON.stringify(state));
-}
-
-return {
-refresh,
-getState
-};
-
+function getState(){return JSON.parse(JSON.stringify(state))}
+return{refresh,getState,getJson,bust};
 })();
 
-let clicks = 0;
+const RainfallConsumer=(function(){
+const EA_STATION="https://environment.data.gov.uk/flood-monitoring/id/stations/710305.json";
+async function discover(){
+const j=await TelemetryCore.getJson(EA_STATION);
+const station=j.items||{};
+const lat=station.lat||station.latitude;
+const long=station.long||station.longitude;
+if(!lat||!long)throw new Error("No Henthorn coordinates acquired");
+const url="https://environment.data.gov.uk/flood-monitoring/id/stations.json?parameter=rainfall&lat="+encodeURIComponent(lat)+"&long="+encodeURIComponent(long)+"&dist=25";
+const rj=await TelemetryCore.getJson(url);
+const found=(rj.items||[]).slice(0,6);
+if(!found.length)throw new Error("No nearby EA rainfall station candidates acquired");
+return found;
+}
+return{discover};
+})();
 
+let clicks=0;
 function id(x){return document.getElementById(x)}
 function txt(x,v){const e=id(x);if(e)e.textContent=v}
 function cls(x,v){const e=id(x);if(e)e.className=v}
-
-function nowText(){
-return new Date().toLocaleString("en-GB",{dateStyle:"medium",timeStyle:"medium"});
-}
-
-function displayTime(iso){
-return new Date(iso).toLocaleString("en-GB",{dateStyle:"medium",timeStyle:"short"});
-}
-
-function ageMinutes(iso){
-return Math.round((Date.now()-new Date(iso).getTime())/60000);
-}
+function nowText(){return new Date().toLocaleString("en-GB",{dateStyle:"medium",timeStyle:"medium"})}
+function displayTime(iso){return new Date(iso).toLocaleString("en-GB",{dateStyle:"medium",timeStyle:"short"})}
+function ageMinutes(iso){return Math.round((Date.now()-new Date(iso).getTime())/60000)}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]))}
 
 function renderTelemetry(result){
-
-if(!result.ok){
-cls("status","pill bad");
-txt("status","EA telemetry unavailable");
-cls("telemetryConfidence","pill bad");
-txt("telemetryConfidence","No telemetry confidence");
-txt("level","—");
-txt("trend","—");
-txt("trendDetail","Both EA routes failed and no cache exists");
-txt("time","—");
-txt("freshness","—");
-txt("qualityScore","0/100");
-cls("qualityMeaning","bad");
-txt("qualityMeaning","EA telemetry not acquired");
-txt("dataProof","EA proof: failed both routes");
-return;
+if(!result.ok){cls("status","pill bad");txt("status","EA telemetry unavailable");cls("telemetryConfidence","pill bad");txt("telemetryConfidence","No telemetry confidence");txt("level","—");txt("trend","—");txt("trendDetail","Both EA routes failed and no cache exists");txt("time","—");txt("freshness","—");txt("qualityScore","0/100");cls("qualityMeaning","bad");txt("qualityMeaning","EA telemetry not acquired");txt("dataProof","EA proof: failed both routes");return}
+const latest=result.latest,trend=result.trend,mins=ageMinutes(latest.time);
+txt("level",latest.value.toFixed(3)+" m");txt("time",displayTime(latest.time));txt("freshness",mins+" minutes old");txt("trend",trend.label);txt("trendDetail",trend.detail);
+if(result.cached){cls("status","pill warn");txt("status","Using cached last-good telemetry");cls("telemetryConfidence","pill warn");txt("telemetryConfidence","Telemetry confidence reduced — cached data")}
+else{cls("status","pill ok");txt("status","EA telemetry live via "+result.route);if(mins<=30){cls("telemetryConfidence","pill ok");txt("telemetryConfidence","Telemetry confidence HIGH")}else{cls("telemetryConfidence","pill warn");txt("telemetryConfidence","Telemetry stale warning")}}
+txt("qualityScore","40/100");cls("qualityMeaning","warn");txt("qualityMeaning","Core EA telemetry verified");
+txt("dataProof","EA proof: "+result.readings.length+" reading(s) parsed; latest "+latest.value.toFixed(3)+" m at "+latest.time);
 }
-
-const latest = result.latest;
-const trend = result.trend;
-const mins = ageMinutes(latest.time);
-
-txt("level",latest.value.toFixed(3) + " m");
-txt("time",displayTime(latest.time));
-txt("freshness",mins + " minutes old");
-txt("trend",trend.label);
-txt("trendDetail",trend.detail);
-
-if(result.cached){
-cls("status","pill warn");
-txt("status","Using cached last-good telemetry");
-cls("telemetryConfidence","pill warn");
-txt("telemetryConfidence","Telemetry confidence reduced — cached data");
-}
-else{
-cls("status","pill ok");
-txt("status","EA telemetry live via " + result.route);
-
-if(mins <= 30){
-cls("telemetryConfidence","pill ok");
-txt("telemetryConfidence","Telemetry confidence HIGH");
-}
-else{
-cls("telemetryConfidence","pill warn");
-txt("telemetryConfidence","Telemetry stale warning");
-}
-}
-
-txt("qualityScore","40/100");
-cls("qualityMeaning","warn");
-txt("qualityMeaning","Core EA telemetry verified");
-
-txt(
-"dataProof",
-"EA proof: " +
-result.readings.length +
-" reading(s) parsed; latest " +
-latest.value.toFixed(3) +
-" m at " +
-latest.time
-);
-}
-
 function renderDiagnostics(result){
-
-if(result.primaryError){
-cls("diagPrimary","bad");
-txt("diagPrimary","Failed");
-txt("diagPrimaryEvidence",String(result.primaryError.message || result.primaryError));
+if(result.primaryError){cls("diagPrimary","bad");txt("diagPrimary","Failed");txt("diagPrimaryEvidence",String(result.primaryError.message||result.primaryError))}
+else if(result.route==="Primary readings endpoint"){cls("diagPrimary","ok");txt("diagPrimary","OK");txt("diagPrimaryEvidence",result.readings.length+" readings parsed")}
+else{cls("diagPrimary","warn");txt("diagPrimary","Not used");txt("diagPrimaryEvidence","Fallback or cache used")}
+if(result.fallbackError){cls("diagFallback","bad");txt("diagFallback","Failed");txt("diagFallbackEvidence",String(result.fallbackError.message||result.fallbackError))}
+else if(result.route==="Fallback station latestReading"){cls("diagFallback","ok");txt("diagFallback","OK");txt("diagFallbackEvidence",result.readings.length+" latestReading value(s) parsed")}
+else{cls("diagFallback","warn");txt("diagFallback","Standby");txt("diagFallbackEvidence","Not required")}
+if(result.ok){cls("diagLocked","ok");txt("diagLocked",result.route);txt("diagLockedEvidence","Telemetry route protected by frozen core module")}
+else{cls("diagLocked","bad");txt("diagLocked","None");txt("diagLockedEvidence","No working telemetry route")}
 }
-else if(result.route === "Primary readings endpoint"){
-cls("diagPrimary","ok");
-txt("diagPrimary","OK");
-txt("diagPrimaryEvidence",result.readings.length + " readings parsed");
-}
-else{
-cls("diagPrimary","warn");
-txt("diagPrimary","Not used");
-txt("diagPrimaryEvidence","Fallback or cache used");
-}
-
-if(result.fallbackError){
-cls("diagFallback","bad");
-txt("diagFallback","Failed");
-txt("diagFallbackEvidence",String(result.fallbackError.message || result.fallbackError));
-}
-else if(result.route === "Fallback station latestReading"){
-cls("diagFallback","ok");
-txt("diagFallback","OK");
-txt("diagFallbackEvidence",result.readings.length + " latestReading value(s) parsed");
-}
-else{
-cls("diagFallback","warn");
-txt("diagFallback","Standby");
-txt("diagFallbackEvidence","Not required");
-}
-
-if(result.ok){
-cls("diagLocked","ok");
-txt("diagLocked",result.route);
-txt("diagLockedEvidence","Telemetry route protected by frozen core module");
-}
-else{
-cls("diagLocked","bad");
-txt("diagLocked","None");
-txt("diagLockedEvidence","No working telemetry route");
+async function renderRainfall(){
+try{
+cls("rainStatus","pill warn");txt("rainStatus","Discovering rainfall candidates");
+const found=await RainfallConsumer.discover();
+txt("rainDiscovery","Station candidates acquired");cls("rainDiscovery","ok");
+txt("rainValue","—");txt("rainMeta","No numeric rainfall promoted yet");
+cls("rainStatus","pill warn");txt("rainStatus","Rainfall candidates found; numeric reading blocked");
+id("rainRows").innerHTML=found.map(s=>"<tr><td>"+esc(s.label||s.stationReference||"EA rainfall station")+"</td><td class='warn'>Candidate only</td><td>"+esc(s.stationReference||s["@id"]||"No reference")+"</td></tr>").join("");
+}catch(e){
+cls("rainStatus","pill warn");txt("rainStatus","Rainfall discovery unavailable");
+txt("rainDiscovery","Safe fallback");cls("rainDiscovery","warn");
+id("rainRows").innerHTML="<tr><td>EA rainfall discovery</td><td class='warn'>Safe fallback</td><td>"+esc(String(e.message||e))+"</td></tr>";
 }
 }
-
-function renderState(result){
-
-const state = TelemetryCore.getState();
-
-txt("stateReady",state.ready ? "true" : "false");
-txt("stateRoute",state.route || result.route || "—");
-txt("stateLevel",result.latest ? result.latest.value.toFixed(3) + " m" : "—");
-txt("stateTrend",result.trend ? result.trend.label : "—");
-txt("stateReadingTime",result.latest ? result.latest.time : "—");
-txt("stateRefreshTime",state.lastSuccessfulRefresh || "—");
-
-if(state.lastGoodReadings){
-txt("lastGoodProof","Last-good telemetry cache active: " + state.lastGoodReadings.length + " reading(s)");
-}
-else{
-txt("lastGoodProof","Last-good telemetry cache: empty");
-}
-}
-
 async function manualRefresh(){
-
-clicks++;
-txt("refreshClicks","Refresh clicks: " + clicks);
-txt("refreshState","Refresh running: " + nowText());
-
-const result = await TelemetryCore.refresh();
-
-renderTelemetry(result);
-renderDiagnostics(result);
-renderState(result);
-
-txt("refreshState","Last refresh completed: " + nowText());
+clicks++;txt("refreshClicks","Refresh clicks: "+clicks);txt("refreshState","Refresh running: "+nowText());
+const result=await TelemetryCore.refresh();
+renderTelemetry(result);renderDiagnostics(result);
+const state=TelemetryCore.getState();
+if(state.lastGoodReadings){txt("lastGoodProof","Last-good telemetry cache active: "+state.lastGoodReadings.length+" reading(s)")}else{txt("lastGoodProof","Last-good telemetry cache: empty")}
+await renderRainfall();
+txt("refreshState","Last refresh completed: "+nowText());
 }
-
 document.addEventListener("DOMContentLoaded",function(){
 id("refreshBtn").addEventListener("click",manualRefresh);
 manualRefresh();
-setInterval(manualRefresh,15 * 60 * 1000);
+setInterval(manualRefresh,15*60*1000);
 });
 </script>
-
 </body>
 </html>
