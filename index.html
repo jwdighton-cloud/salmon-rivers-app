@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10126</title>
+<title>Salmon Rivers Intelligence — Build 10127</title>
 <style>
 :root{--bg:#f4f6f8;--card:#fff;--ink:#111827;--muted:#6b7280;--line:#d8dee6;--green:#166534;--amber:#92400e;--red:#991b1b;--blue:#1d4ed8;--soft-green:#dcfce7;--soft-amber:#fef3c7;--soft-red:#fee2e2;--soft-blue:#dbeafe}
 *{box-sizing:border-box}
@@ -41,19 +41,54 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 <body>
 <header>
   <h1>Salmon Rivers Intelligence</h1>
-  <div class="build">Build 10126 · Registry Regression Repair · verified data only</div>
+  <div class="build">Build 10127 · Intelligence Priority Engine · verified data only</div>
 </header>
 
 <main>
 
 <section class="card">
-  <h2>Build 10126 Checkpoint</h2>
-  <div class="badge good">Live baseline restored</div>
-  <div class="row"><div class="label">Current build</div><div class="value">10126</div></div>
-  <div class="row"><div class="label">Repair</div><div class="value">Registry + full live telemetry</div></div>
-  <div class="row"><div class="label">Trend diagnostics</div><div class="value">Restored</div></div>
-  <div class="row"><div class="label">Rainfall loader</div><div class="value">Restored</div></div>
-  <div class="row"><div class="label">Blocked values</div><div class="value">Catch, RFCA, fish counters</div></div>
+  <h2>Intelligence Priority Engine</h2>
+  <div id="priorityBadge" class="badge info">Evaluating priorities…</div>
+  <div class="row"><div class="label">Top operational priority</div><div id="priorityTop" class="value">Checking</div></div>
+  <div class="row"><div class="label">Telemetry priority</div><div id="priorityTelemetry" class="value">Checking</div></div>
+  <div class="row"><div class="label">Rainfall priority</div><div id="priorityRainfall" class="value">Checking</div></div>
+  <div class="row"><div class="label">Missing intelligence</div><div id="priorityMissing" class="value">Checking</div></div>
+  <div class="row"><div class="label">Acquisition urgency</div><div id="priorityAcquisition" class="value">Checking</div></div>
+  <p class="small">
+    This panel does not predict fishing quality. It only ranks what matters operationally from verified or explicitly missing signals.
+  </p>
+</section>
+
+<section class="card">
+  <h2>Source Health Monitor</h2>
+  <div id="healthBadge" class="badge info">Checking source health…</div>
+  <div class="row"><div class="label">EA Henthorn telemetry</div><div id="healthTelemetry" class="value">Checking</div></div>
+  <div class="row"><div class="label">EA rainfall acquisition</div><div id="healthRainfall" class="value">Checking</div></div>
+  <div class="row"><div class="label">Great Mitton weather feed</div><div class="value">Not integrated</div></div>
+  <div class="row"><div class="label">RFCA water quality</div><div class="value">Blocked</div></div>
+  <div class="row"><div class="label">Catch intelligence</div><div class="value">Blocked</div></div>
+</section>
+
+<section class="card">
+  <h2>Telemetry Risk State</h2>
+  <div id="riskBadge" class="badge info">Evaluating telemetry risk…</div>
+  <div class="row"><div class="label">Freshness state</div><div id="riskFreshness" class="value">Checking</div></div>
+  <div class="row"><div class="label">Movement state</div><div id="riskMovement" class="value">Checking</div></div>
+  <div class="row"><div class="label">Trend confidence</div><div id="riskTrendConfidence" class="value">Checking</div></div>
+  <div class="row"><div class="label">Risk statement</div><div id="riskStatement" class="value">Checking</div></div>
+</section>
+
+<section class="card">
+  <h2>Missing Critical Intelligence</h2>
+  <div class="badge warn">Important gaps remain</div>
+  <div class="row"><div class="label">Water temperature</div><div class="value">Missing</div></div>
+  <div class="row"><div class="label">RFCA sonde endpoint</div><div class="value">Not proven</div></div>
+  <div class="row"><div class="label">Fish counters</div><div class="value">Unacquired</div></div>
+  <div class="row"><div class="label">Current-season catch totals</div><div class="value">Blocked</div></div>
+  <div class="row"><div class="label">Verified weather feed</div><div class="value">Not integrated</div></div>
+  <p class="small">
+    Missing intelligence is shown as missing. The app must not fill these gaps with assumptions.
+  </p>
 </section>
 
 <section class="card">
@@ -131,6 +166,7 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
 <section class="card">
   <h2>Governance Rules</h2>
   <div class="row"><div class="label">Core rule</div><div class="value">No source = no number</div></div>
+  <div class="row"><div class="label">Priority rule</div><div class="value">Rank evidence, do not predict</div></div>
   <div class="row"><div class="label">Trend rule</div><div class="value">Do not hide a rise</div></div>
   <div class="row"><div class="label">Weather rule</div><div class="value">Anchor only until verified</div></div>
   <div class="row"><div class="label">Fusion rule</div><div class="value">Weak + weak ≠ verified</div></div>
@@ -142,14 +178,14 @@ a{color:#1d4ed8;font-weight:700;text-decoration:none}
   <button onclick="loadAll()">Refresh verified data</button>
 </div>
 
-<div class="footer">Salmon Rivers Intelligence · Build 10126 · Registry Regression Repair</div>
+<div class="footer">Salmon Rivers Intelligence · Build 10127 · Intelligence Priority Engine</div>
 
 <script>
-const BUILD="10126";
+const BUILD="10127";
 const HENTHORN_STATION="710305";
 const HENTHORN_LAT=53.87;
 const HENTHORN_LONG=-2.39;
-const state={telemetryVerified:false,rainfallVerified:false,movement:"Checking"};
+const state={telemetryVerified:false,rainfallVerified:false,movement:"Checking",freshness:"Checking",trendConfidence:"Checking"};
 const EA_LATEST_URL="https://environment.data.gov.uk/flood-monitoring/id/stations/"+HENTHORN_STATION+"/readings?latest";
 
 function setText(id,value){const el=document.getElementById(id);if(el)el.textContent=value;}
@@ -179,6 +215,7 @@ function updateCommandSummary(){
   else if(state.telemetryVerified)setBadge("commandBadge","Telemetry live, rainfall unavailable","info");
   else setBadge("commandBadge","Live baseline degraded","bad");
 }
+
 function updateFusion(){
   setText("fusionLevel",state.telemetryVerified?"VERIFIED":"Unavailable");
   setText("fusionRainfall",state.rainfallVerified?"PROVISIONAL":"Unavailable");
@@ -186,22 +223,78 @@ function updateFusion(){
   else if(state.telemetryVerified){setBadge("fusionBadge","Fusion limited: telemetry only","info");setText("fusionResult","Level telemetry valid alone");}
   else{setBadge("fusionBadge","Fusion blocked","bad");setText("fusionResult","No live baseline");}
   updateCommandSummary();
+  updatePriorityEngine();
 }
+
 function updateTrendPanel(t){
-  setText("movementValue",t.movement);setText("trendConfidence",t.confidence);setText("trendLatestDelta",t.latestDelta===null?"—":signedMetres(t.latestDelta));setText("trendWindowDelta",t.windowDelta===null?"—":signedMetres(t.windowDelta));setText("trendSteps","↑ "+t.rises+" / ↓ "+t.falls+" / = "+t.flats);setText("trendRule",t.rule);setText("trendReadingsUsed",String(t.readingsUsed));
+  setText("movementValue",t.movement);
+  setText("trendConfidence",t.confidence);
+  setText("trendLatestDelta",t.latestDelta===null?"—":signedMetres(t.latestDelta));
+  setText("trendWindowDelta",t.windowDelta===null?"—":signedMetres(t.windowDelta));
+  setText("trendSteps","↑ "+t.rises+" / ↓ "+t.falls+" / = "+t.flats);
+  setText("trendRule",t.rule);
+  setText("trendReadingsUsed",String(t.readingsUsed));
 }
+
+function updatePriorityEngine(){
+  setText("healthTelemetry",state.telemetryVerified?"Healthy":"Unavailable");
+  setText("healthRainfall",state.rainfallVerified?"Available":"Unavailable");
+  setText("riskFreshness",state.freshness);
+  setText("riskMovement",state.movement);
+  setText("riskTrendConfidence",state.trendConfidence);
+
+  if(!state.telemetryVerified){
+    setBadge("priorityBadge","Priority: restore telemetry","bad");
+    setText("priorityTop","Restore EA telemetry");
+    setText("priorityTelemetry","Critical");
+    setText("priorityRainfall",state.rainfallVerified?"Secondary":"Unavailable");
+    setText("priorityMissing","Telemetry baseline");
+    setText("priorityAcquisition","High");
+    setBadge("healthBadge","Source health degraded","bad");
+    setBadge("riskBadge","Telemetry risk high","bad");
+    setText("riskStatement","No verified live baseline");
+    return;
+  }
+
+  if(state.movement==="Rising"){
+    setBadge("priorityBadge","Priority: monitor rising telemetry","good");
+    setText("priorityTop","Rising level movement");
+    setText("priorityTelemetry","High");
+  }else if(state.movement==="Falling"){
+    setBadge("priorityBadge","Priority: monitor falling telemetry","info");
+    setText("priorityTop","Falling level movement");
+    setText("priorityTelemetry","Medium");
+  }else{
+    setBadge("priorityBadge","Priority: maintain source watch","info");
+    setText("priorityTop","Telemetry watch");
+    setText("priorityTelemetry","Normal");
+  }
+
+  setText("priorityRainfall",state.rainfallVerified?"Available":"Acquire / unavailable");
+  setText("priorityMissing","Temperature, RFCA, catch");
+  setText("priorityAcquisition","RFCA + weather next");
+  setBadge("healthBadge",state.rainfallVerified?"Source health good":"Telemetry good, rainfall gap","good");
+  setBadge("riskBadge",state.freshness==="Fresh telemetry"?"Telemetry risk low":"Telemetry freshness watch",state.freshness==="Fresh telemetry"?"good":"warn");
+  setText("riskStatement",state.movement+" / "+state.freshness);
+}
+
 async function fetchRecentReadings(){
   const res=await fetch("https://environment.data.gov.uk/flood-monitoring/id/stations/"+HENTHORN_STATION+"/readings?_sorted&_limit=12",{cache:"no-store"});
   if(!res.ok)throw new Error("Recent readings failed");
   const json=await res.json();return Array.isArray(json.items)?json.items:[];
 }
+
 function updateFreshness(iso){
-  const d=new Date(iso);if(!iso||isNaN(d.getTime())){setText("freshnessValue","Unknown");return;}
+  const d=new Date(iso);
+  if(!iso||isNaN(d.getTime())){state.freshness="Unknown";setText("freshnessValue","Unknown");return;}
   const mins=Math.floor((new Date()-d)/60000);
-  setText("freshnessValue",mins<=30?"Fresh telemetry":mins<=120?"Aging telemetry":"Stale telemetry");
+  state.freshness=mins<=30?"Fresh telemetry":mins<=120?"Aging telemetry":"Stale telemetry";
+  setText("freshnessValue",state.freshness);
 }
+
 async function loadHenthorn(){
-  setBadge("statusBadge","Checking EA telemetry…","info");state.telemetryVerified=false;state.movement="Checking";updateFusion();
+  setBadge("statusBadge","Checking EA telemetry…","info");
+  state.telemetryVerified=false;state.movement="Checking";updateFusion();
   try{
     const res=await fetch(EA_LATEST_URL,{cache:"no-store"});if(!res.ok)throw new Error("EA latest failed");
     const json=await res.json();const items=Array.isArray(json.items)?json.items:[];if(!items.length)throw new Error("No latest");
@@ -209,13 +302,19 @@ async function loadHenthorn(){
     const recent=await fetchRecentReadings();const rw=recent.slice();if(!rw.some(r=>r.dateTime===latest.dateTime&&Number(r.value)===level))rw.push(latest);
     const trend=classifyMovementFromReadings(rw);
     setText("levelValue",level.toFixed(3)+" m");updateTrendPanel(trend);setText("readingTime",formatDateTime(time));setText("successTime",formatDateTime(new Date()));updateFreshness(time);
-    setBadge("statusBadge","Live EA telemetry verified","good");state.telemetryVerified=true;state.movement=trend.movement;updateFusion();
+    setBadge("statusBadge","Live EA telemetry verified","good");
+    state.telemetryVerified=true;state.movement=trend.movement;state.trendConfidence=trend.confidence;
+    updateFusion();
   }catch(e){
-    setText("levelValue","Unavailable");setText("movementValue","Unavailable");setBadge("statusBadge","EA telemetry unavailable","bad");state.telemetryVerified=false;state.movement="Unavailable";updateFusion();
+    setText("levelValue","Unavailable");setText("movementValue","Unavailable");setBadge("statusBadge","EA telemetry unavailable","bad");
+    state.telemetryVerified=false;state.movement="Unavailable";state.trendConfidence="Unavailable";state.freshness="Unknown";
+    updateFusion();
   }
 }
+
 async function loadRainfall(){
-  setBadge("rainBadge","Checking EA rainfall acquisition…","info");state.rainfallVerified=false;updateFusion();
+  setBadge("rainBadge","Checking EA rainfall acquisition…","info");
+  state.rainfallVerified=false;updateFusion();
   try{
     const stationUrl="https://environment.data.gov.uk/flood-monitoring/id/stations?parameter=rainfall&lat="+encodeURIComponent(HENTHORN_LAT)+"&long="+encodeURIComponent(HENTHORN_LONG)+"&dist=30&_limit=10";
     const stationRes=await fetch(stationUrl,{cache:"no-store"});if(!stationRes.ok)throw new Error("Rain search failed");
@@ -229,11 +328,18 @@ async function loadRainfall(){
       }catch(e){}
     }
     if(!verified)throw new Error("No rainfall");
-    setText("rainStation",verified.station.label||verified.station.notation||"EA rainfall station");setText("rainValue",verified.value.toFixed(1)+" mm");setText("rainTime",formatDateTime(verified.reading.dateTime));setBadge("rainBadge","EA rainfall verified","good");state.rainfallVerified=true;updateFusion();
+    setText("rainStation",verified.station.label||verified.station.notation||"EA rainfall station");
+    setText("rainValue",verified.value.toFixed(1)+" mm");
+    setText("rainTime",formatDateTime(verified.reading.dateTime));
+    setBadge("rainBadge","EA rainfall verified","good");
+    state.rainfallVerified=true;updateFusion();
   }catch(e){
-    setText("rainStation","Unavailable");setText("rainValue","Unavailable");setText("rainTime","Unavailable");setBadge("rainBadge","Rainfall unavailable","bad");state.rainfallVerified=false;updateFusion();
+    setText("rainStation","Unavailable");setText("rainValue","Unavailable");setText("rainTime","Unavailable");
+    setBadge("rainBadge","Rainfall unavailable","bad");
+    state.rainfallVerified=false;updateFusion();
   }
 }
+
 function loadAll(){loadHenthorn();loadRainfall();}
 loadAll();setInterval(loadAll,10*60*1000);
 </script>
