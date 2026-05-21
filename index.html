@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10150</title>
+<title>Salmon Rivers Intelligence — Build 10151</title>
 <style>
 :root{--bg:#f4f6f8;--card:#fff;--line:#d8dde3;--text:#111;--muted:#667085;--ok:#0f7b0f;--warn:#a15c00;--bad:#a40000;--blue:#0b5cad}
 *{box-sizing:border-box}
@@ -29,7 +29,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 
 <header>
 <h1>Salmon Rivers Intelligence</h1>
-<div class="build">GOLD BUILD 10150 — Operator / Beat Intelligence Gate</div>
+<div class="build">GOLD BUILD 10151 — Source Gap Register</div>
 </header>
 
 <main>
@@ -69,6 +69,23 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 <div id="refreshClicks" class="small muted">Refresh clicks: 0</div>
 <div id="dataProof" class="small muted">EA proof: waiting</div>
 <div id="lastGoodProof" class="small muted">Last-good telemetry cache: empty</div>
+</section>
+
+<section class="card">
+<h2>Source Gap Register</h2>
+
+<div class="pill ok">EA telemetry protected</div>
+<div class="pill warn">Acquisition gaps tracked</div>
+<div class="pill bad">No source = no number</div>
+
+<table>
+<thead>
+<tr><th>Source</th><th>Current state</th><th>Gap</th><th>Next action</th></tr>
+</thead>
+<tbody id="gapRows">
+<tr><td>EA Henthorn telemetry</td><td class="warn">Checking</td><td>None if live</td><td>Protect core</td></tr>
+</tbody>
+</table>
 </section>
 
 <section class="card">
@@ -239,13 +256,14 @@ Operator, club, association, beat, forum, social, or private reports remain non-
 <tr><td>RFCA ledger</td><td class="ok">Isolated</td><td>Candidate tracking only; cannot mutate telemetry core</td></tr>
 <tr><td>Catch gate</td><td class="ok">Isolated</td><td>Current-season source gate only; cannot mutate telemetry core</td></tr>
 <tr><td>Operator gate</td><td class="ok">Isolated</td><td>Beat intelligence gate only; cannot mutate telemetry core</td></tr>
+<tr><td>Source gap register</td><td class="ok">Active</td><td>Tracks missing source classes without inventing values</td></tr>
 </tbody>
 </table>
 </section>
 
 </main>
 
-<footer>Build 10150 · NO SOURCE = NO NUMBER · EA CORE FROZEN</footer>
+<footer>Build 10151 · NO SOURCE = NO NUMBER · EA CORE FROZEN</footer>
 
 <script>
 const TelemetryCore=(function(){
@@ -631,6 +649,58 @@ return String(s).replace(/[&<>"']/g,m=>({
 }[m]));
 }
 
+function updateGapRegister(telemetryOk,rainOk,rfcaOk,catchOk,operatorOk){
+
+const rows=[
+{
+source:"EA Henthorn telemetry",
+state:telemetryOk?"Verified live":"Unavailable",
+cls:telemetryOk?"ok":"bad",
+gap:telemetryOk?"No current gap":"Core telemetry failure",
+action:telemetryOk?"Protect frozen EA core":"Investigate EA acquisition"
+},
+{
+source:"Rainfall intelligence",
+state:rainOk?"Verified live reading":"Not verified",
+cls:rainOk?"ok":"warn",
+gap:rainOk?"No rainfall reading gap":"Need stable verified rainfall reading endpoint",
+action:rainOk?"Keep as read-only consumer":"Continue rainfall endpoint verification"
+},
+{
+source:"RFCA sonde / temperature",
+state:rfcaOk?"Verified":"Not integrated",
+cls:rfcaOk?"ok":"warn",
+gap:"Machine-readable RFCA feed not proven",
+action:"Investigate RFCA endpoint without displaying values"
+},
+{
+source:"RFCA fish counters",
+state:"Not integrated",
+cls:"warn",
+gap:"No machine-readable fish-counter feed proven",
+action:"Investigate availability"
+},
+{
+source:"Current-season catches",
+state:catchOk?"Verified":"Not integrated",
+cls:catchOk?"ok":"warn",
+gap:"No dated attributable current-season catch source integrated",
+action:"Acquire verified current-season Ribble source"
+},
+{
+source:"Operator / Henthorn beat intelligence",
+state:operatorOk?"Verified":"Not integrated",
+cls:operatorOk?"ok":"warn",
+gap:"No dated attributable Henthorn beat source integrated",
+action:"Identify reliable operator / beat source"
+}
+];
+
+id("gapRows").innerHTML=rows.map(r=>
+"<tr><td>"+esc(r.source)+"</td><td class='"+r.cls+"'>"+esc(r.state)+"</td><td>"+esc(r.gap)+"</td><td>"+esc(r.action)+"</td></tr>"
+).join("");
+}
+
 function updateSourceScore(telemetryOk,rainOk,rfcaOk,catchOk,operatorOk){
 
 let score=0;
@@ -711,6 +781,8 @@ else{
 cls("qualityMeaning","bad");
 txt("qualityMeaning","No verified live telemetry");
 }
+
+updateGapRegister(telemetryOk,rainOk,rfcaOk,catchOk,operatorOk);
 }
 
 function renderTelemetry(result){
