@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10151</title>
+<title>Salmon Rivers Intelligence — Build 10152</title>
 <style>
 :root{--bg:#f4f6f8;--card:#fff;--line:#d8dde3;--text:#111;--muted:#667085;--ok:#0f7b0f;--warn:#a15c00;--bad:#a40000;--blue:#0b5cad}
 *{box-sizing:border-box}
@@ -29,7 +29,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 
 <header>
 <h1>Salmon Rivers Intelligence</h1>
-<div class="build">GOLD BUILD 10151 — Source Gap Register</div>
+<div class="build">GOLD BUILD 10152 — Acquisition Priority Engine</div>
 </header>
 
 <main>
@@ -69,6 +69,22 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 <div id="refreshClicks" class="small muted">Refresh clicks: 0</div>
 <div id="dataProof" class="small muted">EA proof: waiting</div>
 <div id="lastGoodProof" class="small muted">Last-good telemetry cache: empty</div>
+</section>
+
+<section class="card">
+<h2>Acquisition Priority Engine</h2>
+
+<div class="pill warn">Ranks open gaps only</div>
+<div class="pill bad">Does not create numbers</div>
+
+<table>
+<thead>
+<tr><th>Priority</th><th>Target</th><th>Why it matters</th><th>Action</th></tr>
+</thead>
+<tbody id="priorityRows">
+<tr><td>—</td><td>Waiting</td><td>Awaiting source-state calculation</td><td>—</td></tr>
+</tbody>
+</table>
 </section>
 
 <section class="card">
@@ -257,13 +273,14 @@ Operator, club, association, beat, forum, social, or private reports remain non-
 <tr><td>Catch gate</td><td class="ok">Isolated</td><td>Current-season source gate only; cannot mutate telemetry core</td></tr>
 <tr><td>Operator gate</td><td class="ok">Isolated</td><td>Beat intelligence gate only; cannot mutate telemetry core</td></tr>
 <tr><td>Source gap register</td><td class="ok">Active</td><td>Tracks missing source classes without inventing values</td></tr>
+<tr><td>Acquisition priority engine</td><td class="ok">Active</td><td>Ranks gaps only; cannot generate live numbers</td></tr>
 </tbody>
 </table>
 </section>
 
 </main>
 
-<footer>Build 10151 · NO SOURCE = NO NUMBER · EA CORE FROZEN</footer>
+<footer>Build 10152 · NO SOURCE = NO NUMBER · EA CORE FROZEN</footer>
 
 <script>
 const TelemetryCore=(function(){
@@ -649,6 +666,74 @@ return String(s).replace(/[&<>"']/g,m=>({
 }[m]));
 }
 
+function updatePriorityEngine(telemetryOk,rainOk,rfcaOk,catchOk,operatorOk){
+
+const targets=[];
+
+if(!telemetryOk){
+targets.push({
+target:"Restore EA Henthorn telemetry",
+reason:"Core level and movement telemetry is the foundation of the app",
+action:"Investigate EA acquisition route immediately",
+weight:100
+});
+}
+
+if(!rfcaOk){
+targets.push({
+target:"RFCA sonde / temperature feed",
+reason:"Highest-value missing welfare and water-condition signal",
+action:"Find stable machine-readable RFCA endpoint",
+weight:90
+});
+
+targets.push({
+target:"RFCA fish-counter telemetry",
+reason:"High-value migration intelligence if available",
+action:"Investigate whether a machine-readable counter source exists",
+weight:75
+});
+}
+
+if(!catchOk){
+targets.push({
+target:"Current-season Ribble catch intelligence",
+reason:"Most important fishing intelligence after live river conditions",
+action:"Acquire dated, attributable, current-season source",
+weight:85
+});
+}
+
+if(!rainOk){
+targets.push({
+target:"Verified rainfall reading chain",
+reason:"Improves catchment context and source maturity",
+action:"Verify stable rainfall readings endpoint",
+weight:70
+});
+}
+
+if(!operatorOk){
+targets.push({
+target:"Henthorn / Ribble operator or beat reports",
+reason:"Adds local beat context once traceable and dated",
+action:"Identify reliable operator, club or association source",
+weight:55
+});
+}
+
+targets.sort((a,b)=>b.weight-a.weight);
+
+id("priorityRows").innerHTML=targets.map((t,i)=>
+"<tr><td>"+(i+1)+"</td><td>"+esc(t.target)+"</td><td>"+esc(t.reason)+"</td><td class='warn'>"+esc(t.action)+"</td></tr>"
+).join("");
+
+if(!targets.length){
+id("priorityRows").innerHTML=
+"<tr><td>—</td><td>All tracked sources verified</td><td>No current acquisition gap</td><td class='ok'>Maintain source monitoring</td></tr>";
+}
+}
+
 function updateGapRegister(telemetryOk,rainOk,rfcaOk,catchOk,operatorOk){
 
 const rows=[
@@ -783,6 +868,7 @@ txt("qualityMeaning","No verified live telemetry");
 }
 
 updateGapRegister(telemetryOk,rainOk,rfcaOk,catchOk,operatorOk);
+updatePriorityEngine(telemetryOk,rainOk,rfcaOk,catchOk,operatorOk);
 }
 
 function renderTelemetry(result){
