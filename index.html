@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10154</title>
+<title>Salmon Rivers Intelligence — Build 10155</title>
 <style>
 :root{--bg:#f4f6f8;--card:#fff;--line:#d8dde3;--text:#111;--muted:#667085;--ok:#0f7b0f;--warn:#a15c00;--bad:#a40000;--blue:#0b5cad}
 *{box-sizing:border-box}
@@ -29,7 +29,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 
 <header>
 <h1>Salmon Rivers Intelligence</h1>
-<div class="build">GOLD BUILD 10154 — Source Evidence Ledger</div>
+<div class="build">GOLD BUILD 10155 — Known / Unknown / Next Action Panel</div>
 </header>
 
 <main>
@@ -52,6 +52,24 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 <div id="refreshClicks" class="small muted">Refresh clicks: 0</div>
 <div id="dataProof" class="small muted">EA proof: waiting</div>
 <div id="lastGoodProof" class="small muted">Last-good telemetry cache: empty</div>
+</section>
+
+<section class="card">
+<h2>Known / Unknown / Next Action</h2>
+<div class="grid">
+<div class="box">
+<h3>Known</h3>
+<div id="knownPanel" class="small muted">Awaiting source checks</div>
+</div>
+<div class="box">
+<h3>Unknown</h3>
+<div id="unknownPanel" class="small muted">Awaiting source checks</div>
+</div>
+<div class="box">
+<h3>Next Action</h3>
+<div id="nextActionPanel" class="small muted">Awaiting source checks</div>
+</div>
+</div>
 </section>
 
 <section class="card">
@@ -185,13 +203,14 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 <tr><td>Acquisition priority engine</td><td class="ok">Active</td><td>Ranks gaps only; cannot generate live numbers</td></tr>
 <tr><td>Workflow board</td><td class="ok">Active</td><td>Action lanes only; cannot generate live numbers</td></tr>
 <tr><td>Source evidence ledger</td><td class="ok">Active</td><td>Records provenance and display eligibility</td></tr>
+<tr><td>Known / Unknown / Next Action</td><td class="ok">Active</td><td>Plain-English source-state summary only</td></tr>
 </tbody>
 </table>
 </section>
 
 </main>
 
-<footer>Build 10154 · NO SOURCE = NO NUMBER · EA CORE FROZEN</footer>
+<footer>Build 10155 · NO SOURCE = NO NUMBER · EA CORE FROZEN</footer>
 
 <script>
 const TelemetryCore=(function(){
@@ -249,6 +268,36 @@ function nowText(){return new Date().toLocaleString("en-GB",{dateStyle:"medium",
 function displayTime(iso){return new Date(iso).toLocaleString("en-GB",{dateStyle:"medium",timeStyle:"short"})}
 function ageMinutes(iso){return Math.round((Date.now()-new Date(iso).getTime())/60000)}
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]))}
+
+function list(items){return "<ul>"+items.map(x=>"<li>"+esc(x)+"</li>").join("")+"</ul>"}
+
+function updateKnownUnknownNext(telemetryOk,rainOk,rfcaOk,catchOk,operatorOk){
+const known=[];
+const unknown=[];
+let next="";
+
+if(telemetryOk){known.push("EA Henthorn river level telemetry is live and protected by the frozen core.");}
+else{unknown.push("EA Henthorn telemetry is not currently acquired.");}
+
+if(rainOk){known.push("A verified rainfall reading has been acquired as a read-only consumer.");}
+else{unknown.push("Rainfall remains unverified or unavailable as a live numeric input.");}
+
+unknown.push("RFCA temperature / sonde values are not integrated.");
+unknown.push("RFCA fish-counter values are not integrated.");
+unknown.push("Current-season Ribble salmon and sea-trout catch totals are not integrated.");
+unknown.push("Henthorn/operator beat intelligence is not integrated.");
+
+if(!telemetryOk){next="Repair EA telemetry acquisition before any further intelligence work.";}
+else if(!rfcaOk){next="Investigate RFCA machine-readable sonde / temperature source without displaying any RFCA values.";}
+else if(!catchOk){next="Acquire a dated, attributable, current-season Ribble catch source.";}
+else if(!rainOk){next="Continue rainfall endpoint verification until a stable reading source is proven.";}
+else if(!operatorOk){next="Identify a dated, attributable Henthorn or Ribble operator / beat source.";}
+else{next="Maintain monitoring and protect source governance.";}
+
+id("knownPanel").innerHTML=list(known);
+id("unknownPanel").innerHTML=list(unknown);
+id("nextActionPanel").innerHTML="<strong>"+esc(next)+"</strong>";
+}
 
 function updateEvidenceLedger(telemetryOk,rainOk,rfcaOk,catchOk,operatorOk){
 const rows=[
@@ -311,6 +360,7 @@ else if(score>=80){cls("qualityMeaning","ok");txt("qualityMeaning","EA telemetry
 else if(score>=60){cls("qualityMeaning","ok");txt("qualityMeaning","EA telemetry and rainfall verified")}
 else if(score>=40){cls("qualityMeaning","warn");txt("qualityMeaning","Only core EA telemetry verified")}
 else{cls("qualityMeaning","bad");txt("qualityMeaning","No verified live telemetry")}
+updateKnownUnknownNext(telemetryOk,rainOk,rfcaOk,catchOk,operatorOk);
 updateEvidenceLedger(telemetryOk,rainOk,rfcaOk,catchOk,operatorOk);
 updateGapRegister(telemetryOk,rainOk,rfcaOk,catchOk,operatorOk);
 updatePriorityEngine(telemetryOk,rainOk,rfcaOk,catchOk,operatorOk);
