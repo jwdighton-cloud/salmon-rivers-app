@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10153</title>
+<title>Salmon Rivers Intelligence — Build 10154</title>
 <style>
 :root{--bg:#f4f6f8;--card:#fff;--line:#d8dde3;--text:#111;--muted:#667085;--ok:#0f7b0f;--warn:#a15c00;--bad:#a40000;--blue:#0b5cad}
 *{box-sizing:border-box}
@@ -29,7 +29,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 
 <header>
 <h1>Salmon Rivers Intelligence</h1>
-<div class="build">GOLD BUILD 10153 — Acquisition Workflow Board</div>
+<div class="build">GOLD BUILD 10154 — Source Evidence Ledger</div>
 </header>
 
 <main>
@@ -55,27 +55,27 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 </section>
 
 <section class="card">
+<h2>Source Evidence Ledger</h2>
+<div class="pill ok">Provenance active</div>
+<div class="pill warn">Candidates separated from verified data</div>
+<div class="pill bad">Blocked sources cannot produce numbers</div>
+<table>
+<thead><tr><th>Source</th><th>Class</th><th>Evidence state</th><th>Provenance / rule</th></tr></thead>
+<tbody id="evidenceRows">
+<tr><td>EA Henthorn telemetry</td><td>Level 1</td><td class="warn">Checking</td><td>Official machine-readable EA source if acquired</td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="card">
 <h2>Acquisition Workflow Board</h2>
 <div class="pill warn">Action lanes only</div>
 <div class="pill bad">No invented values</div>
-
 <div class="grid">
-<div class="box">
-<h3>Investigate</h3>
-<table><tbody id="laneInvestigate"><tr><td>Waiting</td></tr></tbody></table>
-</div>
-<div class="box">
-<h3>Verify</h3>
-<table><tbody id="laneVerify"><tr><td>Waiting</td></tr></tbody></table>
-</div>
-<div class="box">
-<h3>Integrate</h3>
-<table><tbody id="laneIntegrate"><tr><td>Waiting</td></tr></tbody></table>
-</div>
-<div class="box">
-<h3>Blocked</h3>
-<table><tbody id="laneBlocked"><tr><td>Waiting</td></tr></tbody></table>
-</div>
+<div class="box"><h3>Investigate</h3><table><tbody id="laneInvestigate"><tr><td>Waiting</td></tr></tbody></table></div>
+<div class="box"><h3>Verify</h3><table><tbody id="laneVerify"><tr><td>Waiting</td></tr></tbody></table></div>
+<div class="box"><h3>Integrate</h3><table><tbody id="laneIntegrate"><tr><td>Waiting</td></tr></tbody></table></div>
+<div class="box"><h3>Blocked</h3><table><tbody id="laneBlocked"><tr><td>Waiting</td></tr></tbody></table></div>
 </div>
 </section>
 
@@ -184,13 +184,14 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 <tr><td>Source gap register</td><td class="ok">Active</td><td>Tracks missing source classes without inventing values</td></tr>
 <tr><td>Acquisition priority engine</td><td class="ok">Active</td><td>Ranks gaps only; cannot generate live numbers</td></tr>
 <tr><td>Workflow board</td><td class="ok">Active</td><td>Action lanes only; cannot generate live numbers</td></tr>
+<tr><td>Source evidence ledger</td><td class="ok">Active</td><td>Records provenance and display eligibility</td></tr>
 </tbody>
 </table>
 </section>
 
 </main>
 
-<footer>Build 10153 · NO SOURCE = NO NUMBER · EA CORE FROZEN</footer>
+<footer>Build 10154 · NO SOURCE = NO NUMBER · EA CORE FROZEN</footer>
 
 <script>
 const TelemetryCore=(function(){
@@ -249,19 +250,28 @@ function displayTime(iso){return new Date(iso).toLocaleString("en-GB",{dateStyle
 function ageMinutes(iso){return Math.round((Date.now()-new Date(iso).getTime())/60000)}
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]))}
 
+function updateEvidenceLedger(telemetryOk,rainOk,rfcaOk,catchOk,operatorOk){
+const rows=[
+{source:"EA Henthorn level telemetry",className:"Level 1 official telemetry",state:telemetryOk?"Verified":"Unavailable",cls:telemetryOk?"ok":"bad",rule:telemetryOk?"Machine-readable EA readings parsed and allowed for numeric display":"No current numeric display if acquisition fails"},
+{source:"Rainfall reading",className:"Level 1 candidate",state:rainOk?"Verified":"Candidate / not verified",cls:rainOk?"ok":"warn",rule:rainOk?"Machine-readable rainfall reading acquired":"No rainfall number unless reading endpoint verifies"},
+{source:"RFCA temperature / sonde",className:"Strategic acquisition candidate",state:rfcaOk?"Verified":"Blocked",cls:rfcaOk?"ok":"bad",rule:"No RFCA value unless stable, traceable, current and machine-readable"},
+{source:"RFCA fish counter",className:"Strategic acquisition candidate",state:"Blocked",cls:"bad",rule:"No fish-counter value without verified machine-readable source"},
+{source:"Current-season catch intelligence",className:"Level 2 candidate",state:catchOk?"Verified":"Blocked",cls:catchOk?"ok":"bad",rule:"No salmon or sea-trout totals without dated attributable current-season source"},
+{source:"Operator / Henthorn beat reports",className:"Level 4 candidate",state:operatorOk?"Verified":"Blocked",cls:operatorOk?"ok":"bad",rule:"No operator claim promoted unless dated, attributable and traceable"},
+{source:"Forum / social / rumour",className:"Weak source",state:"Blocked",cls:"bad",rule:"No numeric use"}
+];
+id("evidenceRows").innerHTML=rows.map(r=>"<tr><td>"+esc(r.source)+"</td><td>"+esc(r.className)+"</td><td class='"+r.cls+"'>"+esc(r.state)+"</td><td>"+esc(r.rule)+"</td></tr>").join("");
+}
+
 function updateWorkflowBoard(telemetryOk,rainOk,rfcaOk,catchOk,operatorOk){
 const investigate=[],verify=[],integrate=[],blocked=[];
 if(!telemetryOk){blocked.push("EA telemetry fault — repair core before other work")}else{integrate.push("EA Henthorn telemetry — protected core active")}
 if(!rfcaOk){investigate.push("RFCA sonde / temperature endpoint");investigate.push("RFCA fish-counter telemetry");blocked.push("RFCA numeric values — blocked until machine-readable")}
 if(!catchOk){investigate.push("Current-season Ribble catch source");verify.push("Any catch source must be dated, attributable and current-season")}
-if(!rainOk){verify.push("Rainfall reading endpoint stability")}
-else{integrate.push("Verified rainfall reading — read-only consumer")}
+if(!rainOk){verify.push("Rainfall reading endpoint stability")}else{integrate.push("Verified rainfall reading — read-only consumer")}
 if(!operatorOk){investigate.push("Henthorn / Ribble operator or beat reports");verify.push("Operator reports must be dated and attributable")}
 function renderLane(idName,items,clsName){id(idName).innerHTML=items.length?items.map(x=>"<tr><td class='"+clsName+"'>"+esc(x)+"</td></tr>").join(""):"<tr><td class='ok'>No current item</td></tr>"}
-renderLane("laneInvestigate",investigate,"warn");
-renderLane("laneVerify",verify,"warn");
-renderLane("laneIntegrate",integrate,"ok");
-renderLane("laneBlocked",blocked,"bad");
+renderLane("laneInvestigate",investigate,"warn");renderLane("laneVerify",verify,"warn");renderLane("laneIntegrate",integrate,"ok");renderLane("laneBlocked",blocked,"bad");
 }
 
 function updatePriorityEngine(telemetryOk,rainOk,rfcaOk,catchOk,operatorOk){
@@ -301,6 +311,7 @@ else if(score>=80){cls("qualityMeaning","ok");txt("qualityMeaning","EA telemetry
 else if(score>=60){cls("qualityMeaning","ok");txt("qualityMeaning","EA telemetry and rainfall verified")}
 else if(score>=40){cls("qualityMeaning","warn");txt("qualityMeaning","Only core EA telemetry verified")}
 else{cls("qualityMeaning","bad");txt("qualityMeaning","No verified live telemetry")}
+updateEvidenceLedger(telemetryOk,rainOk,rfcaOk,catchOk,operatorOk);
 updateGapRegister(telemetryOk,rainOk,rfcaOk,catchOk,operatorOk);
 updatePriorityEngine(telemetryOk,rainOk,rfcaOk,catchOk,operatorOk);
 updateWorkflowBoard(telemetryOk,rainOk,rfcaOk,catchOk,operatorOk);
