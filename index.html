@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10158</title>
+<title>Salmon Rivers Intelligence — Build 10159</title>
 <style>
 :root{--bg:#f4f6f8;--card:#fff;--line:#d8dde3;--text:#111;--muted:#667085;--ok:#0f7b0f;--warn:#a15c00;--bad:#a40000;--blue:#0b5cad}
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
@@ -20,7 +20,7 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 <body>
 <header>
 <h1>Salmon Rivers Intelligence</h1>
-<div class="build">GOLD BUILD 10158 — Compact Full-File Rebuild</div>
+<div class="build">GOLD BUILD 10159 — Henthorn Beat Intelligence Register</div>
 </header>
 
 <main>
@@ -50,6 +50,16 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 <div class="box"><h3>Unknown</h3><div id="unknownPanel" class="small muted">Awaiting checks</div></div>
 <div class="box"><h3>Next Action</h3><div id="nextActionPanel" class="small muted">Awaiting checks</div></div>
 </div>
+</section>
+
+<section class="card">
+<h2>Henthorn Beat Intelligence Register</h2>
+<div class="pill warn">Beat context candidate only</div>
+<div class="pill bad">No fishability inference</div>
+<table>
+<thead><tr><th>Beat / Context Area</th><th>Purpose</th><th>Evidence State</th><th>Allowed Use</th><th>Blocked Use</th></tr></thead>
+<tbody id="beatRows"></tbody>
+</table>
 </section>
 
 <section class="card">
@@ -167,9 +177,9 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 <tbody>
 <tr><td>No source = no number</td><td class="bad">Enforced</td></tr>
 <tr><td>Named place ≠ verified condition</td><td class="bad">Enforced</td></tr>
+<tr><td>Beat context ≠ fishability</td><td class="bad">Enforced</td></tr>
 <tr><td>Mention ≠ catch</td><td class="bad">Enforced</td></tr>
 <tr><td>Mention ≠ fish present</td><td class="bad">Enforced</td></tr>
-<tr><td>Mention ≠ fishability recommendation</td><td class="bad">Enforced</td></tr>
 <tr><td>EA core</td><td class="ok">Frozen and protected</td></tr>
 </tbody>
 </table>
@@ -177,7 +187,7 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 
 </main>
 
-<footer>Build 10158 · NO SOURCE = NO NUMBER · EA CORE FROZEN</footer>
+<footer>Build 10159 · NO SOURCE = NO NUMBER · EA CORE FROZEN</footer>
 
 <script>
 const EA_READINGS="https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings.json?_sorted&_limit=24";
@@ -264,6 +274,15 @@ function pools(){
  const names=["Waddow Weir","Long Pool","Poachers Pot","Hodder Foot","Garage Pool"];
  id("poolRows").innerHTML=names.map(n=>"<tr><td>"+esc(n)+"</td><td>Ribble / Hodder area</td><td>Level 4 candidate</td><td class='warn'>Mention only</td><td class='bad'>No numeric, catch or fishability permission</td></tr>").join("");
 }
+function beats(){
+ const rows=[
+  ["Henthorn beat focus","Primary fishing context for current app phase","Telemetry anchor only","Use EA Henthorn level/movement as verified conditions context","Do not infer fishability"],
+  ["Named pool mentions near Ribble/Hodder","Local place vocabulary from social/operator commentary","Candidate context","Index named places for later source linking","Do not infer fish presence"],
+  ["Operator / club commentary","Potential future beat intelligence","Candidate only","Use only if dated, attributable and current-season","Do not create catch totals"],
+  ["Private anecdote / rumour","No app intelligence use","Blocked","None","Do not display as intelligence"]
+ ];
+ id("beatRows").innerHTML=rows.map(r=>"<tr><td>"+esc(r[0])+"</td><td>"+esc(r[1])+"</td><td class='warn'>"+esc(r[2])+"</td><td>"+esc(r[3])+"</td><td class='bad'>"+esc(r[4])+"</td></tr>").join("");
+}
 function score(teleOK){
  let s=0;if(teleOK){s+=40;cls("scoreTelemetry","ok");txt("scoreTelemetry","Verified")}else{cls("scoreTelemetry","bad");txt("scoreTelemetry","Unavailable")}
  if(rainOK){s+=20;cls("scoreRainfall","ok");txt("scoreRainfall","Verified")}else{cls("scoreRainfall","warn");txt("scoreRainfall","Not verified")}
@@ -276,8 +295,9 @@ function updatePanels(teleOK){
  const known=[],unk=[];
  if(teleOK)known.push("EA Henthorn telemetry is live and protected."); else unk.push("EA telemetry is not acquired.");
  if(rainOK)known.push("Rainfall reading is verified."); else unk.push("Rainfall remains unverified.");
+ known.push("Henthorn beat context is structured as candidate intelligence only.");
  known.push("Named pool mentions are captured as candidate context only.");
- unk.push("RFCA sonde, fish counters, current-season catches and operator intelligence are not integrated.");
+ unk.push("RFCA sonde, fish counters, current-season catches and verified operator intelligence are not integrated.");
  id("knownPanel").innerHTML="<ul>"+known.map(x=>"<li>"+esc(x)+"</li>").join("")+"</ul>";
  id("unknownPanel").innerHTML="<ul>"+unk.map(x=>"<li>"+esc(x)+"</li>").join("")+"</ul>";
  txt("nextActionPanel",teleOK?"Investigate RFCA machine-readable sonde / temperature source without displaying RFCA values.":"Repair EA telemetry before other work.");
@@ -286,25 +306,25 @@ function updatePanels(teleOK){
   row("Rainfall intelligence",rainOK?"Verified live reading":"Not verified",rainOK?"No rainfall gap":"Need stable verified rainfall reading endpoint",rainOK?"Keep read-only":"Continue rainfall verification",rainOK?"ok":"warn")+
   row("RFCA sonde / temperature","Not integrated","Machine-readable RFCA feed not proven","Investigate endpoint without displaying values")+
   row("Current-season catches","Not integrated","No dated attributable source integrated","Acquire verified current-season source")+
-  row("Operator / beat intelligence","Candidate only","Mentions captured but not promoted","Verify dated attributable source");
+  row("Henthorn beat intelligence","Candidate only","No verified operator feed integrated","Use named place context only until verified");
  id("evidenceRows").innerHTML=
   row("EA Henthorn level telemetry",teleOK?"Verified":"Unavailable","Level 1 official telemetry",teleOK?"Machine-readable EA readings parsed":"No display if acquisition fails",teleOK?"ok":"bad")+
   row("Rainfall reading",rainOK?"Verified":"Candidate / not verified","Level 1 candidate",rainOK?"Machine-readable rainfall acquired":"No rainfall number unless verified",rainOK?"ok":"warn")+
   row("RFCA temperature / sonde","Blocked","Strategic acquisition candidate","No RFCA value unless machine-readable","bad")+
   row("Current-season catch intelligence","Blocked","Level 2 candidate","No totals without dated attributable source","bad")+
-  row("Operator / named pool commentary","Candidate only","Level 4 candidate","Mention only; no numbers or recommendations","warn");
+  row("Henthorn beat / named pool commentary","Candidate only","Level 4 candidate","Context only; no fishability, catch or movement inference","warn");
  const targets=[
   ["RFCA sonde / temperature feed","Highest-value missing welfare signal","Find stable machine-readable endpoint",90],
   ["Current-season Ribble catch intelligence","Most important fishing intelligence after live conditions","Acquire dated attributable source",85],
   ["RFCA fish-counter telemetry","Migration intelligence if available","Investigate availability",75],
   ["Verified rainfall reading chain","Catchment context",rainOK?"Maintain read-only verification":"Verify endpoint stability",rainOK?0:70],
-  ["Henthorn / operator beat reports","Local beat context","Verify dated attributable source",55]
+  ["Henthorn beat operator reports","Local beat context","Verify dated attributable source",60]
  ].filter(x=>x[3]>0).sort((a,b)=>b[3]-a[3]);
  id("priorityRows").innerHTML=targets.map((t,i)=>"<tr><td>"+(i+1)+"</td><td>"+esc(t[0])+"</td><td>"+esc(t[1])+"</td><td class='warn'>"+esc(t[2])+"</td></tr>").join("");
- lane("laneInvestigate",["RFCA sonde / temperature endpoint","RFCA fish-counter telemetry","Current-season Ribble catch source","Henthorn / Ribble operator reports"],"warn");
- lane("laneVerify",[rainOK?"Rainfall reading already verified":"Rainfall reading endpoint stability","Any catch/operator source must be dated and attributable"],"warn");
- lane("laneIntegrate",[teleOK?"EA Henthorn telemetry — protected core active":"No core integration until EA repaired",rainOK?"Verified rainfall — read-only consumer":"No rainfall integration yet"],teleOK?"ok":"warn");
- lane("laneBlocked",["RFCA numeric values until machine-readable","Catch totals until verified current-season source","Named pool mentions as fishability/catch evidence"],"bad");
+ lane("laneInvestigate",["RFCA sonde / temperature endpoint","RFCA fish-counter telemetry","Current-season Ribble catch source","Henthorn beat operator reports"],"warn");
+ lane("laneVerify",[rainOK?"Rainfall reading already verified":"Rainfall reading endpoint stability","Any catch/operator source must be dated and attributable","Named pool mentions remain context only"],"warn");
+ lane("laneIntegrate",[teleOK?"EA Henthorn telemetry — protected core active":"No core integration until EA repaired",rainOK?"Verified rainfall — read-only consumer":"No rainfall integration yet","Henthorn beat register — candidate context only"],teleOK?"ok":"warn");
+ lane("laneBlocked",["RFCA numeric values until machine-readable","Catch totals until verified current-season source","Named pool mentions as fishability/catch evidence","Beat context as recommendation"],"bad");
 }
 function lane(x,items,c){id(x).innerHTML=items.map(v=>"<tr><td class='"+c+"'>"+esc(v)+"</td></tr>").join("")}
 function renderTele(r){
@@ -315,7 +335,7 @@ function renderTele(r){
 }
 async function refresh(){
  clicks++;txt("refreshClicks","Refresh clicks: "+clicks);txt("refreshState","Refresh running: "+now());
- const r=await telemetry();await rainfall();renderTele(r);pools();
+ const r=await telemetry();await rainfall();renderTele(r);pools();beats();
  txt("lastGoodProof",lastGood?"Last-good cache active: "+lastGood.length+" reading(s)":"Last-good cache: empty");
  txt("refreshState","Last refresh completed: "+now());
 }
