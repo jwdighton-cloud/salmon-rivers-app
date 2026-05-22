@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10161</title>
+<title>Salmon Rivers Intelligence — Build 10162</title>
 <style>
 :root{--bg:#f4f6f8;--card:#fff;--line:#d8dde3;--text:#111;--muted:#667085;--ok:#0f7b0f;--warn:#a15c00;--bad:#a40000;--blue:#0b5cad}
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
@@ -20,7 +20,7 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 <body>
 <header>
 <h1>Salmon Rivers Intelligence</h1>
-<div class="build">GOLD BUILD 10161 — RFCA Acquisition Investigation Panel</div>
+<div class="build">GOLD BUILD 10162 — Source Health Dashboard</div>
 </header>
 
 <main>
@@ -119,6 +119,58 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 <section class="card">
 <h2>Source Evidence Ledger</h2>
 <table><thead><tr><th>Source</th><th>Class</th><th>Evidence State</th><th>Rule</th></tr></thead><tbody id="evidenceRows"></tbody></table>
+</section>
+
+<section class="card">
+<h2>Source Health Dashboard</h2>
+<div class="pill warn">Internal confidence only</div>
+<div class="pill bad">Not fishability</div>
+<div class="pill bad">No unverified numbers</div>
+
+<div class="grid">
+<div class="box">
+<h3>Live Source Health</h3>
+<p class="small muted">Tracks whether a source is usable for intelligence. It does not convert weak sources into numbers or recommendations.</p>
+</div>
+<div class="box">
+<h3>Display Permission</h3>
+<p class="small muted">A source may be listed here before it is permitted to display values. Listing is not verification.</p>
+</div>
+<div class="box">
+<h3>Failure Rule</h3>
+<p class="small muted">If a source is stale, unstructured, unverifiable or unavailable, it remains blocked from numeric use.</p>
+</div>
+</div>
+
+<table style="margin-top:12px">
+<thead>
+<tr>
+<th>Source</th>
+<th>Health</th>
+<th>Evidence Basis</th>
+<th>Display Permission</th>
+<th>Next Action</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>EA Henthorn telemetry</td><td id="healthEA" class="warn">Checking</td><td>Machine-readable EA acquisition</td><td id="healthEAPermission" class="warn">Pending refresh</td><td>Protect frozen core</td></tr>
+<tr><td>EA rainfall discovery / reading</td><td id="healthRain" class="warn">Checking</td><td>Machine-readable only if verified by live reading endpoint</td><td id="healthRainPermission" class="warn">Pending refresh</td><td>Keep behind rainfall verification gate</td></tr>
+<tr><td>RFCA sonde / temperature</td><td class="bad">Blocked</td><td>No stable machine-readable source proven</td><td class="bad">No values displayed</td><td>Investigate acquisition path</td></tr>
+<tr><td>RFCA fish counters</td><td class="bad">Blocked</td><td>No stable machine-readable source proven</td><td class="bad">No values displayed</td><td>Investigate availability</td></tr>
+<tr><td>Current-season catch intelligence</td><td class="bad">Blocked</td><td>No dated attributable current-season source integrated</td><td class="bad">No totals displayed</td><td>Acquire verified source</td></tr>
+<tr><td>Operator / Henthorn beat intelligence</td><td class="warn">Candidate only</td><td>Context register only</td><td class="bad">No fishability or catch inference</td><td>Seek dated attributable operator source</td></tr>
+<tr><td>Named pool / social screenshot candidates</td><td class="warn">Candidate only</td><td>Named-place context only</td><td class="bad">No numeric use</td><td>Corroborate or retain as context</td></tr>
+</tbody>
+</table>
+
+<table style="margin-top:12px">
+<tbody>
+<tr><td>Source health score</td><td class="bad">Not displayed as a river score</td></tr>
+<tr><td>Fishability conclusion</td><td class="bad">Blocked</td></tr>
+<tr><td>Weak-source numeric promotion</td><td class="bad">Blocked</td></tr>
+<tr><td>Candidate source inflation</td><td class="bad">Blocked</td></tr>
+</tbody>
+</table>
 </section>
 
 <section class="card">
@@ -262,6 +314,7 @@ RFCA intelligence is acquisition-only. No RFCA values are displayed until the so
 <tr><td>Mention ≠ catch</td><td class="bad">Enforced</td></tr>
 <tr><td>Candidate confidence ≠ verification</td><td class="bad">Enforced</td></tr>
 <tr><td>RFCA investigation ≠ RFCA display permission</td><td class="bad">Enforced</td></tr>
+<tr><td>Source health ≠ fishability</td><td class="bad">Enforced</td></tr>
 <tr><td>EA core</td><td class="ok">Frozen and protected</td></tr>
 </tbody>
 </table>
@@ -269,7 +322,7 @@ RFCA intelligence is acquisition-only. No RFCA values are displayed until the so
 
 </main>
 
-<footer>Build 10161 · NO SOURCE = NO NUMBER · EA CORE FROZEN · RFCA VALUES BLOCKED</footer>
+<footer>Build 10162 · NO SOURCE = NO NUMBER · EA CORE FROZEN · SOURCE HEALTH IS NOT FISHABILITY</footer>
 
 <script>
 const EA_READINGS="https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings.json?_sorted&_limit=24";
@@ -365,12 +418,26 @@ function beats(){
  ];
  id("beatRows").innerHTML=rows.map(r=>"<tr><td>"+esc(r[0])+"</td><td>"+esc(r[1])+"</td><td class='warn'>"+esc(r[2])+"</td><td class='warn'>"+esc(r[3])+"</td><td>"+esc(r[4])+"</td><td class='bad'>"+esc(r[5])+"</td></tr>").join("");
 }
+function updateSourceHealth(teleOK){
+ if(id("healthEA")){
+  cls("healthEA",teleOK?"ok":"bad");
+  txt("healthEA",teleOK?"Healthy":"Unavailable");
+  cls("healthEAPermission",teleOK?"ok":"bad");
+  txt("healthEAPermission",teleOK?"Level and movement display permitted":"No display");
+ }
+ if(id("healthRain")){
+  cls("healthRain",rainOK?"ok":"warn");
+  txt("healthRain",rainOK?"Verified":"Not verified");
+  cls("healthRainPermission",rainOK?"ok":"bad");
+  txt("healthRainPermission",rainOK?"Rainfall display permitted":"No rainfall number");
+ }
+}
 function score(teleOK){
  let s=0;if(teleOK){s+=40;cls("scoreTelemetry","ok");txt("scoreTelemetry","Verified")}else{cls("scoreTelemetry","bad");txt("scoreTelemetry","Unavailable")}
  if(rainOK){s+=20;cls("scoreRainfall","ok");txt("scoreRainfall","Verified")}else{cls("scoreRainfall","warn");txt("scoreRainfall","Not verified")}
  cls("scoreRFCA","warn");txt("scoreRFCA","Not integrated");cls("scoreCatch","warn");txt("scoreCatch","Not integrated");cls("scoreOperator","warn");txt("scoreOperator","Candidate only");
  txt("qualityScore",s+"/100");cls("qualityMeaning",s>=60?"ok":s>=40?"warn":"bad");txt("qualityMeaning",s>=60?"EA telemetry and rainfall verified":s>=40?"Only core EA telemetry verified":"No verified live telemetry");
- updatePanels(teleOK);
+ updatePanels(teleOK);updateSourceHealth(teleOK);
 }
 function row(a,b,c,d,cl){return"<tr><td>"+esc(a)+"</td><td class='"+(cl||"warn")+"'>"+esc(b)+"</td><td>"+esc(c)+"</td><td>"+esc(d)+"</td></tr>"}
 function updatePanels(teleOK){
