@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10162</title>
+<title>Salmon Rivers Intelligence — Build 10163</title>
 <style>
 :root{--bg:#f4f6f8;--card:#fff;--line:#d8dde3;--text:#111;--muted:#667085;--ok:#0f7b0f;--warn:#a15c00;--bad:#a40000;--blue:#0b5cad}
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
@@ -20,7 +20,7 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 <body>
 <header>
 <h1>Salmon Rivers Intelligence</h1>
-<div class="build">GOLD BUILD 10162 — Source Health Dashboard</div>
+<div class="build">GOLD BUILD 10163 — RFCA Machine-Readable Discovery Checklist</div>
 </header>
 
 <main>
@@ -174,6 +174,59 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 </section>
 
 <section class="card">
+<h2>RFCA Machine-Readable Discovery Checklist</h2>
+<div class="pill warn">Discovery framework only</div>
+<div class="pill bad">No RFCA fetch active</div>
+<div class="pill bad">No RFCA numbers displayed</div>
+
+<div class="grid">
+<div class="box">
+<h3>Purpose</h3>
+<p class="small muted">Define the checks required before any RFCA source can move from investigation to verified integration.</p>
+</div>
+<div class="box">
+<h3>Safety Rule</h3>
+<p class="small muted">Discovery does not equal permission. A discovered page, image, chart or dashboard is not enough for numeric display.</p>
+</div>
+<div class="box">
+<h3>Promotion Rule</h3>
+<p class="small muted">A source can only be promoted after machine readability, stability, traceability, freshness and independent verification are all satisfied.</p>
+</div>
+</div>
+
+<table style="margin-top:12px">
+<thead>
+<tr>
+<th>Discovery Check</th>
+<th>Required Evidence</th>
+<th>Current State</th>
+<th>Promotion Allowed?</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Stable endpoint exists</td><td>Repeatable URL or feed address</td><td class="warn">Not proven</td><td class="bad">No</td></tr>
+<tr><td>Machine-readable format</td><td>JSON, CSV, XML or parseable structured payload</td><td class="warn">Not proven</td><td class="bad">No</td></tr>
+<tr><td>Measurement identity</td><td>Named sensor, station, river, parameter and unit</td><td class="warn">Not proven</td><td class="bad">No</td></tr>
+<tr><td>Timestamp availability</td><td>Current reading timestamp exposed with the reading</td><td class="warn">Not proven</td><td class="bad">No</td></tr>
+<tr><td>Refresh behaviour</td><td>Observed update cadence or currentness rule</td><td class="warn">Not proven</td><td class="bad">No</td></tr>
+<tr><td>Traceability</td><td>Source ownership and provenance clear</td><td class="warn">Candidate only</td><td class="bad">No</td></tr>
+<tr><td>Independent verification</td><td>Cross-check against another trusted statement/source</td><td class="warn">Not proven</td><td class="bad">No</td></tr>
+<tr><td>Display authorisation / suitability</td><td>Suitable for app display without misleading context</td><td class="warn">Not proven</td><td class="bad">No</td></tr>
+</tbody>
+</table>
+
+<table style="margin-top:12px">
+<tbody>
+<tr><td>Screenshot-only evidence</td><td class="bad">Blocked from numeric use</td></tr>
+<tr><td>Visual chart without structured data</td><td class="bad">Blocked from numeric use</td></tr>
+<tr><td>Copied value without endpoint</td><td class="bad">Blocked from numeric use</td></tr>
+<tr><td>Old or undated value</td><td class="bad">Blocked from numeric use</td></tr>
+<tr><td>Unclear unit or station identity</td><td class="bad">Blocked from numeric use</td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="card">
 <h2>Acquisition Priority Engine</h2>
 <table><thead><tr><th>Priority</th><th>Target</th><th>Why</th><th>Action</th></tr></thead><tbody id="priorityRows"></tbody></table>
 </section>
@@ -315,6 +368,7 @@ RFCA intelligence is acquisition-only. No RFCA values are displayed until the so
 <tr><td>Candidate confidence ≠ verification</td><td class="bad">Enforced</td></tr>
 <tr><td>RFCA investigation ≠ RFCA display permission</td><td class="bad">Enforced</td></tr>
 <tr><td>Source health ≠ fishability</td><td class="bad">Enforced</td></tr>
+<tr><td>Discovery checklist ≠ source approval</td><td class="bad">Enforced</td></tr>
 <tr><td>EA core</td><td class="ok">Frozen and protected</td></tr>
 </tbody>
 </table>
@@ -322,7 +376,7 @@ RFCA intelligence is acquisition-only. No RFCA values are displayed until the so
 
 </main>
 
-<footer>Build 10162 · NO SOURCE = NO NUMBER · EA CORE FROZEN · SOURCE HEALTH IS NOT FISHABILITY</footer>
+<footer>Build 10163 · NO SOURCE = NO NUMBER · EA CORE FROZEN · RFCA DISCOVERY ONLY</footer>
 
 <script>
 const EA_READINGS="https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings.json?_sorted&_limit=24";
