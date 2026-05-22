@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10160</title>
+<title>Salmon Rivers Intelligence — Build 10161</title>
 <style>
 :root{--bg:#f4f6f8;--card:#fff;--line:#d8dde3;--text:#111;--muted:#667085;--ok:#0f7b0f;--warn:#a15c00;--bad:#a40000;--blue:#0b5cad}
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
@@ -20,7 +20,7 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 <body>
 <header>
 <h1>Salmon Rivers Intelligence</h1>
-<div class="build">GOLD BUILD 10160 — Beat Confidence Ladder</div>
+<div class="build">GOLD BUILD 10161 — RFCA Acquisition Investigation Panel</div>
 </header>
 
 <main>
@@ -142,6 +142,71 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 </section>
 
 <section class="card">
+<h2>RFCA Acquisition Investigation</h2>
+<div class="pill warn">Investigation only</div>
+<div class="pill bad">No RFCA values displayed</div>
+<div class="pill bad">No numeric inference</div>
+
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Status</th>
+<th>Machine Readable</th>
+<th>Verified</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Temperature / sonde data</td><td class="warn">Investigating</td><td>Unknown</td><td class="warn">Pending</td><td>RFCA public exposure under review</td></tr>
+<tr><td>Fish-counter data</td><td class="warn">Investigating</td><td>Unknown</td><td class="warn">Pending</td><td>No stable feed acquired</td></tr>
+<tr><td>Catch intelligence</td><td class="warn">Candidate</td><td>Unknown</td><td class="warn">Pending</td><td>Current-season verification required</td></tr>
+<tr><td>River-health telemetry</td><td class="warn">Candidate</td><td>Unknown</td><td class="warn">Pending</td><td>Traceability required</td></tr>
+<tr><td>Migration monitoring</td><td class="warn">Investigating</td><td>Unknown</td><td class="warn">Pending</td><td>Acquisition path not confirmed</td></tr>
+<tr><td>Additional environmental feeds</td><td class="warn">Candidate</td><td>Unknown</td><td class="warn">Pending</td><td>Discovery stage</td></tr>
+</tbody>
+</table>
+
+<div class="grid" style="margin-top:12px">
+<div class="box">
+<h3>Acquisition Rule</h3>
+<p class="small">
+RFCA intelligence is acquisition-only. No RFCA values are displayed until the source is machine-readable, stable, traceable, current and independently verifiable.
+</p>
+<ul class="small">
+<li>Machine readable</li>
+<li>Stable</li>
+<li>Traceable</li>
+<li>Current</li>
+<li>Independently verifiable</li>
+</ul>
+</div>
+<div class="box">
+<h3>Known</h3>
+<p class="small muted">RFCA provides public information and is a strategic acquisition target.</p>
+</div>
+<div class="box">
+<h3>Unknown</h3>
+<p class="small muted">Stable structured feed availability is not yet proven.</p>
+</div>
+<div class="box">
+<h3>Next Action</h3>
+<p class="small muted">Investigate machine-readable acquisition path without displaying RFCA measurements.</p>
+</div>
+</div>
+
+<table style="margin-top:12px">
+<tbody>
+<tr><td>Temperature values</td><td class="bad">Blocked</td></tr>
+<tr><td>Fish-counter values</td><td class="bad">Blocked</td></tr>
+<tr><td>River-quality numbers</td><td class="bad">Blocked</td></tr>
+<tr><td>Estimated values</td><td class="bad">Blocked</td></tr>
+<tr><td>River-condition classification from RFCA</td><td class="bad">Blocked</td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="card">
 <h2>RFCA Acquisition Candidate Ledger</h2>
 <div class="pill warn">Primary strategic acquisition target</div>
 <div class="pill bad">RFCA values blocked until machine-readable</div>
@@ -196,6 +261,7 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 <tr><td>Beat context ≠ fishability</td><td class="bad">Enforced</td></tr>
 <tr><td>Mention ≠ catch</td><td class="bad">Enforced</td></tr>
 <tr><td>Candidate confidence ≠ verification</td><td class="bad">Enforced</td></tr>
+<tr><td>RFCA investigation ≠ RFCA display permission</td><td class="bad">Enforced</td></tr>
 <tr><td>EA core</td><td class="ok">Frozen and protected</td></tr>
 </tbody>
 </table>
@@ -203,7 +269,7 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 
 </main>
 
-<footer>Build 10160 · NO SOURCE = NO NUMBER · EA CORE FROZEN</footer>
+<footer>Build 10161 · NO SOURCE = NO NUMBER · EA CORE FROZEN · RFCA VALUES BLOCKED</footer>
 
 <script>
 const EA_READINGS="https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings.json?_sorted&_limit=24";
