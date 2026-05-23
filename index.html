@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10170</title>
+<title>Salmon Rivers Intelligence — Build 10172</title>
 <style>
 :root{--bg:#f4f6f8;--card:#fff;--line:#d8dde3;--text:#111;--muted:#667085;--ok:#0f7b0f;--warn:#a15c00;--bad:#a40000;--blue:#0b5cad}
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
@@ -20,7 +20,7 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 <body>
 <header>
 <h1>Salmon Rivers Intelligence</h1>
-<div class="build">GOLD BUILD 10170 — RFCA Promotion Decision Panel</div>
+<div class="build">GOLD BUILD 10172 — RFCA Investigation Checkpoint</div>
 </header>
 <main>
 
@@ -253,12 +253,7 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 <section class="card">
 <h2>RFCA Promotion Decision Panel</h2>
 <div class="pill bad">Decision: do not promote</div><div class="pill bad">No RFCA source approved</div><div class="pill bad">No RFCA values displayed</div><div class="pill bad">No RFCA fetch active</div>
-<div class="grid">
-<div class="box"><h3>Current Decision</h3><p class="small bad">All RFCA candidates remain blocked. No RFCA source has enough evidence for read-only testing, integration, scoring, display or recommendation use.</p></div>
-<div class="box"><h3>Reason</h3><p class="small muted">Machine-readable endpoint, source identity, parameter identity, timestamp proof, currentness rule and independent verification remain incomplete.</p></div>
-<div class="box"><h3>Allowed Next Step</h3><p class="small muted">Continue evidence acquisition and manual investigation only. Do not alter the EA telemetry core.</p></div>
-</div>
-<table style="margin-top:12px">
+<table>
 <thead><tr><th>Candidate</th><th>Promotion Requested?</th><th>Evidence Complete?</th><th>Decision</th><th>Reason</th></tr></thead>
 <tbody>
 <tr><td>RFCA temperature / sonde</td><td class="warn">Candidate only</td><td class="bad">No</td><td class="bad">Do not promote</td><td>Stable machine-readable endpoint and timestamp proof not verified</td></tr>
@@ -268,13 +263,51 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 <tr><td>Embedded dashboard resources</td><td class="warn">Candidate only</td><td class="bad">No</td><td class="bad">Do not promote</td><td>Structured payload not proven; visual display is insufficient</td></tr>
 </tbody>
 </table>
+</section>
+
+<section class="card">
+<h2>RFCA Next Evidence Acquisition Plan</h2>
+<div class="pill warn">Manual investigation only</div><div class="pill bad">No RFCA fetch active</div><div class="pill bad">No RFCA values displayed</div><div class="pill bad">EA core must remain untouched</div>
+<table>
+<thead><tr><th>Step</th><th>Manual Action</th><th>Evidence to Capture</th><th>Success Condition</th><th>App Permission</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Open RFCA live water-quality monitoring page outside the app</td><td>Page URL, title, visible provider, update wording, dashboard technology clues</td><td>Candidate source described without copying values</td><td class="warn">Context only</td></tr>
+<tr><td>2</td><td>Inspect whether page exposes structured resources</td><td>Possible JSON, CSV, XML, API, embedded dashboard or script resource names</td><td>Repeatable candidate endpoint path found</td><td class="bad">No fetch yet</td></tr>
+<tr><td>3</td><td>Identify sensor and station naming</td><td>River, site, station, sensor, sonde or monitoring point labels</td><td>Unambiguous source identity</td><td class="bad">No display</td></tr>
+<tr><td>4</td><td>Identify parameter names and units</td><td>Temperature, dissolved oxygen, turbidity, conductivity or other labels and units if present</td><td>Parameter meaning clear without inference</td><td class="bad">No value use</td></tr>
+<tr><td>5</td><td>Check timestamp / freshness wording</td><td>Reading time, update time, refresh interval or stale-data note</td><td>Currentness can be assessed</td><td class="bad">No live claim</td></tr>
+<tr><td>6</td><td>Check source ownership / provenance</td><td>RFCA, provider, partner or dashboard supplier attribution</td><td>Traceability is documented</td><td class="bad">No promotion</td></tr>
+<tr><td>7</td><td>Cross-check with trusted external statement</td><td>RFCA page text, announcement, provider info or official note</td><td>Independent confidence improves</td><td class="warn">May support evidence pack</td></tr>
+<tr><td>8</td><td>Prepare a non-display read-only test proposal</td><td>Target URL, expected format, failure rule, proof output, rollback point</td><td>Safe test design can be reviewed</td><td class="warn">Future review only</td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="card">
+<h2>RFCA Investigation Checkpoint</h2>
+<div class="pill ok">Checkpoint build</div><div class="pill warn">Governance phase complete</div><div class="pill bad">No RFCA source integrated</div><div class="pill bad">EA core frozen</div>
+<div class="grid">
+<div class="box"><h3>What is now complete</h3><p class="small muted">The app now has RFCA candidate controls, evidence requirements, pre-integration gates, read-only test design rules, proof-sheet rules, promotion decision logic and a manual evidence acquisition plan.</p></div>
+<div class="box"><h3>What remains blocked</h3><p class="small bad">RFCA temperature, sonde, fish-counter, catch, river-health and embedded dashboard values remain blocked. No RFCA value may be displayed.</p></div>
+<div class="box"><h3>Next project phase</h3><p class="small muted">Stop adding governance panels and begin real RFCA source investigation outside the app. Evidence comes first; code comes later.</p></div>
+</div>
+<table style="margin-top:12px">
+<thead><tr><th>Area</th><th>Checkpoint Status</th><th>Decision</th><th>Next Action</th></tr></thead>
+<tbody>
+<tr><td>EA Henthorn telemetry core</td><td class="ok">Protected</td><td class="ok">Keep frozen</td><td>Do not alter EA URLs, telemetry(), trend(), refresh(), renderTele() or cache logic</td></tr>
+<tr><td>RFCA candidate governance</td><td class="ok">Established</td><td class="ok">Phase complete</td><td>Use existing panels as guardrails</td></tr>
+<tr><td>RFCA source integration</td><td class="bad">Not approved</td><td class="bad">Blocked</td><td>Do not add fetch code yet</td></tr>
+<tr><td>RFCA value display</td><td class="bad">Not approved</td><td class="bad">Blocked</td><td>No temperature, fish-counter, catch or river-health numbers</td></tr>
+<tr><td>RFCA evidence acquisition</td><td class="warn">Ready to begin manually</td><td class="warn">Proceed outside app</td><td>Investigate endpoints, identity, timestamps, units and provenance</td></tr>
+<tr><td>Next safe build after evidence</td><td class="warn">Not yet authorised</td><td class="warn">Depends on evidence</td><td>Only consider isolated non-display read-only test after proof exists</td></tr>
+</tbody>
+</table>
 <table style="margin-top:12px">
 <tbody>
-<tr><td>RFCA status for Build 10170</td><td class="bad">Blocked</td></tr>
-<tr><td>RFCA read-only test</td><td class="bad">Not authorised</td></tr>
-<tr><td>RFCA numeric display</td><td class="bad">Not authorised</td></tr>
-<tr><td>RFCA contribution to source score</td><td class="bad">Not authorised</td></tr>
-<tr><td>EA telemetry core</td><td class="ok">Protected and unchanged</td></tr>
+<tr><td>Current live build role</td><td class="ok">Governance checkpoint</td></tr>
+<tr><td>Recommended next activity</td><td class="warn">RFCA source investigation, not app-panel expansion</td></tr>
+<tr><td>Transition readiness</td><td class="ok">Ready</td></tr>
+<tr><td>Micro-restore line</td><td class="warn">Build 10172: EA Henthorn telemetry protected; RFCA governance complete; no RFCA values/fetch; next phase is source investigation.</td></tr>
 </tbody>
 </table>
 </section>
@@ -377,12 +410,14 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 <tr><td>Read-only design ≠ active RFCA integration</td><td class="bad">Enforced</td></tr>
 <tr><td>Proof sheet not run = no promotion</td><td class="bad">Enforced</td></tr>
 <tr><td>Promotion decision: RFCA blocked</td><td class="bad">Enforced</td></tr>
+<tr><td>Evidence acquisition plan ≠ data acquisition</td><td class="bad">Enforced</td></tr>
+<tr><td>Checkpoint reached: stop panel sprawl</td><td class="warn">Enforced</td></tr>
 <tr><td>EA core</td><td class="ok">Frozen and protected</td></tr>
 </tbody></table>
 </section>
 
 </main>
-<footer>Build 10170 · NO SOURCE = NO NUMBER · EA CORE FROZEN · RFCA PROMOTION BLOCKED</footer>
+<footer>Build 10172 · NO SOURCE = NO NUMBER · EA CORE FROZEN · RFCA GOVERNANCE CHECKPOINT</footer>
 
 <script>
 const EA_READINGS="https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings.json?_sorted&_limit=24";
@@ -495,10 +530,11 @@ function updatePanels(teleOK){
  if(rainOK)known.push("Rainfall reading is verified."); else unk.push("Rainfall remains unverified.");
  known.push("Henthorn beat context is structured as candidate intelligence only.");
  known.push("Named pool mentions are captured at Candidate confidence only.");
+ known.push("RFCA governance checkpoint reached; next phase is external source investigation.");
  unk.push("RFCA sonde, fish counters, current-season catches and verified operator intelligence are not integrated.");
  id("knownPanel").innerHTML="<ul>"+known.map(x=>"<li>"+esc(x)+"</li>").join("")+"</ul>";
  id("unknownPanel").innerHTML="<ul>"+unk.map(x=>"<li>"+esc(x)+"</li>").join("")+"</ul>";
- txt("nextActionPanel",teleOK?"Investigate RFCA machine-readable sonde / temperature source without displaying RFCA values.":"Repair EA telemetry before other work.");
+ txt("nextActionPanel",teleOK?"Begin RFCA source investigation outside the app; do not add RFCA fetch code until evidence proves a stable machine-readable source.":"Repair EA telemetry before other work.");
  id("gapRows").innerHTML=
   row("EA Henthorn telemetry",teleOK?"Verified live":"Unavailable",teleOK?"No current gap":"Core telemetry failure",teleOK?"Protect frozen EA core":"Investigate EA acquisition",teleOK?"ok":"bad")+
   row("Rainfall intelligence",rainOK?"Verified live reading":"Not verified",rainOK?"No rainfall gap":"Need stable verified rainfall reading endpoint",rainOK?"Keep read-only":"Continue rainfall verification",rainOK?"ok":"warn")+
@@ -512,17 +548,17 @@ function updatePanels(teleOK){
   row("Current-season catch intelligence","Blocked","Level 2 candidate","No totals without dated attributable source","bad")+
   row("Henthorn beat / named pool commentary","Candidate only","Level 4 candidate","Candidate context only; no fishability, catch or movement inference","warn");
  const targets=[
-  ["RFCA sonde / temperature feed","Highest-value missing welfare signal","Find stable machine-readable endpoint",90],
+  ["RFCA sonde / temperature feed","Highest-value missing welfare signal","Investigate external RFCA evidence; do not add app fetch yet",90],
   ["Current-season Ribble catch intelligence","Most important fishing intelligence after live conditions","Acquire dated attributable source",85],
   ["RFCA fish-counter telemetry","Migration intelligence if available","Investigate availability",75],
   ["Verified rainfall reading chain","Catchment context",rainOK?"Maintain read-only verification":"Verify endpoint stability",rainOK?0:70],
   ["Henthorn beat operator reports","Local beat context","Verify dated attributable source",60]
  ].filter(x=>x[3]>0).sort((a,b)=>b[3]-a[3]);
  id("priorityRows").innerHTML=targets.map((t,i)=>"<tr><td>"+(i+1)+"</td><td>"+esc(t[0])+"</td><td>"+esc(t[1])+"</td><td class='warn'>"+esc(t[2])+"</td></tr>").join("");
- lane("laneInvestigate",["RFCA sonde / temperature endpoint","RFCA fish-counter telemetry","Current-season Ribble catch source","Henthorn beat operator reports"],"warn");
+ lane("laneInvestigate",["RFCA source investigation outside app","RFCA sonde / temperature endpoint","RFCA fish-counter telemetry","Current-season Ribble catch source","Henthorn beat operator reports"],"warn");
  lane("laneVerify",[rainOK?"Rainfall reading already verified":"Rainfall reading endpoint stability","Any catch/operator source must be dated and attributable","Named pool mentions remain Candidate until corroborated"],"warn");
  lane("laneIntegrate",[teleOK?"EA Henthorn telemetry — protected core active":"No core integration until EA repaired",rainOK?"Verified rainfall — read-only consumer":"No rainfall integration yet","Henthorn beat register — candidate context only"],teleOK?"ok":"warn");
- lane("laneBlocked",["RFCA numeric values until machine-readable","Catch totals until verified current-season source","Named pool mentions as fishability/catch evidence","Candidate confidence as verification"],"bad");
+ lane("laneBlocked",["RFCA numeric values until machine-readable","RFCA automated acquisition until evidence complete","Catch totals until verified current-season source","Named pool mentions as fishability/catch evidence","Candidate confidence as verification"],"bad");
 }
 function lane(x,items,c){id(x).innerHTML=items.map(v=>"<tr><td class='"+c+"'>"+esc(v)+"</td></tr>").join("")}
 function renderTele(r){
