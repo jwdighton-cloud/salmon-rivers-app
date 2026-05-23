@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10163</title>
+<title>Salmon Rivers Intelligence — Build 10164</title>
 <style>
 :root{--bg:#f4f6f8;--card:#fff;--line:#d8dde3;--text:#111;--muted:#667085;--ok:#0f7b0f;--warn:#a15c00;--bad:#a40000;--blue:#0b5cad}
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
@@ -20,7 +20,7 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 <body>
 <header>
 <h1>Salmon Rivers Intelligence</h1>
-<div class="build">GOLD BUILD 10163 — RFCA Machine-Readable Discovery Checklist</div>
+<div class="build">GOLD BUILD 10164 — RFCA Candidate Endpoint Register</div>
 </header>
 
 <main>
@@ -227,6 +227,66 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 </section>
 
 <section class="card">
+<h2>RFCA Candidate Endpoint Register</h2>
+<div class="pill warn">Candidate acquisition paths only</div>
+<div class="pill bad">No endpoint is verified</div>
+<div class="pill bad">No RFCA fetch active</div>
+<div class="pill bad">No RFCA values displayed</div>
+
+<div class="grid">
+<div class="box">
+<h3>Purpose</h3>
+<p class="small muted">Record possible RFCA acquisition paths without promoting them into live data, values, fishability, or recommendations.</p>
+</div>
+<div class="box">
+<h3>Endpoint Rule</h3>
+<p class="small muted">A page, dashboard, chart, screenshot, embedded widget or visual display is not an approved endpoint until a stable structured feed is proven.</p>
+</div>
+<div class="box">
+<h3>Promotion Gate</h3>
+<p class="small muted">Candidate endpoint → discovered endpoint → verified endpoint → read-only integration → display permission. Current state: candidate only.</p>
+</div>
+</div>
+
+<table style="margin-top:12px">
+<thead>
+<tr>
+<th>Candidate Path</th>
+<th>Likely Data Type</th>
+<th>Current Status</th>
+<th>Verification Need</th>
+<th>Display Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>RFCA live water-quality monitoring page</td><td>Temperature / sonde / water-health context</td><td class="warn">Candidate page only</td><td>Find stable machine-readable source behind display</td><td class="bad">No values displayed</td></tr>
+<tr><td>Embedded dashboard resources</td><td>Possible structured telemetry feed</td><td class="warn">Unproven</td><td>Inspect safely for stable JSON, CSV, XML or API payload</td><td class="bad">No values displayed</td></tr>
+<tr><td>Public chart or visual widget</td><td>Visual telemetry context</td><td class="warn">Candidate only</td><td>Confirm whether chart is backed by traceable structured data</td><td class="bad">No numeric extraction</td></tr>
+<tr><td>RFCA fish-counter information</td><td>Migration / counter telemetry</td><td class="warn">Availability unknown</td><td>Find source, ownership, station identity, date and format</td><td class="bad">No fish-count display</td></tr>
+<tr><td>RFCA catch reports or updates</td><td>Current-season catch intelligence</td><td class="warn">Not integrated</td><td>Need dated, attributable, current-season and display-suitable source</td><td class="bad">No catch totals displayed</td></tr>
+<tr><td>River-health monitoring material</td><td>Environmental context</td><td class="warn">Candidate only</td><td>Confirm parameter identity, unit, timestamp and provenance</td><td class="bad">No river-health values displayed</td></tr>
+</tbody>
+</table>
+
+<table style="margin-top:12px">
+<thead>
+<tr>
+<th>Promotion Stage</th>
+<th>Meaning</th>
+<th>Current Permission</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Candidate</td><td>Possible source worth investigating</td><td class="warn">List only</td></tr>
+<tr><td>Discovered</td><td>Stable source path observed but not verified</td><td class="bad">No values</td></tr>
+<tr><td>Verified Endpoint</td><td>Machine-readable, stable, traceable and current</td><td class="warn">Read-only integration may be considered</td></tr>
+<tr><td>Integrated</td><td>Safely parsed without breaking core telemetry</td><td class="warn">Still subject to display gate</td></tr>
+<tr><td>Display Approved</td><td>Verified, current, suitable and independently checked</td><td class="ok">Values may be displayed only then</td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="card">
 <h2>Acquisition Priority Engine</h2>
 <table><thead><tr><th>Priority</th><th>Target</th><th>Why</th><th>Action</th></tr></thead><tbody id="priorityRows"></tbody></table>
 </section>
@@ -369,6 +429,7 @@ RFCA intelligence is acquisition-only. No RFCA values are displayed until the so
 <tr><td>RFCA investigation ≠ RFCA display permission</td><td class="bad">Enforced</td></tr>
 <tr><td>Source health ≠ fishability</td><td class="bad">Enforced</td></tr>
 <tr><td>Discovery checklist ≠ source approval</td><td class="bad">Enforced</td></tr>
+<tr><td>Candidate endpoint ≠ verified feed</td><td class="bad">Enforced</td></tr>
 <tr><td>EA core</td><td class="ok">Frozen and protected</td></tr>
 </tbody>
 </table>
@@ -376,7 +437,7 @@ RFCA intelligence is acquisition-only. No RFCA values are displayed until the so
 
 </main>
 
-<footer>Build 10163 · NO SOURCE = NO NUMBER · EA CORE FROZEN · RFCA DISCOVERY ONLY</footer>
+<footer>Build 10164 · NO SOURCE = NO NUMBER · EA CORE FROZEN · RFCA ENDPOINTS CANDIDATE ONLY</footer>
 
 <script>
 const EA_READINGS="https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings.json?_sorted&_limit=24";
@@ -472,6 +533,7 @@ function beats(){
  ];
  id("beatRows").innerHTML=rows.map(r=>"<tr><td>"+esc(r[0])+"</td><td>"+esc(r[1])+"</td><td class='warn'>"+esc(r[2])+"</td><td class='warn'>"+esc(r[3])+"</td><td>"+esc(r[4])+"</td><td class='bad'>"+esc(r[5])+"</td></tr>").join("");
 }
+
 function updateSourceHealth(teleOK){
  if(id("healthEA")){
   cls("healthEA",teleOK?"ok":"bad");
@@ -486,6 +548,7 @@ function updateSourceHealth(teleOK){
   txt("healthRainPermission",rainOK?"Rainfall display permitted":"No rainfall number");
  }
 }
+
 function score(teleOK){
  let s=0;if(teleOK){s+=40;cls("scoreTelemetry","ok");txt("scoreTelemetry","Verified")}else{cls("scoreTelemetry","bad");txt("scoreTelemetry","Unavailable")}
  if(rainOK){s+=20;cls("scoreRainfall","ok");txt("scoreRainfall","Verified")}else{cls("scoreRainfall","warn");txt("scoreRainfall","Not verified")}
