@@ -1,9 +1,10 @@
+go
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10168</title>
+<title>Salmon Rivers Intelligence — Build 10169</title>
 <style>
 :root{--bg:#f4f6f8;--card:#fff;--line:#d8dde3;--text:#111;--muted:#667085;--ok:#0f7b0f;--warn:#a15c00;--bad:#a40000;--blue:#0b5cad}
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
@@ -20,7 +21,7 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 <body>
 <header>
 <h1>Salmon Rivers Intelligence</h1>
-<div class="build">GOLD BUILD 10168 — RFCA Read-Only Test Design</div>
+<div class="build">GOLD BUILD 10169 — RFCA Read-Only Test Proof Sheet</div>
 </header>
 <main>
 
@@ -217,12 +218,7 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 <section class="card">
 <h2>RFCA Read-Only Test Design</h2>
 <div class="pill warn">Locked draft only</div><div class="pill bad">No RFCA code active</div><div class="pill bad">No RFCA fetch active</div><div class="pill bad">No RFCA values displayed</div>
-<div class="grid">
-<div class="box"><h3>Purpose</h3><p class="small muted">Define how a future RFCA acquisition test would be safely designed after the pre-integration gate passes.</p></div>
-<div class="box"><h3>Current Decision</h3><p class="small bad">Design only. No RFCA test is authorised in this build.</p></div>
-<div class="box"><h3>Protection</h3><p class="small muted">Any future test must be isolated from EA telemetry, trend, refresh, cache and verified-source scoring.</p></div>
-</div>
-<table style="margin-top:12px">
+<table>
 <thead><tr><th>Design Area</th><th>Required Design Rule</th><th>Current State</th><th>Permission</th></tr></thead>
 <tbody>
 <tr><td>Acquisition mode</td><td>Read-only HTTP GET only; no writes, no mutation, no dependency on RFCA values</td><td class="warn">Draft rule</td><td class="bad">Not active</td></tr>
@@ -235,12 +231,37 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 <tr><td>Promotion rule</td><td>Passing acquisition test still does not authorise value display</td><td class="ok">Rule defined</td><td class="bad">Display blocked</td></tr>
 </tbody>
 </table>
+</section>
+
+<section class="card">
+<h2>RFCA Read-Only Test Proof Sheet</h2>
+<div class="pill warn">Future proof sheet only</div><div class="pill bad">No RFCA test active</div><div class="pill bad">No RFCA fetch active</div><div class="pill bad">No RFCA values displayed</div>
+<div class="grid">
+<div class="box"><h3>Purpose</h3><p class="small muted">Defines exactly what a future RFCA read-only test must prove before any source can move beyond investigation.</p></div>
+<div class="box"><h3>Current Status</h3><p class="small bad">No RFCA proof has been run. This build records the proof requirements only.</p></div>
+<div class="box"><h3>Promotion Rule</h3><p class="small muted">Passing this proof sheet would still not permit public display of RFCA values. It would only support a later review step.</p></div>
+</div>
+<table style="margin-top:12px">
+<thead><tr><th>Proof Item</th><th>Required Output</th><th>Pass Rule</th><th>Current State</th><th>Result</th></tr></thead>
+<tbody>
+<tr><td>HTTP reachability</td><td>Status code, final URL, redirect chain if any</td><td>Stable successful response across repeated manual checks</td><td class="warn">Not tested</td><td class="bad">No pass</td></tr>
+<tr><td>Payload type</td><td>Content-Type and observed data format</td><td>Structured data confirmed; not merely visual page content</td><td class="warn">Not tested</td><td class="bad">No pass</td></tr>
+<tr><td>Machine-readable body</td><td>Sample keys/fields or structured rows</td><td>Readable without screenshots, OCR or guessed visual extraction</td><td class="warn">Not tested</td><td class="bad">No pass</td></tr>
+<tr><td>Station identity</td><td>River, site, station, sensor or monitoring location</td><td>Clearly tied to Ribble/Hodder RFCA context and not ambiguous</td><td class="warn">Not tested</td><td class="bad">No pass</td></tr>
+<tr><td>Parameter identity</td><td>Parameter name and unit</td><td>Unambiguous parameter, unit and meaning</td><td class="warn">Not tested</td><td class="bad">No pass</td></tr>
+<tr><td>Timestamp proof</td><td>Reading timestamp or update timestamp</td><td>Currentness can be judged without guessing</td><td class="warn">Not tested</td><td class="bad">No pass</td></tr>
+<tr><td>Stale-data behaviour</td><td>Defined age limit and failure display</td><td>Old RFCA values cannot appear as live</td><td class="warn">Not tested</td><td class="bad">No pass</td></tr>
+<tr><td>Failure handling</td><td>Error path, unavailable state and no-value display</td><td>Failure cannot invent, estimate or reuse RFCA values as current</td><td class="warn">Not tested</td><td class="bad">No pass</td></tr>
+<tr><td>EA isolation proof</td><td>Diff confirms EA core functions untouched</td><td>No changes to EA acquisition, trend, refresh, cache or render logic</td><td class="ok">Rule defined</td><td class="warn">Pending future diff</td></tr>
+<tr><td>User-facing proof</td><td>Visible pass/fail evidence, not hidden assumptions</td><td>User can see why source is blocked or eligible for next review</td><td class="warn">Not built</td><td class="bad">No pass</td></tr>
+</tbody>
+</table>
 <table style="margin-top:12px">
 <tbody>
-<tr><td>RFCA acquisition code in this build</td><td class="bad">None</td></tr>
-<tr><td>RFCA endpoint requested by this build</td><td class="bad">None</td></tr>
-<tr><td>RFCA value shown by this build</td><td class="bad">None</td></tr>
-<tr><td>Future test status</td><td class="warn">Designed but not authorised</td></tr>
+<tr><td>Proof sheet status</td><td class="bad">Not run</td></tr>
+<tr><td>RFCA read-only test status</td><td class="bad">Not active</td></tr>
+<tr><td>RFCA source promotion</td><td class="bad">Not permitted</td></tr>
+<tr><td>RFCA public value display</td><td class="bad">Blocked</td></tr>
 </tbody>
 </table>
 </section>
@@ -341,12 +362,13 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 <tr><td>Evidence pack incomplete = RFCA blocked</td><td class="bad">Enforced</td></tr>
 <tr><td>Pre-integration gate closed = no RFCA test</td><td class="bad">Enforced</td></tr>
 <tr><td>Read-only design ≠ active RFCA integration</td><td class="bad">Enforced</td></tr>
+<tr><td>Proof sheet not run = no promotion</td><td class="bad">Enforced</td></tr>
 <tr><td>EA core</td><td class="ok">Frozen and protected</td></tr>
 </tbody></table>
 </section>
 
 </main>
-<footer>Build 10168 · NO SOURCE = NO NUMBER · EA CORE FROZEN · RFCA READ-ONLY TEST DESIGN ONLY</footer>
+<footer>Build 10169 · NO SOURCE = NO NUMBER · EA CORE FROZEN · RFCA PROOF SHEET ONLY</footer>
 
 <script>
 const EA_READINGS="https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings.json?_sorted&_limit=24";
