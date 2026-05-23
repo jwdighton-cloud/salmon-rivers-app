@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10165</title>
+<title>Salmon Rivers Intelligence — Build 10166</title>
 <style>
 :root{--bg:#f4f6f8;--card:#fff;--line:#d8dde3;--text:#111;--muted:#667085;--ok:#0f7b0f;--warn:#a15c00;--bad:#a40000;--blue:#0b5cad}
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
@@ -20,7 +20,7 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 <body>
 <header>
 <h1>Salmon Rivers Intelligence</h1>
-<div class="build">GOLD BUILD 10165 — RFCA Investigation Action Log</div>
+<div class="build">GOLD BUILD 10166 — RFCA Evidence Pack Requirements</div>
 </header>
 <main>
 
@@ -165,12 +165,7 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 <section class="card">
 <h2>RFCA Investigation Action Log</h2>
 <div class="pill warn">Action tracking only</div><div class="pill bad">No RFCA values displayed</div><div class="pill bad">No source promotion</div><div class="pill bad">No RFCA fetch active</div>
-<div class="grid">
-<div class="box"><h3>Purpose</h3><p class="small muted">Track the investigation steps needed before RFCA data can ever move toward verified read-only integration.</p></div>
-<div class="box"><h3>Current Rule</h3><p class="small muted">Every action remains investigative. No action confirms a value, feed, fish counter, catch report or water-quality number.</p></div>
-<div class="box"><h3>Completion Rule</h3><p class="small muted">An action can only close when evidence is traceable, dated, reproducible and suitable for governance.</p></div>
-</div>
-<table style="margin-top:12px">
+<table>
 <thead><tr><th>Action</th><th>Target</th><th>Status</th><th>Evidence Needed</th><th>Permission After Completion</th></tr></thead>
 <tbody>
 <tr><td>Inspect public RFCA monitoring page</td><td>Water-quality / sonde route</td><td class="warn">Open</td><td>Identify whether a stable structured feed exists behind the page</td><td class="bad">No values; investigation only</td></tr>
@@ -179,6 +174,39 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 <tr><td>Investigate RFCA fish-counter availability</td><td>Migration intelligence</td><td class="warn">Open</td><td>Public source, station identity, update cadence and machine-readable access</td><td class="bad">No fish-count display</td></tr>
 <tr><td>Investigate current-season catch intelligence</td><td>Ribble salmon / sea-trout context</td><td class="warn">Open</td><td>Dated, attributable, current-season, display-suitable source</td><td class="bad">No catch totals</td></tr>
 <tr><td>Define verification proof format</td><td>Future RFCA integration governance</td><td class="warn">Open</td><td>Repeatable checks, source citation, timestamp and failure behaviour</td><td class="warn">May support later read-only test build only</td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="card">
+<h2>RFCA Evidence Pack Requirements</h2>
+<div class="pill warn">Proof requirements only</div><div class="pill bad">No RFCA values displayed</div><div class="pill bad">No source approval</div><div class="pill bad">No RFCA fetch active</div>
+<div class="grid">
+<div class="box"><h3>Purpose</h3><p class="small muted">Define the evidence pack required before any RFCA candidate can move from investigation into a controlled read-only test build.</p></div>
+<div class="box"><h3>Class I Rule</h3><p class="small muted">A candidate source must prove identity, stability, currentness, machine readability, traceability and safe failure behaviour before integration.</p></div>
+<div class="box"><h3>Current State</h3><p class="small muted">No RFCA candidate currently has a complete evidence pack. All RFCA values remain blocked.</p></div>
+</div>
+<table style="margin-top:12px">
+<thead><tr><th>Evidence Item</th><th>Required Proof</th><th>Why It Matters</th><th>Current State</th><th>Gate Result</th></tr></thead>
+<tbody>
+<tr><td>Source owner</td><td>Clear RFCA or authorised provider ownership</td><td>Prevents unattributed or copied values</td><td class="warn">Not documented</td><td class="bad">Blocked</td></tr>
+<tr><td>Stable URL / endpoint</td><td>Repeatable structured source address</td><td>Prevents fragile scraping or screenshot use</td><td class="warn">Not proven</td><td class="bad">Blocked</td></tr>
+<tr><td>Machine-readable payload</td><td>JSON, CSV, XML or stable structured data</td><td>Required for safe automated acquisition</td><td class="warn">Not proven</td><td class="bad">Blocked</td></tr>
+<tr><td>Sensor / station identity</td><td>Named river, station, sensor or monitoring location</td><td>Prevents displaying the wrong river or site</td><td class="warn">Not proven</td><td class="bad">Blocked</td></tr>
+<tr><td>Parameter and unit</td><td>Explicit parameter name and unit</td><td>Prevents false temperature, quality or count interpretation</td><td class="warn">Not proven</td><td class="bad">Blocked</td></tr>
+<tr><td>Timestamp</td><td>Reading time exposed with the value</td><td>Required for currentness and stale-data control</td><td class="warn">Not proven</td><td class="bad">Blocked</td></tr>
+<tr><td>Refresh cadence</td><td>Known update interval or freshness rule</td><td>Prevents old data appearing live</td><td class="warn">Not proven</td><td class="bad">Blocked</td></tr>
+<tr><td>Failure behaviour</td><td>Defined safe fallback when source fails</td><td>Prevents fake continuity or invented replacement values</td><td class="warn">Not specified</td><td class="bad">Blocked</td></tr>
+<tr><td>Independent cross-check</td><td>Second trusted reference or manual verification path</td><td>Reduces risk of bad feed interpretation</td><td class="warn">Not completed</td><td class="bad">Blocked</td></tr>
+<tr><td>Display suitability</td><td>Confirmed safe to show without misleading users</td><td>Prevents overclaiming from raw technical data</td><td class="warn">Not approved</td><td class="bad">Blocked</td></tr>
+</tbody>
+</table>
+<table style="margin-top:12px">
+<tbody>
+<tr><td>Minimum evidence pack status</td><td class="bad">Incomplete</td></tr>
+<tr><td>RFCA read-only test permission</td><td class="bad">Not granted</td></tr>
+<tr><td>RFCA public display permission</td><td class="bad">Not granted</td></tr>
+<tr><td>RFCA numeric use</td><td class="bad">Blocked</td></tr>
 </tbody>
 </table>
 </section>
@@ -276,12 +304,13 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 <tr><td>Discovery checklist ≠ source approval</td><td class="bad">Enforced</td></tr>
 <tr><td>Candidate endpoint ≠ verified feed</td><td class="bad">Enforced</td></tr>
 <tr><td>Action log ≠ source approval</td><td class="bad">Enforced</td></tr>
+<tr><td>Evidence pack incomplete = RFCA blocked</td><td class="bad">Enforced</td></tr>
 <tr><td>EA core</td><td class="ok">Frozen and protected</td></tr>
 </tbody></table>
 </section>
 
 </main>
-<footer>Build 10165 · NO SOURCE = NO NUMBER · EA CORE FROZEN · RFCA ACTION LOG ONLY</footer>
+<footer>Build 10166 · NO SOURCE = NO NUMBER · EA CORE FROZEN · RFCA EVIDENCE PACK ONLY</footer>
 
 <script>
 const EA_READINGS="https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings.json?_sorted&_limit=24";
