@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10166</title>
+<title>Salmon Rivers Intelligence — Build 10167</title>
 <style>
 :root{--bg:#f4f6f8;--card:#fff;--line:#d8dde3;--text:#111;--muted:#667085;--ok:#0f7b0f;--warn:#a15c00;--bad:#a40000;--blue:#0b5cad}
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
@@ -20,7 +20,7 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 <body>
 <header>
 <h1>Salmon Rivers Intelligence</h1>
-<div class="build">GOLD BUILD 10166 — RFCA Evidence Pack Requirements</div>
+<div class="build">GOLD BUILD 10167 — RFCA Pre-Integration Gate</div>
 </header>
 <main>
 
@@ -181,32 +181,49 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 <section class="card">
 <h2>RFCA Evidence Pack Requirements</h2>
 <div class="pill warn">Proof requirements only</div><div class="pill bad">No RFCA values displayed</div><div class="pill bad">No source approval</div><div class="pill bad">No RFCA fetch active</div>
-<div class="grid">
-<div class="box"><h3>Purpose</h3><p class="small muted">Define the evidence pack required before any RFCA candidate can move from investigation into a controlled read-only test build.</p></div>
-<div class="box"><h3>Class I Rule</h3><p class="small muted">A candidate source must prove identity, stability, currentness, machine readability, traceability and safe failure behaviour before integration.</p></div>
-<div class="box"><h3>Current State</h3><p class="small muted">No RFCA candidate currently has a complete evidence pack. All RFCA values remain blocked.</p></div>
-</div>
-<table style="margin-top:12px">
+<table>
 <thead><tr><th>Evidence Item</th><th>Required Proof</th><th>Why It Matters</th><th>Current State</th><th>Gate Result</th></tr></thead>
 <tbody>
 <tr><td>Source owner</td><td>Clear RFCA or authorised provider ownership</td><td>Prevents unattributed or copied values</td><td class="warn">Not documented</td><td class="bad">Blocked</td></tr>
 <tr><td>Stable URL / endpoint</td><td>Repeatable structured source address</td><td>Prevents fragile scraping or screenshot use</td><td class="warn">Not proven</td><td class="bad">Blocked</td></tr>
 <tr><td>Machine-readable payload</td><td>JSON, CSV, XML or stable structured data</td><td>Required for safe automated acquisition</td><td class="warn">Not proven</td><td class="bad">Blocked</td></tr>
 <tr><td>Sensor / station identity</td><td>Named river, station, sensor or monitoring location</td><td>Prevents displaying the wrong river or site</td><td class="warn">Not proven</td><td class="bad">Blocked</td></tr>
-<tr><td>Parameter and unit</td><td>Explicit parameter name and unit</td><td>Prevents false temperature, quality or count interpretation</td><td class="warn">Not proven</td><td class="bad">Blocked</td></tr>
-<tr><td>Timestamp</td><td>Reading time exposed with the value</td><td>Required for currentness and stale-data control</td><td class="warn">Not proven</td><td class="bad">Blocked</td></tr>
-<tr><td>Refresh cadence</td><td>Known update interval or freshness rule</td><td>Prevents old data appearing live</td><td class="warn">Not proven</td><td class="bad">Blocked</td></tr>
-<tr><td>Failure behaviour</td><td>Defined safe fallback when source fails</td><td>Prevents fake continuity or invented replacement values</td><td class="warn">Not specified</td><td class="bad">Blocked</td></tr>
-<tr><td>Independent cross-check</td><td>Second trusted reference or manual verification path</td><td>Reduces risk of bad feed interpretation</td><td class="warn">Not completed</td><td class="bad">Blocked</td></tr>
-<tr><td>Display suitability</td><td>Confirmed safe to show without misleading users</td><td>Prevents overclaiming from raw technical data</td><td class="warn">Not approved</td><td class="bad">Blocked</td></tr>
+<tr><td>Parameter and unit</td><td>Explicit parameter name and unit</td><td>Prevents false interpretation</td><td class="warn">Not proven</td><td class="bad">Blocked</td></tr>
+<tr><td>Timestamp</td><td>Reading time exposed with the value</td><td>Required for stale-data control</td><td class="warn">Not proven</td><td class="bad">Blocked</td></tr>
+<tr><td>Failure behaviour</td><td>Defined safe fallback when source fails</td><td>Prevents fake continuity</td><td class="warn">Not specified</td><td class="bad">Blocked</td></tr>
+<tr><td>Independent cross-check</td><td>Second trusted reference or manual verification path</td><td>Reduces bad interpretation risk</td><td class="warn">Not completed</td><td class="bad">Blocked</td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="card">
+<h2>RFCA Pre-Integration Gate</h2>
+<div class="pill warn">Final gate before any read-only test</div><div class="pill bad">Gate currently closed</div><div class="pill bad">No RFCA fetch permitted</div><div class="pill bad">No RFCA values displayed</div>
+<div class="grid">
+<div class="box"><h3>Purpose</h3><p class="small muted">This gate prevents premature RFCA integration. No RFCA source can be tested in code until every pre-integration item is satisfied.</p></div>
+<div class="box"><h3>Current Decision</h3><p class="small bad">RFCA integration is not approved. Evidence is incomplete and no machine-readable source has been verified.</p></div>
+<div class="box"><h3>Next Safe State</h3><p class="small muted">Continue investigation outside the live telemetry core. Any future RFCA test must be isolated, read-only, non-display and reversible.</p></div>
+</div>
+<table style="margin-top:12px">
+<thead><tr><th>Gate Item</th><th>Required Before Test Build</th><th>Current State</th><th>Decision</th></tr></thead>
+<tbody>
+<tr><td>Evidence pack complete</td><td>All evidence requirements documented and reproducible</td><td class="bad">Incomplete</td><td class="bad">Fail</td></tr>
+<tr><td>Stable endpoint proven</td><td>Repeatable machine-readable endpoint confirmed</td><td class="bad">Not proven</td><td class="bad">Fail</td></tr>
+<tr><td>Read-only acquisition design</td><td>Proposed test cannot write, mutate or depend on RFCA values</td><td class="warn">Not designed</td><td class="bad">Fail</td></tr>
+<tr><td>Isolation from EA core</td><td>RFCA test must not alter EA telemetry, trend, refresh or cache logic</td><td class="warn">Requirement defined</td><td class="warn">Pending</td></tr>
+<tr><td>Safe failure mode</td><td>Failure must show unavailable, not guessed or cached as live</td><td class="warn">Requirement defined</td><td class="warn">Pending</td></tr>
+<tr><td>No display mode</td><td>First test build may test acquisition only, not show RFCA values</td><td class="ok">Rule defined</td><td class="warn">Pending</td></tr>
+<tr><td>Rollback route</td><td>Previous gold build must remain recoverable</td><td class="ok">Build chain available</td><td class="warn">Pending test</td></tr>
+<tr><td>Manual proof checklist</td><td>User-visible proof of pass/fail before promotion</td><td class="warn">Not prepared</td><td class="bad">Fail</td></tr>
 </tbody>
 </table>
 <table style="margin-top:12px">
 <tbody>
-<tr><td>Minimum evidence pack status</td><td class="bad">Incomplete</td></tr>
-<tr><td>RFCA read-only test permission</td><td class="bad">Not granted</td></tr>
-<tr><td>RFCA public display permission</td><td class="bad">Not granted</td></tr>
-<tr><td>RFCA numeric use</td><td class="bad">Blocked</td></tr>
+<tr><td>RFCA read-only test build</td><td class="bad">Not authorised</td></tr>
+<tr><td>RFCA display integration</td><td class="bad">Not authorised</td></tr>
+<tr><td>RFCA value rendering</td><td class="bad">Blocked</td></tr>
+<tr><td>EA core modification</td><td class="bad">Blocked</td></tr>
+<tr><td>Approved next step</td><td class="warn">Continue evidence acquisition only</td></tr>
 </tbody>
 </table>
 </section>
@@ -305,12 +322,13 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 <tr><td>Candidate endpoint ≠ verified feed</td><td class="bad">Enforced</td></tr>
 <tr><td>Action log ≠ source approval</td><td class="bad">Enforced</td></tr>
 <tr><td>Evidence pack incomplete = RFCA blocked</td><td class="bad">Enforced</td></tr>
+<tr><td>Pre-integration gate closed = no RFCA test</td><td class="bad">Enforced</td></tr>
 <tr><td>EA core</td><td class="ok">Frozen and protected</td></tr>
 </tbody></table>
 </section>
 
 </main>
-<footer>Build 10166 · NO SOURCE = NO NUMBER · EA CORE FROZEN · RFCA EVIDENCE PACK ONLY</footer>
+<footer>Build 10167 · NO SOURCE = NO NUMBER · EA CORE FROZEN · RFCA PRE-INTEGRATION GATE CLOSED</footer>
 
 <script>
 const EA_READINGS="https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings.json?_sorted&_limit=24";
