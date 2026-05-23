@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10164</title>
+<title>Salmon Rivers Intelligence — Build 10165</title>
 <style>
 :root{--bg:#f4f6f8;--card:#fff;--line:#d8dde3;--text:#111;--muted:#667085;--ok:#0f7b0f;--warn:#a15c00;--bad:#a40000;--blue:#0b5cad}
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
@@ -20,9 +20,8 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 <body>
 <header>
 <h1>Salmon Rivers Intelligence</h1>
-<div class="build">GOLD BUILD 10164 — RFCA Candidate Endpoint Register</div>
+<div class="build">GOLD BUILD 10165 — RFCA Investigation Action Log</div>
 </header>
-
 <main>
 
 <section class="card">
@@ -94,13 +93,7 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 <table>
 <thead><tr><th>Source</th><th>Date Status</th><th>Locations Mentioned</th><th>Confidence</th><th>Gate</th></tr></thead>
 <tbody>
-<tr>
-<td>Uploaded Facebook/social post screenshot</td>
-<td class="warn">Current-season candidate</td>
-<td>Waddow Weir, Long Pool, Poachers Pot, Hodder Foot, Garage Pool</td>
-<td class="warn">Candidate</td>
-<td class="bad">Commentary only — no catch, no fishability, no numbers</td>
-</tr>
+<tr><td>Uploaded Facebook/social post screenshot</td><td class="warn">Current-season candidate</td><td>Waddow Weir, Long Pool, Poachers Pot, Hodder Foot, Garage Pool</td><td class="warn">Candidate</td><td class="bad">Commentary only — no catch, no fishability, no numbers</td></tr>
 </tbody>
 </table>
 </section>
@@ -123,165 +116,69 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 
 <section class="card">
 <h2>Source Health Dashboard</h2>
-<div class="pill warn">Internal confidence only</div>
-<div class="pill bad">Not fishability</div>
-<div class="pill bad">No unverified numbers</div>
-
-<div class="grid">
-<div class="box">
-<h3>Live Source Health</h3>
-<p class="small muted">Tracks whether a source is usable for intelligence. It does not convert weak sources into numbers or recommendations.</p>
-</div>
-<div class="box">
-<h3>Display Permission</h3>
-<p class="small muted">A source may be listed here before it is permitted to display values. Listing is not verification.</p>
-</div>
-<div class="box">
-<h3>Failure Rule</h3>
-<p class="small muted">If a source is stale, unstructured, unverifiable or unavailable, it remains blocked from numeric use.</p>
-</div>
-</div>
-
-<table style="margin-top:12px">
-<thead>
-<tr>
-<th>Source</th>
-<th>Health</th>
-<th>Evidence Basis</th>
-<th>Display Permission</th>
-<th>Next Action</th>
-</tr>
-</thead>
+<div class="pill warn">Internal confidence only</div><div class="pill bad">Not fishability</div><div class="pill bad">No unverified numbers</div>
+<table>
+<thead><tr><th>Source</th><th>Health</th><th>Evidence Basis</th><th>Display Permission</th><th>Next Action</th></tr></thead>
 <tbody>
 <tr><td>EA Henthorn telemetry</td><td id="healthEA" class="warn">Checking</td><td>Machine-readable EA acquisition</td><td id="healthEAPermission" class="warn">Pending refresh</td><td>Protect frozen core</td></tr>
-<tr><td>EA rainfall discovery / reading</td><td id="healthRain" class="warn">Checking</td><td>Machine-readable only if verified by live reading endpoint</td><td id="healthRainPermission" class="warn">Pending refresh</td><td>Keep behind rainfall verification gate</td></tr>
+<tr><td>EA rainfall discovery / reading</td><td id="healthRain" class="warn">Checking</td><td>Machine-readable only if verified</td><td id="healthRainPermission" class="warn">Pending refresh</td><td>Keep behind rainfall verification gate</td></tr>
 <tr><td>RFCA sonde / temperature</td><td class="bad">Blocked</td><td>No stable machine-readable source proven</td><td class="bad">No values displayed</td><td>Investigate acquisition path</td></tr>
 <tr><td>RFCA fish counters</td><td class="bad">Blocked</td><td>No stable machine-readable source proven</td><td class="bad">No values displayed</td><td>Investigate availability</td></tr>
-<tr><td>Current-season catch intelligence</td><td class="bad">Blocked</td><td>No dated attributable current-season source integrated</td><td class="bad">No totals displayed</td><td>Acquire verified source</td></tr>
-<tr><td>Operator / Henthorn beat intelligence</td><td class="warn">Candidate only</td><td>Context register only</td><td class="bad">No fishability or catch inference</td><td>Seek dated attributable operator source</td></tr>
-<tr><td>Named pool / social screenshot candidates</td><td class="warn">Candidate only</td><td>Named-place context only</td><td class="bad">No numeric use</td><td>Corroborate or retain as context</td></tr>
-</tbody>
-</table>
-
-<table style="margin-top:12px">
-<tbody>
-<tr><td>Source health score</td><td class="bad">Not displayed as a river score</td></tr>
-<tr><td>Fishability conclusion</td><td class="bad">Blocked</td></tr>
-<tr><td>Weak-source numeric promotion</td><td class="bad">Blocked</td></tr>
-<tr><td>Candidate source inflation</td><td class="bad">Blocked</td></tr>
+<tr><td>Current-season catch intelligence</td><td class="bad">Blocked</td><td>No dated attributable source integrated</td><td class="bad">No totals displayed</td><td>Acquire verified source</td></tr>
+<tr><td>Operator / Henthorn beat intelligence</td><td class="warn">Candidate only</td><td>Context register only</td><td class="bad">No inference</td><td>Seek dated attributable operator source</td></tr>
 </tbody>
 </table>
 </section>
 
 <section class="card">
 <h2>RFCA Machine-Readable Discovery Checklist</h2>
-<div class="pill warn">Discovery framework only</div>
-<div class="pill bad">No RFCA fetch active</div>
-<div class="pill bad">No RFCA numbers displayed</div>
-
-<div class="grid">
-<div class="box">
-<h3>Purpose</h3>
-<p class="small muted">Define the checks required before any RFCA source can move from investigation to verified integration.</p>
-</div>
-<div class="box">
-<h3>Safety Rule</h3>
-<p class="small muted">Discovery does not equal permission. A discovered page, image, chart or dashboard is not enough for numeric display.</p>
-</div>
-<div class="box">
-<h3>Promotion Rule</h3>
-<p class="small muted">A source can only be promoted after machine readability, stability, traceability, freshness and independent verification are all satisfied.</p>
-</div>
-</div>
-
-<table style="margin-top:12px">
-<thead>
-<tr>
-<th>Discovery Check</th>
-<th>Required Evidence</th>
-<th>Current State</th>
-<th>Promotion Allowed?</th>
-</tr>
-</thead>
+<div class="pill warn">Discovery framework only</div><div class="pill bad">No RFCA fetch active</div><div class="pill bad">No RFCA numbers displayed</div>
+<table>
+<thead><tr><th>Discovery Check</th><th>Required Evidence</th><th>Current State</th><th>Promotion Allowed?</th></tr></thead>
 <tbody>
 <tr><td>Stable endpoint exists</td><td>Repeatable URL or feed address</td><td class="warn">Not proven</td><td class="bad">No</td></tr>
-<tr><td>Machine-readable format</td><td>JSON, CSV, XML or parseable structured payload</td><td class="warn">Not proven</td><td class="bad">No</td></tr>
-<tr><td>Measurement identity</td><td>Named sensor, station, river, parameter and unit</td><td class="warn">Not proven</td><td class="bad">No</td></tr>
-<tr><td>Timestamp availability</td><td>Current reading timestamp exposed with the reading</td><td class="warn">Not proven</td><td class="bad">No</td></tr>
+<tr><td>Machine-readable format</td><td>JSON, CSV, XML or structured payload</td><td class="warn">Not proven</td><td class="bad">No</td></tr>
+<tr><td>Measurement identity</td><td>Sensor, station, river, parameter and unit</td><td class="warn">Not proven</td><td class="bad">No</td></tr>
+<tr><td>Timestamp availability</td><td>Current reading timestamp exposed</td><td class="warn">Not proven</td><td class="bad">No</td></tr>
 <tr><td>Refresh behaviour</td><td>Observed update cadence or currentness rule</td><td class="warn">Not proven</td><td class="bad">No</td></tr>
 <tr><td>Traceability</td><td>Source ownership and provenance clear</td><td class="warn">Candidate only</td><td class="bad">No</td></tr>
-<tr><td>Independent verification</td><td>Cross-check against another trusted statement/source</td><td class="warn">Not proven</td><td class="bad">No</td></tr>
-<tr><td>Display authorisation / suitability</td><td>Suitable for app display without misleading context</td><td class="warn">Not proven</td><td class="bad">No</td></tr>
-</tbody>
-</table>
-
-<table style="margin-top:12px">
-<tbody>
-<tr><td>Screenshot-only evidence</td><td class="bad">Blocked from numeric use</td></tr>
-<tr><td>Visual chart without structured data</td><td class="bad">Blocked from numeric use</td></tr>
-<tr><td>Copied value without endpoint</td><td class="bad">Blocked from numeric use</td></tr>
-<tr><td>Old or undated value</td><td class="bad">Blocked from numeric use</td></tr>
-<tr><td>Unclear unit or station identity</td><td class="bad">Blocked from numeric use</td></tr>
+<tr><td>Independent verification</td><td>Cross-check against another trusted source</td><td class="warn">Not proven</td><td class="bad">No</td></tr>
 </tbody>
 </table>
 </section>
 
 <section class="card">
 <h2>RFCA Candidate Endpoint Register</h2>
-<div class="pill warn">Candidate acquisition paths only</div>
-<div class="pill bad">No endpoint is verified</div>
-<div class="pill bad">No RFCA fetch active</div>
-<div class="pill bad">No RFCA values displayed</div>
-
-<div class="grid">
-<div class="box">
-<h3>Purpose</h3>
-<p class="small muted">Record possible RFCA acquisition paths without promoting them into live data, values, fishability, or recommendations.</p>
-</div>
-<div class="box">
-<h3>Endpoint Rule</h3>
-<p class="small muted">A page, dashboard, chart, screenshot, embedded widget or visual display is not an approved endpoint until a stable structured feed is proven.</p>
-</div>
-<div class="box">
-<h3>Promotion Gate</h3>
-<p class="small muted">Candidate endpoint → discovered endpoint → verified endpoint → read-only integration → display permission. Current state: candidate only.</p>
-</div>
-</div>
-
-<table style="margin-top:12px">
-<thead>
-<tr>
-<th>Candidate Path</th>
-<th>Likely Data Type</th>
-<th>Current Status</th>
-<th>Verification Need</th>
-<th>Display Rule</th>
-</tr>
-</thead>
+<div class="pill warn">Candidate acquisition paths only</div><div class="pill bad">No endpoint is verified</div><div class="pill bad">No RFCA fetch active</div><div class="pill bad">No RFCA values displayed</div>
+<table>
+<thead><tr><th>Candidate Path</th><th>Likely Data Type</th><th>Current Status</th><th>Verification Need</th><th>Display Rule</th></tr></thead>
 <tbody>
 <tr><td>RFCA live water-quality monitoring page</td><td>Temperature / sonde / water-health context</td><td class="warn">Candidate page only</td><td>Find stable machine-readable source behind display</td><td class="bad">No values displayed</td></tr>
 <tr><td>Embedded dashboard resources</td><td>Possible structured telemetry feed</td><td class="warn">Unproven</td><td>Inspect safely for stable JSON, CSV, XML or API payload</td><td class="bad">No values displayed</td></tr>
-<tr><td>Public chart or visual widget</td><td>Visual telemetry context</td><td class="warn">Candidate only</td><td>Confirm whether chart is backed by traceable structured data</td><td class="bad">No numeric extraction</td></tr>
+<tr><td>Public chart or visual widget</td><td>Visual telemetry context</td><td class="warn">Candidate only</td><td>Confirm whether backed by traceable structured data</td><td class="bad">No numeric extraction</td></tr>
 <tr><td>RFCA fish-counter information</td><td>Migration / counter telemetry</td><td class="warn">Availability unknown</td><td>Find source, ownership, station identity, date and format</td><td class="bad">No fish-count display</td></tr>
-<tr><td>RFCA catch reports or updates</td><td>Current-season catch intelligence</td><td class="warn">Not integrated</td><td>Need dated, attributable, current-season and display-suitable source</td><td class="bad">No catch totals displayed</td></tr>
-<tr><td>River-health monitoring material</td><td>Environmental context</td><td class="warn">Candidate only</td><td>Confirm parameter identity, unit, timestamp and provenance</td><td class="bad">No river-health values displayed</td></tr>
+<tr><td>RFCA catch reports or updates</td><td>Current-season catch intelligence</td><td class="warn">Not integrated</td><td>Need dated, attributable, current-season source</td><td class="bad">No catch totals displayed</td></tr>
 </tbody>
 </table>
+</section>
 
+<section class="card">
+<h2>RFCA Investigation Action Log</h2>
+<div class="pill warn">Action tracking only</div><div class="pill bad">No RFCA values displayed</div><div class="pill bad">No source promotion</div><div class="pill bad">No RFCA fetch active</div>
+<div class="grid">
+<div class="box"><h3>Purpose</h3><p class="small muted">Track the investigation steps needed before RFCA data can ever move toward verified read-only integration.</p></div>
+<div class="box"><h3>Current Rule</h3><p class="small muted">Every action remains investigative. No action confirms a value, feed, fish counter, catch report or water-quality number.</p></div>
+<div class="box"><h3>Completion Rule</h3><p class="small muted">An action can only close when evidence is traceable, dated, reproducible and suitable for governance.</p></div>
+</div>
 <table style="margin-top:12px">
-<thead>
-<tr>
-<th>Promotion Stage</th>
-<th>Meaning</th>
-<th>Current Permission</th>
-</tr>
-</thead>
+<thead><tr><th>Action</th><th>Target</th><th>Status</th><th>Evidence Needed</th><th>Permission After Completion</th></tr></thead>
 <tbody>
-<tr><td>Candidate</td><td>Possible source worth investigating</td><td class="warn">List only</td></tr>
-<tr><td>Discovered</td><td>Stable source path observed but not verified</td><td class="bad">No values</td></tr>
-<tr><td>Verified Endpoint</td><td>Machine-readable, stable, traceable and current</td><td class="warn">Read-only integration may be considered</td></tr>
-<tr><td>Integrated</td><td>Safely parsed without breaking core telemetry</td><td class="warn">Still subject to display gate</td></tr>
-<tr><td>Display Approved</td><td>Verified, current, suitable and independently checked</td><td class="ok">Values may be displayed only then</td></tr>
+<tr><td>Inspect public RFCA monitoring page</td><td>Water-quality / sonde route</td><td class="warn">Open</td><td>Identify whether a stable structured feed exists behind the page</td><td class="bad">No values; investigation only</td></tr>
+<tr><td>Check embedded resources</td><td>Dashboard, chart or widget payloads</td><td class="warn">Open</td><td>Confirm whether any JSON, CSV, XML or structured endpoint is repeatable</td><td class="bad">No values; candidate endpoint only</td></tr>
+<tr><td>Confirm parameter identity</td><td>Temperature / water-quality readings</td><td class="warn">Open</td><td>Named station, sensor, parameter, unit and timestamp</td><td class="bad">No display until verified</td></tr>
+<tr><td>Investigate RFCA fish-counter availability</td><td>Migration intelligence</td><td class="warn">Open</td><td>Public source, station identity, update cadence and machine-readable access</td><td class="bad">No fish-count display</td></tr>
+<tr><td>Investigate current-season catch intelligence</td><td>Ribble salmon / sea-trout context</td><td class="warn">Open</td><td>Dated, attributable, current-season, display-suitable source</td><td class="bad">No catch totals</td></tr>
+<tr><td>Define verification proof format</td><td>Future RFCA integration governance</td><td class="warn">Open</td><td>Repeatable checks, source citation, timestamp and failure behaviour</td><td class="warn">May support later read-only test build only</td></tr>
 </tbody>
 </table>
 </section>
@@ -308,20 +205,9 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 
 <section class="card">
 <h2>RFCA Acquisition Investigation</h2>
-<div class="pill warn">Investigation only</div>
-<div class="pill bad">No RFCA values displayed</div>
-<div class="pill bad">No numeric inference</div>
-
+<div class="pill warn">Investigation only</div><div class="pill bad">No RFCA values displayed</div><div class="pill bad">No numeric inference</div>
 <table>
-<thead>
-<tr>
-<th>Source</th>
-<th>Status</th>
-<th>Machine Readable</th>
-<th>Verified</th>
-<th>Notes</th>
-</tr>
-</thead>
+<thead><tr><th>Source</th><th>Status</th><th>Machine Readable</th><th>Verified</th><th>Notes</th></tr></thead>
 <tbody>
 <tr><td>Temperature / sonde data</td><td class="warn">Investigating</td><td>Unknown</td><td class="warn">Pending</td><td>RFCA public exposure under review</td></tr>
 <tr><td>Fish-counter data</td><td class="warn">Investigating</td><td>Unknown</td><td class="warn">Pending</td><td>No stable feed acquired</td></tr>
@@ -331,50 +217,11 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 <tr><td>Additional environmental feeds</td><td class="warn">Candidate</td><td>Unknown</td><td class="warn">Pending</td><td>Discovery stage</td></tr>
 </tbody>
 </table>
-
-<div class="grid" style="margin-top:12px">
-<div class="box">
-<h3>Acquisition Rule</h3>
-<p class="small">
-RFCA intelligence is acquisition-only. No RFCA values are displayed until the source is machine-readable, stable, traceable, current and independently verifiable.
-</p>
-<ul class="small">
-<li>Machine readable</li>
-<li>Stable</li>
-<li>Traceable</li>
-<li>Current</li>
-<li>Independently verifiable</li>
-</ul>
-</div>
-<div class="box">
-<h3>Known</h3>
-<p class="small muted">RFCA provides public information and is a strategic acquisition target.</p>
-</div>
-<div class="box">
-<h3>Unknown</h3>
-<p class="small muted">Stable structured feed availability is not yet proven.</p>
-</div>
-<div class="box">
-<h3>Next Action</h3>
-<p class="small muted">Investigate machine-readable acquisition path without displaying RFCA measurements.</p>
-</div>
-</div>
-
-<table style="margin-top:12px">
-<tbody>
-<tr><td>Temperature values</td><td class="bad">Blocked</td></tr>
-<tr><td>Fish-counter values</td><td class="bad">Blocked</td></tr>
-<tr><td>River-quality numbers</td><td class="bad">Blocked</td></tr>
-<tr><td>Estimated values</td><td class="bad">Blocked</td></tr>
-<tr><td>River-condition classification from RFCA</td><td class="bad">Blocked</td></tr>
-</tbody>
-</table>
 </section>
 
 <section class="card">
 <h2>RFCA Acquisition Candidate Ledger</h2>
-<div class="pill warn">Primary strategic acquisition target</div>
-<div class="pill bad">RFCA values blocked until machine-readable</div>
+<div class="pill warn">Primary strategic acquisition target</div><div class="pill bad">RFCA values blocked until machine-readable</div>
 <table>
 <thead><tr><th>RFCA Candidate</th><th>Potential Value</th><th>Gate</th><th>Display Rule</th></tr></thead>
 <tbody>
@@ -389,8 +236,7 @@ RFCA intelligence is acquisition-only. No RFCA values are displayed until the so
 
 <section class="card">
 <h2>Current-Season Catch Intelligence Gate</h2>
-<div class="pill bad">No catch totals displayed</div>
-<div class="pill warn">Current-season gate active</div>
+<div class="pill bad">No catch totals displayed</div><div class="pill warn">Current-season gate active</div>
 <div class="grid">
 <div class="box"><div class="muted">Salmon total</div><div class="big">—</div><div class="small muted">No verified current-season source</div></div>
 <div class="box"><div class="muted">Sea-trout total</div><div class="big">—</div><div class="small muted">No verified current-season source</div></div>
@@ -419,8 +265,7 @@ RFCA intelligence is acquisition-only. No RFCA values are displayed until the so
 
 <section class="card">
 <h2>Governance Rules</h2>
-<table>
-<tbody>
+<table><tbody>
 <tr><td>No source = no number</td><td class="bad">Enforced</td></tr>
 <tr><td>Named place ≠ verified condition</td><td class="bad">Enforced</td></tr>
 <tr><td>Beat context ≠ fishability</td><td class="bad">Enforced</td></tr>
@@ -430,20 +275,18 @@ RFCA intelligence is acquisition-only. No RFCA values are displayed until the so
 <tr><td>Source health ≠ fishability</td><td class="bad">Enforced</td></tr>
 <tr><td>Discovery checklist ≠ source approval</td><td class="bad">Enforced</td></tr>
 <tr><td>Candidate endpoint ≠ verified feed</td><td class="bad">Enforced</td></tr>
+<tr><td>Action log ≠ source approval</td><td class="bad">Enforced</td></tr>
 <tr><td>EA core</td><td class="ok">Frozen and protected</td></tr>
-</tbody>
-</table>
+</tbody></table>
 </section>
 
 </main>
-
-<footer>Build 10164 · NO SOURCE = NO NUMBER · EA CORE FROZEN · RFCA ENDPOINTS CANDIDATE ONLY</footer>
+<footer>Build 10165 · NO SOURCE = NO NUMBER · EA CORE FROZEN · RFCA ACTION LOG ONLY</footer>
 
 <script>
 const EA_READINGS="https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings.json?_sorted&_limit=24";
 const EA_STATION="https://environment.data.gov.uk/flood-monitoring/id/stations/710305.json";
 let clicks=0, rainOK=false, rfcaOK=false, catchOK=false, opOK=false, lastGood=null;
-
 function id(x){return document.getElementById(x)}
 function txt(x,v){const e=id(x);if(e)e.textContent=v}
 function cls(x,v){const e=id(x);if(e)e.className=v}
@@ -533,22 +376,10 @@ function beats(){
  ];
  id("beatRows").innerHTML=rows.map(r=>"<tr><td>"+esc(r[0])+"</td><td>"+esc(r[1])+"</td><td class='warn'>"+esc(r[2])+"</td><td class='warn'>"+esc(r[3])+"</td><td>"+esc(r[4])+"</td><td class='bad'>"+esc(r[5])+"</td></tr>").join("");
 }
-
 function updateSourceHealth(teleOK){
- if(id("healthEA")){
-  cls("healthEA",teleOK?"ok":"bad");
-  txt("healthEA",teleOK?"Healthy":"Unavailable");
-  cls("healthEAPermission",teleOK?"ok":"bad");
-  txt("healthEAPermission",teleOK?"Level and movement display permitted":"No display");
- }
- if(id("healthRain")){
-  cls("healthRain",rainOK?"ok":"warn");
-  txt("healthRain",rainOK?"Verified":"Not verified");
-  cls("healthRainPermission",rainOK?"ok":"bad");
-  txt("healthRainPermission",rainOK?"Rainfall display permitted":"No rainfall number");
- }
+ if(id("healthEA")){cls("healthEA",teleOK?"ok":"bad");txt("healthEA",teleOK?"Healthy":"Unavailable");cls("healthEAPermission",teleOK?"ok":"bad");txt("healthEAPermission",teleOK?"Level and movement display permitted":"No display")}
+ if(id("healthRain")){cls("healthRain",rainOK?"ok":"warn");txt("healthRain",rainOK?"Verified":"Not verified");cls("healthRainPermission",rainOK?"ok":"bad");txt("healthRainPermission",rainOK?"Rainfall display permitted":"No rainfall number")}
 }
-
 function score(teleOK){
  let s=0;if(teleOK){s+=40;cls("scoreTelemetry","ok");txt("scoreTelemetry","Verified")}else{cls("scoreTelemetry","bad");txt("scoreTelemetry","Unavailable")}
  if(rainOK){s+=20;cls("scoreRainfall","ok");txt("scoreRainfall","Verified")}else{cls("scoreRainfall","warn");txt("scoreRainfall","Not verified")}
