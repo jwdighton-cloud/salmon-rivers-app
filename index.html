@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10173</title>
+<title>Salmon Rivers Intelligence — Build 10174</title>
 <style>
 :root{--bg:#f4f6f8;--card:#fff;--line:#d8dde3;--text:#111;--muted:#667085;--ok:#0f7b0f;--warn:#a15c00;--bad:#a40000;--blue:#0b5cad}
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
@@ -20,7 +20,7 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 <body>
 <header>
 <h1>Salmon Rivers Intelligence</h1>
-<div class="build">GOLD BUILD 10173 — Evidence Coverage Engine</div>
+<div class="build">GOLD BUILD 10174 — Coverage Audit Layer</div>
 </header>
 <main>
 
@@ -52,20 +52,22 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 </section>
 
 <section class="card">
-<h2>Evidence Coverage Engine</h2>
-<div id="coverageStatus" class="pill warn">Coverage pending</div><div class="pill bad">Not fishability</div><div class="pill bad">No unverified numbers</div>
+<h2>Evidence Coverage & Audit Layer</h2>
+<div id="coverageStatus" class="pill warn">Coverage pending</div><div class="pill bad">Not fishability</div><div class="pill bad">No unverified numbers</div><div class="pill ok">EA core untouched</div>
 <div class="grid">
 <div class="box"><div class="muted">Evidence coverage</div><div id="coveragePercent" class="big">—</div><div id="coverageMeaning" class="small muted">Awaiting source checks</div></div>
-<div class="box"><div class="muted">Verified live sources</div><div id="coverageVerified" class="big">—</div><div class="small muted">Only live machine-readable sources count</div></div>
+<div class="box"><div class="muted">Verified live sources</div><div id="coverageVerified" class="big">—</div><div class="small muted">Only live machine-readable verified sources count</div></div>
 <div class="box"><div class="muted">Candidate sources</div><div id="coverageCandidate" class="big">—</div><div class="small muted">Context only; no numeric promotion</div></div>
 <div class="box"><div class="muted">Blocked sources</div><div id="coverageBlocked" class="big">—</div><div class="small muted">Blocked means no display permission</div></div>
 </div>
 <table style="margin-top:12px">
-<thead><tr><th>Metric</th><th>Current State</th><th>Rule</th></tr></thead>
+<thead><tr><th>Audit Item</th><th>Current State</th><th>Formula / Rule</th></tr></thead>
 <tbody>
+<tr><td>Coverage formula</td><td id="coverageFormula" class="warn">Awaiting checks</td><td>EA telemetry 40 + rainfall 20 + RFCA 20 + catches 15 + operator 5</td></tr>
 <tr><td>Coverage trend</td><td id="coverageTrend" class="warn">Awaiting checks</td><td>Runtime comparison only; no prediction</td></tr>
 <tr><td>Source maturity</td><td id="coverageMaturity" class="warn">Awaiting checks</td><td>Derived from verified source score</td></tr>
 <tr><td>Telemetry integrity</td><td id="coverageTelemetry" class="warn">Awaiting checks</td><td>EA core must remain protected</td></tr>
+<tr><td>Coverage timestamp</td><td id="coverageTimestamp" class="warn">Awaiting checks</td><td>Time this coverage audit was calculated</td></tr>
 <tr><td>RFCA state</td><td class="bad">Blocked</td><td>No RFCA fetch or value display</td></tr>
 </tbody>
 </table>
@@ -438,7 +440,7 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 </section>
 
 </main>
-<footer>Build 10173 · NO SOURCE = NO NUMBER · EA CORE FROZEN · EVIDENCE COVERAGE ENGINE</footer>
+<footer>Build 10174 · NO SOURCE = NO NUMBER · EA CORE FROZEN · COVERAGE AUDIT LAYER</footer>
 
 <script>
 const EA_READINGS="https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings.json?_sorted&_limit=24";
@@ -557,18 +559,23 @@ function updateCoverage(teleOK,sourceScore){
  cls("coverageStatus",coverage>=60?"pill ok":coverage>=40?"pill warn":"pill bad");
  txt("coverageStatus",coverage>=60?"Coverage moderate-high":coverage>=40?"Coverage partial":"Coverage weak");
  txt("coverageMeaning",coverage>=60?"EA telemetry and rainfall currently verified":coverage>=40?"EA telemetry only; major intelligence gaps remain":"Verified live evidence is insufficient");
+ const formula="EA "+(teleOK?"40":"0")+" + Rain "+(rainOK?"20":"0")+" + RFCA 0 + Catch 0 + Operator 0 = "+coverage+"%";
+ txt("coverageFormula",formula);
+ cls("coverageFormula",coverage>=60?"ok":coverage>=40?"warn":"bad");
  cls("coverageMaturity",coverage>=60?"ok":coverage>=40?"warn":"bad");
  txt("coverageMaturity",coverage>=60?"Telemetry-led, rainfall-supported":coverage>=40?"Telemetry-led only":"Below operational baseline");
  cls("coverageTelemetry",teleOK?"ok":"bad");
  txt("coverageTelemetry",teleOK?"EA telemetry core healthy":"EA telemetry unavailable");
- let trend="Initial coverage reading";
+ txt("coverageTimestamp",now());
+ cls("coverageTimestamp","ok");
+ let trendText="Initial coverage reading";
  if(lastCoverage!==null){
-  if(coverage>lastCoverage)trend="Coverage up from "+lastCoverage+"%";
-  else if(coverage<lastCoverage)trend="Coverage down from "+lastCoverage+"%";
-  else trend="Coverage flat at "+coverage+"%";
+  if(coverage>lastCoverage)trendText="Coverage up from "+lastCoverage+"%";
+  else if(coverage<lastCoverage)trendText="Coverage down from "+lastCoverage+"%";
+  else trendText="Coverage flat at "+coverage+"%";
  }
  cls("coverageTrend",lastCoverage===null?"warn":coverage>=lastCoverage?"ok":"warn");
- txt("coverageTrend",trend);
+ txt("coverageTrend",trendText);
  lastCoverage=coverage;
 }
 function row(a,b,c,d,cl){return"<tr><td>"+esc(a)+"</td><td class='"+(cl||"warn")+"'>"+esc(b)+"</td><td>"+esc(c)+"</td><td>"+esc(d)+"</td></tr>"}
