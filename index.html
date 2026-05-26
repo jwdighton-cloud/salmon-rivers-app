@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10176</title>
+<title>Salmon Rivers Intelligence — Build 10177</title>
 <style>
 :root{--bg:#f4f6f8;--card:#fff;--line:#d8dde3;--text:#111;--muted:#667085;--ok:#0f7b0f;--warn:#a15c00;--bad:#a40000;--blue:#0b5cad}
 *{box-sizing:border-box}
@@ -25,7 +25,7 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 <body>
 <header>
 <h1>Salmon Rivers Intelligence</h1>
-<div class="build">GOLD BUILD 10176 — Browser Fetch Fallback Repair</div>
+<div class="build">GOLD BUILD 10177 — Live EA Repair + Movement Integrity</div>
 </header>
 
 <main>
@@ -53,17 +53,17 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 </section>
 
 <section class="card">
-<h2>Repair Gate — Build 10176</h2>
+<h2>Repair Gate — Build 10177</h2>
 <div class="pill ok">Repair build only</div>
-<div class="pill warn">Browser fallback added</div>
-<div class="pill bad">No new intelligence source</div>
+<div class="pill ok">Movement integrity hardened</div>
+<div class="pill warn">JSONP EA fallback added</div>
 <div class="pill bad">No RFCA fetch</div>
 <table>
 <tbody>
-<tr><td>Repair target</td><td>Restore EA Henthorn telemetry in browser runtime</td></tr>
+<tr><td>Repair target</td><td>Restore live EA Henthorn telemetry and stop false steady state</td></tr>
 <tr><td>Primary source</td><td>EA station 710305 / measure 710305-level-stage-i-15_min-m</td></tr>
-<tr><td>Fallback method</td><td>Direct EA fetch first, then browser-compatible EA fetch via read-only proxy if direct browser fetch fails</td></tr>
-<tr><td>Displayed source</td><td>Still EA telemetry only</td></tr>
+<tr><td>Fallback method</td><td>Direct EA fetch first; EA JSONP-style fallback second; local cache only if live routes fail</td></tr>
+<tr><td>Movement rule</td><td>Latest delta governs first. Rising latest reading means Rising. Falling latest reading means Falling.</td></tr>
 <tr><td>Not changed</td><td>RFCA blocking, catch blocking, fish-counter blocking, no-source=no-number governance</td></tr>
 </tbody>
 </table>
@@ -101,6 +101,19 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 <tr><td>Telemetry integrity</td><td id="coverageTelemetry" class="warn">Awaiting checks</td><td>EA core must remain protected</td></tr>
 <tr><td>Coverage timestamp</td><td id="coverageTimestamp" class="warn">Awaiting checks</td><td>Time this coverage audit was calculated</td></tr>
 <tr><td>RFCA state</td><td class="bad">Blocked</td><td>No RFCA fetch or value display</td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="card">
+<h2>Movement Integrity Panel</h2>
+<div id="movementGate" class="pill warn">Awaiting readings</div>
+<table>
+<tbody>
+<tr><td>Latest delta</td><td id="latestDelta" class="warn">Awaiting readings</td></tr>
+<tr><td>Window delta</td><td id="windowDelta" class="warn">Awaiting readings</td></tr>
+<tr><td>Decision rule</td><td id="movementRule" class="warn">Latest reading takes precedence</td></tr>
+<tr><td>Readings used</td><td id="readingsUsed" class="warn">Awaiting readings</td></tr>
 </tbody>
 </table>
 </section>
@@ -266,18 +279,17 @@ a{color:var(--blue);font-weight:800}footer{text-align:center;color:var(--muted);
 <tr><td>Evidence pack incomplete = RFCA blocked</td><td class="bad">Enforced</td></tr>
 <tr><td>Pre-integration gate closed = no RFCA test</td><td class="bad">Enforced</td></tr>
 <tr><td>RFCA values</td><td class="bad">Blocked</td></tr>
-<tr><td>EA telemetry repair</td><td class="ok">Active in 10176</td></tr>
+<tr><td>EA movement integrity</td><td class="ok">Latest delta governs</td></tr>
 </tbody></table>
 </section>
 
 </main>
-<footer>Build 10176 · NO SOURCE = NO NUMBER · BROWSER FETCH FALLBACK REPAIR · RFCA BLOCKED</footer>
+<footer>Build 10177 · NO SOURCE = NO NUMBER · LIVE EA REPAIR · MOVEMENT INTEGRITY · RFCA BLOCKED</footer>
 
 <script>
 const EA_READINGS_PRIMARY="https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings.json?_sorted&_limit=24";
 const EA_READINGS_ALT="https://environment.data.gov.uk/flood-monitoring/id/measures/710305-level-stage-i-15_min-m/readings?_sorted&_limit=24";
 const EA_STATION="https://environment.data.gov.uk/flood-monitoring/id/stations/710305.json";
-const FALLBACK_PREFIX="https://api.allorigins.win/raw?url=";
 
 let clicks=0, rainOK=false, rfcaOK=false, catchOK=false, opOK=false, lastGood=null, lastCoverage=null;
 
@@ -289,40 +301,60 @@ function now(){return new Date().toLocaleString("en-GB",{dateStyle:"medium",time
 function dtime(iso){const d=new Date(iso);return isNaN(d.getTime())?String(iso):d.toLocaleString("en-GB",{dateStyle:"medium",timeStyle:"short"})}
 function age(iso){const d=new Date(iso);if(isNaN(d.getTime()))return null;return Math.round((Date.now()-d.getTime())/60000)}
 function bust(u){return u+(u.includes("?")?"&":"?")+"_cb="+Date.now()+"_"+Math.random().toString(16).slice(2)}
-function proxyUrl(u){return FALLBACK_PREFIX+encodeURIComponent(u)}
 
-async function fetchTextDirect(url){
- const r=await fetch(bust(url),{cache:"no-store",mode:"cors"});
+function saveCache(rs){
+ try{localStorage.setItem("sri_henthorn_lastgood",JSON.stringify({saved:new Date().toISOString(),readings:rs.slice(-24)}))}catch(e){}
+}
+function loadCache(){
+ try{
+  const raw=localStorage.getItem("sri_henthorn_lastgood");
+  if(!raw)return null;
+  const obj=JSON.parse(raw);
+  const rs=cleanReadings(obj.readings||[]);
+  return rs.length?rs:null;
+ }catch(e){return null}
+}
+
+async function fetchJsonDirect(url){
+ const r=await fetch(bust(url),{cache:"no-store",mode:"cors",headers:{"Accept":"application/json"}});
  if(!r.ok)throw new Error("HTTP "+r.status);
- return await r.text();
+ return await r.json();
 }
 
-async function fetchTextProxy(url){
- const r=await fetch(bust(proxyUrl(url)),{cache:"no-store"});
- if(!r.ok)throw new Error("Proxy HTTP "+r.status);
- return await r.text();
+function jsonp(url,paramName){
+ return new Promise((resolve,reject)=>{
+  const cb="sri_cb_"+Date.now()+"_"+Math.random().toString(16).slice(2);
+  const sep=url.includes("?")?"&":"?";
+  const src=bust(url+sep+encodeURIComponent(paramName)+"="+encodeURIComponent(cb));
+  const script=document.createElement("script");
+  const timer=setTimeout(()=>cleanup(new Error("JSONP timeout")),9000);
+  function cleanup(err,data){
+   clearTimeout(timer);
+   try{delete window[cb]}catch(e){window[cb]=undefined}
+   if(script.parentNode)script.parentNode.removeChild(script);
+   err?reject(err):resolve(data);
+  }
+  window[cb]=data=>cleanup(null,data);
+  script.onerror=()=>cleanup(new Error("JSONP script error"));
+  script.src=src;
+  document.head.appendChild(script);
+ });
 }
 
-async function getJsonWithFallback(url,label){
- const attempts=[];
- try{
-  const text=await fetchTextDirect(url);
-  return{json:JSON.parse(text),route:label+" direct EA",notes:attempts};
- }catch(e){
-  attempts.push(label+" direct failed: "+String(e.message||e));
+async function fetchJsonEA(url,label){
+ const notes=[];
+ try{return{json:await fetchJsonDirect(url),route:label+" direct EA",notes}}
+ catch(e){notes.push(label+" direct failed: "+String(e.message||e))}
+ for(const p of ["callback","_callback"]){
+  try{return{json:await jsonp(url,p),route:label+" EA JSONP "+p,notes}}
+  catch(e){notes.push(label+" JSONP "+p+" failed: "+String(e.message||e))}
  }
- try{
-  const text=await fetchTextProxy(url);
-  return{json:JSON.parse(text),route:label+" EA via browser fallback",notes:attempts};
- }catch(e){
-  attempts.push(label+" fallback failed: "+String(e.message||e));
- }
- throw new Error(attempts.join(" | "));
+ throw new Error(notes.join(" | "));
 }
 
 function cleanReadings(items){
  return(items||[])
- .map(x=>({value:Number(x.value),time:x.dateTime||x.date||""}))
+ .map(x=>({value:Number(x.value),time:x.dateTime||x.time||x.date||""}))
  .filter(x=>Number.isFinite(x.value)&&x.time)
  .sort((a,b)=>new Date(a.time)-new Date(b.time));
 }
@@ -338,15 +370,23 @@ function parseStationLatest(j){
  .sort((a,b)=>new Date(a.time)-new Date(b.time));
 }
 
-function trend(rs){
- if(rs.length<2)return{label:"Unknown",detail:"Not enough EA readings"};
- const a=rs[rs.length-1],b=rs[rs.length-2],d=a.value-b.value,t=.005;
- if(d>t)return{label:"Rising",detail:"Latest delta +"+d.toFixed(3)+" m from previous EA reading"};
- if(d<-t)return{label:"Falling",detail:"Latest delta "+d.toFixed(3)+" m from previous EA reading"};
- const s=rs.slice(-6),m=s[s.length-1].value-s[0].value;
- if(m>t)return{label:"Rising",detail:"Multi-reading rise +"+m.toFixed(3)+" m"};
- if(m<-t)return{label:"Falling",detail:"Multi-reading fall "+m.toFixed(3)+" m"};
- return{label:"Steady",detail:"No material latest or multi-reading movement"};
+function movement(rs){
+ const clean=rs.slice().sort((a,b)=>new Date(a.time)-new Date(b.time));
+ if(clean.length<2){
+  return{label:"Unknown",detail:"Not enough EA readings",latestDelta:null,windowDelta:null,rule:"Insufficient readings",used:clean.length};
+ }
+ const latest=clean[clean.length-1],prev=clean[clean.length-2],first=clean[Math.max(0,clean.length-6)];
+ const latestDelta=latest.value-prev.value;
+ const windowDelta=latest.value-first.value;
+ const t=0.001;
+
+ if(latestDelta>t)return{label:"Rising",detail:"Latest EA reading is higher by +"+latestDelta.toFixed(3)+" m",latestDelta,windowDelta,rule:"Latest delta positive",used:clean.length};
+ if(latestDelta<-t)return{label:"Falling",detail:"Latest EA reading is lower by "+latestDelta.toFixed(3)+" m",latestDelta,windowDelta,rule:"Latest delta negative",used:clean.length};
+
+ if(windowDelta>t)return{label:"Rising",detail:"Latest reading flat but recent EA window is up +"+windowDelta.toFixed(3)+" m",latestDelta,windowDelta,rule:"Window delta positive",used:clean.length};
+ if(windowDelta<-t)return{label:"Falling",detail:"Latest reading flat but recent EA window is down "+windowDelta.toFixed(3)+" m",latestDelta,windowDelta,rule:"Window delta negative",used:clean.length};
+
+ return{label:"Steady",detail:"No material latest or recent-window movement",latestDelta,windowDelta,rule:"Latest and window delta within threshold",used:clean.length};
 }
 
 async function telemetry(){
@@ -358,17 +398,23 @@ async function telemetry(){
  ];
  for(const route of routes){
   try{
-   const result=await getJsonWithFallback(route.url,route.name);
+   const result=await fetchJsonEA(route.url,route.name);
    const rs=route.parser(result.json);
    if(!rs.length)throw new Error("No numeric readings parsed");
    lastGood=rs;
-   return{ok:true,route:result.route,readings:rs,latest:rs[rs.length-1],trend:trend(rs),cached:false,errors:errors.concat(result.notes)};
+   saveCache(rs);
+   return{ok:true,route:result.route,readings:rs,latest:rs[rs.length-1],trend:movement(rs),cached:false,errors:errors.concat(result.notes)};
   }catch(e){
    errors.push(route.name+": "+String(e.message||e));
   }
  }
+ const stored=loadCache();
+ if(stored&&stored.length){
+  lastGood=stored;
+  return{ok:true,route:"Stored last-good telemetry cache",readings:stored,latest:stored[stored.length-1],trend:movement(stored),cached:true,errors};
+ }
  if(lastGood&&lastGood.length){
-  return{ok:true,route:"Cached last-good telemetry",readings:lastGood,latest:lastGood[lastGood.length-1],trend:trend(lastGood),cached:true,errors};
+  return{ok:true,route:"Session last-good telemetry cache",readings:lastGood,latest:lastGood[lastGood.length-1],trend:movement(lastGood),cached:true,errors};
  }
  return{ok:false,error:errors.join(" | ")};
 }
@@ -378,11 +424,11 @@ function measureUrl(m){return typeof m==="string"?m:(m&&m["@id"]?m["@id"]:(m&&m.
 async function rainfall(){
  rainOK=false;
  try{
-  let sj=(await getJsonWithFallback(EA_STATION,"Station metadata")).json;
+  let sj=(await fetchJsonEA(EA_STATION,"Station metadata")).json;
   let st=sj.items||{}, lat=st.lat||st.latitude, lon=st.long||st.longitude;
   if(!lat||!lon)throw new Error("No Henthorn coordinates");
   let url="https://environment.data.gov.uk/flood-monitoring/id/stations.json?parameter=rainfall&lat="+encodeURIComponent(lat)+"&long="+encodeURIComponent(lon)+"&dist=25";
-  let rj=(await getJsonWithFallback(url,"Rainfall station discovery")).json;
+  let rj=(await fetchJsonEA(url,"Rainfall station discovery")).json;
   let found=(rj.items||[]).slice(0,6);
   if(!found.length)throw new Error("No rainfall candidates");
   let rows=[], verified=null;
@@ -392,7 +438,7 @@ async function rainfall(){
    for(const m of ms){
     try{
      let u=measureUrl(m);if(!u)continue;
-     let j=(await getJsonWithFallback(u.replace(/\/$/,"")+"/readings.json?_sorted&_limit=1","Rainfall reading")).json;
+     let j=(await fetchJsonEA(u.replace(/\/$/,"")+"/readings.json?_sorted&_limit=1","Rainfall reading")).json;
      let it=(j.items||[])[0],v=it?Number(it.value):NaN;
      if(Number.isFinite(v)&&it.dateTime){rr={value:v,time:it.dateTime};break}
     }catch(e){}
@@ -476,6 +522,19 @@ function updateCoverage(teleOK,sourceScore){
  lastCoverage=coverage;
 }
 
+function signed(v){return v===null||!Number.isFinite(v)?"—":(v>0?"+":"")+v.toFixed(3)+" m"}
+
+function renderMovementIntegrity(t){
+ txt("latestDelta",signed(t.latestDelta));
+ txt("windowDelta",signed(t.windowDelta));
+ txt("movementRule",t.rule);
+ txt("readingsUsed",String(t.used));
+ if(t.label==="Rising"){cls("movementGate","pill ok");txt("movementGate","Movement integrity: Rising")}
+ else if(t.label==="Falling"){cls("movementGate","pill warn");txt("movementGate","Movement integrity: Falling")}
+ else if(t.label==="Steady"){cls("movementGate","pill warn");txt("movementGate","Movement integrity: Steady")}
+ else{cls("movementGate","pill bad");txt("movementGate","Movement integrity unavailable")}
+}
+
 function row(a,b,c,d,cl){return"<tr><td>"+esc(a)+"</td><td class='"+(cl||"warn")+"'>"+esc(b)+"</td><td>"+esc(c)+"</td><td>"+esc(d)+"</td></tr>"}
 
 function updatePanels(teleOK){
@@ -488,7 +547,7 @@ function updatePanels(teleOK){
  unk.push("RFCA sonde, fish counters, current-season catches and verified operator intelligence are not integrated.");
  id("knownPanel").innerHTML="<ul>"+known.map(x=>"<li>"+esc(x)+"</li>").join("")+"</ul>";
  id("unknownPanel").innerHTML="<ul>"+unk.map(x=>"<li>"+esc(x)+"</li>").join("")+"</ul>";
- txt("nextActionPanel",teleOK?"Confirm 10176 telemetry repair on deployed page, then continue RFCA source investigation outside app.":"Telemetry still failing; inspect route proof before other work.");
+ txt("nextActionPanel",teleOK?"Confirm 10177 telemetry is live, not cache-only. If live is still blocked, next step is server-side acquisition or Android WebView/native acquisition planning.":"Telemetry still failing; inspect route proof before other work.");
  id("gapRows").innerHTML=
   row("EA Henthorn telemetry",teleOK?"Verified live":"Unavailable",teleOK?"No current gap":"Core telemetry failure",teleOK?"Protect repaired EA core":"Investigate route proof",teleOK?"ok":"bad")+
   row("Rainfall intelligence",rainOK?"Verified live reading":"Not verified",rainOK?"No rainfall gap":"Need stable verified rainfall reading endpoint",rainOK?"Keep read-only":"Continue rainfall verification",rainOK?"ok":"warn")+
@@ -525,6 +584,7 @@ function renderTele(r){
   txt("trendDetail","All EA routes failed and no cache exists");
   txt("dataProof","EA proof: failed");
   txt("routeProof","Route proof: "+String(r.error||"unknown failure"));
+  renderMovementIntegrity({label:"Unknown",latestDelta:null,windowDelta:null,rule:"No telemetry",used:0});
   score(false);
   return;
  }
@@ -535,11 +595,12 @@ function renderTele(r){
  txt("trend",r.trend.label);
  txt("trendDetail",r.trend.detail);
  cls("status",r.cached?"pill warn":"pill ok");
- txt("status",r.cached?"Using cached last-good telemetry":"EA telemetry live via "+r.route);
- cls("confidence",m!==null&&m<=30&&!r.cached?"pill ok":"pill warn");
- txt("confidence",m!==null&&m<=30&&!r.cached?"Telemetry confidence HIGH":r.cached?"Telemetry confidence reduced — cached data":"Telemetry stale warning");
+ txt("status",r.cached?"Using last-good telemetry cache":"EA telemetry live via "+r.route);
+ cls("confidence",!r.cached&&m!==null&&m<=30?"pill ok":"pill warn");
+ txt("confidence",!r.cached&&m!==null&&m<=30?"Telemetry confidence HIGH":r.cached?"Telemetry confidence reduced — cached data":"Telemetry stale warning");
  txt("dataProof","EA proof: "+r.readings.length+" reading(s); latest "+r.latest.value.toFixed(3)+" m at "+r.latest.time);
  txt("routeProof","Route proof: "+r.route+(r.errors&&r.errors.length?" | earlier route notes: "+r.errors.join(" ; "):""));
+ renderMovementIntegrity(r.trend);
  score(true);
 }
 
