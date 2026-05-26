@@ -3,104 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10178</title>
+<title>Salmon Rivers Intelligence — Build 10179</title>
 <style>
-:root{
-  --bg:#f4f6f8;
-  --card:#fff;
-  --line:#d8dde3;
-  --text:#111;
-  --muted:#667085;
-  --ok:#0f7b0f;
-  --warn:#a15c00;
-  --bad:#a40000;
-  --blue:#0b5cad;
-}
+:root{--bg:#f4f6f8;--card:#fff;--line:#d8dde3;--text:#111;--muted:#667085;--ok:#0f7b0f;--warn:#a15c00;--bad:#a40000;--blue:#0b5cad}
 *{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-  background:var(--bg);
-  color:var(--text);
-}
-header{
-  background:#0b1f33;
-  color:white;
-  text-align:center;
-  padding:18px 14px;
-}
-h1{margin:0;font-size:26px}
-.build{font-size:13px;opacity:.85;margin-top:4px}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{background:#0b1f33;color:white;text-align:center;padding:18px 14px}
+h1{margin:0;font-size:26px}.build{font-size:13px;opacity:.85;margin-top:4px}
 main{max-width:980px;margin:0 auto;padding:14px}
-.card{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:16px;
-  margin:12px 0;
-}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-  gap:12px;
-}
-.box{
-  border:1px solid var(--line);
-  border-radius:12px;
-  padding:12px;
-  background:#fbfcfd;
-}
-.big{font-size:38px;font-weight:800}
-.small{font-size:12px}
-.muted{color:var(--muted)}
-.ok{color:var(--ok)}
-.warn{color:var(--warn)}
-.bad{color:var(--bad)}
-.pill{
-  display:inline-block;
-  border-radius:999px;
-  padding:7px 11px;
-  font-size:13px;
-  font-weight:800;
-  background:#eef2f6;
-  margin:3px 4px 3px 0;
-}
-button{
-  border:0;
-  border-radius:12px;
-  background:var(--blue);
-  color:white;
-  padding:13px 18px;
-  font-weight:900;
-  font-size:15px;
-  cursor:pointer;
-}
-table{
-  width:100%;
-  border-collapse:collapse;
-  font-size:13px;
-}
-th,td{
-  border-bottom:1px solid var(--line);
-  padding:8px;
-  text-align:left;
-  vertical-align:top;
-}
-th{background:#f0f3f6}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:12px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.box{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fbfcfd}
+.big{font-size:38px;font-weight:800}.small{font-size:12px}.muted{color:var(--muted)}.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}
+.pill{display:inline-block;border-radius:999px;padding:7px 11px;font-size:13px;font-weight:800;background:#eef2f6;margin:3px 4px 3px 0}
+button{border:0;border-radius:12px;background:var(--blue);color:white;padding:13px 18px;font-weight:900;font-size:15px;cursor:pointer}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{border-bottom:1px solid var(--line);padding:8px;text-align:left;vertical-align:top}th{background:#f0f3f6}
 a{color:var(--blue);font-weight:800}
-footer{
-  text-align:center;
-  color:var(--muted);
-  font-size:12px;
-  padding:18px;
-}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
 </style>
 </head>
 
 <body>
 <header>
 <h1>Salmon Rivers Intelligence</h1>
-<div class="build">GOLD BUILD 10178 — Hard Rollback EA Telemetry Repair</div>
+<div class="build">GOLD BUILD 10179 — Timeout-Safe EA Repair</div>
 </header>
 
 <main>
@@ -142,18 +68,17 @@ footer{
 </section>
 
 <section class="card">
-<h2>Repair Gate — Build 10178</h2>
-<div class="pill ok">Hard rollback repair</div>
-<div class="pill ok">Simple EA route restored</div>
+<h2>Repair Gate — Build 10179</h2>
+<div class="pill ok">Timeout-safe repair</div>
 <div class="pill bad">No proxy</div>
 <div class="pill bad">No JSONP</div>
 <div class="pill bad">No RFCA fetch</div>
 <table>
 <tbody>
-<tr><td>Repair target</td><td>Restore live Henthorn telemetry without browser proxy or JSONP experiments</td></tr>
-<tr><td>Primary live route</td><td>EA station readings endpoint for 710305</td></tr>
-<tr><td>Fallback</td><td>Local last-good cache only after a successful live acquisition</td></tr>
-<tr><td>Movement rule</td><td>Latest delta governs first; recent window only used if latest delta is flat</td></tr>
+<tr><td>Repair target</td><td>Stop hanging refreshes and expose exact EA route failure</td></tr>
+<tr><td>EA route</td><td>Direct EA Henthorn readings only</td></tr>
+<tr><td>Timeout rule</td><td>Each EA request must finish or fail within 8 seconds</td></tr>
+<tr><td>Fallback</td><td>Use browser localStorage cache only after a previous real live read</td></tr>
 <tr><td>Governance</td><td>No source = no number; RFCA remains blocked</td></tr>
 </tbody>
 </table>
@@ -182,32 +107,6 @@ footer{
 </section>
 
 <section class="card">
-<h2>Rainfall Reading Verification Gate</h2>
-<div id="rainStatus" class="pill warn">Rainfall not checked</div>
-<div class="grid">
-<div class="box">
-<div class="muted">Verified rainfall</div>
-<div id="rainValue" class="big">—</div>
-<div id="rainMeta" class="small muted">No verified rainfall reading</div>
-</div>
-<div class="box">
-<div class="muted">Discovery</div>
-<div id="rainDiscovery" class="warn">Not run</div>
-</div>
-<div class="box">
-<div class="muted">Reading</div>
-<div id="rainReading" class="warn">Blocked until verified</div>
-</div>
-</div>
-<table>
-<thead><tr><th>Candidate</th><th>Status</th><th>Evidence</th></tr></thead>
-<tbody id="rainRows">
-<tr><td>EA rainfall discovery</td><td class="warn">Not run</td><td>Rainfall is secondary to telemetry repair</td></tr>
-</tbody>
-</table>
-</section>
-
-<section class="card">
 <h2>Evidence Coverage</h2>
 <div id="coverageStatus" class="pill warn">Coverage pending</div>
 <div class="pill bad">Not fishability</div>
@@ -233,7 +132,7 @@ footer{
 <thead><tr><th>Source</th><th>Health</th><th>Evidence Basis</th><th>Display Permission</th><th>Next Action</th></tr></thead>
 <tbody>
 <tr><td>EA Henthorn telemetry</td><td id="healthEA" class="warn">Checking</td><td>Machine-readable EA acquisition</td><td id="healthEAPermission" class="warn">Pending refresh</td><td>Protect repaired core</td></tr>
-<tr><td>EA rainfall discovery / reading</td><td id="healthRain" class="warn">Secondary</td><td>Not part of this repair gate</td><td id="healthRainPermission" class="warn">No rainfall number</td><td>Re-enable only after telemetry is stable</td></tr>
+<tr><td>EA rainfall discovery / reading</td><td id="healthRain" class="warn">Disabled in repair</td><td>Not part of this repair gate</td><td id="healthRainPermission" class="bad">No rainfall number</td><td>Re-enable only after telemetry is stable</td></tr>
 <tr><td>RFCA sonde / temperature</td><td class="bad">Blocked</td><td>No stable machine-readable source proven</td><td class="bad">No values displayed</td><td>Investigate outside app</td></tr>
 <tr><td>RFCA fish counters</td><td class="bad">Blocked</td><td>No stable machine-readable source proven</td><td class="bad">No values displayed</td><td>Investigate availability</td></tr>
 <tr><td>Current-season catch intelligence</td><td class="bad">Blocked</td><td>No dated attributable source integrated</td><td class="bad">No totals displayed</td><td>Acquire verified source</td></tr>
@@ -361,25 +260,24 @@ footer{
 <tr><td>RFCA investigation ≠ RFCA display permission</td><td class="bad">Enforced</td></tr>
 <tr><td>Source health ≠ fishability</td><td class="bad">Enforced</td></tr>
 <tr><td>RFCA values</td><td class="bad">Blocked</td></tr>
-<tr><td>EA acquisition</td><td class="ok">Simple direct route only</td></tr>
+<tr><td>EA acquisition</td><td class="ok">Timeout-safe direct route only</td></tr>
 </tbody>
 </table>
 </section>
 
 </main>
 
-<footer>Build 10178 · NO SOURCE = NO NUMBER · HARD ROLLBACK EA TELEMETRY REPAIR · RFCA BLOCKED</footer>
+<footer>Build 10179 · NO SOURCE = NO NUMBER · TIMEOUT-SAFE EA TELEMETRY REPAIR · RFCA BLOCKED</footer>
 
 <script>
-const BUILD="10178";
-const EA_STATION_ID="710305";
-const EA_LATEST="https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?latest";
+const BUILD="10179";
 const EA_RECENT="https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=24";
-const CACHE_KEY="sri_henthorn_lastgood_v10178";
+const EA_LATEST="https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?latest";
+const CACHE_KEY="sri_henthorn_lastgood_v10179";
+const TIMEOUT_MS=8000;
 
 let clicks=0;
 let lastCoverage=null;
-let rainOK=false;
 
 function id(x){return document.getElementById(x)}
 function txt(x,v){const e=id(x);if(e)e.textContent=v}
@@ -390,10 +288,19 @@ function dtime(iso){const d=new Date(iso);return isNaN(d.getTime())?String(iso):
 function age(iso){const d=new Date(iso);if(isNaN(d.getTime()))return null;return Math.round((Date.now()-d.getTime())/60000)}
 function signed(v){return v===null||!Number.isFinite(v)?"—":(v>0?"+":"")+v.toFixed(3)+" m"}
 
-async function getJson(url){
- const r=await fetch(url,{cache:"no-store"});
- if(!r.ok)throw new Error("HTTP "+r.status);
- return await r.json();
+async function getJsonTimeout(url,label){
+ const controller=new AbortController();
+ const timer=setTimeout(()=>controller.abort(),TIMEOUT_MS);
+ try{
+  const r=await fetch(url,{cache:"no-store",signal:controller.signal});
+  clearTimeout(timer);
+  if(!r.ok)throw new Error(label+" HTTP "+r.status);
+  return await r.json();
+ }catch(e){
+  clearTimeout(timer);
+  if(e&&e.name==="AbortError")throw new Error(label+" timeout after "+(TIMEOUT_MS/1000)+"s");
+  throw new Error(label+" "+String(e.message||e));
+ }
 }
 
 function cleanReadings(items){
@@ -426,15 +333,9 @@ function loadCache(){
 
 function movement(readings){
  const rs=readings.slice().sort((a,b)=>new Date(a.time)-new Date(b.time));
+
  if(rs.length<2){
-  return{
-   label:"Unknown",
-   detail:"Not enough EA readings",
-   latestDelta:null,
-   windowDelta:null,
-   rule:"Insufficient readings",
-   used:rs.length
-  };
+  return{label:"Unknown",detail:"Not enough EA readings",latestDelta:null,windowDelta:null,rule:"Insufficient readings",used:rs.length};
  }
 
  const latest=rs[rs.length-1];
@@ -446,72 +347,37 @@ function movement(readings){
  const threshold=0.001;
 
  if(latestDelta>threshold){
-  return{
-   label:"Rising",
-   detail:"Latest EA reading is higher by +"+latestDelta.toFixed(3)+" m",
-   latestDelta,
-   windowDelta,
-   rule:"Latest delta positive",
-   used:rs.length
-  };
+  return{label:"Rising",detail:"Latest EA reading is higher by +"+latestDelta.toFixed(3)+" m",latestDelta,windowDelta,rule:"Latest delta positive",used:rs.length};
  }
 
  if(latestDelta<-threshold){
-  return{
-   label:"Falling",
-   detail:"Latest EA reading is lower by "+latestDelta.toFixed(3)+" m",
-   latestDelta,
-   windowDelta,
-   rule:"Latest delta negative",
-   used:rs.length
-  };
+  return{label:"Falling",detail:"Latest EA reading is lower by "+latestDelta.toFixed(3)+" m",latestDelta,windowDelta,rule:"Latest delta negative",used:rs.length};
  }
 
  if(windowDelta>threshold){
-  return{
-   label:"Rising",
-   detail:"Latest reading flat but recent EA window is up +"+windowDelta.toFixed(3)+" m",
-   latestDelta,
-   windowDelta,
-   rule:"Window delta positive",
-   used:rs.length
-  };
+  return{label:"Rising",detail:"Latest reading flat but recent EA window is up +"+windowDelta.toFixed(3)+" m",latestDelta,windowDelta,rule:"Window delta positive",used:rs.length};
  }
 
  if(windowDelta<-threshold){
-  return{
-   label:"Falling",
-   detail:"Latest reading flat but recent EA window is down "+windowDelta.toFixed(3)+" m",
-   latestDelta,
-   windowDelta,
-   rule:"Window delta negative",
-   used:rs.length
-  };
+  return{label:"Falling",detail:"Latest reading flat but recent EA window is down "+windowDelta.toFixed(3)+" m",latestDelta,windowDelta,rule:"Window delta negative",used:rs.length};
  }
 
- return{
-  label:"Steady",
-  detail:"No material latest or recent-window movement",
-  latestDelta,
-  windowDelta,
-  rule:"Latest and window delta within threshold",
-  used:rs.length
- };
+ return{label:"Steady",detail:"No material latest or recent-window movement",latestDelta,windowDelta,rule:"Latest and window delta within threshold",used:rs.length};
 }
 
 async function telemetry(){
  const notes=[];
 
  try{
-  const recentJson=await getJson(EA_RECENT);
+  const recentJson=await getJsonTimeout(EA_RECENT,"recent readings");
   let readings=cleanReadings(recentJson.items);
 
   if(!readings.length){
-   throw new Error("Recent route returned no numeric readings");
+   throw new Error("recent readings returned no numeric readings");
   }
 
   try{
-   const latestJson=await getJson(EA_LATEST);
+   const latestJson=await getJsonTimeout(EA_LATEST,"latest reading");
    const latestReadings=cleanReadings(latestJson.items);
    if(latestReadings.length){
     const latest=latestReadings[latestReadings.length-1];
@@ -520,7 +386,7 @@ async function telemetry(){
     readings=cleanReadings(readings);
    }
   }catch(e){
-   notes.push("latest route note: "+String(e.message||e));
+   notes.push(String(e.message||e));
   }
 
   saveCache(readings);
@@ -536,7 +402,7 @@ async function telemetry(){
   };
 
  }catch(e){
-  notes.push("direct EA route failed: "+String(e.message||e));
+  notes.push(String(e.message||e));
  }
 
  const cached=loadCache();
@@ -593,13 +459,7 @@ function renderTele(result){
   txt("freshness","—");
   txt("dataProof","EA proof: failed");
   txt("routeProof","Route proof: "+result.error);
-  renderMovementIntegrity({
-   label:"Unknown",
-   latestDelta:null,
-   windowDelta:null,
-   rule:"No telemetry",
-   used:0
-  });
+  renderMovementIntegrity({label:"Unknown",latestDelta:null,windowDelta:null,rule:"No telemetry",used:0});
   updateScore(false);
   return;
  }
@@ -705,7 +565,7 @@ function updatePanels(teleOK){
  const unknown=[];
 
  if(teleOK){
-  known.push("EA Henthorn telemetry is live through the simplified station readings route.");
+  known.push("EA Henthorn telemetry is live through timeout-safe direct acquisition.");
  }else{
   unknown.push("EA telemetry is not acquired in the browser runtime.");
  }
@@ -715,12 +575,12 @@ function updatePanels(teleOK){
  known.push("Named pool mentions remain candidate context only.");
 
  unknown.push("RFCA sonde, fish counters, current-season catches and verified operator intelligence are not integrated.");
- unknown.push("Rainfall has been disabled during the 10178 telemetry repair gate.");
+ unknown.push("Rainfall has been disabled during the 10179 telemetry repair gate.");
 
  id("knownPanel").innerHTML="<ul>"+known.map(x=>"<li>"+esc(x)+"</li>").join("")+"</ul>";
  id("unknownPanel").innerHTML="<ul>"+unknown.map(x=>"<li>"+esc(x)+"</li>").join("")+"</ul>";
 
- txt("nextActionPanel",teleOK?"Hold telemetry steady; do not reintroduce proxy/JSONP. Re-enable rainfall only after live level/movement are stable.":"Telemetry still failing; rollback to last confirmed working build or move acquisition server-side.");
+ txt("nextActionPanel",teleOK?"Hold telemetry steady; do not reintroduce proxy/JSONP. Re-enable rainfall only after live level/movement are stable.":"Telemetry still failing; route proof now gives a bounded failure reason instead of hanging.");
 
  id("evidenceRows").innerHTML=
  row("EA Henthorn level telemetry",teleOK?"Verified":"Unavailable","Level 1 official telemetry",teleOK?"Machine-readable EA readings parsed":"No display if acquisition fails",teleOK?"ok":"bad")+
@@ -744,6 +604,7 @@ async function refresh(){
  clicks++;
  txt("refreshClicks","Refresh clicks: "+clicks);
  txt("refreshState","Refresh running: "+now());
+ txt("routeProof","Route proof: request in progress, timeout "+(TIMEOUT_MS/1000)+"s");
 
  const result=await telemetry();
  renderTele(result);
