@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10197</title>
+<title>Salmon Rivers Intelligence — Build 10199</title>
 
 <style>
 :root{
@@ -27,7 +27,7 @@ main{max-width:760px;margin:0 auto;padding:14px}
 .badge{display:inline-block;padding:7px 11px;border-radius:999px;font-size:13px;font-weight:800;background:#e8f3ec;color:var(--good)}
 .badge.warn{background:#fff4df;color:var(--warn)}
 .badge.bad{background:#fde8e8;color:var(--bad)}
-.panel{border-radius:12px;padding:15px;line-height:1.75;font-size:16px}
+.panel{border-radius:12px;padding:15px;line-height:1.65;font-size:16px}
 .green{background:var(--soft);border-left:5px solid var(--good)}
 .blue{background:var(--blue);border-left:5px solid #0b5f8a}
 .gold{background:#fff9ed;border-left:5px solid var(--warn)}
@@ -36,7 +36,7 @@ button:disabled{opacity:.6;cursor:not-allowed}
 .event{padding:12px 0;border-bottom:1px solid var(--line)}
 .event:last-child{border-bottom:0}
 .event-title{font-size:18px;font-weight:900;margin-bottom:6px}
-.event-text{line-height:1.7;color:#24322b}
+.event-text{line-height:1.65;color:#24322b}
 .source{font-size:13px;line-height:1.45;color:var(--muted)}
 .ok{color:var(--good);font-weight:800}
 .badtext{color:var(--bad);font-weight:800}
@@ -56,7 +56,7 @@ footer{text-align:center;padding:20px;font-size:12px;color:var(--muted)}
 
 <header>
 <h1>Salmon Rivers Intelligence</h1>
-<p>Build 10197 · Softer river-language refinement</p>
+<p>Build 10199 · Quiet river intelligence</p>
 </header>
 
 <main>
@@ -139,11 +139,11 @@ This app only shows verified telemetry and careful interpretation of recent rive
 
 </main>
 
-<footer>Build 10197 · Calm river meaning from verified telemetry</footer>
+<footer>Build 10199 · Quiet meaning from verified telemetry</footer>
 
 <script>
 const STATION_ID="710305";
-const MEMORY_KEY="sri_henthorn_memory_v3";
+const MEMORY_KEY="sri_henthorn_memory_v4";
 
 const latestUrl=`https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?latest`;
 const trendUrl=`https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?_sorted&_limit=20`;
@@ -221,47 +221,47 @@ if(!items.length)return"Live river information is currently unavailable.";
 const latest=items[0].value;
 
 if(latest<0.35){
-return"The river is low at Henthorn, with not much water showing in the system at the gauge.";
+return"Low at Henthorn. Not much water showing at the gauge.";
 }
 
 if(latest<0.55){
-return"The river is holding a reasonable middle level at Henthorn. It is not especially low, but it is not carrying a big push of water either.";
+return"Holding a reasonable middle level. Not especially low, but not carrying a big push of water either.";
 }
 
 if(latest<0.85){
-return"The river has a fair amount of water in it at Henthorn and is above the quieter low-water picture.";
+return"Carrying a fair amount of water, above the quieter low-water picture.";
 }
 
-return"The river is high at Henthorn and carrying a strong volume of water through the system.";
+return"High at Henthorn, with a strong volume of water moving through.";
 }
 
 function recentMovementText(items){
-if(items.length<4)return"There is not yet enough recent telemetry to explain how the river has been moving.";
+if(items.length<4)return"Not enough recent history yet to judge movement properly.";
 
 const d=delta(items);
-if(d===null)return"Recent river movement is currently unclear.";
+if(d===null)return"Recent movement is unclear.";
 
 if(Math.abs(d)<0.008){
-return"There has been very little meaningful change across the recent readings. In practical terms, the river is holding its level.";
+return"Very little has changed. In practical terms, the river is holding its level.";
 }
 
 if(d>0 && d<0.03){
-return"The river has been lifting gradually. There is some extra water moving through, but it is not a strong rise at present.";
+return"Levels are lifting gradually. Some extra water is moving through, but it is not a strong rise yet.";
 }
 
 if(d>=0.03){
-return"The river has risen noticeably across the recent readings, suggesting a stronger push of water moving through.";
+return"Levels have risen noticeably. A stronger push of water is moving through.";
 }
 
 if(d<0 && d>-0.03){
-return"The river has been easing down slowly from earlier water. It is falling gently rather than dropping away sharply.";
+return"Levels are easing back gently from earlier water.";
 }
 
-return"The river has been dropping back steadily after higher water.";
+return"Levels are dropping back steadily after higher water.";
 }
 
 function freshWaterText(items){
-if(items.length<6)return"There is not yet enough telemetry history to judge whether fresh water is entering the river.";
+if(items.length<6)return"Not enough recent history yet to judge fresh water properly.";
 
 const changes=[];
 for(let i=0;i<items.length-1;i++){
@@ -272,22 +272,22 @@ const recent=changes.slice(0,4);
 const avg=recent.reduce((a,b)=>a+b,0)/recent.length;
 
 if(avg>0.007){
-return"The latest readings are lifting more clearly now. That can be the first useful sign of fresh water starting to come into the river.";
+return"A clearer lift is now showing. This may be the first useful sign of fresh water entering the river.";
 }
 
 if(avg>0.003){
-return"There are slight signs of the river beginning to build. It is worth keeping an eye on, but the lift is still modest at present.";
+return"A small lift is beginning to show. Worth watching, but still modest.";
 }
 
 if(avg<-0.007){
-return"There is no clear sign of fresh water arriving at the moment. The river is still easing down from earlier water.";
+return"No clear fresh water yet. Levels are still easing back from earlier water.";
 }
 
 if(avg<0){
-return"The river is still edging down slightly, which points more towards earlier water fading than fresh water arriving.";
+return"No clear fresh water yet. Earlier water still appears to be fading.";
 }
 
-return"The recent readings are steady enough that there is no obvious fresh push of water showing yet.";
+return"No obvious fresh push showing at present.";
 }
 
 function loadMemory(){
@@ -316,35 +316,35 @@ function continuityText(latest){
 const memory=loadMemory();
 
 if(memory.length<2){
-return"The app is beginning to build a local picture of the river on this device. After a few checks, it will be able to compare the river more usefully through time.";
+return"Local river memory is starting on this device. Future checks will give better comparisons.";
 }
 
 const older=memory.find(x=>x.dateTime!==latest.dateTime);
 
 if(!older){
-return"The app is still building enough local history for a useful comparison.";
+return"Still building enough local history for comparison.";
 }
 
 const diff=latest.value-older.value;
 const previousTime=formatDate(older.dateTime);
 
 if(Math.abs(diff)<0.005){
-return"Compared with your previous saved check at "+previousTime+", the river is practically unchanged.";
+return"Practically unchanged since your previous saved check at "+previousTime+".";
 }
 
 if(diff>0 && diff<0.02){
-return"Compared with your previous saved check at "+previousTime+", the river is a little higher.";
+return"A little higher than your previous saved check at "+previousTime+".";
 }
 
 if(diff>=0.02){
-return"Compared with your previous saved check at "+previousTime+", the river is noticeably higher, so a more meaningful lift has developed.";
+return"Noticeably higher than your previous saved check at "+previousTime+". A more meaningful lift has developed.";
 }
 
 if(diff<0 && diff>-0.02){
-return"Compared with your previous saved check at "+previousTime+", the river is a little lower.";
+return"A little lower than your previous saved check at "+previousTime+".";
 }
 
-return"Compared with your previous saved check at "+previousTime+", the river is noticeably lower, so earlier water has continued to fall away.";
+return"Noticeably lower than your previous saved check at "+previousTime+". Earlier water has continued to fall away.";
 }
 
 function behaviourEvents(items){
@@ -353,7 +353,7 @@ const out=[];
 if(items.length<4){
 out.push({
 title:"Limited recent history",
-text:"More telemetry history is needed before recent river behaviour can be explained properly."
+text:"More recent readings are needed before behaviour can be judged properly."
 });
 return out;
 }
@@ -363,12 +363,12 @@ const d=delta(items);
 if(Math.abs(d)<0.008){
 out.push({
 title:"Broadly unchanged",
-text:"The river has not moved enough in the recent readings to treat it as a meaningful rise or fall."
+text:"The river has not moved enough to treat it as a meaningful rise or fall."
 });
 }else if(d>0){
 out.push({
 title:"Water building",
-text:"The river is lifting, which means extra water is moving into the system."
+text:"The river is lifting. Extra water is moving into the system."
 });
 }else{
 out.push({
@@ -391,14 +391,14 @@ const olderAvg=older.reduce((a,b)=>a+b,0)/Math.max(1,older.length);
 if(recentAvg>0.007 && olderAvg<0.002){
 out.push({
 title:"Possible fresh lift starting",
-text:"The latest readings are rising more clearly than the earlier part of the sequence. This may be the start of a more useful lift."
+text:"The latest readings are rising more clearly than earlier. This may be the start of a more useful lift."
 });
 }
 
 if(recentAvg<0 && olderAvg<0 && Math.abs(recentAvg)<Math.abs(olderAvg)){
 out.push({
 title:"Drop slowing",
-text:"The river is still easing down, but the latest readings suggest the fall is slowing compared with earlier."
+text:"Levels are still easing back, but the fall appears to be slowing."
 });
 }
 
