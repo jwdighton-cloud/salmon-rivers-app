@@ -3,52 +3,258 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10195</title>
+<title>Salmon Rivers Intelligence — Build 10196</title>
 
 <style>
 :root{
---bg:#eef2f3;--card:#fff;--ink:#102018;--muted:#5b6b63;
---good:#0f7b3f;--warn:#a15c00;--bad:#9b1c1c;--line:#d7dfdc;
---deep:#082d1b;--soft:#eef8f1;--blue:#eef6fb;
+--bg:#eef2f3;
+--card:#ffffff;
+--ink:#102018;
+--muted:#5b6b63;
+--good:#0f7b3f;
+--warn:#a15c00;
+--bad:#9b1c1c;
+--line:#d7dfdc;
+--deep:#082d1b;
+--soft:#eef8f1;
+--blue:#eef6fb;
 }
+
 *{box-sizing:border-box}
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
-header{background:var(--deep);color:white;text-align:center;padding:22px 14px}
-h1{margin:0;font-size:28px}
-header p{margin:6px 0 0;font-size:14px;color:#d2e3da}
-main{max-width:760px;margin:0 auto;padding:14px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:14px 0;box-shadow:0 2px 8px rgba(0,0,0,.05)}
-.row{display:flex;justify-content:space-between;align-items:center;gap:12px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.label{font-size:14px;color:var(--muted)}
-.big{font-size:48px;font-weight:900;margin:8px 0 2px}
-.stat{border:1px solid var(--line);border-radius:14px;padding:12px;background:white}
-.stat strong{display:block;margin-top:5px;font-size:20px}
-.badge{display:inline-block;padding:7px 11px;border-radius:999px;font-size:13px;font-weight:800;background:#e8f3ec;color:var(--good)}
-.badge.warn{background:#fff4df;color:var(--warn)}
-.badge.bad{background:#fde8e8;color:var(--bad)}
-.panel{border-radius:12px;padding:15px;line-height:1.7;font-size:16px}
-.green{background:var(--soft);border-left:5px solid var(--good)}
-.blue{background:var(--blue);border-left:5px solid #0b5f8a}
-.gold{background:#fff9ed;border-left:5px solid var(--warn)}
-button{width:100%;border:0;border-radius:14px;padding:15px;background:var(--deep);color:white;font-size:16px;font-weight:900;cursor:pointer}
-button:disabled{opacity:.6;cursor:not-allowed}
-.event{padding:12px 0;border-bottom:1px solid var(--line)}
-.event:last-child{border-bottom:0}
-.event-title{font-size:18px;font-weight:900;margin-bottom:6px}
-.event-text{line-height:1.7;color:#24322b}
-.source{font-size:13px;line-height:1.45;color:var(--muted)}
-.ok{color:var(--good);font-weight:800}
-.badtext{color:var(--bad);font-weight:800}
-.notice{background:#fff9ed;border-left:5px solid var(--warn);padding:12px;border-radius:10px;line-height:1.6;color:#4b3515}
-table{width:100%;border-collapse:collapse;font-size:14px}
-th,td{padding:10px 6px;border-bottom:1px solid var(--line);text-align:left}
-th{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
-.trend-up{color:var(--good);font-weight:800}
-.trend-down{color:var(--bad);font-weight:800}
-.trend-flat{color:var(--warn);font-weight:800}
-footer{text-align:center;padding:20px;font-size:12px;color:var(--muted)}
-@media(max-width:520px){.grid{grid-template-columns:1fr}.big{font-size:40px}}
+
+body{
+margin:0;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+background:var(--bg);
+color:var(--ink);
+}
+
+header{
+background:var(--deep);
+color:white;
+text-align:center;
+padding:22px 14px;
+}
+
+h1{
+margin:0;
+font-size:28px;
+}
+
+header p{
+margin:6px 0 0;
+font-size:14px;
+color:#d2e3da;
+}
+
+main{
+max-width:760px;
+margin:0 auto;
+padding:14px;
+}
+
+.card{
+background:var(--card);
+border:1px solid var(--line);
+border-radius:16px;
+padding:16px;
+margin:14px 0;
+box-shadow:0 2px 8px rgba(0,0,0,.05);
+}
+
+.row{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:12px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+}
+
+.label{
+font-size:14px;
+color:var(--muted);
+}
+
+.big{
+font-size:48px;
+font-weight:900;
+margin:8px 0 2px;
+}
+
+.stat{
+border:1px solid var(--line);
+border-radius:14px;
+padding:12px;
+background:white;
+}
+
+.stat strong{
+display:block;
+margin-top:5px;
+font-size:20px;
+}
+
+.badge{
+display:inline-block;
+padding:7px 11px;
+border-radius:999px;
+font-size:13px;
+font-weight:800;
+background:#e8f3ec;
+color:var(--good);
+}
+
+.badge.warn{
+background:#fff4df;
+color:var(--warn);
+}
+
+.badge.bad{
+background:#fde8e8;
+color:var(--bad);
+}
+
+.panel{
+border-radius:12px;
+padding:15px;
+line-height:1.75;
+font-size:16px;
+}
+
+.green{
+background:var(--soft);
+border-left:5px solid var(--good);
+}
+
+.blue{
+background:var(--blue);
+border-left:5px solid #0b5f8a;
+}
+
+.gold{
+background:#fff9ed;
+border-left:5px solid var(--warn);
+}
+
+button{
+width:100%;
+border:0;
+border-radius:14px;
+padding:15px;
+background:var(--deep);
+color:white;
+font-size:16px;
+font-weight:900;
+cursor:pointer;
+}
+
+button:disabled{
+opacity:.6;
+cursor:not-allowed;
+}
+
+.event{
+padding:12px 0;
+border-bottom:1px solid var(--line);
+}
+
+.event:last-child{
+border-bottom:0;
+}
+
+.event-title{
+font-size:18px;
+font-weight:900;
+margin-bottom:6px;
+}
+
+.event-text{
+line-height:1.7;
+color:#24322b;
+}
+
+.source{
+font-size:13px;
+line-height:1.45;
+color:var(--muted);
+}
+
+.ok{
+color:var(--good);
+font-weight:800;
+}
+
+.badtext{
+color:var(--bad);
+font-weight:800;
+}
+
+.notice{
+background:#fff9ed;
+border-left:5px solid var(--warn);
+padding:12px;
+border-radius:10px;
+line-height:1.6;
+color:#4b3515;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+font-size:14px;
+}
+
+th,td{
+padding:10px 6px;
+border-bottom:1px solid var(--line);
+text-align:left;
+}
+
+th{
+font-size:12px;
+text-transform:uppercase;
+letter-spacing:.5px;
+color:var(--muted);
+}
+
+.trend-up{
+color:var(--good);
+font-weight:800;
+}
+
+.trend-down{
+color:var(--bad);
+font-weight:800;
+}
+
+.trend-flat{
+color:var(--warn);
+font-weight:800;
+}
+
+footer{
+text-align:center;
+padding:20px;
+font-size:12px;
+color:var(--muted);
+}
+
+@media(max-width:520px){
+
+.grid{
+grid-template-columns:1fr;
+}
+
+.big{
+font-size:40px;
+}
+
+}
 </style>
 </head>
 
@@ -56,283 +262,560 @@ footer{text-align:center;padding:20px;font-size:12px;color:var(--muted)}
 
 <header>
 <h1>Salmon Rivers Intelligence</h1>
-<p>Build 10195 · Clear fisherman-first river view</p>
+<p>Build 10196 · River continuity awareness</p>
 </header>
 
 <main>
 
 <section class="card">
+
 <div class="row">
+
 <div>
 <div class="label">Live river reading</div>
 <strong>River Ribble @ Henthorn</strong>
 </div>
-<span id="statusBadge" class="badge warn">Checking</span>
+
+<span id="statusBadge" class="badge warn">
+Checking
+</span>
+
 </div>
+
 <div id="levelValue" class="big">—</div>
-<div class="label">Latest Environment Agency river level</div>
+
+<div class="label">
+Latest Environment Agency river level
+</div>
+
 </section>
 
 <section class="card">
+
 <div class="grid">
-<div class="stat"><div class="label">River movement</div><strong id="movementValue">Checking</strong></div>
-<div class="stat"><div class="label">Reading time</div><strong id="readingTime">—</strong></div>
-<div class="stat"><div class="label">Reading age</div><strong id="ageValue">—</strong></div>
-<div class="stat"><div class="label">Confidence</div><strong id="confidenceValue">Checking</strong></div>
+
+<div class="stat">
+<div class="label">River movement</div>
+<strong id="movementValue">Checking</strong>
 </div>
+
+<div class="stat">
+<div class="label">Reading time</div>
+<strong id="readingTime">—</strong>
+</div>
+
+<div class="stat">
+<div class="label">Reading age</div>
+<strong id="ageValue">—</strong>
+</div>
+
+<div class="stat">
+<div class="label">Confidence</div>
+<strong id="confidenceValue">Checking</strong>
+</div>
+
+</div>
+
 </section>
 
 <section class="card">
 <h2>Current river picture</h2>
-<div class="panel green" id="currentPicture">Checking live river conditions...</div>
+<div class="panel green" id="currentPicture">
+Checking live river conditions...
+</div>
 </section>
 
 <section class="card">
 <h2>Recent movement</h2>
-<div class="panel blue" id="recentMovement">Checking how the river has been moving...</div>
+<div class="panel blue" id="recentMovement">
+Checking how the river has been moving...
+</div>
 </section>
 
 <section class="card">
 <h2>Fresh water signs</h2>
-<div class="panel gold" id="freshWater">Checking whether fresh water appears to be entering the system...</div>
+<div class="panel gold" id="freshWater">
+Checking whether fresh water appears to be entering the system...
+</div>
 </section>
 
 <section class="card">
-<h2>Since your last check</h2>
-<div class="panel blue" id="sinceLastCheck">Checking local river history...</div>
+<h2>River continuity</h2>
+<div class="panel blue" id="continuityPanel">
+Checking how current conditions compare with earlier readings...
+</div>
 </section>
 
 <section class="card">
+
 <h2>Recent river behaviour</h2>
+
 <div id="behaviourEvents">
+
 <div class="event">
 <div class="event-title">Loading river behaviour</div>
-<div class="event-text">Checking recent river movement from live telemetry history.</div>
+<div class="event-text">
+Checking recent river movement from live telemetry history.
 </div>
 </div>
+
+</div>
+
 </section>
 
 <section class="card">
-<button id="refreshBtn" onclick="loadHenthorn()">Refresh live data</button>
-<p class="source" id="lastChecked">Last checked: —</p>
+
+<button id="refreshBtn" onclick="loadHenthorn()">
+Refresh live data
+</button>
+
+<p class="source" id="lastChecked">
+Last checked: —
+</p>
+
 </section>
 
 <section class="card">
+
 <h2>Recent readings</h2>
+
 <table>
-<thead><tr><th>Time</th><th>Level</th><th>Change</th></tr></thead>
-<tbody id="trendTable"><tr><td colspan="3">Loading telemetry...</td></tr></tbody>
+
+<thead>
+<tr>
+<th>Time</th>
+<th>Level</th>
+<th>Change</th>
+</tr>
+</thead>
+
+<tbody id="trendTable">
+<tr>
+<td colspan="3">Loading telemetry...</td>
+</tr>
+</tbody>
+
 </table>
+
 </section>
 
 <section class="card">
+
 <h2>Source</h2>
-<p class="source"><strong>River level source:</strong> Environment Agency live telemetry</p>
-<p class="source" id="sourceResult">Checking telemetry...</p>
+
+<p class="source">
+<strong>River level source:</strong>
+Environment Agency live telemetry
+</p>
+
+<p class="source" id="sourceResult">
+Checking telemetry...
+</p>
+
 </section>
 
 <section class="card">
+
 <div class="notice">
-This app only shows verified river telemetry and careful interpretation of recent river behaviour. It does not invent catches, weather, fish movement or river conditions.
+This app only shows verified telemetry and careful interpretation of recent river behaviour. It does not invent catches, fish movement, rainfall or fishing conditions.
 </div>
+
 </section>
 
 </main>
 
-<footer>Build 10195 · Clear river meaning from verified telemetry</footer>
+<footer>
+Build 10196 · Meaningful river continuity from verified telemetry
+</footer>
 
 <script>
+
 const STATION_ID="710305";
-const MEMORY_KEY="sri_henthorn_memory_v1";
+const MEMORY_KEY="sri_henthorn_memory_v2";
 
 const latestUrl=`https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?latest`;
-const trendUrl=`https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?_sorted&_limit=16`;
 
-function $(id){return document.getElementById(id);}
+const trendUrl=`https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?_sorted&_limit=20`;
+
+function $(id){
+return document.getElementById(id);
+}
 
 function setStatus(text,type){
+
 const b=$("statusBadge");
+
 b.textContent=text;
 b.className="badge";
-if(type==="warn")b.classList.add("warn");
-if(type==="bad")b.classList.add("bad");
+
+if(type==="warn") b.classList.add("warn");
+if(type==="bad") b.classList.add("bad");
 }
 
 function asDate(iso){
+
 const d=new Date(iso);
+
 return isNaN(d)?null:d;
 }
 
 function formatDate(iso){
+
 const d=asDate(iso);
-if(!d)return"Unavailable";
-return d.toLocaleString("en-GB",{weekday:"short",day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"});
+
+if(!d) return "Unavailable";
+
+return d.toLocaleString("en-GB",{
+weekday:"short",
+day:"2-digit",
+month:"short",
+hour:"2-digit",
+minute:"2-digit"
+});
 }
 
 function shortTime(iso){
+
 const d=asDate(iso);
-if(!d)return"—";
-return d.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"});
+
+if(!d) return "—";
+
+return d.toLocaleTimeString("en-GB",{
+hour:"2-digit",
+minute:"2-digit"
+});
 }
 
 function ageMinutes(iso){
+
 const d=asDate(iso);
-if(!d)return null;
-return Math.max(0,Math.round((Date.now()-d.getTime())/60000));
+
+if(!d) return null;
+
+return Math.max(
+0,
+Math.round((Date.now()-d.getTime())/60000)
+);
 }
 
 function ageText(iso){
+
 const m=ageMinutes(iso);
-if(m===null)return"Unavailable";
-if(m<60)return m+" min";
+
+if(m===null) return "Unavailable";
+
+if(m<60) return m+" min";
+
 return Math.floor(m/60)+"h "+(m%60)+"m";
 }
 
 function confidenceText(iso){
+
 const m=ageMinutes(iso);
-if(m===null)return"Unavailable";
-if(m<=90)return"High";
-if(m<=240)return"Medium";
-return"Low";
+
+if(m===null) return "Unavailable";
+
+if(m<=90) return "High";
+if(m<=240) return "Medium";
+
+return "Low";
 }
 
 function cleanReadings(items){
-if(!Array.isArray(items))return[];
+
+if(!Array.isArray(items)) return [];
+
 return items
-.filter(x=>x&&typeof x.value==="number"&&x.dateTime&&asDate(x.dateTime))
-.sort((a,b)=>asDate(b.dateTime)-asDate(a.dateTime));
+.filter(x=>
+x &&
+typeof x.value==="number" &&
+x.dateTime &&
+asDate(x.dateTime)
+)
+.sort((a,b)=>
+asDate(b.dateTime)-asDate(a.dateTime)
+);
 }
 
 function movement(items){
-if(items.length<2)return"Unavailable";
+
+if(items.length<2) return "Unavailable";
+
 const d=items[0].value-items[1].value;
-if(Math.abs(d)<0.005)return"Steady";
-return d>0?"Rising":"Falling";
+
+if(Math.abs(d)<0.005){
+return "Steady";
+}
+
+return d>0 ? "Rising" : "Falling";
 }
 
 function delta(items){
-if(items.length<2)return null;
+
+if(items.length<2) return null;
+
 return items[0].value-items[items.length-1].value;
 }
 
 function currentPictureText(items){
-if(!items.length)return"Live river information is currently unavailable.";
+
+if(!items.length){
+return "Live river information is currently unavailable.";
+}
 
 const latest=items[0].value;
 
 if(latest<0.35){
-return"The river is low at Henthorn. On its own, that means there is not much water in the beat at present.";
+return "The river is currently low at Henthorn. There is not a great deal of water in the system at present.";
 }
 
 if(latest<0.55){
-return"The river is sitting in a moderate band at Henthorn. There is water in the system, but it is not showing as a big river at the gauge.";
+return "The river is sitting at a moderate level at Henthorn. It is neither especially low nor carrying a large volume of water.";
 }
 
 if(latest<0.85){
-return"The river is carrying a more noticeable amount of water at Henthorn. It is above the quieter low-water picture.";
+return "The river is carrying a noticeable amount of extra water compared with normal lower conditions.";
 }
 
-return"The river is high at Henthorn. That is a very different river picture from normal low or moderate water.";
+return "The river is high at Henthorn and carrying a strong volume of water through the system.";
 }
 
 function recentMovementText(items){
-if(items.length<4)return"There is not yet enough recent telemetry to explain the recent movement properly.";
+
+if(items.length<4){
+return "There is not yet enough recent telemetry to explain how the river has been moving.";
+}
 
 const d=delta(items);
-if(d===null)return"Recent movement is currently unclear.";
 
-if(Math.abs(d)<0.01){
-return"The level has barely moved across the recent readings. That suggests the river is holding rather than clearly rising or falling.";
+if(d===null){
+return "Recent river movement is currently unclear.";
+}
+
+if(Math.abs(d)<0.008){
+return "There has been very little meaningful change across the recent readings. The river is broadly holding its level.";
 }
 
 if(d>0 && d<0.03){
-return"The river has been lifting gradually. That means extra water is beginning to move through, but it is not a sharp rise at present.";
+return "The river has been lifting gradually. Extra water appears to be moving through, although this is not yet a major rise.";
 }
 
 if(d>=0.03){
-return"The river has risen noticeably across the recent readings. That suggests a stronger push of water is moving through the system.";
+return "The river has risen noticeably across the recent readings, suggesting a stronger push of water moving through the system.";
 }
 
 if(d<0 && d>-0.03){
-return"The river has been easing down slowly from earlier water. It is falling, but not dropping away sharply.";
+return "The river has been easing down slowly from earlier water rather than dropping away sharply.";
 }
 
-return"The river has been dropping back steadily after higher water.";
+return "The river has been dropping back steadily after higher water.";
 }
 
 function freshWaterText(items){
-if(items.length<6)return"There is not yet enough recent telemetry to judge whether fresh water is entering the river.";
+
+if(items.length<6){
+return "There is not yet enough telemetry history to judge whether fresh water is entering the river.";
+}
 
 const changes=[];
+
 for(let i=0;i<items.length-1;i++){
 changes.push(items[i].value-items[i+1].value);
 }
 
 const recent=changes.slice(0,4);
-const avg=recent.reduce((a,b)=>a+b,0)/recent.length;
 
-if(avg>0.006){
-return"The latest readings are now lifting more clearly. That can be a sign that fresh water is starting to enter the river system.";
+const avg=
+recent.reduce((a,b)=>a+b,0)/
+recent.length;
+
+if(avg>0.007){
+return "The latest readings are now lifting more clearly. This can sometimes be the first genuine sign of fresh water entering the river.";
 }
 
-if(avg>0.002){
-return"There are slight signs of the river beginning to build. It is worth watching, but the movement is still modest at present.";
+if(avg>0.003){
+return "There are slight signs of the river beginning to build, although the movement is still fairly modest at present.";
 }
 
-if(avg<-0.006){
-return"There is no clear sign of fresh water arriving at the moment. The river is still easing down from earlier water.";
+if(avg<-0.007){
+return "There is currently no sign of fresh water arriving. The river is continuing to ease down from earlier water.";
 }
 
 if(avg<0){
-return"The river is still edging down slightly. That points more towards earlier water fading than new water arriving.";
+return "The river is still edging down slightly, suggesting earlier water is fading rather than new water arriving.";
 }
 
-return"The recent readings are flat enough that there is no obvious fresh push of water showing yet.";
+return "The recent readings are steady enough that there is no obvious fresh push of water showing at present.";
+}
+
+function loadMemory(){
+
+try{
+
+const raw=localStorage.getItem(MEMORY_KEY);
+
+if(!raw) return [];
+
+const parsed=JSON.parse(raw);
+
+return Array.isArray(parsed)?parsed:[];
+
+}catch(e){
+
+return [];
+
+}
+}
+
+function saveMemory(latest){
+
+const memory=loadMemory();
+
+const exists=
+memory.some(x=>x.dateTime===latest.dateTime);
+
+if(!exists){
+
+memory.unshift({
+value:latest.value,
+dateTime:latest.dateTime
+});
+
+}
+
+const trimmed=
+memory.slice(0,120);
+
+localStorage.setItem(
+MEMORY_KEY,
+JSON.stringify(trimmed)
+);
+}
+
+function continuityText(latest){
+
+const memory=loadMemory();
+
+if(memory.length<2){
+return "The app is beginning to build local river continuity for this device. Future checks will allow stronger comparison through time.";
+}
+
+const older=
+memory.find(x=>x.dateTime!==latest.dateTime);
+
+if(!older){
+return "The app is still building enough local continuity history for comparison.";
+}
+
+const diff=
+latest.value-older.value;
+
+const previousTime=
+formatDate(older.dateTime);
+
+if(Math.abs(diff)<0.005){
+return "Compared with your previous saved check at "+previousTime+", there has been very little meaningful change in the river level.";
+}
+
+if(diff>0 && diff<0.02){
+return "The river is slightly higher than your previous saved check at "+previousTime+".";
+}
+
+if(diff>=0.02){
+return "The river is noticeably higher than your previous saved check at "+previousTime+", suggesting a more meaningful lift has developed.";
+}
+
+if(diff<0 && diff>-0.02){
+return "The river is slightly lower than your previous saved check at "+previousTime+".";
+}
+
+return "The river is noticeably lower than your previous saved check at "+previousTime+", suggesting the earlier water has continued to fall away.";
 }
 
 function behaviourEvents(items){
+
 const out=[];
 
 if(items.length<4){
-out.push({title:"Limited recent history",text:"More telemetry history is needed before recent river behaviour can be explained properly."});
+
+out.push({
+title:"Limited recent history",
+text:"More telemetry history is needed before recent river behaviour can be explained properly."
+});
+
 return out;
 }
 
 const d=delta(items);
 
-if(Math.abs(d)<0.01){
-out.push({title:"Holding steady",text:"The river has changed very little across the recent readings. It is neither clearly building nor clearly dropping away."});
-}else if(d>0){
-out.push({title:"Water building",text:"The recent readings show the river lifting. That suggests extra water is moving into the system."});
-}else{
-out.push({title:"Water easing back",text:"The recent readings show the river dropping back from earlier water."});
+if(Math.abs(d)<0.008){
+
+out.push({
+title:"Conditions largely unchanged",
+text:"The recent readings show very little meaningful movement in the river level."
+});
+
+}
+else if(d>0){
+
+out.push({
+title:"River building",
+text:"The latest readings suggest extra water has been moving into the system."
+});
+
+}
+else{
+
+out.push({
+title:"River easing back",
+text:"The river appears to be continuing to fall away from earlier water."
+});
+
 }
 
 const changes=[];
+
 for(let i=0;i<items.length-1;i++){
 changes.push(items[i].value-items[i+1].value);
 }
 
-const recent=changes.slice(0,4);
-const older=changes.slice(4,10);
+const recentAvg=
+changes.slice(0,4)
+.reduce((a,b)=>a+b,0)/
+Math.max(1,changes.slice(0,4).length);
 
-const recentAvg=recent.reduce((a,b)=>a+b,0)/Math.max(1,recent.length);
-const olderAvg=older.reduce((a,b)=>a+b,0)/Math.max(1,older.length);
+const olderAvg=
+changes.slice(4,10)
+.reduce((a,b)=>a+b,0)/
+Math.max(1,changes.slice(4,10).length);
 
-if(recentAvg>0.006 && olderAvg<0.002){
-out.push({title:"Possible fresh water starting",text:"The latest readings are rising more clearly than the earlier part of the sequence. That can be the first sign of fresh water entering the river."});
+if(recentAvg>0.007 && olderAvg<0.002){
+
+out.push({
+title:"First more noticeable lift",
+text:"The latest readings are rising more clearly than earlier in the sequence. This may be the first meaningful lift seen recently."
+});
+
 }
 
 if(recentAvg<0 && olderAvg<0 && Math.abs(recentAvg)<Math.abs(olderAvg)){
-out.push({title:"Drop may be slowing",text:"The river is still easing down, but the latest readings suggest the fall is slowing compared with earlier."});
+
+out.push({
+title:"River beginning to steady",
+text:"The river is still easing down, although the recent drop now appears to be slowing."
+});
+
 }
 
 return out;
 }
 
 function renderBehaviour(items){
+
 const events=behaviourEvents(items);
-$("behaviourEvents").innerHTML=events.map(e=>`
+
+$("behaviourEvents").innerHTML=
+events.map(e=>`
 <div class="event">
 <div class="event-title">${e.title}</div>
 <div class="event-text">${e.text}</div>
@@ -340,68 +823,34 @@ $("behaviourEvents").innerHTML=events.map(e=>`
 `).join("");
 }
 
-function loadMemory(){
-try{
-const raw=localStorage.getItem(MEMORY_KEY);
-if(!raw)return[];
-const parsed=JSON.parse(raw);
-return Array.isArray(parsed)?parsed:[];
-}catch(e){
-return[];
-}
-}
-
-function saveMemory(latest){
-const memory=loadMemory();
-const exists=memory.some(x=>x.dateTime===latest.dateTime);
-if(!exists){
-memory.unshift({value:latest.value,dateTime:latest.dateTime,storedAt:new Date().toISOString()});
-}
-const trimmed=memory
-.filter(x=>typeof x.value==="number"&&x.dateTime)
-.slice(0,80);
-localStorage.setItem(MEMORY_KEY,JSON.stringify(trimmed));
-}
-
-function sinceLastCheckText(latest){
-const memory=loadMemory();
-const previous=memory.find(x=>x.dateTime!==latest.dateTime);
-
-if(!previous){
-return"This browser has no earlier saved Henthorn reading yet. From the next few checks, the app will be able to compare the river against your previous visits.";
-}
-
-const diff=latest.value-previous.value;
-const previousTime=formatDate(previous.dateTime);
-
-if(Math.abs(diff)<0.005){
-return"Since your last saved check, the river is almost unchanged. Previous saved reading: "+previous.value.toFixed(3)+" m at "+previousTime+".";
-}
-
-if(diff>0){
-return"Since your last saved check, the river is higher by "+diff.toFixed(3)+" m. Previous saved reading: "+previous.value.toFixed(3)+" m at "+previousTime+".";
-}
-
-return"Since your last saved check, the river is lower by "+Math.abs(diff).toFixed(3)+" m. Previous saved reading: "+previous.value.toFixed(3)+" m at "+previousTime+".";
-}
-
 async function fetchJson(url){
-const res=await fetch(url,{cache:"no-store"});
-if(!res.ok)throw new Error("HTTP "+res.status);
+
+const res=
+await fetch(url,{cache:"no-store"});
+
+if(!res.ok){
+throw new Error("HTTP "+res.status);
+}
+
 return await res.json();
 }
 
 function renderTrendTable(items){
+
 const tbody=$("trendTable");
 
 if(!items.length){
-tbody.innerHTML="<tr><td colspan='3'>No telemetry available</td></tr>";
+
+tbody.innerHTML=
+"<tr><td colspan='3'>No telemetry available</td></tr>";
+
 return;
 }
 
 let html="";
 
 for(let i=0;i<items.length;i++){
+
 const row=items[i];
 const prev=items[i+1];
 
@@ -409,15 +858,18 @@ let change="—";
 let cls="trend-flat";
 
 if(prev){
+
 const d=row.value-prev.value;
 
 if(Math.abs(d)<0.005){
-change="Steady";
+change="No major change";
 cls="trend-flat";
-}else if(d>0){
+}
+else if(d>0){
 change="+"+d.toFixed(3);
 cls="trend-up";
-}else{
+}
+else{
 change=d.toFixed(3);
 cls="trend-down";
 }
@@ -436,80 +888,141 @@ tbody.innerHTML=html;
 }
 
 async function loadHenthorn(){
+
 const btn=$("refreshBtn");
+
 btn.disabled=true;
+
 btn.textContent="Checking EA telemetry...";
+
 setStatus("Checking","warn");
 
-$("lastChecked").textContent="Last checked: "+new Date().toLocaleString("en-GB");
+$("lastChecked").textContent=
+"Last checked: "+
+new Date().toLocaleString("en-GB");
 
 try{
-const latestData=await fetchJson(latestUrl);
+
+const latestData=
+await fetchJson(latestUrl);
 
 let trendData;
+
 try{
-trendData=await fetchJson(trendUrl);
-}catch(e){
+trendData=
+await fetchJson(trendUrl);
+}
+catch(e){
 trendData={items:[]};
 }
 
-const latestItems=cleanReadings(latestData.items);
-const trendItems=cleanReadings(trendData.items);
+const latestItems=
+cleanReadings(latestData.items);
 
-const clean=trendItems.length?trendItems:latestItems;
-const latest=latestItems[0]||clean[0];
+const trendItems=
+cleanReadings(trendData.items);
 
-if(!latest)throw new Error("No telemetry returned");
+const clean=
+trendItems.length
+? trendItems
+: latestItems;
 
-$("levelValue").textContent=latest.value.toFixed(3)+" m";
-$("movementValue").textContent=movement(clean);
-$("readingTime").textContent=formatDate(latest.dateTime);
-$("ageValue").textContent=ageText(latest.dateTime);
-$("confidenceValue").textContent=confidenceText(latest.dateTime);
+const latest=
+latestItems[0]||clean[0];
 
-$("currentPicture").textContent=currentPictureText(clean);
-$("recentMovement").textContent=recentMovementText(clean);
-$("freshWater").textContent=freshWaterText(clean);
-$("sinceLastCheck").textContent=sinceLastCheckText(latest);
+if(!latest){
+throw new Error("No telemetry returned");
+}
 
-renderBehaviour(clean);
-renderTrendTable(clean);
+$("levelValue").textContent=
+latest.value.toFixed(3)+" m";
+
+$("movementValue").textContent=
+movement(clean);
+
+$("readingTime").textContent=
+formatDate(latest.dateTime);
+
+$("ageValue").textContent=
+ageText(latest.dateTime);
+
+$("confidenceValue").textContent=
+confidenceText(latest.dateTime);
+
+$("currentPicture").textContent=
+currentPictureText(clean);
+
+$("recentMovement").textContent=
+recentMovementText(clean);
+
+$("freshWater").textContent=
+freshWaterText(clean);
 
 saveMemory(latest);
 
-$("sourceResult").innerHTML='<span class="ok">Live Environment Agency telemetry active</span>';
+$("continuityPanel").textContent=
+continuityText(latest);
+
+renderBehaviour(clean);
+
+renderTrendTable(clean);
+
+$("sourceResult").innerHTML=
+'<span class="ok">Live Environment Agency telemetry active</span>';
+
 setStatus("Live data","good");
 
-}catch(err){
+}
+catch(err){
+
 $("levelValue").textContent="Unavailable";
 $("movementValue").textContent="Unavailable";
 $("readingTime").textContent="Unavailable";
 $("ageValue").textContent="Unavailable";
 $("confidenceValue").textContent="Unavailable";
 
-$("currentPicture").textContent="Live river information is currently unavailable.";
-$("recentMovement").textContent="Recent river movement is currently unavailable.";
-$("freshWater").textContent="Fresh water interpretation is currently unavailable.";
-$("sinceLastCheck").textContent="Saved comparison is unavailable because live telemetry could not be acquired.";
+$("currentPicture").textContent=
+"Live river information is currently unavailable.";
+
+$("recentMovement").textContent=
+"Recent river movement is currently unavailable.";
+
+$("freshWater").textContent=
+"Fresh water interpretation is currently unavailable.";
+
+$("continuityPanel").textContent=
+"River continuity is currently unavailable.";
 
 $("behaviourEvents").innerHTML=`
 <div class="event">
 <div class="event-title">Telemetry unavailable</div>
-<div class="event-text">The app could not acquire live river telemetry.</div>
+<div class="event-text">
+The app could not acquire live river telemetry.
+</div>
 </div>
 `;
 
-$("trendTable").innerHTML="<tr><td colspan='3'>Telemetry unavailable</td></tr>";
-$("sourceResult").innerHTML='<span class="badtext">Telemetry acquisition failed: '+err.message+'</span>';
+$("trendTable").innerHTML=
+"<tr><td colspan='3'>Telemetry unavailable</td></tr>";
+
+$("sourceResult").innerHTML=
+'<span class="badtext">Telemetry acquisition failed: '+err.message+'</span>';
+
 setStatus("Unavailable","bad");
-}finally{
+
+}
+finally{
+
 btn.disabled=false;
+
 btn.textContent="Refresh live data";
 }
 }
 
 loadHenthorn();
+
 setInterval(loadHenthorn,15*60*1000);
+
 </script>
 
 </body>
