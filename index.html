@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10191</title>
+<title>Salmon Rivers Intelligence — Build 10192</title>
 <style>
 :root{--bg:#eef2f3;--card:#fff;--ink:#102018;--muted:#5b6b63;--good:#0f7b3f;--warn:#a15c00;--bad:#9b1c1c;--line:#d7dfdc;--deep:#082d1b;--blue:#0b5f8a;--purple:#5942a9}
 *{box-sizing:border-box}
@@ -30,11 +30,11 @@ button:disabled{opacity:.6;cursor:not-allowed}
 .notice{border-left:5px solid var(--warn);background:#fff9ed;padding:12px;border-radius:10px;line-height:1.5;color:#4b3515}
 .source{font-size:13px;line-height:1.45;color:var(--muted);word-break:break-word}
 .ok{color:var(--good);font-weight:800}.badtext{color:var(--bad);font-weight:800}
-.timeline-event{padding:12px 0;border-bottom:1px solid var(--line)}
-.timeline-event:last-child{border-bottom:0}
-.timeline-time{font-size:12px;font-weight:800;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.4px}
-.timeline-title{font-size:18px;font-weight:900;margin-bottom:5px}
-.timeline-text{line-height:1.6;color:#203028}
+.timeline-event,.transition-event{padding:12px 0;border-bottom:1px solid var(--line)}
+.timeline-event:last-child,.transition-event:last-child{border-bottom:0}
+.timeline-time,.transition-type{font-size:12px;font-weight:800;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.4px}
+.timeline-title,.transition-title{font-size:18px;font-weight:900;margin-bottom:5px}
+.timeline-text,.transition-text{line-height:1.6;color:#203028}
 table{width:100%;border-collapse:collapse;font-size:14px}
 th,td{padding:10px 6px;border-bottom:1px solid var(--line);text-align:left}
 th{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
@@ -47,7 +47,7 @@ footer{text-align:center;padding:20px;font-size:12px;color:var(--muted)}
 <body>
 <header>
 <h1>Salmon Rivers Intelligence</h1>
-<p>Build 10191 · Timeline engine stabilisation</p>
+<p>Build 10192 · Transition detection engine</p>
 </header>
 
 <main>
@@ -96,6 +96,18 @@ footer{text-align:center;padding:20px;font-size:12px;color:var(--muted)}
 </section>
 
 <section class="card">
+<h2>Transition detection</h2>
+<div class="panel-purple" style="margin-bottom:14px" id="transitionSummary">Detecting behavioural transitions from telemetry continuity...</div>
+<div id="transitionEvents">
+<div class="transition-event">
+<div class="transition-type">INITIALISING</div>
+<div class="transition-title">Transition engine loading</div>
+<div class="transition-text">The app is checking whether river behaviour is changing phase.</div>
+</div>
+</div>
+</section>
+
+<section class="card">
 <h2>Intelligence timeline</h2>
 <div class="panel-purple" style="margin-bottom:14px" id="timelineSummary">Building telemetry continuity model...</div>
 <div id="timelineEvents">
@@ -124,20 +136,20 @@ footer{text-align:center;padding:20px;font-size:12px;color:var(--muted)}
 <h2>Source audit</h2>
 <p class="source"><strong>Station:</strong> 710305 · Henthorn</p>
 <p class="source"><strong>Telemetry source:</strong> Environment Agency flood-monitoring telemetry API</p>
-<p class="source"><strong>Timeline engine:</strong> hardened non-fatal telemetry continuity layer</p>
+<p class="source"><strong>Transition engine:</strong> telemetry-derived phase change detection only</p>
 <p class="source" id="sourceResult">Source result: checking</p>
 </section>
 
 <section class="card">
 <h2>Verified intelligence only</h2>
 <div class="notice">
-Build 10191 hardens the timeline engine. Live EA telemetry remains the foundation; timeline interpretation is defensive and cannot invent missing data.
+Build 10192 detects behavioural transitions from verified telemetry history only. It does not predict future levels, fish movement, rainfall or catches.
 </div>
 </section>
 
 </main>
 
-<footer>Build 10191 · Stabilised timeline intelligence from verified telemetry</footer>
+<footer>Build 10192 · Transition detection from verified telemetry only</footer>
 
 <script>
 const STATION_ID="710305";
@@ -146,7 +158,6 @@ const trendUrl=`https://environment.data.gov.uk/flood-monitoring/id/stations/${S
 
 function $(id){return document.getElementById(id);}
 function setStatus(text,type){const b=$("statusBadge");b.textContent=text;b.className="badge";if(type==="warn")b.classList.add("warn");if(type==="bad")b.classList.add("bad");}
-
 function asDate(iso){const d=new Date(iso);return isNaN(d)?null:d;}
 function formatDate(iso){const d=asDate(iso);if(!d)return"Unavailable";return d.toLocaleString("en-GB",{weekday:"short",day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"});}
 function shortTime(iso){const d=asDate(iso);if(!d)return"—";return d.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"});}
@@ -156,9 +167,7 @@ function telemetryConfidence(iso){const m=ageMinutes(iso);if(m===null)return"Una
 
 function cleanReadings(items){
 if(!Array.isArray(items))return[];
-return items
-.filter(x=>x && typeof x.value==="number" && x.dateTime && asDate(x.dateTime))
-.sort((a,b)=>asDate(b.dateTime)-asDate(a.dateTime));
+return items.filter(x=>x&&typeof x.value==="number"&&x.dateTime&&asDate(x.dateTime)).sort((a,b)=>asDate(b.dateTime)-asDate(a.dateTime));
 }
 
 function movementFromReadings(items){
@@ -191,8 +200,8 @@ function classifyRiverState(items){
 if(items.length<3)return{state:"INSUFFICIENT TELEMETRY",explanation:"Not enough telemetry is available for classification."};
 const latest=items[0].value;
 const d=deltaValue(items);
-if(latest<0.35 && Math.abs(d)<0.01)return{state:"STATIC LOW WATER",explanation:"The river is low and broadly stable across the available telemetry window."};
-if(latest<0.55 && Math.abs(d)<0.015)return{state:"STABLE LOW-MODERATE PROFILE",explanation:"The river is holding in a modest band with limited movement across the telemetry window."};
+if(latest<0.35&&Math.abs(d)<0.01)return{state:"STATIC LOW WATER",explanation:"The river is low and broadly stable across the available telemetry window."};
+if(latest<0.55&&Math.abs(d)<0.015)return{state:"STABLE LOW-MODERATE PROFILE",explanation:"The river is holding in a modest band with limited movement across the telemetry window."};
 if(d>0.03)return{state:"ACTIVE RISE RESPONSE",explanation:"The river is rising steadily across the telemetry sequence."};
 if(d<-0.03)return{state:"POST-LIFT FALL PROFILE",explanation:"The river is easing down after an earlier lift event."};
 return{state:"CONTROLLED TRANSITION PROFILE",explanation:"The river is currently in a controlled transitional telemetry state."};
@@ -216,6 +225,71 @@ if(d>0.03)return"The river is building across the telemetry window, suggesting a
 return"The telemetry profile suggests a controlled low-energy catchment state.";
 }
 
+function recentChanges(items){
+const out=[];
+for(let i=0;i<items.length-1;i++){
+out.push(items[i].value-items[i+1].value);
+}
+return out;
+}
+
+function average(arr){
+if(!arr.length)return 0;
+return arr.reduce((a,b)=>a+b,0)/arr.length;
+}
+
+function detectTransitions(items){
+const events=[];
+if(items.length<6){
+events.push({type:"LIMITED DATA",title:"Transition confidence limited",text:"More telemetry history is required before phase-change detection is reliable."});
+return events;
+}
+
+const changes=recentChanges(items);
+const recent=changes.slice(0,4);
+const older=changes.slice(4,10);
+const recentAvg=average(recent);
+const olderAvg=average(older);
+const total=deltaValue(items);
+
+if(Math.abs(recentAvg)<0.003 && Math.abs(olderAvg)>0.004){
+events.push({type:"PHASE CHANGE",title:"Stability emerging",text:"Recent telemetry movement has flattened compared with the earlier sequence. The river may be moving from active change into a steadier phase."});
+}
+
+if(recentAvg<0 && olderAvg<0 && Math.abs(recentAvg)<Math.abs(olderAvg)){
+events.push({type:"FALL TRANSITION",title:"Easing phase weakening",text:"The fall is still present, but recent readings suggest the rate of easing is slowing."});
+}
+
+if(recentAvg>0 && olderAvg>0 && recentAvg<olderAvg){
+events.push({type:"RISE TRANSITION",title:"Rise slowing",text:"The rise signal is still present, but recent telemetry suggests upward movement is losing pace."});
+}
+
+if(recentAvg>0.005 && olderAvg<=0.002){
+events.push({type:"FRESH SIGNAL",title:"Fresh lift beginning",text:"Recent readings show fresh upward movement after a quieter prior sequence."});
+}
+
+if(recentAvg<-0.005 && olderAvg>=-0.002){
+events.push({type:"EASING SIGNAL",title:"Fresh easing phase detected",text:"Recent readings show a stronger easing signal after a previously flatter telemetry sequence."});
+}
+
+if(total!==null && total<0 && Math.abs(total)<0.02 && Math.abs(recentAvg)<0.003){
+events.push({type:"CONTROL",title:"Controlled low-energy transition",text:"The system is easing only gently and recent movement is limited, suggesting controlled low-energy behaviour."});
+}
+
+if(!events.length){
+events.push({type:"NO MAJOR TRANSITION",title:"No strong phase change detected",text:"Telemetry continuity does not currently show a clear behavioural phase change."});
+}
+
+return events;
+}
+
+function transitionSummary(items){
+if(items.length<6)return"Transition engine active but waiting for stronger telemetry continuity.";
+const events=detectTransitions(items);
+const primary=events[0];
+return "Transition engine: "+primary.title+". "+primary.text;
+}
+
 function buildTimeline(items){
 const events=[];
 if(items.length<4){
@@ -234,14 +308,6 @@ events.push({time:"RECENT TREND",title:"Fresh rise sequence",text:"Telemetry con
 }else{
 events.push({time:"RECENT TREND",title:"Gradual easing sequence",text:"Telemetry continuity shows a controlled easing pattern through successive readings."});
 }
-let priorHigher=false;
-for(let i=0;i<items.length-1;i++){
-const diff=items[i].value-items[i+1].value;
-if(diff<-0.01)priorHigher=true;
-}
-if(priorHigher){
-events.push({time:"PRIOR WINDOW",title:"Earlier higher-water phase detected",text:"Historical telemetry suggests the river carried more water earlier before easing."});
-}
 if(d<0){
 events.push({time:"CATCHMENT SIGNAL",title:"Residual runoff fading",text:"Current telemetry suggests catchment response is fading rather than actively building."});
 }
@@ -255,6 +321,15 @@ $("timelineEvents").innerHTML=events.map(e=>`
 <div class="timeline-time">${e.time}</div>
 <div class="timeline-title">${e.title}</div>
 <div class="timeline-text">${e.text}</div>
+</div>`).join("");
+}
+
+function renderTransitions(events){
+$("transitionEvents").innerHTML=events.map(e=>`
+<div class="transition-event">
+<div class="transition-type">${e.type}</div>
+<div class="transition-title">${e.title}</div>
+<div class="transition-text">${e.text}</div>
 </div>`).join("");
 }
 
@@ -301,11 +376,7 @@ try{
 const latestData=await fetchJson(latestUrl);
 let trendData=null;
 
-try{
-trendData=await fetchJson(trendUrl);
-}catch(e){
-trendData={items:[]};
-}
+try{trendData=await fetchJson(trendUrl);}catch(e){trendData={items:[]};}
 
 const latestItems=cleanReadings(latestData.items);
 const trendItems=cleanReadings(trendData.items);
@@ -314,10 +385,10 @@ let clean=trendItems.length?trendItems:latestItems;
 let latest=latestItems[0]||clean[0];
 
 if(!latest)throw new Error("No numeric telemetry returned");
-
 if(!clean.length)clean=[latest];
 
 const state=classifyRiverState(clean);
+const transitions=detectTransitions(clean);
 
 $("levelValue").textContent=latest.value.toFixed(3)+" m";
 $("movementValue").textContent=movementFromReadings(clean);
@@ -330,12 +401,14 @@ $("riverState").textContent=state.state;
 $("stateExplanation").textContent=state.explanation;
 $("interpretationPanel").textContent=interpretation(clean);
 $("catchmentPanel").textContent=catchmentResponse(clean);
+$("transitionSummary").textContent=transitionSummary(clean);
 $("timelineSummary").textContent=timelineSummary(clean);
 
+renderTransitions(transitions);
 renderTimeline(buildTimeline(clean));
 renderTrendTable(clean);
 
-$("sourceResult").innerHTML='Source result: <span class="ok">EA telemetry acquired; stabilised timeline engine active</span>';
+$("sourceResult").innerHTML='Source result: <span class="ok">EA telemetry acquired; transition detection engine active</span>';
 setStatus("Live EA data","good");
 
 }catch(err){
@@ -350,6 +423,8 @@ $("riverState").textContent="UNAVAILABLE";
 $("stateExplanation").textContent="River classification unavailable.";
 $("interpretationPanel").textContent="Telemetry unavailable.";
 $("catchmentPanel").textContent="Catchment response unavailable.";
+$("transitionSummary").textContent="Transition detection unavailable.";
+$("transitionEvents").innerHTML=`<div class="transition-event"><div class="transition-type">SYSTEM FAILURE</div><div class="transition-title">Transition engine unavailable</div><div class="transition-text">Live telemetry could not be acquired.</div></div>`;
 $("timelineSummary").textContent="Timeline engine unavailable.";
 $("timelineEvents").innerHTML=`<div class="timeline-event"><div class="timeline-time">SYSTEM FAILURE</div><div class="timeline-title">Telemetry unavailable</div><div class="timeline-text">The continuity engine could not acquire live telemetry.</div></div>`;
 $("trendTable").innerHTML="<tr><td colspan='3'>Telemetry unavailable</td></tr>";
