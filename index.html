@@ -3,343 +3,904 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10189</title>
+<title>Salmon Rivers Intelligence — Build 10190</title>
+
 <style>
-:root{--bg:#eef2f3;--card:#fff;--ink:#102018;--muted:#5b6b63;--good:#0f7b3f;--warn:#a15c00;--bad:#9b1c1c;--line:#d7dfdc;--deep:#082d1b;--blue:#0b5f8a;--purple:#5942a9}
+:root{
+--bg:#eef2f3;
+--card:#ffffff;
+--ink:#102018;
+--muted:#5b6b63;
+--good:#0f7b3f;
+--warn:#a15c00;
+--bad:#9b1c1c;
+--line:#d7dfdc;
+--deep:#082d1b;
+--blue:#0b5f8a;
+--purple:#5942a9;
+}
+
 *{box-sizing:border-box}
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
-header{background:var(--deep);color:white;text-align:center;padding:20px 14px}
-h1{margin:0;font-size:26px} header p{margin:6px 0 0;color:#cfe3d7;font-size:14px}
-main{max-width:760px;margin:0 auto;padding:14px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:14px 0;box-shadow:0 2px 8px rgba(0,0,0,.05)}
-.row{display:flex;justify-content:space-between;gap:12px;align-items:center}
-.label{color:var(--muted);font-size:14px}.big{font-size:46px;font-weight:900;margin:8px 0 2px}
-.badge{display:inline-block;padding:7px 11px;border-radius:999px;font-weight:800;font-size:13px;background:#e8f3ec;color:var(--good)}
-.badge.warn{background:#fff4df;color:var(--warn)}.badge.bad{background:#fde8e8;color:var(--bad)}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.stat{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fff}
-.stat strong{display:block;font-size:20px;margin-top:5px}
-button{width:100%;border:0;border-radius:14px;padding:15px;background:var(--deep);color:white;font-weight:900;font-size:16px;cursor:pointer}
-button:disabled{opacity:.6;cursor:not-allowed}
-.panel-green{border-left:5px solid var(--good);background:#eef8f1;padding:14px;border-radius:10px;line-height:1.6}
-.panel-blue{border-left:5px solid var(--blue);background:#eef6fb;padding:14px;border-radius:10px;line-height:1.6}
-.panel-gold{border-left:5px solid var(--warn);background:#fff9ed;padding:14px;border-radius:10px;line-height:1.6}
-.panel-purple{border-left:5px solid var(--purple);background:#f2efff;padding:14px;border-radius:10px;line-height:1.6}
-.notice{border-left:5px solid var(--warn);background:#fff9ed;padding:12px;border-radius:10px;color:#4b3515;line-height:1.45}
-.source{font-size:13px;color:var(--muted);word-break:break-word;line-height:1.45}
-.ok{color:var(--good);font-weight:800}.badtext{color:var(--bad);font-weight:800}
-.state-title{font-size:24px;font-weight:900;margin:0 0 8px}
-.conf-row,.fusion-row,.acq-row{display:grid;grid-template-columns:1fr auto;gap:10px;border-bottom:1px solid var(--line);padding:10px 0;align-items:center}
-.conf-row:last-child,.fusion-row:last-child,.acq-row:last-child{border-bottom:0}
-.conf-tag,.fusion-tag,.acq-tag{font-weight:900;border-radius:999px;padding:5px 9px;font-size:12px;white-space:nowrap}
-.conf-high,.fusion-live,.acq-live{background:#e8f3ec;color:var(--good)}
-.conf-med,.fusion-derived,.acq-investigate{background:#fff4df;color:var(--warn)}
-.conf-low,.fusion-blocked,.acq-blocked{background:#fde8e8;color:var(--bad)}
-.fusion-planned,.acq-planned{background:#eef6fb;color:var(--blue)}
-table{width:100%;border-collapse:collapse;font-size:14px}
-th,td{padding:10px 6px;border-bottom:1px solid var(--line);text-align:left}
-th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.5px}
-.trend-up{color:var(--good);font-weight:800}.trend-down{color:var(--bad);font-weight:800}.trend-flat{color:var(--warn);font-weight:800}
-footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
-@media(max-width:520px){.grid{grid-template-columns:1fr}.big{font-size:40px}.conf-row,.fusion-row,.acq-row{grid-template-columns:1fr}}
+
+body{
+margin:0;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+background:var(--bg);
+color:var(--ink);
+}
+
+header{
+background:var(--deep);
+color:white;
+text-align:center;
+padding:20px 14px;
+}
+
+h1{margin:0;font-size:26px}
+header p{margin:6px 0 0;color:#cfe3d7;font-size:14px}
+
+main{
+max-width:760px;
+margin:0 auto;
+padding:14px;
+}
+
+.card{
+background:var(--card);
+border:1px solid var(--line);
+border-radius:16px;
+padding:16px;
+margin:14px 0;
+box-shadow:0 2px 8px rgba(0,0,0,.05);
+}
+
+.row{
+display:flex;
+justify-content:space-between;
+gap:12px;
+align-items:center;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+}
+
+.label{
+font-size:14px;
+color:var(--muted);
+}
+
+.big{
+font-size:46px;
+font-weight:900;
+margin:8px 0 2px;
+}
+
+.stat{
+border:1px solid var(--line);
+border-radius:14px;
+padding:12px;
+background:white;
+}
+
+.stat strong{
+display:block;
+margin-top:5px;
+font-size:20px;
+}
+
+.badge{
+display:inline-block;
+padding:7px 11px;
+border-radius:999px;
+font-weight:800;
+font-size:13px;
+background:#e8f3ec;
+color:var(--good);
+}
+
+.badge.warn{
+background:#fff4df;
+color:var(--warn);
+}
+
+.badge.bad{
+background:#fde8e8;
+color:var(--bad);
+}
+
+button{
+width:100%;
+border:0;
+border-radius:14px;
+padding:15px;
+background:var(--deep);
+color:white;
+font-size:16px;
+font-weight:900;
+cursor:pointer;
+}
+
+button:disabled{
+opacity:.6;
+cursor:not-allowed;
+}
+
+.panel-green{
+border-left:5px solid var(--good);
+background:#eef8f1;
+padding:14px;
+border-radius:10px;
+line-height:1.6;
+}
+
+.panel-blue{
+border-left:5px solid var(--blue);
+background:#eef6fb;
+padding:14px;
+border-radius:10px;
+line-height:1.6;
+}
+
+.panel-gold{
+border-left:5px solid var(--warn);
+background:#fff9ed;
+padding:14px;
+border-radius:10px;
+line-height:1.6;
+}
+
+.panel-purple{
+border-left:5px solid var(--purple);
+background:#f2efff;
+padding:14px;
+border-radius:10px;
+line-height:1.6;
+}
+
+.timeline-event{
+padding:12px 0;
+border-bottom:1px solid var(--line);
+}
+
+.timeline-event:last-child{
+border-bottom:0;
+}
+
+.timeline-time{
+font-size:12px;
+font-weight:800;
+color:var(--muted);
+margin-bottom:5px;
+text-transform:uppercase;
+letter-spacing:.4px;
+}
+
+.timeline-title{
+font-size:18px;
+font-weight:900;
+margin-bottom:5px;
+}
+
+.timeline-text{
+line-height:1.6;
+color:#203028;
+}
+
+.notice{
+border-left:5px solid var(--warn);
+background:#fff9ed;
+padding:12px;
+border-radius:10px;
+line-height:1.5;
+color:#4b3515;
+}
+
+.source{
+font-size:13px;
+line-height:1.45;
+color:var(--muted);
+word-break:break-word;
+}
+
+.ok{
+color:var(--good);
+font-weight:800;
+}
+
+.badtext{
+color:var(--bad);
+font-weight:800;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+font-size:14px;
+}
+
+th,td{
+padding:10px 6px;
+border-bottom:1px solid var(--line);
+text-align:left;
+}
+
+th{
+font-size:12px;
+text-transform:uppercase;
+letter-spacing:.5px;
+color:var(--muted);
+}
+
+.trend-up{
+color:var(--good);
+font-weight:800;
+}
+
+.trend-down{
+color:var(--bad);
+font-weight:800;
+}
+
+.trend-flat{
+color:var(--warn);
+font-weight:800;
+}
+
+footer{
+text-align:center;
+padding:20px;
+font-size:12px;
+color:var(--muted);
+}
+
+@media(max-width:520px){
+.grid{grid-template-columns:1fr}
+.big{font-size:40px}
+}
 </style>
 </head>
 
 <body>
+
 <header>
-  <h1>Salmon Rivers Intelligence</h1>
-  <p>Build 10189 · Source acquisition layer</p>
+<h1>Salmon Rivers Intelligence</h1>
+<p>Build 10190 · Intelligence timeline engine</p>
 </header>
 
 <main>
 
 <section class="card">
-  <div class="row">
-    <div><div class="label">Primary live station</div><strong>River Ribble @ Henthorn</strong></div>
-    <span id="statusBadge" class="badge warn">Checking</span>
-  </div>
-  <div id="levelValue" class="big">—</div>
-  <div class="label">Latest Environment Agency river level reading</div>
+<div class="row">
+<div>
+<div class="label">Primary live station</div>
+<strong>River Ribble @ Henthorn</strong>
+</div>
+<span id="statusBadge" class="badge warn">Checking</span>
+</div>
+
+<div id="levelValue" class="big">—</div>
+<div class="label">Latest Environment Agency river level reading</div>
 </section>
 
 <section class="card">
-  <div class="grid">
-    <div class="stat"><div class="label">Movement</div><strong id="movementValue">Checking</strong></div>
-    <div class="stat"><div class="label">Reading time</div><strong id="readingTime">—</strong></div>
-    <div class="stat"><div class="label">Reading age</div><strong id="ageValue">—</strong></div>
-    <div class="stat"><div class="label">Telemetry confidence</div><strong id="confidenceValue">Checking</strong></div>
-  </div>
+<div class="grid">
+<div class="stat">
+<div class="label">Movement</div>
+<strong id="movementValue">Checking</strong>
+</div>
+
+<div class="stat">
+<div class="label">Reading time</div>
+<strong id="readingTime">—</strong>
+</div>
+
+<div class="stat">
+<div class="label">Reading age</div>
+<strong id="ageValue">—</strong>
+</div>
+
+<div class="stat">
+<div class="label">Telemetry confidence</div>
+<strong id="confidenceValue">Checking</strong>
+</div>
+</div>
 </section>
 
 <section class="card">
-  <div class="grid">
-    <div class="stat"><div class="label">Trend delta</div><strong id="deltaValue">—</strong></div>
-    <div class="stat"><div class="label">Trend profile</div><strong id="trendProfile">Checking</strong></div>
-  </div>
+<div class="grid">
+<div class="stat">
+<div class="label">Trend delta</div>
+<strong id="deltaValue">—</strong>
+</div>
+
+<div class="stat">
+<div class="label">Trend profile</div>
+<strong id="trendProfile">Checking</strong>
+</div>
+</div>
 </section>
 
 <section class="card">
-  <h2>River state</h2>
-  <div class="panel-gold">
-    <div class="state-title" id="riverState">Classifying...</div>
-    <div id="stateExplanation">Checking telemetry before classifying river state.</div>
-  </div>
+<h2>River state</h2>
+<div class="panel-gold">
+<div style="font-size:24px;font-weight:900;margin-bottom:8px" id="riverState">Classifying...</div>
+<div id="stateExplanation">Checking telemetry...</div>
+</div>
 </section>
 
 <section class="card">
-  <h2>River interpretation</h2>
-  <div class="panel-green" id="interpretationPanel">Checking live telemetry before interpreting river behaviour.</div>
+<h2>River interpretation</h2>
+<div class="panel-green" id="interpretationPanel">
+Checking telemetry interpretation...
+</div>
 </section>
 
 <section class="card">
-  <h2>Catchment response</h2>
-  <div class="panel-blue" id="catchmentPanel">Evaluating catchment response behaviour from telemetry profile.</div>
+<h2>Intelligence timeline</h2>
+
+<div class="panel-purple" style="margin-bottom:14px" id="timelineSummary">
+Building telemetry continuity model...
+</div>
+
+<div id="timelineEvents">
+
+<div class="timeline-event">
+<div class="timeline-time">INITIALISING</div>
+<div class="timeline-title">Loading telemetry continuity</div>
+<div class="timeline-text">
+The timeline engine is preparing behavioural interpretation from telemetry history.
+</div>
+</div>
+
+</div>
+
 </section>
 
 <section class="card">
-  <h2>Rainfall intelligence investigation</h2>
-  <div class="panel-blue" id="rainPanel">Evaluating telemetry for possible rainfall-response signatures.</div>
-  <p class="source"><strong>Candidate reference area:</strong> Great Mitton</p>
-  <p class="source">Rainfall figures are not live-acquired yet. This panel remains telemetry-derived only.</p>
+<h2>Telemetry trend</h2>
+
+<table>
+<thead>
+<tr>
+<th>Time</th>
+<th>Level</th>
+<th>Change</th>
+</tr>
+</thead>
+
+<tbody id="trendTable">
+<tr><td colspan="3">Loading telemetry...</td></tr>
+</tbody>
+</table>
 </section>
 
 <section class="card">
-  <h2>Source acquisition layer</h2>
-  <div class="panel-purple" id="acquisitionSummary">
-    Acquisition model active. Live data is allowed only when source stability, traceability and currentness are satisfied.
-  </div>
+<button id="refreshBtn" onclick="loadHenthorn()">
+Refresh live data
+</button>
 
-  <div style="margin-top:12px" id="acquisitionPanel">
-    <div class="acq-row"><span>EA Henthorn river level telemetry</span><span class="acq-tag acq-live">Live · verified</span></div>
-    <div class="acq-row"><span>Great Mitton rainfall / catchment reference</span><span class="acq-tag acq-investigate">Investigating</span></div>
-    <div class="acq-row"><span>RFCA water quality / temperature</span><span class="acq-tag acq-investigate">Acquisition target</span></div>
-    <div class="acq-row"><span>RFCA fish counters</span><span class="acq-tag acq-blocked">Blocked · no endpoint</span></div>
-    <div class="acq-row"><span>Current-season Ribble catch reports</span><span class="acq-tag acq-blocked">Blocked · no verified feed</span></div>
-    <div class="acq-row"><span>Operator / beat intelligence</span><span class="acq-tag acq-planned">Planned manual-source model</span></div>
-  </div>
+<p class="source" id="lastChecked">
+Last checked: —
+</p>
 </section>
 
 <section class="card">
-  <h2>Intelligence fusion status</h2>
-  <div class="panel-purple" id="fusionSummary">
-    Building governed multi-source model from live telemetry and future verified acquisition layers.
-  </div>
+<h2>Source audit</h2>
 
-  <div style="margin-top:12px" id="fusionPanel">
-    <div class="fusion-row"><span>EA Henthorn telemetry</span><span class="fusion-tag fusion-live">Live</span></div>
-    <div class="fusion-row"><span>Telemetry-derived river state</span><span class="fusion-tag fusion-derived">Derived</span></div>
-    <div class="fusion-row"><span>Great Mitton rainfall acquisition</span><span class="fusion-tag fusion-planned">Planned</span></div>
-    <div class="fusion-row"><span>RFCA water quality / temperature</span><span class="fusion-tag fusion-planned">Planned</span></div>
-    <div class="fusion-row"><span>Fish counters</span><span class="fusion-tag fusion-blocked">Blocked · no source</span></div>
-    <div class="fusion-row"><span>Current-season catch intelligence</span><span class="fusion-tag fusion-blocked">Blocked · no source</span></div>
-  </div>
+<p class="source">
+<strong>Station:</strong> 710305 · Henthorn
+</p>
+
+<p class="source">
+<strong>Telemetry source:</strong> Environment Agency flood-monitoring telemetry API
+</p>
+
+<p class="source">
+<strong>Timeline engine:</strong> telemetry continuity interpretation only
+</p>
+
+<p class="source" id="sourceResult">
+Source result: checking
+</p>
 </section>
 
 <section class="card">
-  <h2>Intelligence confidence</h2>
-  <div id="confidencePanel">
-    <div class="conf-row"><span>Telemetry source integrity</span><span class="conf-tag conf-med">Checking</span></div>
-    <div class="conf-row"><span>River-state classification</span><span class="conf-tag conf-med">Checking</span></div>
-    <div class="conf-row"><span>Catchment interpretation</span><span class="conf-tag conf-med">Checking</span></div>
-    <div class="conf-row"><span>Rainfall inference</span><span class="conf-tag conf-low">Not live sourced</span></div>
-  </div>
-</section>
+<h2>Verified intelligence only</h2>
 
-<section class="card">
-  <button id="refreshBtn" onclick="loadHenthorn()">Refresh live data</button>
-  <p class="source" id="lastChecked">Last checked: —</p>
-</section>
-
-<section class="card">
-  <h2>Telemetry trend</h2>
-  <table>
-    <thead><tr><th>Time</th><th>Level</th><th>Change</th></tr></thead>
-    <tbody id="trendTable"><tr><td colspan="3">Loading telemetry history...</td></tr></tbody>
-  </table>
-</section>
-
-<section class="card">
-  <h2>Source audit</h2>
-  <p class="source"><strong>Station:</strong> 710305 · Henthorn</p>
-  <p class="source"><strong>Live telemetry:</strong> Environment Agency flood-monitoring telemetry API</p>
-  <p class="source"><strong>Rainfall:</strong> acquisition investigation · no live endpoint connected</p>
-  <p class="source"><strong>RFCA:</strong> acquisition candidate · no values displayed until traceable</p>
-  <p class="source"><strong>Catch reports / counters:</strong> blocked until verified current-season sources exist</p>
-  <p class="source" id="sourceResult">Source result: checking</p>
-</section>
-
-<section class="card">
-  <h2>Verified intelligence only</h2>
-  <div class="notice">
-    Build 10189 adds the acquisition governance layer. Sources can be live, derived, investigating, planned or blocked. Blocked sources display no values.
-  </div>
+<div class="notice">
+Build 10190 introduces telemetry continuity interpretation. Timeline events are derived only from verified telemetry history and do not predict future river behaviour.
+</div>
 </section>
 
 </main>
 
-<footer>Build 10189 · Source acquisition governed before display</footer>
+<footer>
+Build 10190 · Temporal intelligence from verified telemetry only
+</footer>
 
 <script>
 const STATION_ID="710305";
-const latestUrl=`https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?latest`;
-const trendUrl=`https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?_sorted&_limit=12`;
 
-function $(id){return document.getElementById(id);}
-function setStatus(text,type){const b=$("statusBadge");b.textContent=text;b.className="badge";if(type==="warn")b.classList.add("warn");if(type==="bad")b.classList.add("bad");}
-function formatDate(iso){const d=new Date(iso);if(isNaN(d))return"Unavailable";return d.toLocaleString("en-GB",{weekday:"short",day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"});}
-function shortTime(iso){const d=new Date(iso);if(isNaN(d))return"—";return d.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"});}
-function ageMinutes(iso){const d=new Date(iso);if(isNaN(d))return null;return Math.max(0,Math.round((Date.now()-d.getTime())/60000));}
-function ageText(iso){const m=ageMinutes(iso);if(m===null)return"Unavailable";if(m<60)return m+" min";return Math.floor(m/60)+"h "+(m%60)+"m";}
-function telemetryConfidence(iso){const m=ageMinutes(iso);if(m===null)return"Unavailable";if(m<=90)return"High";if(m<=240)return"Medium";return"Low";}
-function movementFromReadings(items){if(!Array.isArray(items)||items.length<2)return"Unavailable";const d=items[0].value-items[1].value;if(Math.abs(d)<0.005)return"Steady";return d>0?"Rising":"Falling";}
-function deltaValue(items){if(items.length<2)return null;return items[0].value-items[items.length-1].value;}
-function deltaText(items){const d=deltaValue(items);if(d===null)return"—";return(d>0?"+":"")+d.toFixed(3)+" m";}
-function overallTrend(items){const d=deltaValue(items);if(d===null)return"Unavailable";if(Math.abs(d)<0.01)return"Stable profile";if(d>0)return"Gradual rise";return"Gradual fall";}
+const latestUrl=`https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?latest`;
+
+const trendUrl=`https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?_sorted&_limit=16`;
+
+function $(id){
+return document.getElementById(id);
+}
+
+function setStatus(text,type){
+const b=$("statusBadge");
+b.textContent=text;
+b.className="badge";
+
+if(type==="warn") b.classList.add("warn");
+if(type==="bad") b.classList.add("bad");
+}
+
+function formatDate(iso){
+const d=new Date(iso);
+if(isNaN(d)) return "Unavailable";
+
+return d.toLocaleString("en-GB",{
+weekday:"short",
+day:"2-digit",
+month:"short",
+hour:"2-digit",
+minute:"2-digit"
+});
+}
+
+function shortTime(iso){
+const d=new Date(iso);
+if(isNaN(d)) return "—";
+
+return d.toLocaleTimeString("en-GB",{
+hour:"2-digit",
+minute:"2-digit"
+});
+}
+
+function ageMinutes(iso){
+const d=new Date(iso);
+if(isNaN(d)) return null;
+
+return Math.max(0,Math.round((Date.now()-d.getTime())/60000));
+}
+
+function ageText(iso){
+const m=ageMinutes(iso);
+
+if(m===null) return "Unavailable";
+
+if(m<60) return m+" min";
+
+return Math.floor(m/60)+"h "+(m%60)+"m";
+}
+
+function telemetryConfidence(iso){
+const m=ageMinutes(iso);
+
+if(m===null) return "Unavailable";
+if(m<=90) return "High";
+if(m<=240) return "Medium";
+
+return "Low";
+}
+
+function movementFromReadings(items){
+if(items.length<2) return "Unavailable";
+
+const d=items[0].value-items[1].value;
+
+if(Math.abs(d)<0.005) return "Steady";
+
+return d>0?"Rising":"Falling";
+}
+
+function deltaValue(items){
+if(items.length<2) return null;
+
+return items[0].value-items[items.length-1].value;
+}
+
+function deltaText(items){
+const d=deltaValue(items);
+
+if(d===null) return "—";
+
+return (d>0?"+":"")+d.toFixed(3)+" m";
+}
+
+function overallTrend(items){
+const d=deltaValue(items);
+
+if(d===null) return "Unavailable";
+
+if(Math.abs(d)<0.01) return "Stable profile";
+if(d>0) return "Gradual rise";
+
+return "Gradual fall";
+}
 
 function classifyRiverState(items){
-  if(items.length<3)return{state:"INSUFFICIENT TELEMETRY",explanation:"Not enough verified telemetry points are available to classify river state."};
-  const latest=items[0].value,d=deltaValue(items),recent=items[0].value-items[1].value;
-  if(latest<0.35&&Math.abs(d)<0.01)return{state:"STATIC LOW WATER",explanation:"The river is low and broadly stable across the available telemetry window."};
-  if(latest<0.55&&Math.abs(d)<0.015)return{state:"STABLE LOW-MODERATE PROFILE",explanation:"The river is holding in a modest band with limited movement across the telemetry window."};
-  if(d>0.03&&recent>0.005)return{state:"ACTIVE RISING RESPONSE",explanation:"The river is rising across the telemetry window with fresh upward movement in the latest readings."};
-  if(d<-0.03)return{state:"FALLING POST-LIFT PROFILE",explanation:"The river is falling steadily across the telemetry window, consistent with water easing through after an earlier rise."};
-  return{state:"BALANCED TRANSITION PROFILE",explanation:"The river is currently behaving in a relatively controlled telemetry pattern."};
+
+if(items.length<3){
+return{
+state:"INSUFFICIENT TELEMETRY",
+explanation:"Not enough telemetry is available for classification."
+};
+}
+
+const latest=items[0].value;
+const d=deltaValue(items);
+
+if(latest<0.55 && Math.abs(d)<0.015){
+return{
+state:"STABLE LOW-MODERATE PROFILE",
+explanation:"The river is holding in a modest band with limited movement across the telemetry window."
+};
+}
+
+if(d>0.03){
+return{
+state:"ACTIVE RISE RESPONSE",
+explanation:"The river is rising steadily across the telemetry sequence."
+};
+}
+
+if(d<-0.03){
+return{
+state:"POST-LIFT FALL PROFILE",
+explanation:"The river is easing down after an earlier lift event."
+};
+}
+
+return{
+state:"CONTROLLED TRANSITION PROFILE",
+explanation:"The river is currently in a controlled transitional telemetry state."
+};
 }
 
 function interpretation(items){
-  if(!items.length)return"Telemetry unavailable, so no interpretation is shown.";
-  const latest=items[0].value,d=deltaValue(items);
-  let state=latest<0.35?"The Henthorn level is currently low on the live EA gauge.":latest<0.55?"The Henthorn level is currently in a modest, controlled band on the live EA gauge.":latest<0.85?"The Henthorn level is carrying a more noticeable lift on the live EA gauge.":"The Henthorn level is elevated on the live EA gauge.";
-  let trend=d===null?"Trend strength cannot yet be assessed.":Math.abs(d)<0.01?"Across the telemetry window the river profile is broadly stable.":d>0?"Across the telemetry window the river has been rising.":"Across the telemetry window the river has been easing down.";
-  return state+" "+trend+" This is telemetry interpretation only, not a fishing recommendation.";
+
+if(!items.length){
+return "Telemetry unavailable.";
 }
 
-function catchmentResponse(items){
-  if(items.length<3)return"Insufficient telemetry history available for catchment interpretation.";
-  const d=deltaValue(items);
-  if(Math.abs(d)<0.01)return"Catchment behaviour currently appears quiet and stable. No significant response signal is visible across the available telemetry window.";
-  if(d<-0.03)return"The river is continuing to ease down after an earlier lift event. This profile suggests residual catchment runoff gradually declining through the system.";
-  if(d>0.03)return"The river is building steadily across the telemetry window, indicating an active catchment response moving through the system.";
-  return"The telemetry profile suggests a slow easing pattern rather than fresh catchment input at present.";
+const latest=items[0].value;
+const d=deltaValue(items);
+
+let state="";
+
+if(latest<0.35){
+state="The Henthorn level is currently low.";
+}
+else if(latest<0.55){
+state="The Henthorn level is currently in a modest controlled band.";
+}
+else{
+state="The Henthorn level is carrying more water through the system.";
 }
 
-function rainfallIntelligence(items){
-  if(items.length<3)return"Telemetry history is currently insufficient for rainfall-response analysis.";
-  const d=deltaValue(items);
-  let rises=0;
-  for(let i=0;i<items.length-1;i++){if(items[i].value-items[i+1].value>0.005)rises++;}
-  if(rises>=3)return"Telemetry behaviour suggests a possible fresh rainfall-response signal. Live rainfall acquisition is not yet connected, so this remains telemetry-derived interpretation only.";
-  if(d>0.03)return"The river profile indicates a broader catchment lift event consistent with upstream rainfall influence moving through the system.";
-  if(d<-0.03)return"The telemetry profile currently suggests residual runoff easing after an earlier rainfall-driven response event.";
-  if(Math.abs(d)<0.01)return"No meaningful telemetry evidence of active rainfall-driven catchment response is currently visible.";
-  return"Current telemetry suggests a low-energy catchment state without strong fresh rainfall-response behaviour.";
+let trend="";
+
+if(Math.abs(d)<0.01){
+trend="The telemetry profile is broadly stable.";
+}
+else if(d>0){
+trend="The telemetry profile shows rising behaviour.";
+}
+else{
+trend="The telemetry profile shows easing behaviour.";
 }
 
-function fusionSummary(items,latest){
-  const tel=telemetryConfidence(latest.dateTime);
-  const d=deltaValue(items);
-  let behaviour="controlled";
-  if(d!==null&&d>0.03)behaviour="building";
-  if(d!==null&&d<-0.03)behaviour="falling after lift";
-  if(d!==null&&Math.abs(d)<0.01)behaviour="stable";
-  return "Fusion engine status: live EA telemetry is active with "+tel.toLowerCase()+" telemetry confidence. Current derived river behaviour is "+behaviour+". Rainfall, RFCA, counters and catch intelligence remain gated until verified sources are connected.";
+return state+" "+trend+" This is telemetry interpretation only.";
 }
 
-function acquisitionSummary(items,latest){
-  const tel=telemetryConfidence(latest.dateTime);
-  return "Acquisition status: EA Henthorn telemetry is live and verified with "+tel.toLowerCase()+" confidence. Rainfall and RFCA remain acquisition targets. Fish counters and catch intelligence remain blocked until stable, traceable current-season sources are identified.";
+function buildTimeline(items){
+
+const events=[];
+
+if(items.length<4){
+events.push({
+time:"LIMITED DATA",
+title:"Insufficient telemetry continuity",
+text:"More telemetry history is required before behavioural continuity can be interpreted."
+});
+
+return events;
 }
 
-function confidenceRows(items,latest){
-  const tel=telemetryConfidence(latest.dateTime);
-  const stateConf=items.length>=6&&tel==="High"?"High":items.length>=3?"Medium":"Low";
-  const catchConf=items.length>=6&&tel!=="Low"?"Medium":"Low";
-  function tag(v){return v==="High"?"conf-high":v==="Medium"?"conf-med":"conf-low";}
-  $("confidencePanel").innerHTML=`
-    <div class="conf-row"><span>Telemetry source integrity</span><span class="conf-tag ${tag(tel)}">${tel}</span></div>
-    <div class="conf-row"><span>River-state classification</span><span class="conf-tag ${tag(stateConf)}">${stateConf}</span></div>
-    <div class="conf-row"><span>Catchment interpretation</span><span class="conf-tag ${tag(catchConf)}">${catchConf}</span></div>
-    <div class="conf-row"><span>Rainfall inference</span><span class="conf-tag conf-low">Low · telemetry-only</span></div>
-    <div class="conf-row"><span>RFCA / counters / catches</span><span class="conf-tag conf-low">Blocked · no source</span></div>
-  `;
+const latest=items[0].value;
+const delta=deltaValue(items);
+
+if(Math.abs(delta)<0.01){
+events.push({
+time:"CURRENT WINDOW",
+title:"River stability phase",
+text:"Telemetry continuity suggests the river has remained relatively stable through the observed timeline window."
+});
 }
 
-async function fetchJson(url){const res=await fetch(url,{cache:"no-store"});if(!res.ok)throw new Error("HTTP "+res.status);return await res.json();}
+if(delta<0){
+events.push({
+time:"RECENT TREND",
+title:"Gradual easing sequence",
+text:"The telemetry engine detects a controlled easing pattern through successive readings."
+});
+}
+
+if(delta>0){
+events.push({
+time:"RECENT TREND",
+title:"Fresh rise sequence",
+text:"The telemetry engine detects progressive lift behaviour across the continuity window."
+});
+}
+
+let overnight=false;
+
+for(let i=0;i<items.length-1;i++){
+
+const diff=items[i].value-items[i+1].value;
+
+if(diff<-0.01){
+overnight=true;
+}
+}
+
+if(overnight){
+events.push({
+time:"PRIOR WINDOW",
+title:"Earlier higher-water phase detected",
+text:"Historical telemetry suggests the river was carrying more water earlier in the continuity sequence before beginning to ease."
+});
+}
+
+if(!overnight && delta<0){
+events.push({
+time:"CATCHMENT SIGNAL",
+title:"Residual runoff behaviour",
+text:"Current telemetry suggests the catchment response is fading rather than actively building."
+});
+}
+
+events.push({
+time:"SYSTEM STATUS",
+title:"Timeline engine active",
+text:"Temporal interpretation is now being generated from verified telemetry continuity rather than single-point readings."
+});
+
+return events;
+}
+
+function renderTimeline(events){
+
+const container=$("timelineEvents");
+
+let html="";
+
+for(const e of events){
+
+html+=`
+<div class="timeline-event">
+<div class="timeline-time">${e.time}</div>
+<div class="timeline-title">${e.title}</div>
+<div class="timeline-text">${e.text}</div>
+</div>
+`;
+}
+
+container.innerHTML=html;
+}
+
+function timelineSummary(items){
+
+const d=deltaValue(items);
+
+if(d===null){
+return "Telemetry continuity unavailable.";
+}
+
+if(Math.abs(d)<0.01){
+return "Timeline engine detects stable continuity with low behavioural volatility.";
+}
+
+if(d>0){
+return "Timeline engine detects developing rise behaviour across the telemetry sequence.";
+}
+
+return "Timeline engine detects controlled easing behaviour across the telemetry sequence.";
+}
+
+async function fetchJson(url){
+
+const res=await fetch(url,{cache:"no-store"});
+
+if(!res.ok){
+throw new Error("HTTP "+res.status);
+}
+
+return await res.json();
+}
 
 function renderTrendTable(items){
-  const tbody=$("trendTable");
-  if(!items.length){tbody.innerHTML="<tr><td colspan='3'>No telemetry history available</td></tr>";return;}
-  let html="";
-  for(let i=0;i<items.length;i++){
-    const row=items[i],prev=items[i+1];let change="—",cls="trend-flat";
-    if(prev){const d=row.value-prev.value;if(Math.abs(d)<0.005){change="Steady";cls="trend-flat";}else if(d>0){change="+"+d.toFixed(3);cls="trend-up";}else{change=d.toFixed(3);cls="trend-down";}}
-    html+=`<tr><td>${shortTime(row.dateTime)}</td><td>${row.value.toFixed(3)} m</td><td class="${cls}">${change}</td></tr>`;
-  }
-  tbody.innerHTML=html;
+
+const tbody=$("trendTable");
+
+if(!items.length){
+tbody.innerHTML="<tr><td colspan='3'>No telemetry available</td></tr>";
+return;
+}
+
+let html="";
+
+for(let i=0;i<items.length;i++){
+
+const row=items[i];
+const prev=items[i+1];
+
+let change="—";
+let cls="trend-flat";
+
+if(prev){
+
+const d=row.value-prev.value;
+
+if(Math.abs(d)<0.005){
+change="Steady";
+cls="trend-flat";
+}
+else if(d>0){
+change="+"+d.toFixed(3);
+cls="trend-up";
+}
+else{
+change=d.toFixed(3);
+cls="trend-down";
+}
+}
+
+html+=`
+<tr>
+<td>${shortTime(row.dateTime)}</td>
+<td>${row.value.toFixed(3)} m</td>
+<td class="${cls}">${change}</td>
+</tr>
+`;
+}
+
+tbody.innerHTML=html;
 }
 
 async function loadHenthorn(){
-  const btn=$("refreshBtn");
-  btn.disabled=true;btn.textContent="Checking EA telemetry...";setStatus("Checking","warn");
-  $("lastChecked").textContent="Last checked: "+new Date().toLocaleString("en-GB");
 
-  try{
-    const latestData=await fetchJson(latestUrl);
-    const trendData=await fetchJson(trendUrl);
-    const latestItems=Array.isArray(latestData.items)?latestData.items:[];
-    const trendItems=Array.isArray(trendData.items)?trendData.items:[];
-    const clean=trendItems.filter(x=>typeof x.value==="number"&&x.dateTime).sort((a,b)=>new Date(b.dateTime)-new Date(a.dateTime));
-    const latest=latestItems.find(x=>typeof x.value==="number"&&x.dateTime)||clean[0];
-    if(!latest)throw new Error("No numeric telemetry returned");
+const btn=$("refreshBtn");
 
-    const state=classifyRiverState(clean);
+btn.disabled=true;
+btn.textContent="Checking EA telemetry...";
 
-    $("levelValue").textContent=latest.value.toFixed(3)+" m";
-    $("movementValue").textContent=movementFromReadings(clean);
-    $("readingTime").textContent=formatDate(latest.dateTime);
-    $("ageValue").textContent=ageText(latest.dateTime);
-    $("confidenceValue").textContent=telemetryConfidence(latest.dateTime);
-    $("deltaValue").textContent=deltaText(clean);
-    $("trendProfile").textContent=overallTrend(clean);
-    $("riverState").textContent=state.state;
-    $("stateExplanation").textContent=state.explanation;
-    $("interpretationPanel").textContent=interpretation(clean);
-    $("catchmentPanel").textContent=catchmentResponse(clean);
-    $("rainPanel").textContent=rainfallIntelligence(clean);
-    $("fusionSummary").textContent=fusionSummary(clean,latest);
-    $("acquisitionSummary").textContent=acquisitionSummary(clean,latest);
+setStatus("Checking","warn");
 
-    confidenceRows(clean,latest);
-    renderTrendTable(clean);
+$("lastChecked").textContent=
+"Last checked: "+new Date().toLocaleString("en-GB");
 
-    $("sourceResult").innerHTML='Source result: <span class="ok">Live telemetry acquired; acquisition governance layer active</span>';
-    setStatus("Live EA data","good");
-  }catch(err){
-    $("levelValue").textContent="Unavailable";
-    $("movementValue").textContent="Unavailable";
-    $("readingTime").textContent="Unavailable";
-    $("ageValue").textContent="Unavailable";
-    $("confidenceValue").textContent="Unavailable";
-    $("deltaValue").textContent="Unavailable";
-    $("trendProfile").textContent="Unavailable";
-    $("riverState").textContent="UNAVAILABLE";
-    $("stateExplanation").textContent="River state cannot be classified because telemetry acquisition failed.";
-    $("interpretationPanel").textContent="Telemetry unavailable, so no interpretation is shown.";
-    $("catchmentPanel").textContent="Catchment response unavailable because telemetry acquisition failed.";
-    $("rainPanel").textContent="Rainfall intelligence unavailable because telemetry acquisition failed.";
-    $("fusionSummary").textContent="Fusion engine unavailable because the live telemetry foundation failed.";
-    $("acquisitionSummary").textContent="Acquisition layer unavailable because the live telemetry foundation failed.";
-    $("confidencePanel").innerHTML='<div class="conf-row"><span>System confidence</span><span class="conf-tag conf-low">Unavailable</span></div>';
-    $("trendTable").innerHTML="<tr><td colspan='3'>Telemetry unavailable</td></tr>";
-    $("sourceResult").innerHTML='<span class="badtext">Telemetry acquisition failed: '+err.message+'</span>';
-    setStatus("Unavailable","bad");
-  }finally{
-    btn.disabled=false;btn.textContent="Refresh live data";
-  }
+try{
+
+const latestData=await fetchJson(latestUrl);
+const trendData=await fetchJson(trendUrl);
+
+const latestItems=Array.isArray(latestData.items)?latestData.items:[];
+const trendItems=Array.isArray(trendData.items)?trendData.items:[];
+
+const clean=trendItems
+.filter(x=>typeof x.value==="number" && x.dateTime)
+.sort((a,b)=>new Date(b.dateTime)-new Date(a.dateTime));
+
+const latest=latestItems.find(x=>typeof x.value==="number" && x.dateTime)||clean[0];
+
+if(!latest){
+throw new Error("No numeric telemetry returned");
+}
+
+const state=classifyRiverState(clean);
+
+$("levelValue").textContent=
+latest.value.toFixed(3)+" m";
+
+$("movementValue").textContent=
+movementFromReadings(clean);
+
+$("readingTime").textContent=
+formatDate(latest.dateTime);
+
+$("ageValue").textContent=
+ageText(latest.dateTime);
+
+$("confidenceValue").textContent=
+telemetryConfidence(latest.dateTime);
+
+$("deltaValue").textContent=
+deltaText(clean);
+
+$("trendProfile").textContent=
+overallTrend(clean);
+
+$("riverState").textContent=
+state.state;
+
+$("stateExplanation").textContent=
+state.explanation;
+
+$("interpretationPanel").textContent=
+interpretation(clean);
+
+$("timelineSummary").textContent=
+timelineSummary(clean);
+
+renderTimeline(buildTimeline(clean));
+
+renderTrendTable(clean);
+
+$("sourceResult").innerHTML=
+'Source result: <span class="ok">Telemetry continuity engine active and operating normally</span>';
+
+setStatus("Live EA data","good");
+
+}
+catch(err){
+
+$("levelValue").textContent="Unavailable";
+$("movementValue").textContent="Unavailable";
+$("readingTime").textContent="Unavailable";
+$("ageValue").textContent="Unavailable";
+$("confidenceValue").textContent="Unavailable";
+$("deltaValue").textContent="Unavailable";
+$("trendProfile").textContent="Unavailable";
+
+$("riverState").textContent="UNAVAILABLE";
+$("stateExplanation").textContent=
+"River classification unavailable.";
+
+$("interpretationPanel").textContent=
+"Telemetry unavailable.";
+
+$("timelineSummary").textContent=
+"Timeline engine unavailable.";
+
+$("timelineEvents").innerHTML=`
+<div class="timeline-event">
+<div class="timeline-time">SYSTEM FAILURE</div>
+<div class="timeline-title">Telemetry unavailable</div>
+<div class="timeline-text">
+The continuity engine could not acquire telemetry history.
+</div>
+</div>
+`;
+
+$("trendTable").innerHTML=
+"<tr><td colspan='3'>Telemetry unavailable</td></tr>";
+
+$("sourceResult").innerHTML=
+'<span class="badtext">Telemetry acquisition failed: '+err.message+'</span>';
+
+setStatus("Unavailable","bad");
+}
+finally{
+
+btn.disabled=false;
+btn.textContent="Refresh live data";
+}
 }
 
 loadHenthorn();
+
 setInterval(loadHenthorn,15*60*1000);
+
 </script>
 </body>
 </html>
