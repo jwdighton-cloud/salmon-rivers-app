@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon & Sea Trout Rivers Intelligence — Build 10201</title>
+<title>Salmon & Sea Trout Rivers Intelligence — Build 10202</title>
 
 <style>
 :root{
 --bg:#eef2f3;
---card:#fff;
+--card:#ffffff;
 --ink:#102018;
 --muted:#5b6b63;
 --good:#0f7b3f;
@@ -211,7 +211,7 @@ overflow:hidden;
 
 #levelChart{
 width:100%;
-height:260px;
+height:300px;
 display:block;
 border:1px solid var(--line);
 border-radius:14px;
@@ -281,7 +281,7 @@ font-size:26px;
 }
 
 #levelChart{
-height:230px;
+height:260px;
 }
 
 }
@@ -292,7 +292,7 @@ height:230px;
 
 <header>
 <h1>Salmon & Sea Trout Rivers Intelligence</h1>
-<p>Build 10201 · Live level chart</p>
+<p>Build 10202 · Beat-level view with 7-day river chart</p>
 </header>
 
 <main>
@@ -315,7 +315,7 @@ Checking
 <div id="levelValue" class="big">—</div>
 
 <div class="label">
-Latest Environment Agency river level
+Mid-beat reference gauge between Mitton Bridge and Edisford Bridge
 </div>
 
 </section>
@@ -344,6 +344,16 @@ Latest Environment Agency river level
 </section>
 
 <section class="card">
+<h2>River level chart</h2>
+<div class="chart-wrap">
+<svg id="levelChart" viewBox="0 0 720 300" preserveAspectRatio="none" role="img" aria-label="Seven day river level chart"></svg>
+</div>
+<p class="chart-note" id="chartNote">
+Chart loading from recent Environment Agency readings.
+</p>
+</section>
+
+<section class="card">
 <h2>Current river picture</h2>
 <div class="panel green" id="currentPicture">
 Checking live conditions...
@@ -362,16 +372,6 @@ Checking recent movement...
 <div class="panel gold" id="freshWater">
 Checking for signs of fresh water...
 </div>
-</section>
-
-<section class="card">
-<h2>River level chart</h2>
-<div class="chart-wrap">
-<svg id="levelChart" viewBox="0 0 720 260" preserveAspectRatio="none" role="img" aria-label="Recent river level chart"></svg>
-</div>
-<p class="chart-note" id="chartNote">
-Chart loading from recent Environment Agency readings.
-</p>
 </section>
 
 <section class="card">
@@ -460,17 +460,27 @@ This platform only uses verified live telemetry and careful river interpretation
 </main>
 
 <footer>
-Build 10201 · Salmon & Sea Trout Rivers Intelligence
+Build 10202 · Salmon & Sea Trout Rivers Intelligence
 </footer>
 
 <script>
 
 const STATION_ID="710305";
-const MEMORY_KEY="sstri_henthorn_memory_v2";
+const MEMORY_KEY="sstri_henthorn_memory_v3";
 
 const latestUrl=`https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?latest`;
 
-const trendUrl=`https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?_sorted&_limit=32`;
+const recentUrl=`https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?_sorted&_limit=32`;
+
+function sevenDayUrl(){
+const end=new Date();
+const start=new Date(end.getTime()-(7*24*60*60*1000));
+
+const startIso=start.toISOString();
+const endIso=end.toISOString();
+
+return `https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?_sorted&startdate=${encodeURIComponent(startIso)}&enddate=${encodeURIComponent(endIso)}`;
+}
 
 function $(id){
 return document.getElementById(id);
@@ -516,6 +526,19 @@ const d=asDate(iso);
 if(!d) return "—";
 
 return d.toLocaleTimeString("en-GB",{
+hour:"2-digit",
+minute:"2-digit"
+});
+}
+
+function shortDayTime(iso){
+
+const d=asDate(iso);
+
+if(!d) return "—";
+
+return d.toLocaleString("en-GB",{
+weekday:"short",
 hour:"2-digit",
 minute:"2-digit"
 });
@@ -589,18 +612,18 @@ return "Live information is currently unavailable.";
 const latest=items[0].value;
 
 if(latest<0.35){
-return "Low at Henthorn. Not much water showing at the gauge.";
+return "Low at Henthorn. Not much water showing at the mid-beat gauge.";
 }
 
 if(latest<0.55){
-return "Holding a reasonable middle level. Not especially low, but not carrying a strong push of water either.";
+return "Holding a reasonable middle level at Henthorn. Not especially low, but not carrying a strong push of water either.";
 }
 
 if(latest<0.85){
-return "Carrying a fair amount of water above the quieter low-water picture.";
+return "Carrying a fair amount of water at Henthorn, above the quieter low-water picture.";
 }
 
-return "High at Henthorn with a strong volume of water moving through.";
+return "High at Henthorn with a strong volume of water moving through the beat.";
 }
 
 function recentMovementText(items){
@@ -871,12 +894,15 @@ tbody.innerHTML=
 return;
 }
 
+const tableItems=
+items.slice(0,12);
+
 let html="";
 
-for(let i=0;i<items.length;i++){
+for(let i=0;i<tableItems.length;i++){
 
-const row=items[i];
-const prev=items[i+1];
+const row=tableItems[i];
+const prev=tableItems[i+1];
 
 let change="—";
 let cls="trend-flat";
@@ -911,6 +937,28 @@ html+=`
 tbody.innerHTML=html;
 }
 
+function downsample(items,maxPoints){
+
+if(items.length<=maxPoints){
+return items;
+}
+
+const out=[];
+
+const step=
+(items.length-1)/(maxPoints-1);
+
+for(let i=0;i<maxPoints;i++){
+
+const idx=
+Math.round(i*step);
+
+out.push(items[idx]);
+}
+
+return out;
+}
+
 function renderChart(items){
 
 const svg=$("levelChart");
@@ -918,7 +966,7 @@ const note=$("chartNote");
 
 if(!items || items.length<2){
 svg.innerHTML="";
-note.textContent="Not enough recent readings to draw a chart yet.";
+note.textContent="Not enough recent readings to draw the 7-day chart yet.";
 return;
 }
 
@@ -927,8 +975,11 @@ items
 .slice()
 .sort((a,b)=>asDate(a.dateTime)-asDate(b.dateTime));
 
+const sampled=
+downsample(chronological,80);
+
 const values=
-chronological.map(x=>x.value);
+sampled.map(x=>x.value);
 
 let min=
 Math.min(...values);
@@ -942,16 +993,16 @@ max+=0.005;
 }
 
 const width=720;
-const height=260;
-const padL=54;
-const padR=18;
-const padT=20;
-const padB=42;
+const height=300;
+const padL=56;
+const padR=20;
+const padT=22;
+const padB=46;
 
 function xPos(i){
-if(chronological.length===1)return padL;
+if(sampled.length===1)return padL;
 return padL+
-(i/(chronological.length-1))*
+(i/(sampled.length-1))*
 (width-padL-padR);
 }
 
@@ -962,20 +1013,19 @@ return padT+
 }
 
 const points=
-chronological
+sampled
 .map((r,i)=>xPos(i)+","+yPos(r.value))
 .join(" ");
 
-const first=chronological[0];
-const last=chronological[chronological.length-1];
+const first=sampled[0];
+const last=sampled[sampled.length-1];
 
 const yMin=yPos(min);
 const yMax=yPos(max);
-
 const yMid=yPos((min+max)/2);
 
-const firstTime=shortTime(first.dateTime);
-const lastTime=shortTime(last.dateTime);
+const firstLabel=shortDayTime(first.dateTime);
+const lastLabel=shortDayTime(last.dateTime);
 
 svg.innerHTML=`
 <line x1="${padL}" y1="${yMax}" x2="${width-padR}" y2="${yMax}" stroke="#d7dfdc" stroke-width="1"/>
@@ -988,12 +1038,11 @@ svg.innerHTML=`
 
 <polyline points="${points}" fill="none" stroke="#082d1b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
 
-${chronological.map((r,i)=>`
-<circle cx="${xPos(i)}" cy="${yPos(r.value)}" r="4" fill="#0f7b3f"/>
-`).join("")}
+<circle cx="${xPos(0)}" cy="${yPos(first.value)}" r="4" fill="#0f7b3f"/>
+<circle cx="${xPos(sampled.length-1)}" cy="${yPos(last.value)}" r="4" fill="#0f7b3f"/>
 
-<text x="${padL}" y="${height-14}" font-size="12" fill="#5b6b63">${firstTime}</text>
-<text x="${width-padR-48}" y="${height-14}" font-size="12" fill="#5b6b63">${lastTime}</text>
+<text x="${padL}" y="${height-16}" font-size="12" fill="#5b6b63">${firstLabel}</text>
+<text x="${width-padR-92}" y="${height-16}" font-size="12" fill="#5b6b63">${lastLabel}</text>
 `;
 
 const change=
@@ -1001,15 +1050,21 @@ last.value-first.value;
 
 let phrase="broadly steady";
 
-if(change>0.008){
-phrase="rising";
+if(change>0.03){
+phrase="higher than at the start of the displayed week";
+}
+else if(change>0.008){
+phrase="slightly higher than at the start of the displayed week";
+}
+else if(change<-0.03){
+phrase="lower than at the start of the displayed week";
 }
 else if(change<-0.008){
-phrase="easing back";
+phrase="slightly lower than at the start of the displayed week";
 }
 
 note.textContent=
-"Recent level picture: "+phrase+" across the displayed readings.";
+"Seven-day level picture: "+phrase+".";
 }
 
 async function loadHenthorn(){
@@ -1031,25 +1086,38 @@ try{
 const latestData=
 await fetchJson(latestUrl);
 
-let trendData;
+let recentData;
 
 try{
-trendData=
-await fetchJson(trendUrl);
+recentData=
+await fetchJson(recentUrl);
 }
 catch(e){
-trendData={items:[]};
+recentData={items:[]};
+}
+
+let weekData;
+
+try{
+weekData=
+await fetchJson(sevenDayUrl());
+}
+catch(e){
+weekData={items:[]};
 }
 
 const latestItems=
 cleanReadings(latestData.items);
 
-const trendItems=
-cleanReadings(trendData.items);
+const recentItems=
+cleanReadings(recentData.items);
+
+const weekItems=
+cleanReadings(weekData.items);
 
 const clean=
-trendItems.length
-? trendItems
+recentItems.length
+? recentItems
 : latestItems;
 
 const latest=
@@ -1080,7 +1148,12 @@ recentMovementText(clean);
 $("freshWater").textContent=
 freshWaterText(clean);
 
+if(weekItems.length>=2){
+renderChart(weekItems);
+}
+else{
 renderChart(clean);
+}
 
 saveMemory(latest);
 
@@ -1117,7 +1190,8 @@ $("continuityPanel").textContent=
 "River continuity is currently unavailable.";
 
 $("levelChart").innerHTML="";
-$("chartNote").textContent="Chart unavailable because live readings could not be acquired.";
+$("chartNote").textContent=
+"Chart unavailable because live readings could not be acquired.";
 
 $("behaviourEvents").innerHTML=`
 <div class="event">
