@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10187</title>
+<title>Salmon Rivers Intelligence — Build 10188</title>
 <style>
-:root{--bg:#eef2f3;--card:#fff;--ink:#102018;--muted:#5b6b63;--good:#0f7b3f;--warn:#a15c00;--bad:#9b1c1c;--line:#d7dfdc;--deep:#082d1b;--blue:#0b5f8a}
+:root{--bg:#eef2f3;--card:#fff;--ink:#102018;--muted:#5b6b63;--good:#0f7b3f;--warn:#a15c00;--bad:#9b1c1c;--line:#d7dfdc;--deep:#082d1b;--blue:#0b5f8a;--purple:#5942a9}
 *{box-sizing:border-box}
 body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
 header{background:var(--deep);color:white;text-align:center;padding:20px 14px}
@@ -24,27 +24,31 @@ button:disabled{opacity:.6;cursor:not-allowed}
 .panel-green{border-left:5px solid var(--good);background:#eef8f1;padding:14px;border-radius:10px;line-height:1.6}
 .panel-blue{border-left:5px solid var(--blue);background:#eef6fb;padding:14px;border-radius:10px;line-height:1.6}
 .panel-gold{border-left:5px solid var(--warn);background:#fff9ed;padding:14px;border-radius:10px;line-height:1.6}
+.panel-purple{border-left:5px solid var(--purple);background:#f2efff;padding:14px;border-radius:10px;line-height:1.6}
 .notice{border-left:5px solid var(--warn);background:#fff9ed;padding:12px;border-radius:10px;color:#4b3515;line-height:1.45}
 .source{font-size:13px;color:var(--muted);word-break:break-word;line-height:1.45}
-.ok{color:var(--good);font-weight:800}.badtext{color:var(--bad);font-weight:800}.warntext{color:var(--warn);font-weight:800}
+.ok{color:var(--good);font-weight:800}.badtext{color:var(--bad);font-weight:800}
 .state-title{font-size:24px;font-weight:900;margin:0 0 8px}
-.conf-row{display:grid;grid-template-columns:1fr auto;gap:10px;border-bottom:1px solid var(--line);padding:10px 0;align-items:center}
-.conf-row:last-child{border-bottom:0}
-.conf-tag{font-weight:900;border-radius:999px;padding:5px 9px;font-size:12px}
-.conf-high{background:#e8f3ec;color:var(--good)}.conf-med{background:#fff4df;color:var(--warn)}.conf-low{background:#fde8e8;color:var(--bad)}
+.conf-row,.fusion-row{display:grid;grid-template-columns:1fr auto;gap:10px;border-bottom:1px solid var(--line);padding:10px 0;align-items:center}
+.conf-row:last-child,.fusion-row:last-child{border-bottom:0}
+.conf-tag,.fusion-tag{font-weight:900;border-radius:999px;padding:5px 9px;font-size:12px;white-space:nowrap}
+.conf-high,.fusion-live{background:#e8f3ec;color:var(--good)}
+.conf-med,.fusion-derived{background:#fff4df;color:var(--warn)}
+.conf-low,.fusion-blocked{background:#fde8e8;color:var(--bad)}
+.fusion-planned{background:#eef6fb;color:var(--blue)}
 table{width:100%;border-collapse:collapse;font-size:14px}
 th,td{padding:10px 6px;border-bottom:1px solid var(--line);text-align:left}
 th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.5px}
 .trend-up{color:var(--good);font-weight:800}.trend-down{color:var(--bad);font-weight:800}.trend-flat{color:var(--warn);font-weight:800}
 footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
-@media(max-width:520px){.grid{grid-template-columns:1fr}.big{font-size:40px}}
+@media(max-width:520px){.grid{grid-template-columns:1fr}.big{font-size:40px}.conf-row,.fusion-row{grid-template-columns:1fr}}
 </style>
 </head>
 
 <body>
 <header>
   <h1>Salmon Rivers Intelligence</h1>
-  <p>Build 10187 · Intelligence confidence engine</p>
+  <p>Build 10188 · Multi-source intelligence fusion framework</p>
 </header>
 
 <main>
@@ -100,6 +104,22 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
 </section>
 
 <section class="card">
+  <h2>Intelligence fusion status</h2>
+  <div class="panel-purple" id="fusionSummary">
+    Building governed multi-source model from live telemetry and future verified acquisition layers.
+  </div>
+
+  <div style="margin-top:12px" id="fusionPanel">
+    <div class="fusion-row"><span>EA Henthorn telemetry</span><span class="fusion-tag fusion-live">Live</span></div>
+    <div class="fusion-row"><span>Telemetry-derived river state</span><span class="fusion-tag fusion-derived">Derived</span></div>
+    <div class="fusion-row"><span>Great Mitton rainfall acquisition</span><span class="fusion-tag fusion-planned">Planned</span></div>
+    <div class="fusion-row"><span>RFCA water quality / temperature</span><span class="fusion-tag fusion-planned">Planned</span></div>
+    <div class="fusion-row"><span>Fish counters</span><span class="fusion-tag fusion-blocked">Blocked · no source</span></div>
+    <div class="fusion-row"><span>Current-season catch intelligence</span><span class="fusion-tag fusion-blocked">Blocked · no source</span></div>
+  </div>
+</section>
+
+<section class="card">
   <h2>Intelligence confidence</h2>
   <div id="confidencePanel">
     <div class="conf-row"><span>Telemetry source integrity</span><span class="conf-tag conf-med">Checking</span></div>
@@ -125,21 +145,23 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
 <section class="card">
   <h2>Source audit</h2>
   <p class="source"><strong>Station:</strong> 710305 · Henthorn</p>
-  <p class="source"><strong>Telemetry source:</strong> Environment Agency flood-monitoring telemetry API</p>
-  <p class="source"><strong>Rainfall status:</strong> Investigation phase only · no live rainfall endpoint connected yet</p>
+  <p class="source"><strong>Live telemetry:</strong> Environment Agency flood-monitoring telemetry API</p>
+  <p class="source"><strong>Rainfall:</strong> planned acquisition · no live endpoint connected</p>
+  <p class="source"><strong>RFCA:</strong> acquisition candidate · no values displayed until traceable</p>
+  <p class="source"><strong>Catch reports / counters:</strong> blocked until verified current-season sources exist</p>
   <p class="source" id="sourceResult">Source result: checking</p>
 </section>
 
 <section class="card">
   <h2>Verified intelligence only</h2>
   <div class="notice">
-    Confidence labels separate verified telemetry from derived interpretation. No fake rainfall, fish counters, catch totals, temperature values or fishability scores are generated.
+    Build 10188 introduces the fusion framework only. It does not invent missing sources. Live values are shown only where a stable source exists; derived claims are labelled; blocked intelligence remains blocked.
   </div>
 </section>
 
 </main>
 
-<footer>Build 10187 · Source confidence governs every claim</footer>
+<footer>Build 10188 · No source = no number · Fusion governed by source class</footer>
 
 <script>
 const STATION_ID="710305";
@@ -197,17 +219,28 @@ function rainfallIntelligence(items){
   return"Current telemetry suggests a low-energy catchment state without strong fresh rainfall-response behaviour.";
 }
 
+function fusionSummary(items,latest){
+  const tel=telemetryConfidence(latest.dateTime);
+  const d=deltaValue(items);
+  let behaviour="controlled";
+  if(d!==null&&d>0.03)behaviour="building";
+  if(d!==null&&d<-0.03)behaviour="falling after lift";
+  if(d!==null&&Math.abs(d)<0.01)behaviour="stable";
+
+  return "Fusion engine status: live EA telemetry is active with "+tel.toLowerCase()+" telemetry confidence. Current derived river behaviour is "+behaviour+". Rainfall, RFCA, counters and catch intelligence remain gated until verified sources are connected.";
+}
+
 function confidenceRows(items,latest){
   const tel=telemetryConfidence(latest.dateTime);
   const stateConf=items.length>=6&&tel==="High"?"High":items.length>=3?"Medium":"Low";
   const catchConf=items.length>=6&&tel!=="Low"?"Medium":"Low";
-  const rainConf="Low";
   function tag(v){return v==="High"?"conf-high":v==="Medium"?"conf-med":"conf-low";}
   $("confidencePanel").innerHTML=`
     <div class="conf-row"><span>Telemetry source integrity</span><span class="conf-tag ${tag(tel)}">${tel}</span></div>
     <div class="conf-row"><span>River-state classification</span><span class="conf-tag ${tag(stateConf)}">${stateConf}</span></div>
     <div class="conf-row"><span>Catchment interpretation</span><span class="conf-tag ${tag(catchConf)}">${catchConf}</span></div>
-    <div class="conf-row"><span>Rainfall inference</span><span class="conf-tag ${tag(rainConf)}">Low · telemetry-only</span></div>
+    <div class="conf-row"><span>Rainfall inference</span><span class="conf-tag conf-low">Low · telemetry-only</span></div>
+    <div class="conf-row"><span>RFCA / counters / catches</span><span class="conf-tag conf-low">Blocked · no source</span></div>
   `;
 }
 
@@ -253,11 +286,12 @@ async function loadHenthorn(){
     $("interpretationPanel").textContent=interpretation(clean);
     $("catchmentPanel").textContent=catchmentResponse(clean);
     $("rainPanel").textContent=rainfallIntelligence(clean);
+    $("fusionSummary").textContent=fusionSummary(clean,latest);
 
     confidenceRows(clean,latest);
     renderTrendTable(clean);
 
-    $("sourceResult").innerHTML='Source result: <span class="ok">EA telemetry acquired and intelligence confidence assessed successfully</span>';
+    $("sourceResult").innerHTML='Source result: <span class="ok">Live telemetry fused with governed derived intelligence successfully</span>';
     setStatus("Live EA data","good");
   }catch(err){
     $("levelValue").textContent="Unavailable";
@@ -272,6 +306,7 @@ async function loadHenthorn(){
     $("interpretationPanel").textContent="Telemetry unavailable, so no interpretation is shown.";
     $("catchmentPanel").textContent="Catchment response unavailable because telemetry acquisition failed.";
     $("rainPanel").textContent="Rainfall intelligence unavailable because telemetry acquisition failed.";
+    $("fusionSummary").textContent="Fusion engine unavailable because the live telemetry foundation failed.";
     $("confidencePanel").innerHTML='<div class="conf-row"><span>System confidence</span><span class="conf-tag conf-low">Unavailable</span></div>';
     $("trendTable").innerHTML="<tr><td colspan='3'>Telemetry unavailable</td></tr>";
     $("sourceResult").innerHTML='<span class="badtext">Telemetry acquisition failed: '+err.message+'</span>';
