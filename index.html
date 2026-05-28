@@ -2,622 +2,286 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10179</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salmon Rivers Intelligence — Build 10180</title>
 <style>
-:root{--bg:#f4f6f8;--card:#fff;--line:#d8dde3;--text:#111;--muted:#667085;--ok:#0f7b0f;--warn:#a15c00;--bad:#a40000;--blue:#0b5cad}
+:root{
+  --bg:#eef2f3;
+  --card:#ffffff;
+  --ink:#102018;
+  --muted:#5b6b63;
+  --good:#1f7a3f;
+  --warn:#b36b00;
+  --bad:#9b1c1c;
+  --line:#d7dfdc;
+}
 *{box-sizing:border-box}
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
-header{background:#0b1f33;color:white;text-align:center;padding:18px 14px}
-h1{margin:0;font-size:26px}.build{font-size:13px;opacity:.85;margin-top:4px}
-main{max-width:980px;margin:0 auto;padding:14px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:12px 0}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
-.box{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fbfcfd}
-.big{font-size:38px;font-weight:800}.small{font-size:12px}.muted{color:var(--muted)}.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}
-.pill{display:inline-block;border-radius:999px;padding:7px 11px;font-size:13px;font-weight:800;background:#eef2f6;margin:3px 4px 3px 0}
-button{border:0;border-radius:12px;background:var(--blue);color:white;padding:13px 18px;font-weight:900;font-size:15px;cursor:pointer}
-table{width:100%;border-collapse:collapse;font-size:13px}th,td{border-bottom:1px solid var(--line);padding:8px;text-align:left;vertical-align:top}th{background:#f0f3f6}
-a{color:var(--blue);font-weight:800}
-footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+}
+header{
+  background:#0d2a1b;
+  color:white;
+  padding:18px 14px;
+  text-align:center;
+}
+header h1{margin:0;font-size:24px}
+header p{margin:6px 0 0;color:#cfe3d7;font-size:14px}
+main{max-width:760px;margin:0 auto;padding:14px}
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:16px;
+  margin:14px 0;
+  box-shadow:0 2px 8px rgba(0,0,0,.04);
+}
+.row{display:flex;justify-content:space-between;gap:12px;align-items:center}
+.badge{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:999px;
+  font-weight:700;
+  font-size:13px;
+  background:#e8f3ec;
+  color:var(--good);
+}
+.badge.warn{background:#fff4df;color:var(--warn)}
+.badge.bad{background:#fde8e8;color:var(--bad)}
+.big{
+  font-size:44px;
+  font-weight:800;
+  margin:8px 0 2px;
+}
+.label{color:var(--muted);font-size:14px}
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.stat{
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:12px;
+}
+.stat strong{display:block;font-size:20px;margin-top:4px}
+button{
+  width:100%;
+  border:0;
+  border-radius:14px;
+  padding:14px;
+  background:#0d2a1b;
+  color:white;
+  font-weight:800;
+  font-size:16px;
+}
+button:active{transform:scale(.99)}
+.notice{
+  border-left:5px solid var(--warn);
+  background:#fff9ed;
+  padding:12px;
+  border-radius:10px;
+  color:#4b3515;
+}
+.source{
+  font-size:13px;
+  color:var(--muted);
+  word-break:break-word;
+}
+footer{
+  text-align:center;
+  color:var(--muted);
+  font-size:12px;
+  padding:20px;
+}
+@media(max-width:520px){
+  .grid{grid-template-columns:1fr}
+  .big{font-size:38px}
+}
 </style>
 </head>
 
 <body>
 <header>
-<h1>Salmon Rivers Intelligence</h1>
-<div class="build">GOLD BUILD 10179 — Timeout-Safe EA Repair</div>
+  <h1>Salmon Rivers Intelligence</h1>
+  <p>Build 10180 · Ribble @ Henthorn recovery build</p>
 </header>
 
 <main>
 
 <section class="card">
-<h2>River Ribble @ Henthorn — Protected Core Telemetry</h2>
-<div id="status" class="pill warn">Initialising…</div>
-<div id="confidence" class="pill warn">Telemetry confidence pending</div>
-<div class="pill ok">EA core protected</div>
-<div class="pill bad">No RFCA values</div>
+  <div class="row">
+    <div>
+      <div class="label">Primary live station</div>
+      <strong>River Ribble @ Henthorn</strong>
+    </div>
+    <span id="statusBadge" class="badge warn">Checking</span>
+  </div>
 
-<div class="grid">
-<div class="box">
-<div class="muted">Latest level</div>
-<div id="level" class="big">—</div>
-<div class="small muted">EA Henthorn station 710305</div>
-</div>
-
-<div class="box">
-<div class="muted">Movement</div>
-<div id="trend" class="big">—</div>
-<div id="trendDetail" class="small muted">Awaiting readings</div>
-</div>
-
-<div class="box">
-<div class="muted">Latest timestamp</div>
-<div id="time" style="font-weight:800">—</div>
-<div id="freshness" class="small muted">—</div>
-</div>
-</div>
-
-<br>
-<button id="refreshBtn">REFRESH NOW</button>
-<div id="refreshState" class="small muted">Refresh ready</div>
-<div id="refreshClicks" class="small muted">Refresh clicks: 0</div>
-<div id="dataProof" class="small muted">EA proof: waiting</div>
-<div id="routeProof" class="small muted">Route proof: waiting</div>
-<div id="lastGoodProof" class="small muted">Last-good cache: empty</div>
+  <div id="levelValue" class="big">—</div>
+  <div class="label">Latest EA river level reading</div>
 </section>
 
 <section class="card">
-<h2>Repair Gate — Build 10179</h2>
-<div class="pill ok">Timeout-safe repair</div>
-<div class="pill bad">No proxy</div>
-<div class="pill bad">No JSONP</div>
-<div class="pill bad">No RFCA fetch</div>
-<table>
-<tbody>
-<tr><td>Repair target</td><td>Stop hanging refreshes and expose exact EA route failure</td></tr>
-<tr><td>EA route</td><td>Direct EA Henthorn readings only</td></tr>
-<tr><td>Timeout rule</td><td>Each EA request must finish or fail within 8 seconds</td></tr>
-<tr><td>Fallback</td><td>Use browser localStorage cache only after a previous real live read</td></tr>
-<tr><td>Governance</td><td>No source = no number; RFCA remains blocked</td></tr>
-</tbody>
-</table>
+  <div class="grid">
+    <div class="stat">
+      <div class="label">Movement</div>
+      <strong id="movementValue">Checking</strong>
+    </div>
+    <div class="stat">
+      <div class="label">Reading time</div>
+      <strong id="readingTime">—</strong>
+    </div>
+    <div class="stat">
+      <div class="label">Station ID</div>
+      <strong>710305</strong>
+    </div>
+    <div class="stat">
+      <div class="label">Data confidence</div>
+      <strong id="confidenceValue">Checking</strong>
+    </div>
+  </div>
 </section>
 
 <section class="card">
-<h2>Movement Integrity</h2>
-<div id="movementGate" class="pill warn">Awaiting readings</div>
-<table>
-<tbody>
-<tr><td>Latest delta</td><td id="latestDelta" class="warn">Awaiting readings</td></tr>
-<tr><td>Window delta</td><td id="windowDelta" class="warn">Awaiting readings</td></tr>
-<tr><td>Decision rule</td><td id="movementRule" class="warn">Latest reading takes precedence</td></tr>
-<tr><td>Readings used</td><td id="readingsUsed" class="warn">Awaiting readings</td></tr>
-</tbody>
-</table>
+  <button onclick="loadHenthorn()">Refresh live data</button>
+  <p class="source" id="lastChecked">Last checked: —</p>
 </section>
 
 <section class="card">
-<h2>Known / Unknown / Next Action</h2>
-<div class="grid">
-<div class="box"><h3>Known</h3><div id="knownPanel" class="small muted">Awaiting checks</div></div>
-<div class="box"><h3>Unknown</h3><div id="unknownPanel" class="small muted">Awaiting checks</div></div>
-<div class="box"><h3>Next Action</h3><div id="nextActionPanel" class="small muted">Awaiting checks</div></div>
-</div>
+  <h2>Verified intelligence only</h2>
+  <div class="notice">
+    Temperature, fish counters, catches and RFCA values are not displayed in this build unless a stable, traceable live source is connected.
+  </div>
 </section>
 
 <section class="card">
-<h2>Evidence Coverage</h2>
-<div id="coverageStatus" class="pill warn">Coverage pending</div>
-<div class="pill bad">Not fishability</div>
-<div class="pill bad">No unverified numbers</div>
-<div class="grid">
-<div class="box"><div class="muted">Evidence coverage</div><div id="coveragePercent" class="big">—</div><div id="coverageMeaning" class="small muted">Awaiting source checks</div></div>
-<div class="box"><div class="muted">Verified live sources</div><div id="coverageVerified" class="big">—</div><div class="small muted">Only machine-readable verified sources count</div></div>
-<div class="box"><div class="muted">Candidate sources</div><div id="coverageCandidate" class="big">2</div><div class="small muted">Context only; no numeric promotion</div></div>
-<div class="box"><div class="muted">Blocked sources</div><div id="coverageBlocked" class="big">4</div><div class="small muted">Blocked means no display permission</div></div>
-</div>
-<table style="margin-top:12px">
-<tbody>
-<tr><td>Coverage formula</td><td id="coverageFormula" class="warn">Awaiting checks</td></tr>
-<tr><td>Coverage timestamp</td><td id="coverageTimestamp" class="warn">Awaiting checks</td></tr>
-<tr><td>RFCA state</td><td class="bad">Blocked — no RFCA fetch or value display</td></tr>
-</tbody>
-</table>
-</section>
-
-<section class="card">
-<h2>Source Health Dashboard</h2>
-<table>
-<thead><tr><th>Source</th><th>Health</th><th>Evidence Basis</th><th>Display Permission</th><th>Next Action</th></tr></thead>
-<tbody>
-<tr><td>EA Henthorn telemetry</td><td id="healthEA" class="warn">Checking</td><td>Machine-readable EA acquisition</td><td id="healthEAPermission" class="warn">Pending refresh</td><td>Protect repaired core</td></tr>
-<tr><td>EA rainfall discovery / reading</td><td id="healthRain" class="warn">Disabled in repair</td><td>Not part of this repair gate</td><td id="healthRainPermission" class="bad">No rainfall number</td><td>Re-enable only after telemetry is stable</td></tr>
-<tr><td>RFCA sonde / temperature</td><td class="bad">Blocked</td><td>No stable machine-readable source proven</td><td class="bad">No values displayed</td><td>Investigate outside app</td></tr>
-<tr><td>RFCA fish counters</td><td class="bad">Blocked</td><td>No stable machine-readable source proven</td><td class="bad">No values displayed</td><td>Investigate availability</td></tr>
-<tr><td>Current-season catch intelligence</td><td class="bad">Blocked</td><td>No dated attributable source integrated</td><td class="bad">No totals displayed</td><td>Acquire verified source</td></tr>
-<tr><td>Operator / Henthorn beat intelligence</td><td class="warn">Candidate only</td><td>Context register only</td><td class="bad">No inference</td><td>Seek dated attributable operator source</td></tr>
-</tbody>
-</table>
-</section>
-
-<section class="card">
-<h2>Source Evidence Ledger</h2>
-<table>
-<thead><tr><th>Source</th><th>Class</th><th>Evidence State</th><th>Rule</th></tr></thead>
-<tbody id="evidenceRows"></tbody>
-</table>
-</section>
-
-<section class="card">
-<h2>Beat Confidence Ladder</h2>
-<div class="pill warn">Candidate context only</div>
-<div class="pill bad">No social/operator post creates numbers</div>
-<table>
-<thead><tr><th>Level</th><th>Meaning</th><th>Requirement</th><th>Allowed Use</th><th>Blocked Use</th></tr></thead>
-<tbody>
-<tr><td class="bad">Blocked</td><td>Rumour, vague, undated, private anecdote</td><td>No reliable attribution/date</td><td>None</td><td class="bad">No app intelligence use</td></tr>
-<tr><td class="warn">Candidate</td><td>Named place or commentary captured</td><td>Dated or attributable enough to retain as context</td><td>Context register only</td><td class="bad">No catch, fishability, movement or numbers</td></tr>
-<tr><td class="warn">Corroborated</td><td>Multiple independent dated mentions</td><td>Two or more traceable current-season sources</td><td>Higher-confidence context</td><td class="bad">Still no automatic numbers</td></tr>
-<tr><td class="ok">Verified</td><td>Reliable source suitable for display</td><td>Traceable, dated, current-season and display-authorised</td><td>May be shown as verified context</td><td class="bad">Numeric use only if source explicitly supports numeric data</td></tr>
-</tbody>
-</table>
-</section>
-
-<section class="card">
-<h2>Henthorn Beat Intelligence Register</h2>
-<div class="pill warn">Beat context candidate only</div>
-<div class="pill bad">No fishability inference</div>
-<table>
-<thead><tr><th>Beat / Context Area</th><th>Purpose</th><th>Evidence State</th><th>Confidence</th><th>Allowed Use</th><th>Blocked Use</th></tr></thead>
-<tbody id="beatRows"></tbody>
-</table>
-</section>
-
-<section class="card">
-<h2>Named Pool Intelligence Register</h2>
-<div class="pill warn">Level 4 candidate only</div>
-<div class="pill bad">Named place ≠ verified condition</div>
-<table>
-<thead><tr><th>Named Pool / Place</th><th>River / Area</th><th>Source Class</th><th>Status</th><th>Confidence</th><th>Permission</th></tr></thead>
-<tbody id="poolRows"></tbody>
-</table>
-</section>
-
-<section class="card">
-<h2>RFCA Acquisition Investigation</h2>
-<div class="pill warn">Investigation only</div>
-<div class="pill bad">No RFCA values displayed</div>
-<div class="pill bad">No numeric inference</div>
-<table>
-<thead><tr><th>Source</th><th>Status</th><th>Machine Readable</th><th>Verified</th><th>Notes</th></tr></thead>
-<tbody>
-<tr><td>Temperature / sonde data</td><td class="warn">Investigating</td><td>Unknown</td><td class="warn">Pending</td><td>RFCA public exposure under review</td></tr>
-<tr><td>Fish-counter data</td><td class="warn">Investigating</td><td>Unknown</td><td class="warn">Pending</td><td>No stable feed acquired</td></tr>
-<tr><td>Catch intelligence</td><td class="warn">Candidate</td><td>Unknown</td><td class="warn">Pending</td><td>Current-season verification required</td></tr>
-<tr><td>River-health telemetry</td><td class="warn">Candidate</td><td>Unknown</td><td class="warn">Pending</td><td>Traceability required</td></tr>
-<tr><td>Migration monitoring</td><td class="warn">Investigating</td><td>Unknown</td><td class="warn">Pending</td><td>Acquisition path not confirmed</td></tr>
-<tr><td>Additional environmental feeds</td><td class="warn">Candidate</td><td>Unknown</td><td class="warn">Pending</td><td>Discovery stage</td></tr>
-</tbody>
-</table>
-</section>
-
-<section class="card">
-<h2>RFCA Acquisition Candidate Ledger</h2>
-<div class="pill warn">Primary strategic acquisition target</div>
-<div class="pill bad">RFCA values blocked until machine-readable</div>
-<table>
-<thead><tr><th>RFCA Candidate</th><th>Potential Value</th><th>Gate</th><th>Display Rule</th></tr></thead>
-<tbody>
-<tr><td>Temperature / sonde data</td><td>Fish welfare and water-condition intelligence</td><td class="warn">Investigate endpoint</td><td class="bad">No value displayed</td></tr>
-<tr><td>Fish-counter telemetry</td><td>Migration intelligence</td><td class="warn">Investigate availability</td><td class="bad">No value displayed</td></tr>
-<tr><td>Catch intelligence</td><td>Current-season Ribble context</td><td class="warn">Needs attributable feed</td><td class="bad">No totals displayed</td></tr>
-<tr><td>River-health telemetry</td><td>Environmental context</td><td class="warn">Candidate only</td><td class="bad">No value displayed</td></tr>
-</tbody>
-</table>
-<p class="small"><a href="https://www.ribblefisheriesca.co.uk/live-water-quality-monitoring/" target="_blank" rel="noopener">Open RFCA live water-quality monitoring</a></p>
-</section>
-
-<section class="card">
-<h2>Current-Season Catch Intelligence Gate</h2>
-<div class="pill bad">No catch totals displayed</div>
-<div class="pill warn">Current-season gate active</div>
-<div class="grid">
-<div class="box"><div class="muted">Salmon total</div><div class="big">—</div><div class="small muted">No verified current-season source</div></div>
-<div class="box"><div class="muted">Sea-trout total</div><div class="big">—</div><div class="small muted">No verified current-season source</div></div>
-<div class="box"><div class="muted">Latest verified catch report</div><div class="bad">Unavailable</div><div class="small muted">No source = no number</div></div>
-</div>
-</section>
-
-<section class="card">
-<h2>Verified Source Score</h2>
-<div class="grid">
-<div class="box"><div class="muted">Verified source score</div><div id="qualityScore" class="big">—</div></div>
-<div class="box"><div class="muted">Meaning</div><div id="qualityMeaning" class="warn">Awaiting checks</div></div>
-<div class="box"><div class="muted">Governance</div><div class="bad">NOT a fishability score</div></div>
-</div>
-<table>
-<thead><tr><th>Source</th><th>Weight</th><th>Status</th></tr></thead>
-<tbody>
-<tr><td>EA live telemetry</td><td>40</td><td id="scoreTelemetry" class="warn">Waiting</td></tr>
-<tr><td>Verified rainfall reading</td><td>20</td><td id="scoreRainfall" class="warn">Disabled in repair</td></tr>
-<tr><td>RFCA machine-readable data</td><td>20</td><td id="scoreRFCA" class="warn">Not integrated</td></tr>
-<tr><td>Current-season catch intelligence</td><td>15</td><td id="scoreCatch" class="warn">Not integrated</td></tr>
-<tr><td>Operator / beat intelligence</td><td>5</td><td id="scoreOperator" class="warn">Candidate only</td></tr>
-</tbody>
-</table>
-</section>
-
-<section class="card">
-<h2>Governance Rules</h2>
-<table>
-<tbody>
-<tr><td>No source = no number</td><td class="bad">Enforced</td></tr>
-<tr><td>Named place ≠ verified condition</td><td class="bad">Enforced</td></tr>
-<tr><td>Beat context ≠ fishability</td><td class="bad">Enforced</td></tr>
-<tr><td>Mention ≠ catch</td><td class="bad">Enforced</td></tr>
-<tr><td>Candidate confidence ≠ verification</td><td class="bad">Enforced</td></tr>
-<tr><td>RFCA investigation ≠ RFCA display permission</td><td class="bad">Enforced</td></tr>
-<tr><td>Source health ≠ fishability</td><td class="bad">Enforced</td></tr>
-<tr><td>RFCA values</td><td class="bad">Blocked</td></tr>
-<tr><td>EA acquisition</td><td class="ok">Timeout-safe direct route only</td></tr>
-</tbody>
-</table>
+  <h2>Source</h2>
+  <p class="source">
+    Environment Agency flood-monitoring telemetry API · Station 710305 · Henthorn
+  </p>
+  <p class="source" id="apiSource">API: checking</p>
 </section>
 
 </main>
 
-<footer>Build 10179 · NO SOURCE = NO NUMBER · TIMEOUT-SAFE EA TELEMETRY REPAIR · RFCA BLOCKED</footer>
+<footer>
+  No source = no number · Build 10180
+</footer>
 
 <script>
-const BUILD="10179";
-const EA_RECENT="https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?_sorted&_limit=24";
-const EA_LATEST="https://environment.data.gov.uk/flood-monitoring/id/stations/710305/readings?latest";
-const CACHE_KEY="sri_henthorn_lastgood_v10179";
-const TIMEOUT_MS=8000;
+const BUILD = "10180";
+const STATION_ID = "710305";
 
-let clicks=0;
-let lastCoverage=null;
+const latestUrl =
+  `https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?latest`;
 
-function id(x){return document.getElementById(x)}
-function txt(x,v){const e=id(x);if(e)e.textContent=v}
-function cls(x,v){const e=id(x);if(e)e.className=v}
-function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]))}
-function now(){return new Date().toLocaleString("en-GB",{dateStyle:"medium",timeStyle:"medium"})}
-function dtime(iso){const d=new Date(iso);return isNaN(d.getTime())?String(iso):d.toLocaleString("en-GB",{dateStyle:"medium",timeStyle:"short"})}
-function age(iso){const d=new Date(iso);if(isNaN(d.getTime()))return null;return Math.round((Date.now()-d.getTime())/60000)}
-function signed(v){return v===null||!Number.isFinite(v)?"—":(v>0?"+":"")+v.toFixed(3)+" m"}
+const recentUrl =
+  `https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?_sorted&_limit=6`;
 
-async function getJsonTimeout(url,label){
- const controller=new AbortController();
- const timer=setTimeout(()=>controller.abort(),TIMEOUT_MS);
- try{
-  const r=await fetch(url,{cache:"no-store",signal:controller.signal});
-  clearTimeout(timer);
-  if(!r.ok)throw new Error(label+" HTTP "+r.status);
-  return await r.json();
- }catch(e){
-  clearTimeout(timer);
-  if(e&&e.name==="AbortError")throw new Error(label+" timeout after "+(TIMEOUT_MS/1000)+"s");
-  throw new Error(label+" "+String(e.message||e));
- }
+function $(id){ return document.getElementById(id); }
+
+function setStatus(text,type){
+  const badge = $("statusBadge");
+  badge.textContent = text;
+  badge.className = "badge";
+  if(type === "bad") badge.classList.add("bad");
+  if(type === "warn") badge.classList.add("warn");
 }
 
-function cleanReadings(items){
- return(items||[])
- .map(x=>({value:Number(x.value),time:x.dateTime||x.date||""}))
- .filter(x=>Number.isFinite(x.value)&&x.time)
- .sort((a,b)=>new Date(a.time)-new Date(b.time));
+function formatDate(iso){
+  if(!iso) return "Unavailable";
+  const d = new Date(iso);
+  if(isNaN(d)) return "Unavailable";
+  return d.toLocaleString("en-GB",{
+    weekday:"short",
+    day:"2-digit",
+    month:"short",
+    hour:"2-digit",
+    minute:"2-digit"
+  });
 }
 
-function saveCache(readings){
- try{
-  localStorage.setItem(CACHE_KEY,JSON.stringify({
-   saved:new Date().toISOString(),
-   readings:readings.slice(-24)
-  }));
- }catch(e){}
+function readingAgeMinutes(iso){
+  const d = new Date(iso);
+  if(isNaN(d)) return null;
+  return Math.round((Date.now() - d.getTime()) / 60000);
 }
 
-function loadCache(){
- try{
-  const raw=localStorage.getItem(CACHE_KEY);
-  if(!raw)return null;
-  const obj=JSON.parse(raw);
-  const readings=cleanReadings(obj.readings||[]);
-  return readings.length?readings:null;
- }catch(e){
-  return null;
- }
+function classifyConfidence(iso){
+  const mins = readingAgeMinutes(iso);
+  if(mins === null) return "Unavailable";
+  if(mins <= 90) return "High";
+  if(mins <= 240) return "Medium";
+  return "Low";
 }
 
-function movement(readings){
- const rs=readings.slice().sort((a,b)=>new Date(a.time)-new Date(b.time));
+function movementFromReadings(items){
+  if(!Array.isArray(items) || items.length < 2) return "Unavailable";
 
- if(rs.length<2){
-  return{label:"Unknown",detail:"Not enough EA readings",latestDelta:null,windowDelta:null,rule:"Insufficient readings",used:rs.length};
- }
+  const clean = items
+    .filter(x => typeof x.value === "number" && x.dateTime)
+    .sort((a,b) => new Date(b.dateTime) - new Date(a.dateTime));
 
- const latest=rs[rs.length-1];
- const previous=rs[rs.length-2];
- const windowStart=rs[Math.max(0,rs.length-6)];
+  if(clean.length < 2) return "Unavailable";
 
- const latestDelta=latest.value-previous.value;
- const windowDelta=latest.value-windowStart.value;
- const threshold=0.001;
+  const latest = clean[0].value;
+  const previous = clean[1].value;
+  const diff = latest - previous;
 
- if(latestDelta>threshold){
-  return{label:"Rising",detail:"Latest EA reading is higher by +"+latestDelta.toFixed(3)+" m",latestDelta,windowDelta,rule:"Latest delta positive",used:rs.length};
- }
-
- if(latestDelta<-threshold){
-  return{label:"Falling",detail:"Latest EA reading is lower by "+latestDelta.toFixed(3)+" m",latestDelta,windowDelta,rule:"Latest delta negative",used:rs.length};
- }
-
- if(windowDelta>threshold){
-  return{label:"Rising",detail:"Latest reading flat but recent EA window is up +"+windowDelta.toFixed(3)+" m",latestDelta,windowDelta,rule:"Window delta positive",used:rs.length};
- }
-
- if(windowDelta<-threshold){
-  return{label:"Falling",detail:"Latest reading flat but recent EA window is down "+windowDelta.toFixed(3)+" m",latestDelta,windowDelta,rule:"Window delta negative",used:rs.length};
- }
-
- return{label:"Steady",detail:"No material latest or recent-window movement",latestDelta,windowDelta,rule:"Latest and window delta within threshold",used:rs.length};
+  if(Math.abs(diff) < 0.005) return "Steady";
+  if(diff > 0) return "Rising";
+  return "Falling";
 }
 
-async function telemetry(){
- const notes=[];
+async function fetchJson(url){
+  const res = await fetch(url,{cache:"no-store"});
+  if(!res.ok) throw new Error("HTTP " + res.status);
+  return await res.json();
+}
 
- try{
-  const recentJson=await getJsonTimeout(EA_RECENT,"recent readings");
-  let readings=cleanReadings(recentJson.items);
-
-  if(!readings.length){
-   throw new Error("recent readings returned no numeric readings");
-  }
+async function loadHenthorn(){
+  setStatus("Checking","warn");
+  $("levelValue").textContent = "—";
+  $("movementValue").textContent = "Checking";
+  $("confidenceValue").textContent = "Checking";
+  $("apiSource").textContent = "API: " + latestUrl;
+  $("lastChecked").textContent = "Last checked: " + new Date().toLocaleString("en-GB");
 
   try{
-   const latestJson=await getJsonTimeout(EA_LATEST,"latest reading");
-   const latestReadings=cleanReadings(latestJson.items);
-   if(latestReadings.length){
-    const latest=latestReadings[latestReadings.length-1];
-    const exists=readings.some(r=>r.time===latest.time&&r.value===latest.value);
-    if(!exists)readings.push(latest);
-    readings=cleanReadings(readings);
-   }
-  }catch(e){
-   notes.push(String(e.message||e));
+    const latestData = await fetchJson(latestUrl);
+    const recentData = await fetchJson(recentUrl);
+
+    const latestItems = Array.isArray(latestData.items) ? latestData.items : [];
+    const recentItems = Array.isArray(recentData.items) ? recentData.items : [];
+
+    const latest = latestItems.find(x => typeof x.value === "number") || recentItems.find(x => typeof x.value === "number");
+
+    if(!latest){
+      throw new Error("No numeric level reading returned");
+    }
+
+    $("levelValue").textContent = latest.value.toFixed(3) + " m";
+    $("readingTime").textContent = formatDate(latest.dateTime);
+    $("movementValue").textContent = movementFromReadings(recentItems);
+    $("confidenceValue").textContent = classifyConfidence(latest.dateTime);
+
+    setStatus("Live EA data","good");
+  }catch(err){
+    setStatus("Unavailable","bad");
+    $("levelValue").textContent = "Unavailable";
+    $("movementValue").textContent = "Unavailable";
+    $("readingTime").textContent = "Unavailable";
+    $("confidenceValue").textContent = "Unavailable";
+    $("apiSource").textContent = "API error: " + err.message;
   }
-
-  saveCache(readings);
-
-  return{
-   ok:true,
-   route:"Direct EA station readings",
-   readings,
-   latest:readings[readings.length-1],
-   trend:movement(readings),
-   cached:false,
-   notes
-  };
-
- }catch(e){
-  notes.push(String(e.message||e));
- }
-
- const cached=loadCache();
-
- if(cached&&cached.length){
-  return{
-   ok:true,
-   route:"Local last-good telemetry cache",
-   readings:cached,
-   latest:cached[cached.length-1],
-   trend:movement(cached),
-   cached:true,
-   notes
-  };
- }
-
- return{
-  ok:false,
-  error:notes.join(" | ")
- };
 }
 
-function renderMovementIntegrity(t){
- txt("latestDelta",signed(t.latestDelta));
- txt("windowDelta",signed(t.windowDelta));
- txt("movementRule",t.rule);
- txt("readingsUsed",String(t.used));
-
- if(t.label==="Rising"){
-  cls("movementGate","pill ok");
-  txt("movementGate","Movement integrity: Rising");
- }else if(t.label==="Falling"){
-  cls("movementGate","pill warn");
-  txt("movementGate","Movement integrity: Falling");
- }else if(t.label==="Steady"){
-  cls("movementGate","pill warn");
-  txt("movementGate","Movement integrity: Steady");
- }else{
-  cls("movementGate","pill bad");
-  txt("movementGate","Movement integrity unavailable");
- }
-}
-
-function renderTele(result){
- if(!result.ok){
-  cls("status","pill bad");
-  txt("status","EA telemetry unavailable");
-  cls("confidence","pill bad");
-  txt("confidence","No telemetry confidence");
-  txt("level","—");
-  txt("trend","—");
-  txt("trendDetail","EA direct route failed and no local cache exists");
-  txt("time","—");
-  txt("freshness","—");
-  txt("dataProof","EA proof: failed");
-  txt("routeProof","Route proof: "+result.error);
-  renderMovementIntegrity({label:"Unknown",latestDelta:null,windowDelta:null,rule:"No telemetry",used:0});
-  updateScore(false);
-  return;
- }
-
- const m=age(result.latest.time);
-
- txt("level",result.latest.value.toFixed(3)+" m");
- txt("trend",result.trend.label);
- txt("trendDetail",result.trend.detail);
- txt("time",dtime(result.latest.time));
- txt("freshness",m===null?"Unknown age":m+" minutes old");
-
- if(result.cached){
-  cls("status","pill warn");
-  txt("status","Using local last-good telemetry cache");
-  cls("confidence","pill warn");
-  txt("confidence","Telemetry confidence reduced — cached data");
- }else{
-  cls("status","pill ok");
-  txt("status","EA telemetry live");
-  cls("confidence",m!==null&&m<=30?"pill ok":"pill warn");
-  txt("confidence",m!==null&&m<=30?"Telemetry confidence HIGH":"Telemetry stale warning");
- }
-
- txt("dataProof","EA proof: "+result.readings.length+" reading(s); latest "+result.latest.value.toFixed(3)+" m at "+result.latest.time);
- txt("routeProof","Route proof: "+result.route+(result.notes&&result.notes.length?" | "+result.notes.join(" ; "):""));
-
- renderMovementIntegrity(result.trend);
- updateScore(true);
-}
-
-function updateScore(teleOK){
- const score=teleOK?40:0;
-
- cls("scoreTelemetry",teleOK?"ok":"bad");
- txt("scoreTelemetry",teleOK?"Verified":"Unavailable");
-
- cls("scoreRainfall","warn");
- txt("scoreRainfall","Disabled in repair");
-
- cls("scoreRFCA","warn");
- txt("scoreRFCA","Not integrated");
-
- cls("scoreCatch","warn");
- txt("scoreCatch","Not integrated");
-
- cls("scoreOperator","warn");
- txt("scoreOperator","Candidate only");
-
- txt("qualityScore",score+"/100");
- cls("qualityMeaning",teleOK?"warn":"bad");
- txt("qualityMeaning",teleOK?"EA telemetry restored; rainfall disabled during repair":"No verified live telemetry");
-
- updateCoverage(teleOK,score);
- updatePanels(teleOK);
- updateSourceHealth(teleOK);
-}
-
-function updateCoverage(teleOK,score){
- txt("coveragePercent",score+"%");
- txt("coverageVerified",teleOK?"1":"0");
- txt("coverageCandidate","2");
- txt("coverageBlocked","4");
-
- cls("coverageStatus",teleOK?"pill warn":"pill bad");
- txt("coverageStatus",teleOK?"Coverage partial":"Coverage weak");
-
- txt("coverageMeaning",teleOK?"EA telemetry verified; rainfall/RFCA/catch/operator gaps remain":"Verified live evidence is insufficient");
-
- txt("coverageFormula","EA "+(teleOK?"40":"0")+" + Rain 0 + RFCA 0 + Catch 0 + Operator 0 = "+score+"%");
- cls("coverageFormula",teleOK?"warn":"bad");
-
- txt("coverageTimestamp",now());
- cls("coverageTimestamp","ok");
-
- let trendText="Initial coverage reading";
- if(lastCoverage!==null){
-  if(score>lastCoverage)trendText="Coverage up from "+lastCoverage+"%";
-  else if(score<lastCoverage)trendText="Coverage down from "+lastCoverage+"%";
-  else trendText="Coverage flat at "+score+"%";
- }
- lastCoverage=score;
-}
-
-function updateSourceHealth(teleOK){
- cls("healthEA",teleOK?"ok":"bad");
- txt("healthEA",teleOK?"Healthy":"Unavailable");
- cls("healthEAPermission",teleOK?"ok":"bad");
- txt("healthEAPermission",teleOK?"Level and movement display permitted":"No display");
-
- cls("healthRain","warn");
- txt("healthRain","Disabled in repair");
- cls("healthRainPermission","bad");
- txt("healthRainPermission","No rainfall number");
-}
-
-function row(a,b,c,d,cl){
- return"<tr><td>"+esc(a)+"</td><td class='"+(cl||"warn")+"'>"+esc(b)+"</td><td>"+esc(c)+"</td><td>"+esc(d)+"</td></tr>";
-}
-
-function updatePanels(teleOK){
- const known=[];
- const unknown=[];
-
- if(teleOK){
-  known.push("EA Henthorn telemetry is live through timeout-safe direct acquisition.");
- }else{
-  unknown.push("EA telemetry is not acquired in the browser runtime.");
- }
-
- known.push("RFCA values remain blocked.");
- known.push("Henthorn beat context is candidate intelligence only.");
- known.push("Named pool mentions remain candidate context only.");
-
- unknown.push("RFCA sonde, fish counters, current-season catches and verified operator intelligence are not integrated.");
- unknown.push("Rainfall has been disabled during the 10179 telemetry repair gate.");
-
- id("knownPanel").innerHTML="<ul>"+known.map(x=>"<li>"+esc(x)+"</li>").join("")+"</ul>";
- id("unknownPanel").innerHTML="<ul>"+unknown.map(x=>"<li>"+esc(x)+"</li>").join("")+"</ul>";
-
- txt("nextActionPanel",teleOK?"Hold telemetry steady; do not reintroduce proxy/JSONP. Re-enable rainfall only after live level/movement are stable.":"Telemetry still failing; route proof now gives a bounded failure reason instead of hanging.");
-
- id("evidenceRows").innerHTML=
- row("EA Henthorn level telemetry",teleOK?"Verified":"Unavailable","Level 1 official telemetry",teleOK?"Machine-readable EA readings parsed":"No display if acquisition fails",teleOK?"ok":"bad")+
- row("Rainfall reading","Disabled","Level 1 candidate","Disabled during telemetry repair","warn")+
- row("RFCA temperature / sonde","Blocked","Strategic acquisition candidate","No RFCA value unless machine-readable","bad")+
- row("Current-season catch intelligence","Blocked","Level 2 candidate","No totals without dated attributable source","bad")+
- row("Henthorn beat / named pool commentary","Candidate only","Level 4 candidate","Candidate context only; no fishability, catch or movement inference","warn");
-
- id("beatRows").innerHTML=[
-  ["Henthorn beat focus","Primary fishing context for current app phase","Telemetry anchor only","Candidate","Use EA Henthorn level/movement as verified conditions context","Do not infer fishability"],
-  ["Named pool mentions near Ribble/Hodder","Local place vocabulary from social/operator commentary","Candidate context","Candidate","Index named places for later source linking","Do not infer fish presence"],
-  ["Operator / club commentary","Potential future beat intelligence","Candidate only","Candidate","Use only if dated, attributable and current-season","Do not create catch totals"],
-  ["Private anecdote / rumour","No app intelligence use","Blocked","Blocked","None","Do not display as intelligence"]
- ].map(r=>"<tr><td>"+esc(r[0])+"</td><td>"+esc(r[1])+"</td><td class='warn'>"+esc(r[2])+"</td><td class='warn'>"+esc(r[3])+"</td><td>"+esc(r[4])+"</td><td class='bad'>"+esc(r[5])+"</td></tr>").join("");
-
- const pools=["Waddow Weir","Long Pool","Poachers Pot","Hodder Foot","Garage Pool"];
- id("poolRows").innerHTML=pools.map(n=>"<tr><td>"+esc(n)+"</td><td>Ribble / Hodder area</td><td>Level 4 candidate</td><td class='warn'>Mention only</td><td class='warn'>Candidate</td><td class='bad'>No numeric, catch or fishability permission</td></tr>").join("");
-}
-
-async function refresh(){
- clicks++;
- txt("refreshClicks","Refresh clicks: "+clicks);
- txt("refreshState","Refresh running: "+now());
- txt("routeProof","Route proof: request in progress, timeout "+(TIMEOUT_MS/1000)+"s");
-
- const result=await telemetry();
- renderTele(result);
-
- txt("lastGoodProof",loadCache()?"Last-good cache active":"Last-good cache: empty");
- txt("refreshState","Last refresh completed: "+now());
-}
-
-document.addEventListener("DOMContentLoaded",()=>{
- id("refreshBtn").addEventListener("click",refresh);
- refresh();
- setInterval(refresh,15*60*1000);
-});
+loadHenthorn();
+setInterval(loadHenthorn, 15 * 60 * 1000);
 </script>
 
 </body>
