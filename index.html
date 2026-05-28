@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10188</title>
+<title>Salmon Rivers Intelligence — Build 10189</title>
 <style>
 :root{--bg:#eef2f3;--card:#fff;--ink:#102018;--muted:#5b6b63;--good:#0f7b3f;--warn:#a15c00;--bad:#9b1c1c;--line:#d7dfdc;--deep:#082d1b;--blue:#0b5f8a;--purple:#5942a9}
 *{box-sizing:border-box}
@@ -29,26 +29,26 @@ button:disabled{opacity:.6;cursor:not-allowed}
 .source{font-size:13px;color:var(--muted);word-break:break-word;line-height:1.45}
 .ok{color:var(--good);font-weight:800}.badtext{color:var(--bad);font-weight:800}
 .state-title{font-size:24px;font-weight:900;margin:0 0 8px}
-.conf-row,.fusion-row{display:grid;grid-template-columns:1fr auto;gap:10px;border-bottom:1px solid var(--line);padding:10px 0;align-items:center}
-.conf-row:last-child,.fusion-row:last-child{border-bottom:0}
-.conf-tag,.fusion-tag{font-weight:900;border-radius:999px;padding:5px 9px;font-size:12px;white-space:nowrap}
-.conf-high,.fusion-live{background:#e8f3ec;color:var(--good)}
-.conf-med,.fusion-derived{background:#fff4df;color:var(--warn)}
-.conf-low,.fusion-blocked{background:#fde8e8;color:var(--bad)}
-.fusion-planned{background:#eef6fb;color:var(--blue)}
+.conf-row,.fusion-row,.acq-row{display:grid;grid-template-columns:1fr auto;gap:10px;border-bottom:1px solid var(--line);padding:10px 0;align-items:center}
+.conf-row:last-child,.fusion-row:last-child,.acq-row:last-child{border-bottom:0}
+.conf-tag,.fusion-tag,.acq-tag{font-weight:900;border-radius:999px;padding:5px 9px;font-size:12px;white-space:nowrap}
+.conf-high,.fusion-live,.acq-live{background:#e8f3ec;color:var(--good)}
+.conf-med,.fusion-derived,.acq-investigate{background:#fff4df;color:var(--warn)}
+.conf-low,.fusion-blocked,.acq-blocked{background:#fde8e8;color:var(--bad)}
+.fusion-planned,.acq-planned{background:#eef6fb;color:var(--blue)}
 table{width:100%;border-collapse:collapse;font-size:14px}
 th,td{padding:10px 6px;border-bottom:1px solid var(--line);text-align:left}
 th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.5px}
 .trend-up{color:var(--good);font-weight:800}.trend-down{color:var(--bad);font-weight:800}.trend-flat{color:var(--warn);font-weight:800}
 footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
-@media(max-width:520px){.grid{grid-template-columns:1fr}.big{font-size:40px}.conf-row,.fusion-row{grid-template-columns:1fr}}
+@media(max-width:520px){.grid{grid-template-columns:1fr}.big{font-size:40px}.conf-row,.fusion-row,.acq-row{grid-template-columns:1fr}}
 </style>
 </head>
 
 <body>
 <header>
   <h1>Salmon Rivers Intelligence</h1>
-  <p>Build 10188 · Multi-source intelligence fusion framework</p>
+  <p>Build 10189 · Source acquisition layer</p>
 </header>
 
 <main>
@@ -104,6 +104,22 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
 </section>
 
 <section class="card">
+  <h2>Source acquisition layer</h2>
+  <div class="panel-purple" id="acquisitionSummary">
+    Acquisition model active. Live data is allowed only when source stability, traceability and currentness are satisfied.
+  </div>
+
+  <div style="margin-top:12px" id="acquisitionPanel">
+    <div class="acq-row"><span>EA Henthorn river level telemetry</span><span class="acq-tag acq-live">Live · verified</span></div>
+    <div class="acq-row"><span>Great Mitton rainfall / catchment reference</span><span class="acq-tag acq-investigate">Investigating</span></div>
+    <div class="acq-row"><span>RFCA water quality / temperature</span><span class="acq-tag acq-investigate">Acquisition target</span></div>
+    <div class="acq-row"><span>RFCA fish counters</span><span class="acq-tag acq-blocked">Blocked · no endpoint</span></div>
+    <div class="acq-row"><span>Current-season Ribble catch reports</span><span class="acq-tag acq-blocked">Blocked · no verified feed</span></div>
+    <div class="acq-row"><span>Operator / beat intelligence</span><span class="acq-tag acq-planned">Planned manual-source model</span></div>
+  </div>
+</section>
+
+<section class="card">
   <h2>Intelligence fusion status</h2>
   <div class="panel-purple" id="fusionSummary">
     Building governed multi-source model from live telemetry and future verified acquisition layers.
@@ -146,7 +162,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
   <h2>Source audit</h2>
   <p class="source"><strong>Station:</strong> 710305 · Henthorn</p>
   <p class="source"><strong>Live telemetry:</strong> Environment Agency flood-monitoring telemetry API</p>
-  <p class="source"><strong>Rainfall:</strong> planned acquisition · no live endpoint connected</p>
+  <p class="source"><strong>Rainfall:</strong> acquisition investigation · no live endpoint connected</p>
   <p class="source"><strong>RFCA:</strong> acquisition candidate · no values displayed until traceable</p>
   <p class="source"><strong>Catch reports / counters:</strong> blocked until verified current-season sources exist</p>
   <p class="source" id="sourceResult">Source result: checking</p>
@@ -155,13 +171,13 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
 <section class="card">
   <h2>Verified intelligence only</h2>
   <div class="notice">
-    Build 10188 introduces the fusion framework only. It does not invent missing sources. Live values are shown only where a stable source exists; derived claims are labelled; blocked intelligence remains blocked.
+    Build 10189 adds the acquisition governance layer. Sources can be live, derived, investigating, planned or blocked. Blocked sources display no values.
   </div>
 </section>
 
 </main>
 
-<footer>Build 10188 · No source = no number · Fusion governed by source class</footer>
+<footer>Build 10189 · Source acquisition governed before display</footer>
 
 <script>
 const STATION_ID="710305";
@@ -226,8 +242,12 @@ function fusionSummary(items,latest){
   if(d!==null&&d>0.03)behaviour="building";
   if(d!==null&&d<-0.03)behaviour="falling after lift";
   if(d!==null&&Math.abs(d)<0.01)behaviour="stable";
-
   return "Fusion engine status: live EA telemetry is active with "+tel.toLowerCase()+" telemetry confidence. Current derived river behaviour is "+behaviour+". Rainfall, RFCA, counters and catch intelligence remain gated until verified sources are connected.";
+}
+
+function acquisitionSummary(items,latest){
+  const tel=telemetryConfidence(latest.dateTime);
+  return "Acquisition status: EA Henthorn telemetry is live and verified with "+tel.toLowerCase()+" confidence. Rainfall and RFCA remain acquisition targets. Fish counters and catch intelligence remain blocked until stable, traceable current-season sources are identified.";
 }
 
 function confidenceRows(items,latest){
@@ -287,11 +307,12 @@ async function loadHenthorn(){
     $("catchmentPanel").textContent=catchmentResponse(clean);
     $("rainPanel").textContent=rainfallIntelligence(clean);
     $("fusionSummary").textContent=fusionSummary(clean,latest);
+    $("acquisitionSummary").textContent=acquisitionSummary(clean,latest);
 
     confidenceRows(clean,latest);
     renderTrendTable(clean);
 
-    $("sourceResult").innerHTML='Source result: <span class="ok">Live telemetry fused with governed derived intelligence successfully</span>';
+    $("sourceResult").innerHTML='Source result: <span class="ok">Live telemetry acquired; acquisition governance layer active</span>';
     setStatus("Live EA data","good");
   }catch(err){
     $("levelValue").textContent="Unavailable";
@@ -307,6 +328,7 @@ async function loadHenthorn(){
     $("catchmentPanel").textContent="Catchment response unavailable because telemetry acquisition failed.";
     $("rainPanel").textContent="Rainfall intelligence unavailable because telemetry acquisition failed.";
     $("fusionSummary").textContent="Fusion engine unavailable because the live telemetry foundation failed.";
+    $("acquisitionSummary").textContent="Acquisition layer unavailable because the live telemetry foundation failed.";
     $("confidencePanel").innerHTML='<div class="conf-row"><span>System confidence</span><span class="conf-tag conf-low">Unavailable</span></div>';
     $("trendTable").innerHTML="<tr><td colspan='3'>Telemetry unavailable</td></tr>";
     $("sourceResult").innerHTML='<span class="badtext">Telemetry acquisition failed: '+err.message+'</span>';
