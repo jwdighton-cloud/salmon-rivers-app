@@ -2,112 +2,45 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10180</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Salmon Rivers Intelligence — Build 10181</title>
 <style>
 :root{
-  --bg:#eef2f3;
-  --card:#ffffff;
-  --ink:#102018;
-  --muted:#5b6b63;
-  --good:#1f7a3f;
-  --warn:#b36b00;
-  --bad:#9b1c1c;
-  --line:#d7dfdc;
+  --bg:#eef2f3;--card:#fff;--ink:#102018;--muted:#5b6b63;
+  --good:#0f7b3f;--warn:#a15c00;--bad:#9b1c1c;--line:#d7dfdc;--deep:#082d1b;
 }
 *{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-  background:var(--bg);
-  color:var(--ink);
-}
-header{
-  background:#0d2a1b;
-  color:white;
-  padding:18px 14px;
-  text-align:center;
-}
-header h1{margin:0;font-size:24px}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:var(--deep);color:white;text-align:center;padding:20px 14px}
+h1{margin:0;font-size:26px}
 header p{margin:6px 0 0;color:#cfe3d7;font-size:14px}
 main{max-width:760px;margin:0 auto;padding:14px}
-.card{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:16px;
-  margin:14px 0;
-  box-shadow:0 2px 8px rgba(0,0,0,.04);
-}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:14px 0;box-shadow:0 2px 8px rgba(0,0,0,.05)}
 .row{display:flex;justify-content:space-between;gap:12px;align-items:center}
-.badge{
-  display:inline-block;
-  padding:6px 10px;
-  border-radius:999px;
-  font-weight:700;
-  font-size:13px;
-  background:#e8f3ec;
-  color:var(--good);
-}
+.label{color:var(--muted);font-size:14px}
+.big{font-size:44px;font-weight:900;margin:8px 0 2px}
+.badge{display:inline-block;padding:7px 11px;border-radius:999px;font-weight:800;font-size:13px;background:#e8f3ec;color:var(--good)}
 .badge.warn{background:#fff4df;color:var(--warn)}
 .badge.bad{background:#fde8e8;color:var(--bad)}
-.big{
-  font-size:44px;
-  font-weight:800;
-  margin:8px 0 2px;
-}
-.label{color:var(--muted);font-size:14px}
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-.stat{
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:12px;
-}
-.stat strong{display:block;font-size:20px;margin-top:4px}
-button{
-  width:100%;
-  border:0;
-  border-radius:14px;
-  padding:14px;
-  background:#0d2a1b;
-  color:white;
-  font-weight:800;
-  font-size:16px;
-}
-button:active{transform:scale(.99)}
-.notice{
-  border-left:5px solid var(--warn);
-  background:#fff9ed;
-  padding:12px;
-  border-radius:10px;
-  color:#4b3515;
-}
-.source{
-  font-size:13px;
-  color:var(--muted);
-  word-break:break-word;
-}
-footer{
-  text-align:center;
-  color:var(--muted);
-  font-size:12px;
-  padding:20px;
-}
-@media(max-width:520px){
-  .grid{grid-template-columns:1fr}
-  .big{font-size:38px}
-}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.stat{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fff}
+.stat strong{display:block;font-size:20px;margin-top:5px}
+button{width:100%;border:0;border-radius:14px;padding:15px;background:var(--deep);color:white;font-weight:900;font-size:16px;cursor:pointer}
+button:disabled{opacity:.6;cursor:not-allowed}
+.notice{border-left:5px solid var(--warn);background:#fff9ed;padding:12px;border-radius:10px;color:#4b3515;line-height:1.45}
+.source{font-size:13px;color:var(--muted);word-break:break-word;line-height:1.45}
+.ok{color:var(--good);font-weight:800}
+.warntext{color:var(--warn);font-weight:800}
+.badtext{color:var(--bad);font-weight:800}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
+@media(max-width:520px){.grid{grid-template-columns:1fr}.big{font-size:38px}}
 </style>
 </head>
 
 <body>
 <header>
   <h1>Salmon Rivers Intelligence</h1>
-  <p>Build 10180 · Ribble @ Henthorn recovery build</p>
+  <p>Build 10181 · Ribble @ Henthorn source-audit build</p>
 </header>
 
 <main>
@@ -120,9 +53,8 @@ footer{
     </div>
     <span id="statusBadge" class="badge warn">Checking</span>
   </div>
-
   <div id="levelValue" class="big">—</div>
-  <div class="label">Latest EA river level reading</div>
+  <div class="label">Latest Environment Agency river level reading</div>
 </section>
 
 <section class="card">
@@ -136,8 +68,8 @@ footer{
       <strong id="readingTime">—</strong>
     </div>
     <div class="stat">
-      <div class="label">Station ID</div>
-      <strong>710305</strong>
+      <div class="label">Reading age</div>
+      <strong id="ageValue">—</strong>
     </div>
     <div class="stat">
       <div class="label">Data confidence</div>
@@ -147,33 +79,34 @@ footer{
 </section>
 
 <section class="card">
-  <button onclick="loadHenthorn()">Refresh live data</button>
+  <button id="refreshBtn" onclick="loadHenthorn()">Refresh live data</button>
   <p class="source" id="lastChecked">Last checked: —</p>
+</section>
+
+<section class="card">
+  <h2>Source audit</h2>
+  <p class="source"><strong>Station:</strong> 710305 · Henthorn</p>
+  <p class="source"><strong>Live source:</strong> Environment Agency flood-monitoring telemetry API</p>
+  <p class="source" id="latestSource">Latest endpoint: checking</p>
+  <p class="source" id="recentSource">Recent endpoint: checking</p>
+  <p class="source" id="sourceResult">Source result: checking</p>
 </section>
 
 <section class="card">
   <h2>Verified intelligence only</h2>
   <div class="notice">
-    Temperature, fish counters, catches and RFCA values are not displayed in this build unless a stable, traceable live source is connected.
+    Temperature, fish counters, catches and RFCA values remain blocked unless a stable, traceable, current source is connected. No source = no number.
   </div>
-</section>
-
-<section class="card">
-  <h2>Source</h2>
-  <p class="source">
-    Environment Agency flood-monitoring telemetry API · Station 710305 · Henthorn
-  </p>
-  <p class="source" id="apiSource">API: checking</p>
 </section>
 
 </main>
 
 <footer>
-  No source = no number · Build 10180
+  Build 10181 · No source = no number
 </footer>
 
 <script>
-const BUILD = "10180";
+const BUILD = "10181";
 const STATION_ID = "710305";
 
 const latestUrl =
@@ -182,106 +115,119 @@ const latestUrl =
 const recentUrl =
   `https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?_sorted&_limit=6`;
 
-function $(id){ return document.getElementById(id); }
+function $(id){return document.getElementById(id);}
 
 function setStatus(text,type){
-  const badge = $("statusBadge");
-  badge.textContent = text;
-  badge.className = "badge";
-  if(type === "bad") badge.classList.add("bad");
-  if(type === "warn") badge.classList.add("warn");
+  const badge=$("statusBadge");
+  badge.textContent=text;
+  badge.className="badge";
+  if(type==="warn")badge.classList.add("warn");
+  if(type==="bad")badge.classList.add("bad");
 }
 
 function formatDate(iso){
-  if(!iso) return "Unavailable";
-  const d = new Date(iso);
-  if(isNaN(d)) return "Unavailable";
-  return d.toLocaleString("en-GB",{
-    weekday:"short",
-    day:"2-digit",
-    month:"short",
-    hour:"2-digit",
-    minute:"2-digit"
-  });
+  if(!iso)return"Unavailable";
+  const d=new Date(iso);
+  if(isNaN(d))return"Unavailable";
+  return d.toLocaleString("en-GB",{weekday:"short",day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"});
 }
 
-function readingAgeMinutes(iso){
-  const d = new Date(iso);
-  if(isNaN(d)) return null;
-  return Math.round((Date.now() - d.getTime()) / 60000);
+function ageMinutes(iso){
+  const d=new Date(iso);
+  if(isNaN(d))return null;
+  return Math.max(0,Math.round((Date.now()-d.getTime())/60000));
 }
 
-function classifyConfidence(iso){
-  const mins = readingAgeMinutes(iso);
-  if(mins === null) return "Unavailable";
-  if(mins <= 90) return "High";
-  if(mins <= 240) return "Medium";
-  return "Low";
+function ageText(iso){
+  const mins=ageMinutes(iso);
+  if(mins===null)return"Unavailable";
+  if(mins<60)return mins+" min";
+  const h=Math.floor(mins/60);
+  const m=mins%60;
+  return h+"h "+m+"m";
+}
+
+function confidence(iso){
+  const mins=ageMinutes(iso);
+  if(mins===null)return"Unavailable";
+  if(mins<=90)return"High";
+  if(mins<=240)return"Medium";
+  return"Low";
 }
 
 function movementFromReadings(items){
-  if(!Array.isArray(items) || items.length < 2) return "Unavailable";
-
-  const clean = items
-    .filter(x => typeof x.value === "number" && x.dateTime)
-    .sort((a,b) => new Date(b.dateTime) - new Date(a.dateTime));
-
-  if(clean.length < 2) return "Unavailable";
-
-  const latest = clean[0].value;
-  const previous = clean[1].value;
-  const diff = latest - previous;
-
-  if(Math.abs(diff) < 0.005) return "Steady";
-  if(diff > 0) return "Rising";
-  return "Falling";
+  if(!Array.isArray(items)||items.length<2)return"Unavailable";
+  const clean=items
+    .filter(x=>typeof x.value==="number"&&x.dateTime)
+    .sort((a,b)=>new Date(b.dateTime)-new Date(a.dateTime));
+  if(clean.length<2)return"Unavailable";
+  const diff=clean[0].value-clean[1].value;
+  if(Math.abs(diff)<0.005)return"Steady";
+  return diff>0?"Rising":"Falling";
 }
 
 async function fetchJson(url){
-  const res = await fetch(url,{cache:"no-store"});
-  if(!res.ok) throw new Error("HTTP " + res.status);
+  const res=await fetch(url,{cache:"no-store"});
+  if(!res.ok)throw new Error("HTTP "+res.status);
   return await res.json();
 }
 
+function resetChecking(){
+  $("levelValue").textContent="—";
+  $("movementValue").textContent="Checking";
+  $("readingTime").textContent="—";
+  $("ageValue").textContent="—";
+  $("confidenceValue").textContent="Checking";
+  $("sourceResult").textContent="Source result: checking";
+}
+
 async function loadHenthorn(){
+  const btn=$("refreshBtn");
+  btn.disabled=true;
+  btn.textContent="Checking EA live data...";
   setStatus("Checking","warn");
-  $("levelValue").textContent = "—";
-  $("movementValue").textContent = "Checking";
-  $("confidenceValue").textContent = "Checking";
-  $("apiSource").textContent = "API: " + latestUrl;
-  $("lastChecked").textContent = "Last checked: " + new Date().toLocaleString("en-GB");
+  resetChecking();
+
+  $("lastChecked").textContent="Last checked: "+new Date().toLocaleString("en-GB");
+  $("latestSource").textContent="Latest endpoint: "+latestUrl;
+  $("recentSource").textContent="Recent endpoint: "+recentUrl;
 
   try{
-    const latestData = await fetchJson(latestUrl);
-    const recentData = await fetchJson(recentUrl);
+    const latestData=await fetchJson(latestUrl);
+    const recentData=await fetchJson(recentUrl);
 
-    const latestItems = Array.isArray(latestData.items) ? latestData.items : [];
-    const recentItems = Array.isArray(recentData.items) ? recentData.items : [];
+    const latestItems=Array.isArray(latestData.items)?latestData.items:[];
+    const recentItems=Array.isArray(recentData.items)?recentData.items:[];
 
-    const latest = latestItems.find(x => typeof x.value === "number") || recentItems.find(x => typeof x.value === "number");
+    const latest=latestItems.find(x=>typeof x.value==="number"&&x.dateTime)
+      || recentItems.find(x=>typeof x.value==="number"&&x.dateTime);
 
-    if(!latest){
-      throw new Error("No numeric level reading returned");
-    }
+    if(!latest)throw new Error("No numeric EA level reading returned");
 
-    $("levelValue").textContent = latest.value.toFixed(3) + " m";
-    $("readingTime").textContent = formatDate(latest.dateTime);
-    $("movementValue").textContent = movementFromReadings(recentItems);
-    $("confidenceValue").textContent = classifyConfidence(latest.dateTime);
+    $("levelValue").textContent=latest.value.toFixed(3)+" m";
+    $("readingTime").textContent=formatDate(latest.dateTime);
+    $("ageValue").textContent=ageText(latest.dateTime);
+    $("movementValue").textContent=movementFromReadings(recentItems);
+    $("confidenceValue").textContent=confidence(latest.dateTime);
 
+    $("sourceResult").innerHTML='Source result: <span class="ok">EA telemetry returned a current numeric level reading</span>';
     setStatus("Live EA data","good");
   }catch(err){
+    $("levelValue").textContent="Unavailable";
+    $("movementValue").textContent="Unavailable";
+    $("readingTime").textContent="Unavailable";
+    $("ageValue").textContent="Unavailable";
+    $("confidenceValue").textContent="Unavailable";
+    $("sourceResult").innerHTML='Source result: <span class="badtext">'+err.message+'</span>';
     setStatus("Unavailable","bad");
-    $("levelValue").textContent = "Unavailable";
-    $("movementValue").textContent = "Unavailable";
-    $("readingTime").textContent = "Unavailable";
-    $("confidenceValue").textContent = "Unavailable";
-    $("apiSource").textContent = "API error: " + err.message;
+  }finally{
+    btn.disabled=false;
+    btn.textContent="Refresh live data";
   }
 }
 
 loadHenthorn();
-setInterval(loadHenthorn, 15 * 60 * 1000);
+setInterval(loadHenthorn,15*60*1000);
 </script>
 
 </body>
