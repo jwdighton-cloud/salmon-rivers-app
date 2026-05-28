@@ -3,221 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence — Build 10182</title>
-
+<title>Salmon Rivers Intelligence — Build 10183</title>
 <style>
 :root{
-  --bg:#eef2f3;
-  --card:#ffffff;
-  --ink:#102018;
-  --muted:#5b6b63;
-  --good:#0f7b3f;
-  --warn:#a15c00;
-  --bad:#9b1c1c;
-  --line:#d7dfdc;
-  --deep:#082d1b;
+  --bg:#eef2f3;--card:#fff;--ink:#102018;--muted:#5b6b63;
+  --good:#0f7b3f;--warn:#a15c00;--bad:#9b1c1c;--line:#d7dfdc;--deep:#082d1b;
 }
-
 *{box-sizing:border-box}
-
-body{
-  margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-  background:var(--bg);
-  color:var(--ink);
-}
-
-header{
-  background:var(--deep);
-  color:white;
-  text-align:center;
-  padding:20px 14px;
-}
-
-h1{
-  margin:0;
-  font-size:26px;
-}
-
-header p{
-  margin:6px 0 0;
-  color:#cfe3d7;
-  font-size:14px;
-}
-
-main{
-  max-width:760px;
-  margin:0 auto;
-  padding:14px;
-}
-
-.card{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:16px;
-  margin:14px 0;
-  box-shadow:0 2px 8px rgba(0,0,0,.05);
-}
-
-.row{
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-  align-items:center;
-}
-
-.label{
-  color:var(--muted);
-  font-size:14px;
-}
-
-.big{
-  font-size:46px;
-  font-weight:900;
-  margin:8px 0 2px;
-}
-
-.badge{
-  display:inline-block;
-  padding:7px 11px;
-  border-radius:999px;
-  font-weight:800;
-  font-size:13px;
-  background:#e8f3ec;
-  color:var(--good);
-}
-
-.badge.warn{
-  background:#fff4df;
-  color:var(--warn);
-}
-
-.badge.bad{
-  background:#fde8e8;
-  color:var(--bad);
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-
-.stat{
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:12px;
-  background:#fff;
-}
-
-.stat strong{
-  display:block;
-  font-size:20px;
-  margin-top:5px;
-}
-
-button{
-  width:100%;
-  border:0;
-  border-radius:14px;
-  padding:15px;
-  background:var(--deep);
-  color:white;
-  font-weight:900;
-  font-size:16px;
-  cursor:pointer;
-}
-
-button:disabled{
-  opacity:.6;
-  cursor:not-allowed;
-}
-
-.notice{
-  border-left:5px solid var(--warn);
-  background:#fff9ed;
-  padding:12px;
-  border-radius:10px;
-  color:#4b3515;
-  line-height:1.45;
-}
-
-.source{
-  font-size:13px;
-  color:var(--muted);
-  word-break:break-word;
-  line-height:1.45;
-}
-
-.ok{
-  color:var(--good);
-  font-weight:800;
-}
-
-.badtext{
-  color:var(--bad);
-  font-weight:800;
-}
-
-table{
-  width:100%;
-  border-collapse:collapse;
-  font-size:14px;
-}
-
-th,td{
-  padding:10px 6px;
-  border-bottom:1px solid var(--line);
-  text-align:left;
-}
-
-th{
-  color:var(--muted);
-  font-size:12px;
-  text-transform:uppercase;
-  letter-spacing:.5px;
-}
-
-.trend-up{
-  color:var(--good);
-  font-weight:800;
-}
-
-.trend-down{
-  color:var(--bad);
-  font-weight:800;
-}
-
-.trend-flat{
-  color:var(--warn);
-  font-weight:800;
-}
-
-footer{
-  text-align:center;
-  color:var(--muted);
-  font-size:12px;
-  padding:20px;
-}
-
-@media(max-width:520px){
-  .grid{
-    grid-template-columns:1fr;
-  }
-
-  .big{
-    font-size:40px;
-  }
-}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:var(--deep);color:white;text-align:center;padding:20px 14px}
+h1{margin:0;font-size:26px}
+header p{margin:6px 0 0;color:#cfe3d7;font-size:14px}
+main{max-width:760px;margin:0 auto;padding:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:14px 0;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.row{display:flex;justify-content:space-between;gap:12px;align-items:center}
+.label{color:var(--muted);font-size:14px}
+.big{font-size:46px;font-weight:900;margin:8px 0 2px}
+.badge{display:inline-block;padding:7px 11px;border-radius:999px;font-weight:800;font-size:13px;background:#e8f3ec;color:var(--good)}
+.badge.warn{background:#fff4df;color:var(--warn)}
+.badge.bad{background:#fde8e8;color:var(--bad)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.stat{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fff}
+.stat strong{display:block;font-size:20px;margin-top:5px}
+button{width:100%;border:0;border-radius:14px;padding:15px;background:var(--deep);color:white;font-weight:900;font-size:16px;cursor:pointer}
+button:disabled{opacity:.6;cursor:not-allowed}
+.panel{border-left:5px solid var(--good);background:#eef8f1;padding:13px;border-radius:10px;line-height:1.5}
+.notice{border-left:5px solid var(--warn);background:#fff9ed;padding:12px;border-radius:10px;color:#4b3515;line-height:1.45}
+.source{font-size:13px;color:var(--muted);word-break:break-word;line-height:1.45}
+.ok{color:var(--good);font-weight:800}.badtext{color:var(--bad);font-weight:800}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:10px 6px;border-bottom:1px solid var(--line);text-align:left}
+th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.5px}
+.trend-up{color:var(--good);font-weight:800}.trend-down{color:var(--bad);font-weight:800}.trend-flat{color:var(--warn);font-weight:800}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
+@media(max-width:520px){.grid{grid-template-columns:1fr}.big{font-size:40px}}
 </style>
 </head>
 
 <body>
-
 <header>
   <h1>Salmon Rivers Intelligence</h1>
-  <p>Build 10182 · Henthorn telemetry trend layer</p>
+  <p>Build 10183 · River interpretation engine v1</p>
 </header>
 
 <main>
@@ -228,418 +54,247 @@ footer{
       <div class="label">Primary live station</div>
       <strong>River Ribble @ Henthorn</strong>
     </div>
-
     <span id="statusBadge" class="badge warn">Checking</span>
   </div>
-
   <div id="levelValue" class="big">—</div>
   <div class="label">Latest Environment Agency river level reading</div>
 </section>
 
 <section class="card">
   <div class="grid">
-
-    <div class="stat">
-      <div class="label">Movement</div>
-      <strong id="movementValue">Checking</strong>
-    </div>
-
-    <div class="stat">
-      <div class="label">Reading time</div>
-      <strong id="readingTime">—</strong>
-    </div>
-
-    <div class="stat">
-      <div class="label">Reading age</div>
-      <strong id="ageValue">—</strong>
-    </div>
-
-    <div class="stat">
-      <div class="label">Confidence</div>
-      <strong id="confidenceValue">Checking</strong>
-    </div>
-
+    <div class="stat"><div class="label">Movement</div><strong id="movementValue">Checking</strong></div>
+    <div class="stat"><div class="label">Reading time</div><strong id="readingTime">—</strong></div>
+    <div class="stat"><div class="label">Reading age</div><strong id="ageValue">—</strong></div>
+    <div class="stat"><div class="label">Confidence</div><strong id="confidenceValue">Checking</strong></div>
   </div>
 </section>
 
 <section class="card">
   <div class="grid">
-
-    <div class="stat">
-      <div class="label">Trend delta</div>
-      <strong id="deltaValue">—</strong>
-    </div>
-
-    <div class="stat">
-      <div class="label">Trend profile</div>
-      <strong id="trendProfile">Checking</strong>
-    </div>
-
+    <div class="stat"><div class="label">Trend delta</div><strong id="deltaValue">—</strong></div>
+    <div class="stat"><div class="label">Trend profile</div><strong id="trendProfile">Checking</strong></div>
   </div>
 </section>
 
 <section class="card">
-  <button id="refreshBtn" onclick="loadHenthorn()">
-    Refresh live data
-  </button>
+  <h2>River interpretation</h2>
+  <div class="panel" id="interpretationPanel">Checking live telemetry before interpreting river behaviour.</div>
+</section>
 
-  <p class="source" id="lastChecked">
-    Last checked: —
-  </p>
+<section class="card">
+  <button id="refreshBtn" onclick="loadHenthorn()">Refresh live data</button>
+  <p class="source" id="lastChecked">Last checked: —</p>
 </section>
 
 <section class="card">
   <h2>Telemetry trend</h2>
-
   <table>
-    <thead>
-      <tr>
-        <th>Time</th>
-        <th>Level</th>
-        <th>Change</th>
-      </tr>
-    </thead>
-
-    <tbody id="trendTable">
-      <tr>
-        <td colspan="3">Loading telemetry history...</td>
-      </tr>
-    </tbody>
+    <thead><tr><th>Time</th><th>Level</th><th>Change</th></tr></thead>
+    <tbody id="trendTable"><tr><td colspan="3">Loading telemetry history...</td></tr></tbody>
   </table>
 </section>
 
 <section class="card">
   <h2>Source audit</h2>
-
-  <p class="source">
-    <strong>Station:</strong> 710305 · Henthorn
-  </p>
-
-  <p class="source">
-    <strong>Live source:</strong> Environment Agency flood-monitoring telemetry API
-  </p>
-
-  <p class="source" id="sourceResult">
-    Source result: checking
-  </p>
+  <p class="source"><strong>Station:</strong> 710305 · Henthorn</p>
+  <p class="source"><strong>Live source:</strong> Environment Agency flood-monitoring telemetry API</p>
+  <p class="source" id="sourceResult">Source result: checking</p>
 </section>
 
 <section class="card">
   <h2>Verified intelligence only</h2>
-
   <div class="notice">
-    No fishability scoring, fake catches, fake temperatures or speculative classifications are used in this platform. Telemetry only.
+    This build interprets EA telemetry behaviour only. It does not score fishing, invent catches, invent temperature, or infer fish movement without a verified source.
   </div>
 </section>
 
 </main>
 
-<footer>
-  Build 10182 · Telemetry-first intelligence
-</footer>
+<footer>Build 10183 · No source = no number</footer>
 
 <script>
-const STATION_ID = "710305";
+const STATION_ID="710305";
+const latestUrl=`https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?latest`;
+const trendUrl=`https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?_sorted&_limit=12`;
 
-const latestUrl =
-`https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?latest`;
-
-const trendUrl =
-`https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?_sorted&_limit=12`;
-
-function $(id){
-  return document.getElementById(id);
-}
+function $(id){return document.getElementById(id);}
 
 function setStatus(text,type){
-  const badge = $("statusBadge");
-
-  badge.textContent = text;
-  badge.className = "badge";
-
-  if(type==="warn") badge.classList.add("warn");
-  if(type==="bad") badge.classList.add("bad");
+  const badge=$("statusBadge");
+  badge.textContent=text;
+  badge.className="badge";
+  if(type==="warn")badge.classList.add("warn");
+  if(type==="bad")badge.classList.add("bad");
 }
 
 function formatDate(iso){
-  if(!iso) return "Unavailable";
-
-  const d = new Date(iso);
-
-  if(isNaN(d)) return "Unavailable";
-
-  return d.toLocaleString("en-GB",{
-    weekday:"short",
-    day:"2-digit",
-    month:"short",
-    hour:"2-digit",
-    minute:"2-digit"
-  });
+  const d=new Date(iso);
+  if(isNaN(d))return"Unavailable";
+  return d.toLocaleString("en-GB",{weekday:"short",day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"});
 }
 
 function shortTime(iso){
-  const d = new Date(iso);
-
-  if(isNaN(d)) return "—";
-
-  return d.toLocaleTimeString("en-GB",{
-    hour:"2-digit",
-    minute:"2-digit"
-  });
+  const d=new Date(iso);
+  if(isNaN(d))return"—";
+  return d.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"});
 }
 
 function ageMinutes(iso){
-  const d = new Date(iso);
-
-  if(isNaN(d)) return null;
-
+  const d=new Date(iso);
+  if(isNaN(d))return null;
   return Math.max(0,Math.round((Date.now()-d.getTime())/60000));
 }
 
 function ageText(iso){
-  const mins = ageMinutes(iso);
-
-  if(mins===null) return "Unavailable";
-
-  if(mins < 60) return mins + " min";
-
-  const h = Math.floor(mins/60);
-  const m = mins % 60;
-
-  return h + "h " + m + "m";
+  const mins=ageMinutes(iso);
+  if(mins===null)return"Unavailable";
+  if(mins<60)return mins+" min";
+  return Math.floor(mins/60)+"h "+(mins%60)+"m";
 }
 
 function confidence(iso){
-  const mins = ageMinutes(iso);
-
-  if(mins===null) return "Unavailable";
-
-  if(mins <= 90) return "High";
-  if(mins <= 240) return "Medium";
-
-  return "Low";
+  const mins=ageMinutes(iso);
+  if(mins===null)return"Unavailable";
+  if(mins<=90)return"High";
+  if(mins<=240)return"Medium";
+  return"Low";
 }
 
 function movementFromReadings(items){
-  if(!Array.isArray(items) || items.length < 2)
-    return "Unavailable";
-
-  const diff = items[0].value - items[1].value;
-
-  if(Math.abs(diff) < 0.005) return "Steady";
-
-  return diff > 0 ? "Rising" : "Falling";
-}
-
-function overallTrend(items){
-  if(items.length < 2) return "Unavailable";
-
-  const latest = items[0].value;
-  const oldest = items[items.length-1].value;
-
-  const diff = latest - oldest;
-
-  if(Math.abs(diff) < 0.01)
-    return "Stable overnight profile";
-
-  if(diff > 0)
-    return "Gradual rise developing";
-
-  return "Gradual fall developing";
+  if(!Array.isArray(items)||items.length<2)return"Unavailable";
+  const diff=items[0].value-items[1].value;
+  if(Math.abs(diff)<0.005)return"Steady";
+  return diff>0?"Rising":"Falling";
 }
 
 function deltaText(items){
-  if(items.length < 2) return "—";
+  if(items.length<2)return"—";
+  const diff=items[0].value-items[items.length-1].value;
+  return (diff>0?"+":"")+diff.toFixed(3)+" m";
+}
 
-  const latest = items[0].value;
-  const oldest = items[items.length-1].value;
+function overallTrend(items){
+  if(items.length<2)return"Unavailable";
+  const diff=items[0].value-items[items.length-1].value;
+  if(Math.abs(diff)<0.01)return"Stable profile";
+  if(diff>0)return"Gradual rise";
+  return"Gradual fall";
+}
 
-  const diff = latest - oldest;
+function interpretation(items){
+  if(!items.length)return"Telemetry unavailable, so no river interpretation is shown.";
 
-  const sign = diff > 0 ? "+" : "";
+  const latest=items[0].value;
+  const oldest=items[items.length-1].value;
+  const diff=latest-oldest;
+  const recent=items.length>1 ? items[0].value-items[1].value : 0;
 
-  return sign + diff.toFixed(3) + " m";
+  let state="";
+  if(latest<0.35)state="The Henthorn level is currently low on the live EA gauge.";
+  else if(latest<0.55)state="The Henthorn level is currently in a modest, controlled band on the live EA gauge.";
+  else if(latest<0.85)state="The Henthorn level is carrying a more noticeable lift on the live EA gauge.";
+  else state="The Henthorn level is elevated on the live EA gauge.";
+
+  let trend="";
+  if(Math.abs(diff)<0.01)trend="Across the available telemetry window the river profile is broadly stable.";
+  else if(diff>0)trend="Across the available telemetry window the river has been rising.";
+  else trend="Across the available telemetry window the river has been easing down.";
+
+  let recentText="";
+  if(Math.abs(recent)<0.005)recentText="The latest movement is effectively steady.";
+  else if(recent>0)recentText="The latest movement shows a small rise.";
+  else recentText="The latest movement shows a small fall.";
+
+  return state+" "+trend+" "+recentText+" This is telemetry interpretation only, not a fishing recommendation.";
 }
 
 async function fetchJson(url){
-  const res = await fetch(url,{cache:"no-store"});
-
-  if(!res.ok)
-    throw new Error("HTTP " + res.status);
-
+  const res=await fetch(url,{cache:"no-store"});
+  if(!res.ok)throw new Error("HTTP "+res.status);
   return await res.json();
 }
 
 function renderTrendTable(items){
-  const tbody = $("trendTable");
-
+  const tbody=$("trendTable");
   if(!items.length){
-    tbody.innerHTML = `
-      <tr>
-        <td colspan="3">No telemetry history available</td>
-      </tr>
-    `;
+    tbody.innerHTML="<tr><td colspan='3'>No telemetry history available</td></tr>";
     return;
   }
 
-  let html = "";
-
+  let html="";
   for(let i=0;i<items.length;i++){
-
-    const row = items[i];
-    const prev = items[i+1];
-
-    let change = "—";
-    let cls = "trend-flat";
+    const row=items[i];
+    const prev=items[i+1];
+    let change="—";
+    let cls="trend-flat";
 
     if(prev){
-      const diff = row.value - prev.value;
-
-      if(Math.abs(diff) < 0.005){
-        change = "Steady";
-        cls = "trend-flat";
-      }else if(diff > 0){
-        change = "+" + diff.toFixed(3);
-        cls = "trend-up";
-      }else{
-        change = diff.toFixed(3);
-        cls = "trend-down";
-      }
+      const diff=row.value-prev.value;
+      if(Math.abs(diff)<0.005){change="Steady";cls="trend-flat";}
+      else if(diff>0){change="+"+diff.toFixed(3);cls="trend-up";}
+      else{change=diff.toFixed(3);cls="trend-down";}
     }
 
-    html += `
-      <tr>
-        <td>${shortTime(row.dateTime)}</td>
-        <td>${row.value.toFixed(3)} m</td>
-        <td class="${cls}">${change}</td>
-      </tr>
-    `;
+    html+=`<tr><td>${shortTime(row.dateTime)}</td><td>${row.value.toFixed(3)} m</td><td class="${cls}">${change}</td></tr>`;
   }
 
-  tbody.innerHTML = html;
+  tbody.innerHTML=html;
 }
 
 async function loadHenthorn(){
-
-  const btn = $("refreshBtn");
-
-  btn.disabled = true;
-  btn.textContent = "Checking EA telemetry...";
-
+  const btn=$("refreshBtn");
+  btn.disabled=true;
+  btn.textContent="Checking EA telemetry...";
   setStatus("Checking","warn");
-
-  $("lastChecked").textContent =
-    "Last checked: " +
-    new Date().toLocaleString("en-GB");
+  $("lastChecked").textContent="Last checked: "+new Date().toLocaleString("en-GB");
 
   try{
+    const latestData=await fetchJson(latestUrl);
+    const trendData=await fetchJson(trendUrl);
 
-    const latestData = await fetchJson(latestUrl);
-    const trendData = await fetchJson(trendUrl);
+    const latestItems=Array.isArray(latestData.items)?latestData.items:[];
+    const trendItems=Array.isArray(trendData.items)?trendData.items:[];
 
-    const latestItems =
-      Array.isArray(latestData.items)
-      ? latestData.items : [];
+    const clean=trendItems
+      .filter(x=>typeof x.value==="number"&&x.dateTime)
+      .sort((a,b)=>new Date(b.dateTime)-new Date(a.dateTime));
 
-    const trendItems =
-      Array.isArray(trendData.items)
-      ? trendData.items : [];
+    const latest=latestItems.find(x=>typeof x.value==="number"&&x.dateTime)||clean[0];
 
-    const clean = trendItems
-      .filter(x =>
-        typeof x.value === "number" &&
-        x.dateTime
-      )
-      .sort((a,b)=>
-        new Date(b.dateTime)-new Date(a.dateTime)
-      );
+    if(!latest)throw new Error("No numeric telemetry returned");
 
-    const latest =
-      latestItems.find(x =>
-        typeof x.value === "number"
-      ) || clean[0];
-
-    if(!latest)
-      throw new Error(
-        "No numeric telemetry returned"
-      );
-
-    $("levelValue").textContent =
-      latest.value.toFixed(3) + " m";
-
-    $("movementValue").textContent =
-      movementFromReadings(clean);
-
-    $("readingTime").textContent =
-      formatDate(latest.dateTime);
-
-    $("ageValue").textContent =
-      ageText(latest.dateTime);
-
-    $("confidenceValue").textContent =
-      confidence(latest.dateTime);
-
-    $("deltaValue").textContent =
-      deltaText(clean);
-
-    $("trendProfile").textContent =
-      overallTrend(clean);
+    $("levelValue").textContent=latest.value.toFixed(3)+" m";
+    $("movementValue").textContent=movementFromReadings(clean);
+    $("readingTime").textContent=formatDate(latest.dateTime);
+    $("ageValue").textContent=ageText(latest.dateTime);
+    $("confidenceValue").textContent=confidence(latest.dateTime);
+    $("deltaValue").textContent=deltaText(clean);
+    $("trendProfile").textContent=overallTrend(clean);
+    $("interpretationPanel").textContent=interpretation(clean);
 
     renderTrendTable(clean);
 
-    $("sourceResult").innerHTML =
-      'Source result: <span class="ok">EA telemetry trend history acquired successfully</span>';
-
+    $("sourceResult").innerHTML='Source result: <span class="ok">EA telemetry acquired and interpreted successfully</span>';
     setStatus("Live EA data","good");
-
   }catch(err){
-
-    $("levelValue").textContent =
-      "Unavailable";
-
-    $("movementValue").textContent =
-      "Unavailable";
-
-    $("readingTime").textContent =
-      "Unavailable";
-
-    $("ageValue").textContent =
-      "Unavailable";
-
-    $("confidenceValue").textContent =
-      "Unavailable";
-
-    $("deltaValue").textContent =
-      "Unavailable";
-
-    $("trendProfile").textContent =
-      "Unavailable";
-
-    $("trendTable").innerHTML = `
-      <tr>
-        <td colspan="3">
-          Telemetry unavailable
-        </td>
-      </tr>
-    `;
-
-    $("sourceResult").innerHTML =
-      '<span class="badtext">Telemetry acquisition failed: ' +
-      err.message +
-      '</span>';
-
+    $("levelValue").textContent="Unavailable";
+    $("movementValue").textContent="Unavailable";
+    $("readingTime").textContent="Unavailable";
+    $("ageValue").textContent="Unavailable";
+    $("confidenceValue").textContent="Unavailable";
+    $("deltaValue").textContent="Unavailable";
+    $("trendProfile").textContent="Unavailable";
+    $("interpretationPanel").textContent="Telemetry unavailable, so no river interpretation is shown.";
+    $("trendTable").innerHTML="<tr><td colspan='3'>Telemetry unavailable</td></tr>";
+    $("sourceResult").innerHTML='<span class="badtext">Telemetry acquisition failed: '+err.message+'</span>';
     setStatus("Unavailable","bad");
-
   }finally{
-
-    btn.disabled = false;
-    btn.textContent = "Refresh live data";
-
+    btn.disabled=false;
+    btn.textContent="Refresh live data";
   }
 }
 
 loadHenthorn();
-
 setInterval(loadHenthorn,15*60*1000);
 </script>
 
