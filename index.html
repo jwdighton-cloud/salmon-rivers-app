@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon & Sea Trout Rivers Intelligence — Build 10200</title>
+<title>Salmon & Sea Trout Rivers Intelligence — Build 10201</title>
 
 <style>
 :root{
@@ -204,6 +204,27 @@ line-height:1.6;
 color:#4b3515;
 }
 
+.chart-wrap{
+width:100%;
+overflow:hidden;
+}
+
+#levelChart{
+width:100%;
+height:260px;
+display:block;
+border:1px solid var(--line);
+border-radius:14px;
+background:#fbfdfc;
+}
+
+.chart-note{
+font-size:13px;
+color:var(--muted);
+line-height:1.45;
+margin-top:8px;
+}
+
 table{
 width:100%;
 border-collapse:collapse;
@@ -259,6 +280,10 @@ h1{
 font-size:26px;
 }
 
+#levelChart{
+height:230px;
+}
+
 }
 </style>
 </head>
@@ -267,7 +292,7 @@ font-size:26px;
 
 <header>
 <h1>Salmon & Sea Trout Rivers Intelligence</h1>
-<p>Build 10200 · Quiet river intelligence</p>
+<p>Build 10201 · Live level chart</p>
 </header>
 
 <main>
@@ -337,6 +362,16 @@ Checking recent movement...
 <div class="panel gold" id="freshWater">
 Checking for signs of fresh water...
 </div>
+</section>
+
+<section class="card">
+<h2>River level chart</h2>
+<div class="chart-wrap">
+<svg id="levelChart" viewBox="0 0 720 260" preserveAspectRatio="none" role="img" aria-label="Recent river level chart"></svg>
+</div>
+<p class="chart-note" id="chartNote">
+Chart loading from recent Environment Agency readings.
+</p>
 </section>
 
 <section class="card">
@@ -425,17 +460,17 @@ This platform only uses verified live telemetry and careful river interpretation
 </main>
 
 <footer>
-Build 10200 · Salmon & Sea Trout Rivers Intelligence
+Build 10201 · Salmon & Sea Trout Rivers Intelligence
 </footer>
 
 <script>
 
 const STATION_ID="710305";
-const MEMORY_KEY="sstri_henthorn_memory_v1";
+const MEMORY_KEY="sstri_henthorn_memory_v2";
 
 const latestUrl=`https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?latest`;
 
-const trendUrl=`https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?_sorted&_limit=20`;
+const trendUrl=`https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?_sorted&_limit=32`;
 
 function $(id){
 return document.getElementById(id);
@@ -876,6 +911,107 @@ html+=`
 tbody.innerHTML=html;
 }
 
+function renderChart(items){
+
+const svg=$("levelChart");
+const note=$("chartNote");
+
+if(!items || items.length<2){
+svg.innerHTML="";
+note.textContent="Not enough recent readings to draw a chart yet.";
+return;
+}
+
+const chronological=
+items
+.slice()
+.sort((a,b)=>asDate(a.dateTime)-asDate(b.dateTime));
+
+const values=
+chronological.map(x=>x.value);
+
+let min=
+Math.min(...values);
+
+let max=
+Math.max(...values);
+
+if(max-min<0.01){
+min-=0.005;
+max+=0.005;
+}
+
+const width=720;
+const height=260;
+const padL=54;
+const padR=18;
+const padT=20;
+const padB=42;
+
+function xPos(i){
+if(chronological.length===1)return padL;
+return padL+
+(i/(chronological.length-1))*
+(width-padL-padR);
+}
+
+function yPos(v){
+return padT+
+((max-v)/(max-min))*
+(height-padT-padB);
+}
+
+const points=
+chronological
+.map((r,i)=>xPos(i)+","+yPos(r.value))
+.join(" ");
+
+const first=chronological[0];
+const last=chronological[chronological.length-1];
+
+const yMin=yPos(min);
+const yMax=yPos(max);
+
+const yMid=yPos((min+max)/2);
+
+const firstTime=shortTime(first.dateTime);
+const lastTime=shortTime(last.dateTime);
+
+svg.innerHTML=`
+<line x1="${padL}" y1="${yMax}" x2="${width-padR}" y2="${yMax}" stroke="#d7dfdc" stroke-width="1"/>
+<line x1="${padL}" y1="${yMid}" x2="${width-padR}" y2="${yMid}" stroke="#d7dfdc" stroke-width="1"/>
+<line x1="${padL}" y1="${yMin}" x2="${width-padR}" y2="${yMin}" stroke="#d7dfdc" stroke-width="1"/>
+
+<text x="8" y="${yMax+4}" font-size="12" fill="#5b6b63">${max.toFixed(3)}m</text>
+<text x="8" y="${yMid+4}" font-size="12" fill="#5b6b63">${((min+max)/2).toFixed(3)}m</text>
+<text x="8" y="${yMin+4}" font-size="12" fill="#5b6b63">${min.toFixed(3)}m</text>
+
+<polyline points="${points}" fill="none" stroke="#082d1b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+
+${chronological.map((r,i)=>`
+<circle cx="${xPos(i)}" cy="${yPos(r.value)}" r="4" fill="#0f7b3f"/>
+`).join("")}
+
+<text x="${padL}" y="${height-14}" font-size="12" fill="#5b6b63">${firstTime}</text>
+<text x="${width-padR-48}" y="${height-14}" font-size="12" fill="#5b6b63">${lastTime}</text>
+`;
+
+const change=
+last.value-first.value;
+
+let phrase="broadly steady";
+
+if(change>0.008){
+phrase="rising";
+}
+else if(change<-0.008){
+phrase="easing back";
+}
+
+note.textContent=
+"Recent level picture: "+phrase+" across the displayed readings.";
+}
+
 async function loadHenthorn(){
 
 const btn=$("refreshBtn");
@@ -944,6 +1080,8 @@ recentMovementText(clean);
 $("freshWater").textContent=
 freshWaterText(clean);
 
+renderChart(clean);
+
 saveMemory(latest);
 
 $("continuityPanel").textContent=
@@ -977,6 +1115,9 @@ $("freshWater").textContent=
 
 $("continuityPanel").textContent=
 "River continuity is currently unavailable.";
+
+$("levelChart").innerHTML="";
+$("chartNote").textContent="Chart unavailable because live readings could not be acquired.";
 
 $("behaviourEvents").innerHTML=`
 <div class="event">
