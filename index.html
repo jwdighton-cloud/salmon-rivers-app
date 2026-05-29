@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence · Build 10206</title>
+<title>Salmon Rivers Intelligence · Build 10207</title>
 <style>
 :root{
   --bg:#f4f1ea;--panel:#fffaf0;--panel2:#fffdf7;--ink:#1c1c1c;--muted:#6b6258;
-  --line:#d8cbb9;--accent:#9b6b38;--accent-dark:#6f4725;--good:#1f7a4d;--warn:#b7791f;--bad:#b83232;
+  --line:#d8cbb9;--accent:#9b6b38;--accent-dark:#6f4725;
 }
 *{box-sizing:border-box}
 body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
@@ -46,7 +46,7 @@ td:first-child{color:var(--muted);width:38%}
 <body>
 <header>
   <h1>Salmon Rivers Intelligence</h1>
-  <div class="sub">River Ribble · Henthorn · Build 10206</div>
+  <div class="sub">River Ribble · Henthorn · Build 10207</div>
 </header>
 
 <main>
@@ -85,6 +85,8 @@ td:first-child{color:var(--muted);width:38%}
     <div><span>Current movement</span><strong id="sumMovement">Checking…</strong></div>
     <div><span>Latest reading age</span><strong id="sumAge">Checking…</strong></div>
     <div><span>24-hour change</span><strong id="sum24h">Checking…</strong></div>
+    <div><span>7-day high</span><strong id="sumHighTime">Checking…</strong></div>
+    <div><span>7-day low</span><strong id="sumLowTime">Checking…</strong></div>
     <div><span>7-day context</span><strong id="sumContext">Checking…</strong></div>
     <div>
       <span>Position within 7-day range</span>
@@ -124,14 +126,15 @@ td:first-child{color:var(--muted);width:38%}
 
 </main>
 
-<div class="footer">Salmon Rivers Intelligence · Build 10206 · GitHub Pages static build</div>
+<div class="footer">Salmon Rivers Intelligence · Build 10207 · GitHub Pages static build</div>
 
 <script>
-const BUILD="10206";
+const BUILD="10207";
 const STATION_ID="710305";
 const READINGS_URL=`https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?parameter=level&_sorted`;
 const CHART=document.getElementById("chart");
 const CTX=CHART.getContext("2d");
+
 function $(id){return document.getElementById(id);}
 function setStatus(msg){$("status").textContent=msg;}
 
@@ -164,7 +167,9 @@ function readingAgeText(iso){
 function statsFrom(readings){
   const values=readings.map(r=>r.value);
   const high=Math.max(...values),low=Math.min(...values),avg=values.reduce((a,b)=>a+b,0)/values.length;
-  return{high,low,avg,count:readings.length,range:high-low};
+  const highReading=readings.reduce((a,b)=>b.value>a.value?b:a,readings[0]);
+  const lowReading=readings.reduce((a,b)=>b.value<a.value?b:a,readings[0]);
+  return{high,low,avg,count:readings.length,range:high-low,highReading,lowReading};
 }
 function changeOverHours(readings,hours){
   if(readings.length<2)return null;
@@ -190,17 +195,21 @@ function drawChart(readings){
   CTX.clearRect(0,0,w,h);
   const padL=58,padR=24,padT=24,padB=66,plotW=w-padL-padR,plotH=h-padT-padB;
   CTX.fillStyle="#fffdf7";CTX.fillRect(0,0,w,h);
+
   if(readings.length<2){
     CTX.fillStyle="#6b6258";CTX.font="16px system-ui,-apple-system,Segoe UI,sans-serif";
     CTX.fillText("Not enough verified EA chart data.",padL,h/2);return;
   }
+
   const st=statsFrom(readings),axis=axisFromStats(st);
   CTX.strokeStyle="#e0d4c3";CTX.lineWidth=1;CTX.fillStyle="#6b6258";CTX.font="12px system-ui,-apple-system,Segoe UI,sans-serif";CTX.textAlign="left";
+
   for(let i=0;i<=4;i++){
     const val=axis.min+((axis.max-axis.min)*i/4);
     const py=padT+plotH-((val-axis.min)/(axis.max-axis.min))*plotH;
     CTX.beginPath();CTX.moveTo(padL,py);CTX.lineTo(w-padR,py);CTX.stroke();CTX.fillText(val.toFixed(2)+"m",8,py+4);
   }
+
   const minT=readings[0].time.getTime(),maxT=readings[readings.length-1].time.getTime(),span=Math.max(1,maxT-minT);
   const xFor=t=>padL+((t.getTime()-minT)/span)*plotW;
   const yFor=v=>padT+plotH-((v-axis.min)/(axis.max-axis.min))*plotH;
@@ -209,8 +218,11 @@ function drawChart(readings){
   CTX.beginPath();
   readings.forEach((r,i)=>{const x=xFor(r.time),y=yFor(r.value);if(i===0)CTX.moveTo(x,y);else CTX.lineTo(x,y);});
   CTX.lineTo(xFor(readings[readings.length-1].time),baseY);CTX.lineTo(xFor(readings[0].time),baseY);CTX.closePath();
+
   const grad=CTX.createLinearGradient(0,padT,0,baseY);
-  grad.addColorStop(0,"rgba(155,107,56,0.38)");grad.addColorStop(0.55,"rgba(155,107,56,0.14)");grad.addColorStop(1,"rgba(155,107,56,0.02)");
+  grad.addColorStop(0,"rgba(155,107,56,0.38)");
+  grad.addColorStop(0.55,"rgba(155,107,56,0.14)");
+  grad.addColorStop(1,"rgba(155,107,56,0.02)");
   CTX.fillStyle=grad;CTX.fill();
 
   CTX.beginPath();
@@ -218,15 +230,17 @@ function drawChart(readings){
   CTX.strokeStyle="#6f4725";CTX.lineWidth=3;CTX.lineJoin="round";CTX.lineCap="round";CTX.stroke();
 
   const latest=readings[readings.length-1];
-  const highReading=readings.reduce((a,b)=>b.value>a.value?b:a,readings[0]);
-  const lowReading=readings.reduce((a,b)=>b.value<a.value?b:a,readings[0]);
+
   function marker(r,label){
     const x=xFor(r.time),y=yFor(r.value);
     CTX.beginPath();CTX.arc(x,y,5,0,Math.PI*2);CTX.fillStyle="#241b14";CTX.fill();
     CTX.fillStyle="#241b14";CTX.font="11px system-ui,-apple-system,Segoe UI,sans-serif";CTX.textAlign="center";
     CTX.fillText(label,x,y<padT+18?y+18:y-10);
   }
-  marker(highReading,"High");marker(lowReading,"Low");marker(latest,"Latest");
+
+  marker(st.highReading,"High");
+  marker(st.lowReading,"Low");
+  marker(latest,"Latest");
 
   CTX.fillStyle="#6b6258";CTX.font="11px system-ui,-apple-system,Segoe UI,sans-serif";CTX.textAlign="center";
   for(let i=0;i<7;i++){
@@ -237,27 +251,46 @@ function drawChart(readings){
   }
   CTX.textAlign="left";
 }
+
 async function refreshData(){
   setStatus("Fetching EA Henthorn readings…");
   const since=new Date(Date.now()-7*24*60*60*1000).toISOString();
   const url=`${READINGS_URL}&since=${encodeURIComponent(since)}&_limit=2000`;
+
   try{
     const res=await fetch(url,{cache:"no-store"});
     if(!res.ok)throw new Error(`EA HTTP ${res.status}`);
     const data=await res.json();
     const readings=validReadings(data.items);
+
     if(readings.length===0){
       ["level","sumCurrent"].forEach(id=>$(id).textContent="Unavailable");
-      $("levelTime").textContent="No verified EA readings returned.";$("movement").textContent="Unknown";$("movementDetail").textContent="No readings available for movement comparison.";
-      $("sumMovement").textContent="Unknown";$("sumAge").textContent="Unavailable";$("sum24h").textContent="Unavailable";$("sumContext").textContent="Unavailable";$("sumPosition").textContent="Unavailable";$("chartLatest").textContent="—";
-      drawChart([]);setStatus("EA source returned no usable readings.");return;
+      $("levelTime").textContent="No verified EA readings returned.";
+      $("movement").textContent="Unknown";
+      $("movementDetail").textContent="No readings available for movement comparison.";
+      $("sumMovement").textContent="Unknown";
+      $("sumAge").textContent="Unavailable";
+      $("sum24h").textContent="Unavailable";
+      $("sumHighTime").textContent="Unavailable";
+      $("sumLowTime").textContent="Unavailable";
+      $("sumContext").textContent="Unavailable";
+      $("sumPosition").textContent="Unavailable";
+      $("chartLatest").textContent="—";
+      drawChart([]);
+      setStatus("EA source returned no usable readings.");
+      return;
     }
-    const latest=readings[readings.length-1],mv=movementFrom(readings),st=statsFrom(readings),c24=changeOverHours(readings,24);
+
+    const latest=readings[readings.length-1];
+    const mv=movementFrom(readings);
+    const st=statsFrom(readings);
+    const c24=changeOverHours(readings,24);
     const position=st.range>0?((latest.value-st.low)/st.range)*100:0;
 
     $("level").textContent=`${latest.value.toFixed(3)} m`;
     $("levelTime").textContent=`Verified EA reading: ${fmtFullDateTime(latest.iso)}`;
-    $("movement").textContent=mv.label;$("movementDetail").textContent=mv.detail;
+    $("movement").textContent=mv.label;
+    $("movementDetail").textContent=mv.detail;
 
     $("chartLatest").textContent=`${latest.value.toFixed(3)} m`;
     $("chartNote").textContent=`Showing ${readings.length} verified EA readings from ${fmtDateTime(readings[0].iso)} to ${fmtDateTime(latest.iso)}. Dynamic scale: ${st.low.toFixed(3)}–${st.high.toFixed(3)} m.`;
@@ -266,7 +299,9 @@ async function refreshData(){
     $("sumMovement").textContent=mv.label;
     $("sumAge").textContent=readingAgeText(latest.iso);
     $("sum24h").textContent=c24?`${c24.diff>=0?"+":""}${c24.diff.toFixed(3)} m since ${fmtDateTime(c24.from.iso)}`:"Unavailable";
-    $("sumContext").textContent=`High ${st.high.toFixed(3)} m · Low ${st.low.toFixed(3)} m`;
+    $("sumHighTime").textContent=`${st.high.toFixed(3)} m · ${fmtDateTime(st.highReading.iso)}`;
+    $("sumLowTime").textContent=`${st.low.toFixed(3)} m · ${fmtDateTime(st.lowReading.iso)}`;
+    $("sumContext").textContent=`Range ${st.range.toFixed(3)} m · Average ${st.avg.toFixed(3)} m`;
     $("sumPosition").textContent=`${Math.round(position)}% of weekly range`;
     $("positionBar").style.width=`${Math.max(0,Math.min(100,position))}%`;
 
@@ -278,9 +313,21 @@ async function refreshData(){
     drawChart(readings);
     setStatus(`Updated successfully · Build ${BUILD} · ${new Date().toLocaleString("en-GB")}`);
   }catch(err){
-    $("level").textContent="Unavailable";$("levelTime").textContent="EA telemetry could not be reached.";$("movement").textContent="Unknown";$("movementDetail").textContent="Movement withheld because source data is unavailable.";
-    $("sumCurrent").textContent="Unavailable";$("sumMovement").textContent="Unknown";$("sumAge").textContent="Unavailable";$("sum24h").textContent="Unavailable";$("sumContext").textContent="Unavailable";$("sumPosition").textContent="Unavailable";$("chartLatest").textContent="—";
-    drawChart([]);setStatus(`EA fetch failed: ${err.message}`);
+    $("level").textContent="Unavailable";
+    $("levelTime").textContent="EA telemetry could not be reached.";
+    $("movement").textContent="Unknown";
+    $("movementDetail").textContent="Movement withheld because source data is unavailable.";
+    $("sumCurrent").textContent="Unavailable";
+    $("sumMovement").textContent="Unknown";
+    $("sumAge").textContent="Unavailable";
+    $("sum24h").textContent="Unavailable";
+    $("sumHighTime").textContent="Unavailable";
+    $("sumLowTime").textContent="Unavailable";
+    $("sumContext").textContent="Unavailable";
+    $("sumPosition").textContent="Unavailable";
+    $("chartLatest").textContent="—";
+    drawChart([]);
+    setStatus(`EA fetch failed: ${err.message}`);
   }
 }
 refreshData();
