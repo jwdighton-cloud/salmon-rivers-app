@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+P<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence · Build 10210</title>
+<title>Salmon Rivers Intelligence · Build 10211</title>
 <style>
 :root{
   --bg:#f4f1ea;--panel:#fffaf0;--panel2:#fffdf7;--ink:#1c1c1c;--muted:#6b6258;
@@ -48,7 +48,7 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
 <body>
 <header>
   <h1>Salmon Rivers Intelligence</h1>
-  <div class="sub">River Ribble · Henthorn · Build 10210</div>
+  <div class="sub">River Ribble · Henthorn · Build 10211</div>
 </header>
 
 <main>
@@ -141,6 +141,49 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
 </section>
 
 <section class="card">
+  <div class="section-title">Source Acquisition Roadmap</div>
+
+  <table class="analysis-table">
+    <tr>
+      <td>Catch Intelligence</td>
+      <td><strong>Primary Focus</strong><br>
+      RFCA identified as Lead Candidate.<br>
+      Ribble Rivers Trust identified as Secondary Candidate.</td>
+    </tr>
+
+    <tr>
+      <td>RFCA Temperature</td>
+      <td><strong>Investigation</strong><br>
+      Assessing availability, stability and traceability of live water temperature data.</td>
+    </tr>
+
+    <tr>
+      <td>Rainfall Intelligence</td>
+      <td><strong>Investigation</strong><br>
+      Environment Agency Rainfall API identified as acquisition route.
+      Mearley Hall currently leads as rainfall candidate.</td>
+    </tr>
+
+    <tr>
+      <td>Fish Counter Intelligence</td>
+      <td><strong>Research</strong><br>
+      Identifying counter locations, ownership and availability.</td>
+    </tr>
+
+    <tr>
+      <td>Beat Intelligence</td>
+      <td><strong>Planned</strong><br>
+      Future Mitton Bridge ↔ Edisford Bridge intelligence layer.</td>
+    </tr>
+  </table>
+
+  <div class="small" style="margin-top:10px">
+    Current objective: acquire the first approved current-season Ribble catch intelligence source.
+  </div>
+
+</section>
+
+<section class="card">
   <div class="section-title">Weekly Statistics</div>
   <div class="grid4">
     <div class="mini"><div class="label">7-day high</div><div class="value" id="statHigh">—</div><div class="small" id="statHighTime"></div></div>
@@ -167,10 +210,10 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
 
 </main>
 
-<div class="footer">Salmon Rivers Intelligence · Build 10210 · GitHub Pages static build</div>
+<div class="footer">Salmon Rivers Intelligence · Build 10211 · GitHub Pages static build</div>
 
 <script>
-const BUILD="10210";
+const BUILD="10211";
 const STATION_ID="710305";
 const READINGS_URL=`https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?parameter=level&_sorted`;
 const CHART=document.getElementById("chart");
