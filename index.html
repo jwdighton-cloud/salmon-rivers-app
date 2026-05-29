@@ -3,15 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence · Build 10203</title>
+<title>Salmon Rivers Intelligence · Build 10204</title>
 <style>
 :root{
   --bg:#f4f1ea;
   --panel:#fffaf0;
+  --panel2:#fffdf7;
   --ink:#1c1c1c;
   --muted:#6b6258;
   --line:#d8cbb9;
   --accent:#9b6b38;
+  --accent-dark:#6f4725;
   --good:#1f7a4d;
   --warn:#b7791f;
   --bad:#b83232;
@@ -31,7 +33,6 @@ header{
 h1{
   margin:0;
   font-size:24px;
-  letter-spacing:.2px;
 }
 .sub{
   margin-top:6px;
@@ -39,7 +40,7 @@ h1{
   color:#d9c8b3;
 }
 main{
-  max-width:980px;
+  max-width:1040px;
   margin:0 auto;
   padding:14px;
 }
@@ -56,11 +57,16 @@ main{
   grid-template-columns:1fr 1fr;
   gap:12px;
 }
-.metric{
+.grid4{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+.metric,.mini{
   border:1px solid var(--line);
   border-radius:14px;
   padding:12px;
-  background:#fffdf7;
+  background:var(--panel2);
 }
 .label{
   font-size:13px;
@@ -69,7 +75,10 @@ main{
 }
 .value{
   font-size:30px;
-  font-weight:700;
+  font-weight:750;
+}
+.mini .value{
+  font-size:21px;
 }
 .small{
   font-size:13px;
@@ -81,13 +90,14 @@ main{
   padding:5px 9px;
   border-radius:999px;
   font-size:13px;
-  font-weight:650;
-  background:#eee;
+  font-weight:700;
+  background:#666;
+  color:#fff;
 }
-.good{color:#fff;background:var(--good)}
-.warn{color:#fff;background:var(--warn)}
-.bad{color:#fff;background:var(--bad)}
-.neutral{color:#fff;background:#666}
+.good{background:var(--good)}
+.warn{background:var(--warn)}
+.bad{background:var(--bad)}
+.neutral{background:#666}
 button{
   width:100%;
   border:0;
@@ -96,21 +106,56 @@ button{
   background:var(--accent);
   color:#fff;
   font-size:16px;
-  font-weight:700;
+  font-weight:750;
 }
 button:active{transform:scale(.99)}
+.chart-head{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:flex-end;
+  margin-bottom:10px;
+}
+.chart-now{
+  text-align:right;
+  font-size:13px;
+  color:var(--muted);
+}
+.chart-now strong{
+  display:block;
+  color:var(--ink);
+  font-size:22px;
+}
 canvas{
   width:100%;
-  height:310px;
+  height:330px;
   display:block;
-  background:#fffdf7;
+  background:var(--panel2);
   border-radius:12px;
   border:1px solid var(--line);
 }
 .section-title{
   font-size:18px;
-  font-weight:750;
+  font-weight:800;
   margin:0 0 10px;
+}
+.summary{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.summary div{
+  background:var(--panel2);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:10px;
+  font-size:14px;
+}
+.summary span{
+  display:block;
+  color:var(--muted);
+  font-size:12px;
+  margin-bottom:4px;
 }
 table{
   width:100%;
@@ -132,10 +177,13 @@ td:first-child{
   font-size:12px;
   padding:20px 8px;
 }
-@media(max-width:650px){
-  .row{grid-template-columns:1fr}
+@media(max-width:760px){
+  .row,.summary{grid-template-columns:1fr}
+  .grid4{grid-template-columns:1fr 1fr}
   .value{font-size:28px}
-  canvas{height:280px}
+  canvas{height:300px}
+  .chart-head{display:block}
+  .chart-now{text-align:left;margin-top:8px}
 }
 </style>
 </head>
@@ -143,7 +191,7 @@ td:first-child{
 <body>
 <header>
   <h1>Salmon Rivers Intelligence</h1>
-  <div class="sub">River Ribble · Henthorn · Build 10203</div>
+  <div class="sub">River Ribble · Henthorn · Build 10204</div>
 </header>
 
 <main>
@@ -165,10 +213,39 @@ td:first-child{
 </section>
 
 <section class="card">
-  <div class="section-title">7-Day Level Context</div>
-  <canvas id="chart" width="900" height="310"></canvas>
-  <div class="small" id="chartNote" style="margin-top:8px">
-    Chart uses real EA timestamped readings from the last 7 days. Y-axis fixed at 0–2 metres.
+  <div class="section-title">Ribble Intelligence Summary</div>
+  <div class="summary">
+    <div><span>Current verified level</span><strong id="sumCurrent">Checking…</strong></div>
+    <div><span>Current movement</span><strong id="sumMovement">Checking…</strong></div>
+    <div><span>Latest reading age</span><strong id="sumAge">Checking…</strong></div>
+    <div><span>7-day context</span><strong id="sumContext">Checking…</strong></div>
+  </div>
+  <div class="small" style="margin-top:10px">
+    Summary uses verified EA Henthorn level telemetry only. No fishability score and no invented interpretation.
+  </div>
+</section>
+
+<section class="card">
+  <div class="chart-head">
+    <div>
+      <div class="section-title" style="margin-bottom:2px">7-Day Level Context</div>
+      <div class="small" id="chartNote">Chart uses real EA timestamped readings from the last 7 days.</div>
+    </div>
+    <div class="chart-now">
+      Latest
+      <strong id="chartLatest">—</strong>
+    </div>
+  </div>
+  <canvas id="chart" width="980" height="330"></canvas>
+</section>
+
+<section class="card">
+  <div class="section-title">Weekly Statistics</div>
+  <div class="grid4">
+    <div class="mini"><div class="label">7-day high</div><div class="value" id="statHigh">—</div></div>
+    <div class="mini"><div class="label">7-day low</div><div class="value" id="statLow">—</div></div>
+    <div class="mini"><div class="label">7-day average</div><div class="value" id="statAvg">—</div></div>
+    <div class="mini"><div class="label">Readings</div><div class="value" id="statCount">—</div></div>
   </div>
 </section>
 
@@ -190,11 +267,11 @@ td:first-child{
 </main>
 
 <div class="footer">
-  Salmon Rivers Intelligence · Build 10203 · GitHub Pages static build
+  Salmon Rivers Intelligence · Build 10204 · GitHub Pages static build
 </div>
 
 <script>
-const BUILD = "10203";
+const BUILD = "10204";
 const STATION_ID = "710305";
 const READINGS_URL = `https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?parameter=level&_sorted`;
 const CHART = document.getElementById("chart");
@@ -235,7 +312,7 @@ function validReadings(items){
 }
 
 function movementFrom(readings){
-  if(readings.length < 2) return {label:"Unknown", detail:"Not enough verified EA readings.", cls:"neutral"};
+  if(readings.length < 2) return {label:"Unknown", detail:"Not enough verified EA readings.", cls:"neutral", diff:0};
   const latest = readings[readings.length - 1];
   let previous = readings[readings.length - 2];
 
@@ -250,26 +327,28 @@ function movementFrom(readings){
   const abs = Math.abs(diff);
 
   if(abs < 0.005){
-    return {
-      label:"Steady",
-      detail:`Change ${diff.toFixed(3)} m since previous reading.`,
-      cls:"good"
-    };
+    return {label:"Steady", detail:`Change ${diff.toFixed(3)} m since previous reading.`, cls:"good", diff};
   }
-
   if(diff > 0){
-    return {
-      label:"Rising",
-      detail:`Up ${diff.toFixed(3)} m since previous reading.`,
-      cls:"warn"
-    };
+    return {label:"Rising", detail:`Up ${diff.toFixed(3)} m since previous reading.`, cls:"warn", diff};
   }
+  return {label:"Falling", detail:`Down ${Math.abs(diff).toFixed(3)} m since previous reading.`, cls:"good", diff};
+}
 
-  return {
-    label:"Falling",
-    detail:`Down ${Math.abs(diff).toFixed(3)} m since previous reading.`,
-    cls:"good"
-  };
+function readingAgeText(iso){
+  const mins = Math.max(0, Math.round((Date.now() - new Date(iso).getTime()) / 60000));
+  if(mins < 60) return `${mins} min`;
+  const hrs = Math.floor(mins / 60);
+  const rem = mins % 60;
+  return `${hrs}h ${rem}m`;
+}
+
+function statsFrom(readings){
+  const values = readings.map(r => r.value);
+  const high = Math.max(...values);
+  const low = Math.min(...values);
+  const avg = values.reduce((a,b)=>a+b,0) / values.length;
+  return {high, low, avg, count:readings.length, range:high-low};
 }
 
 function drawChart(readings){
@@ -277,14 +356,14 @@ function drawChart(readings){
   const h = CHART.height;
   CTX.clearRect(0,0,w,h);
 
-  const padL = 48, padR = 18, padT = 20, padB = 58;
+  const padL = 52, padR = 22, padT = 22, padB = 64;
   const plotW = w - padL - padR;
   const plotH = h - padT - padB;
 
   CTX.fillStyle = "#fffdf7";
   CTX.fillRect(0,0,w,h);
 
-  CTX.strokeStyle = "#d8cbb9";
+  CTX.strokeStyle = "#e0d4c3";
   CTX.lineWidth = 1;
   CTX.fillStyle = "#6b6258";
   CTX.font = "12px system-ui, -apple-system, Segoe UI, sans-serif";
@@ -322,9 +401,11 @@ function drawChart(readings){
   CTX.lineTo(xFor(readings[readings.length - 1].time), baseY);
   CTX.lineTo(xFor(readings[0].time), baseY);
   CTX.closePath();
+
   const grad = CTX.createLinearGradient(0,padT,0,baseY);
-  grad.addColorStop(0,"rgba(155,107,56,0.32)");
-  grad.addColorStop(1,"rgba(155,107,56,0.04)");
+  grad.addColorStop(0,"rgba(155,107,56,0.36)");
+  grad.addColorStop(0.55,"rgba(155,107,56,0.13)");
+  grad.addColorStop(1,"rgba(155,107,56,0.02)");
   CTX.fillStyle = grad;
   CTX.fill();
 
@@ -333,8 +414,23 @@ function drawChart(readings){
     const x = xFor(r.time), y = yFor(r.value);
     if(i === 0) CTX.moveTo(x,y); else CTX.lineTo(x,y);
   });
-  CTX.strokeStyle = "#9b6b38";
-  CTX.lineWidth = 2.5;
+  CTX.strokeStyle = "#6f4725";
+  CTX.lineWidth = 3;
+  CTX.lineJoin = "round";
+  CTX.lineCap = "round";
+  CTX.stroke();
+
+  const latest = readings[readings.length - 1];
+  const lx = xFor(latest.time);
+  const ly = yFor(latest.value);
+  CTX.beginPath();
+  CTX.arc(lx, ly, 5, 0, Math.PI * 2);
+  CTX.fillStyle = "#241b14";
+  CTX.fill();
+  CTX.beginPath();
+  CTX.arc(lx, ly, 9, 0, Math.PI * 2);
+  CTX.strokeStyle = "rgba(36,27,20,0.25)";
+  CTX.lineWidth = 3;
   CTX.stroke();
 
   const tickCount = 7;
@@ -346,20 +442,15 @@ function drawChart(readings){
     const t = minT + (span * i / (tickCount - 1));
     const d = new Date(t);
     const x = padL + (plotW * i / (tickCount - 1));
-    const label = d.toLocaleString("en-GB", {
-      weekday:"short",
-      day:"2-digit",
-      month:"short",
-      hour:"2-digit"
-    });
-    CTX.fillText(label, x, h - 34);
+    const line1 = d.toLocaleString("en-GB", { weekday:"short" });
+    const line2 = d.toLocaleString("en-GB", { day:"2-digit", month:"short" });
+    const line3 = d.toLocaleString("en-GB", { hour:"2-digit" });
+    CTX.fillText(line1, x, h - 43);
+    CTX.fillText(line2, x, h - 28);
+    CTX.fillText(line3, x, h - 13);
   }
 
   CTX.textAlign = "left";
-  CTX.fillStyle = "#1c1c1c";
-  CTX.font = "12px system-ui, -apple-system, Segoe UI, sans-serif";
-  const latest = readings[readings.length - 1];
-  CTX.fillText(`Latest: ${latest.value.toFixed(3)}m · ${fmtDateTime(latest.iso)}`, padL, h - 12);
 }
 
 async function refreshData(){
@@ -380,21 +471,39 @@ async function refreshData(){
       $("levelTime").textContent = "No verified EA readings returned.";
       $("movement").textContent = "Unknown";
       $("movementDetail").textContent = "No readings available for movement comparison.";
+      $("sumCurrent").textContent = "Unavailable";
+      $("sumMovement").textContent = "Unknown";
+      $("sumAge").textContent = "Unavailable";
+      $("sumContext").textContent = "Unavailable";
+      $("chartLatest").textContent = "—";
       drawChart([]);
       setStatus("EA source returned no usable readings.");
       return;
     }
 
     const latest = readings[readings.length - 1];
+    const mv = movementFrom(readings);
+    const st = statsFrom(readings);
+
     $("level").textContent = `${latest.value.toFixed(3)} m`;
     $("levelTime").textContent = `Verified EA reading: ${fmtFullDateTime(latest.iso)}`;
-
-    const mv = movementFrom(readings);
     $("movement").textContent = mv.label;
     $("movementDetail").textContent = mv.detail;
 
-    drawChart(readings);
+    $("sumCurrent").textContent = `${latest.value.toFixed(3)} m`;
+    $("sumMovement").textContent = mv.label;
+    $("sumAge").textContent = readingAgeText(latest.iso);
+    $("sumContext").textContent = `High ${st.high.toFixed(3)} m · Low ${st.low.toFixed(3)} m`;
+
+    $("statHigh").textContent = `${st.high.toFixed(3)} m`;
+    $("statLow").textContent = `${st.low.toFixed(3)} m`;
+    $("statAvg").textContent = `${st.avg.toFixed(3)} m`;
+    $("statCount").textContent = String(st.count);
+
+    $("chartLatest").textContent = `${latest.value.toFixed(3)} m`;
     $("chartNote").textContent = `Showing ${readings.length} verified EA readings from ${fmtDateTime(readings[0].iso)} to ${fmtDateTime(latest.iso)}. Y-axis fixed 0–2 metres.`;
+
+    drawChart(readings);
     setStatus(`Updated successfully · Build ${BUILD} · ${new Date().toLocaleString("en-GB")}`);
 
   }catch(err){
@@ -402,6 +511,11 @@ async function refreshData(){
     $("levelTime").textContent = "EA telemetry could not be reached.";
     $("movement").textContent = "Unknown";
     $("movementDetail").textContent = "Movement withheld because source data is unavailable.";
+    $("sumCurrent").textContent = "Unavailable";
+    $("sumMovement").textContent = "Unknown";
+    $("sumAge").textContent = "Unavailable";
+    $("sumContext").textContent = "Unavailable";
+    $("chartLatest").textContent = "—";
     drawChart([]);
     setStatus(`EA fetch failed: ${err.message}`);
   }
