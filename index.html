@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence · Build 10204</title>
+<title>Salmon Rivers Intelligence · Build 10205</title>
 <style>
 :root{
   --bg:#f4f1ea;
@@ -30,20 +30,9 @@ header{
   background:#241b14;
   color:#fff;
 }
-h1{
-  margin:0;
-  font-size:24px;
-}
-.sub{
-  margin-top:6px;
-  font-size:14px;
-  color:#d9c8b3;
-}
-main{
-  max-width:1040px;
-  margin:0 auto;
-  padding:14px;
-}
+h1{margin:0;font-size:24px}
+.sub{margin-top:6px;font-size:14px;color:#d9c8b3}
+main{max-width:1040px;margin:0 auto;padding:14px}
 .card{
   background:var(--panel);
   border:1px solid var(--line);
@@ -52,52 +41,18 @@ main{
   margin-bottom:14px;
   box-shadow:0 2px 10px rgba(0,0,0,.04);
 }
-.row{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-.grid4{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:10px;
-}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 .metric,.mini{
   border:1px solid var(--line);
   border-radius:14px;
   padding:12px;
   background:var(--panel2);
 }
-.label{
-  font-size:13px;
-  color:var(--muted);
-  margin-bottom:5px;
-}
-.value{
-  font-size:30px;
-  font-weight:750;
-}
-.mini .value{
-  font-size:21px;
-}
-.small{
-  font-size:13px;
-  color:var(--muted);
-  line-height:1.45;
-}
-.badge{
-  display:inline-block;
-  padding:5px 9px;
-  border-radius:999px;
-  font-size:13px;
-  font-weight:700;
-  background:#666;
-  color:#fff;
-}
-.good{background:var(--good)}
-.warn{background:var(--warn)}
-.bad{background:var(--bad)}
-.neutral{background:#666}
+.label{font-size:13px;color:var(--muted);margin-bottom:5px}
+.value{font-size:30px;font-weight:750}
+.mini .value{font-size:21px}
+.small{font-size:13px;color:var(--muted);line-height:1.45}
 button{
   width:100%;
   border:0;
@@ -116,16 +71,8 @@ button:active{transform:scale(.99)}
   align-items:flex-end;
   margin-bottom:10px;
 }
-.chart-now{
-  text-align:right;
-  font-size:13px;
-  color:var(--muted);
-}
-.chart-now strong{
-  display:block;
-  color:var(--ink);
-  font-size:22px;
-}
+.chart-now{text-align:right;font-size:13px;color:var(--muted)}
+.chart-now strong{display:block;color:var(--ink);font-size:22px}
 canvas{
   width:100%;
   height:330px;
@@ -134,16 +81,8 @@ canvas{
   border-radius:12px;
   border:1px solid var(--line);
 }
-.section-title{
-  font-size:18px;
-  font-weight:800;
-  margin:0 0 10px;
-}
-.summary{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
+.section-title{font-size:18px;font-weight:800;margin:0 0 10px}
+.summary{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .summary div{
   background:var(--panel2);
   border:1px solid var(--line);
@@ -151,32 +90,11 @@ canvas{
   padding:10px;
   font-size:14px;
 }
-.summary span{
-  display:block;
-  color:var(--muted);
-  font-size:12px;
-  margin-bottom:4px;
-}
-table{
-  width:100%;
-  border-collapse:collapse;
-  font-size:14px;
-}
-td{
-  border-top:1px solid var(--line);
-  padding:9px 4px;
-  vertical-align:top;
-}
-td:first-child{
-  color:var(--muted);
-  width:38%;
-}
-.footer{
-  text-align:center;
-  color:var(--muted);
-  font-size:12px;
-  padding:20px 8px;
-}
+.summary span{display:block;color:var(--muted);font-size:12px;margin-bottom:4px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+td{border-top:1px solid var(--line);padding:9px 4px;vertical-align:top}
+td:first-child{color:var(--muted);width:38%}
+.footer{text-align:center;color:var(--muted);font-size:12px;padding:20px 8px}
 @media(max-width:760px){
   .row,.summary{grid-template-columns:1fr}
   .grid4{grid-template-columns:1fr 1fr}
@@ -191,7 +109,7 @@ td:first-child{
 <body>
 <header>
   <h1>Salmon Rivers Intelligence</h1>
-  <div class="sub">River Ribble · Henthorn · Build 10204</div>
+  <div class="sub">River Ribble · Henthorn · Build 10205</div>
 </header>
 
 <main>
@@ -213,6 +131,20 @@ td:first-child{
 </section>
 
 <section class="card">
+  <div class="chart-head">
+    <div>
+      <div class="section-title" style="margin-bottom:2px">7-Day Level Context</div>
+      <div class="small" id="chartNote">Chart uses verified EA timestamped readings from the last 7 days.</div>
+    </div>
+    <div class="chart-now">
+      Latest
+      <strong id="chartLatest">—</strong>
+    </div>
+  </div>
+  <canvas id="chart" width="980" height="330"></canvas>
+</section>
+
+<section class="card">
   <div class="section-title">Ribble Intelligence Summary</div>
   <div class="summary">
     <div><span>Current verified level</span><strong id="sumCurrent">Checking…</strong></div>
@@ -223,20 +155,6 @@ td:first-child{
   <div class="small" style="margin-top:10px">
     Summary uses verified EA Henthorn level telemetry only. No fishability score and no invented interpretation.
   </div>
-</section>
-
-<section class="card">
-  <div class="chart-head">
-    <div>
-      <div class="section-title" style="margin-bottom:2px">7-Day Level Context</div>
-      <div class="small" id="chartNote">Chart uses real EA timestamped readings from the last 7 days.</div>
-    </div>
-    <div class="chart-now">
-      Latest
-      <strong id="chartLatest">—</strong>
-    </div>
-  </div>
-  <canvas id="chart" width="980" height="330"></canvas>
 </section>
 
 <section class="card">
@@ -267,17 +185,18 @@ td:first-child{
 </main>
 
 <div class="footer">
-  Salmon Rivers Intelligence · Build 10204 · GitHub Pages static build
+  Salmon Rivers Intelligence · Build 10205 · GitHub Pages static build
 </div>
 
 <script>
-const BUILD = "10204";
+const BUILD = "10205";
 const STATION_ID = "710305";
 const READINGS_URL = `https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?parameter=level&_sorted`;
 const CHART = document.getElementById("chart");
 const CTX = CHART.getContext("2d");
 
 function $(id){return document.getElementById(id);}
+function setStatus(msg){ $("status").textContent = msg; }
 
 function fmtDateTime(iso){
   const d = new Date(iso);
@@ -302,8 +221,6 @@ function fmtFullDateTime(iso){
   });
 }
 
-function setStatus(msg){ $("status").textContent = msg; }
-
 function validReadings(items){
   return (items || [])
     .filter(r => r && r.dateTime && Number.isFinite(Number(r.value)))
@@ -312,7 +229,8 @@ function validReadings(items){
 }
 
 function movementFrom(readings){
-  if(readings.length < 2) return {label:"Unknown", detail:"Not enough verified EA readings.", cls:"neutral", diff:0};
+  if(readings.length < 2) return {label:"Unknown", detail:"Not enough verified EA readings.", diff:0};
+
   const latest = readings[readings.length - 1];
   let previous = readings[readings.length - 2];
 
@@ -327,12 +245,12 @@ function movementFrom(readings){
   const abs = Math.abs(diff);
 
   if(abs < 0.005){
-    return {label:"Steady", detail:`Change ${diff.toFixed(3)} m since previous reading.`, cls:"good", diff};
+    return {label:"Steady", detail:`Change ${diff.toFixed(3)} m since previous reading.`, diff};
   }
   if(diff > 0){
-    return {label:"Rising", detail:`Up ${diff.toFixed(3)} m since previous reading.`, cls:"warn", diff};
+    return {label:"Rising", detail:`Up ${diff.toFixed(3)} m since previous reading.`, diff};
   }
-  return {label:"Falling", detail:`Down ${Math.abs(diff).toFixed(3)} m since previous reading.`, cls:"good", diff};
+  return {label:"Falling", detail:`Down ${Math.abs(diff).toFixed(3)} m since previous reading.`, diff};
 }
 
 function readingAgeText(iso){
@@ -351,31 +269,42 @@ function statsFrom(readings){
   return {high, low, avg, count:readings.length, range:high-low};
 }
 
+function axisFromStats(st){
+  let min = st.low;
+  let max = st.high;
+  let range = max - min;
+
+  if(range < 0.02){
+    range = 0.02;
+    min -= 0.01;
+    max += 0.01;
+  }
+
+  const pad = Math.max(range * 0.08, 0.01);
+  min = Math.max(0, min - pad);
+  max = max + pad;
+
+  const stepRaw = (max - min) / 4;
+  const step = Math.max(0.01, Math.ceil(stepRaw * 100) / 100);
+  min = Math.max(0, Math.floor(min * 100) / 100);
+  max = Math.ceil(max * 100) / 100;
+
+  if(max <= min) max = min + 0.05;
+
+  return {min, max, step};
+}
+
 function drawChart(readings){
   const w = CHART.width;
   const h = CHART.height;
   CTX.clearRect(0,0,w,h);
 
-  const padL = 52, padR = 22, padT = 22, padB = 64;
+  const padL = 58, padR = 24, padT = 24, padB = 66;
   const plotW = w - padL - padR;
   const plotH = h - padT - padB;
 
   CTX.fillStyle = "#fffdf7";
   CTX.fillRect(0,0,w,h);
-
-  CTX.strokeStyle = "#e0d4c3";
-  CTX.lineWidth = 1;
-  CTX.fillStyle = "#6b6258";
-  CTX.font = "12px system-ui, -apple-system, Segoe UI, sans-serif";
-
-  for(let y = 0; y <= 2; y += 0.5){
-    const py = padT + plotH - (y / 2) * plotH;
-    CTX.beginPath();
-    CTX.moveTo(padL, py);
-    CTX.lineTo(w - padR, py);
-    CTX.stroke();
-    CTX.fillText(y.toFixed(1) + "m", 8, py + 4);
-  }
 
   if(readings.length < 2){
     CTX.fillStyle = "#6b6258";
@@ -384,12 +313,31 @@ function drawChart(readings){
     return;
   }
 
+  const st = statsFrom(readings);
+  const axis = axisFromStats(st);
+
+  CTX.strokeStyle = "#e0d4c3";
+  CTX.lineWidth = 1;
+  CTX.fillStyle = "#6b6258";
+  CTX.font = "12px system-ui, -apple-system, Segoe UI, sans-serif";
+  CTX.textAlign = "left";
+
+  for(let i = 0; i <= 4; i++){
+    const val = axis.min + ((axis.max - axis.min) * i / 4);
+    const py = padT + plotH - ((val - axis.min) / (axis.max - axis.min)) * plotH;
+    CTX.beginPath();
+    CTX.moveTo(padL, py);
+    CTX.lineTo(w - padR, py);
+    CTX.stroke();
+    CTX.fillText(val.toFixed(2) + "m", 8, py + 4);
+  }
+
   const minT = readings[0].time.getTime();
   const maxT = readings[readings.length - 1].time.getTime();
   const span = Math.max(1, maxT - minT);
 
   function xFor(t){ return padL + ((t.getTime() - minT) / span) * plotW; }
-  function yFor(v){ return padT + plotH - (Math.max(0, Math.min(2, v)) / 2) * plotH; }
+  function yFor(v){ return padT + plotH - ((v - axis.min) / (axis.max - axis.min)) * plotH; }
 
   const baseY = padT + plotH;
 
@@ -403,8 +351,8 @@ function drawChart(readings){
   CTX.closePath();
 
   const grad = CTX.createLinearGradient(0,padT,0,baseY);
-  grad.addColorStop(0,"rgba(155,107,56,0.36)");
-  grad.addColorStop(0.55,"rgba(155,107,56,0.13)");
+  grad.addColorStop(0,"rgba(155,107,56,0.38)");
+  grad.addColorStop(0.55,"rgba(155,107,56,0.14)");
   grad.addColorStop(1,"rgba(155,107,56,0.02)");
   CTX.fillStyle = grad;
   CTX.fill();
@@ -421,17 +369,25 @@ function drawChart(readings){
   CTX.stroke();
 
   const latest = readings[readings.length - 1];
-  const lx = xFor(latest.time);
-  const ly = yFor(latest.value);
-  CTX.beginPath();
-  CTX.arc(lx, ly, 5, 0, Math.PI * 2);
-  CTX.fillStyle = "#241b14";
-  CTX.fill();
-  CTX.beginPath();
-  CTX.arc(lx, ly, 9, 0, Math.PI * 2);
-  CTX.strokeStyle = "rgba(36,27,20,0.25)";
-  CTX.lineWidth = 3;
-  CTX.stroke();
+  const highReading = readings.reduce((a,b)=> b.value > a.value ? b : a, readings[0]);
+  const lowReading = readings.reduce((a,b)=> b.value < a.value ? b : a, readings[0]);
+
+  function marker(r, label){
+    const x = xFor(r.time), y = yFor(r.value);
+    CTX.beginPath();
+    CTX.arc(x, y, 5, 0, Math.PI * 2);
+    CTX.fillStyle = "#241b14";
+    CTX.fill();
+    CTX.fillStyle = "#241b14";
+    CTX.font = "11px system-ui, -apple-system, Segoe UI, sans-serif";
+    CTX.textAlign = "center";
+    const textY = y < padT + 18 ? y + 18 : y - 10;
+    CTX.fillText(label, x, textY);
+  }
+
+  marker(highReading, "High");
+  marker(lowReading, "Low");
+  marker(latest, "Latest");
 
   const tickCount = 7;
   CTX.fillStyle = "#6b6258";
@@ -442,12 +398,9 @@ function drawChart(readings){
     const t = minT + (span * i / (tickCount - 1));
     const d = new Date(t);
     const x = padL + (plotW * i / (tickCount - 1));
-    const line1 = d.toLocaleString("en-GB", { weekday:"short" });
-    const line2 = d.toLocaleString("en-GB", { day:"2-digit", month:"short" });
-    const line3 = d.toLocaleString("en-GB", { hour:"2-digit" });
-    CTX.fillText(line1, x, h - 43);
-    CTX.fillText(line2, x, h - 28);
-    CTX.fillText(line3, x, h - 13);
+    CTX.fillText(d.toLocaleString("en-GB", { weekday:"short" }), x, h - 45);
+    CTX.fillText(d.toLocaleString("en-GB", { day:"2-digit", month:"short" }), x, h - 29);
+    CTX.fillText(d.toLocaleString("en-GB", { hour:"2-digit", minute:"2-digit" }), x, h - 13);
   }
 
   CTX.textAlign = "left";
@@ -490,6 +443,9 @@ async function refreshData(){
     $("movement").textContent = mv.label;
     $("movementDetail").textContent = mv.detail;
 
+    $("chartLatest").textContent = `${latest.value.toFixed(3)} m`;
+    $("chartNote").textContent = `Showing ${readings.length} verified EA readings from ${fmtDateTime(readings[0].iso)} to ${fmtDateTime(latest.iso)}. Dynamic scale: ${st.low.toFixed(3)}–${st.high.toFixed(3)} m.`;
+
     $("sumCurrent").textContent = `${latest.value.toFixed(3)} m`;
     $("sumMovement").textContent = mv.label;
     $("sumAge").textContent = readingAgeText(latest.iso);
@@ -499,9 +455,6 @@ async function refreshData(){
     $("statLow").textContent = `${st.low.toFixed(3)} m`;
     $("statAvg").textContent = `${st.avg.toFixed(3)} m`;
     $("statCount").textContent = String(st.count);
-
-    $("chartLatest").textContent = `${latest.value.toFixed(3)} m`;
-    $("chartNote").textContent = `Showing ${readings.length} verified EA readings from ${fmtDateTime(readings[0].iso)} to ${fmtDateTime(latest.iso)}. Y-axis fixed 0–2 metres.`;
 
     drawChart(readings);
     setStatus(`Updated successfully · Build ${BUILD} · ${new Date().toLocaleString("en-GB")}`);
