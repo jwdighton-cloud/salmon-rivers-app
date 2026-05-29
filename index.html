@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence · Build 10207</title>
+<title>Salmon Rivers Intelligence · Build 10208</title>
 <style>
 :root{
   --bg:#f4f1ea;--panel:#fffaf0;--panel2:#fffdf7;--ink:#1c1c1c;--muted:#6b6258;
@@ -17,7 +17,7 @@ main{max-width:1040px;margin:0 auto;padding:14px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:14px;box-shadow:0 2px 10px rgba(0,0,0,.04)}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.metric,.mini{border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--panel2)}
+.metric,.mini,.summary-item{border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--panel2)}
 .label{font-size:13px;color:var(--muted);margin-bottom:5px}
 .value{font-size:30px;font-weight:750}.mini .value{font-size:21px}
 .small{font-size:13px;color:var(--muted);line-height:1.45}
@@ -27,18 +27,19 @@ button:active{transform:scale(.99)}
 .chart-now{text-align:right;font-size:13px;color:var(--muted)}.chart-now strong{display:block;color:var(--ink);font-size:22px}
 canvas{width:100%;height:330px;display:block;background:var(--panel2);border-radius:12px;border:1px solid var(--line)}
 .section-title{font-size:18px;font-weight:800;margin:0 0 10px}
-.summary{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.summary div{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:10px;font-size:14px}
-.summary span{display:block;color:var(--muted);font-size:12px;margin-bottom:4px}
-.bar{height:12px;background:#eadfce;border-radius:999px;overflow:hidden;margin-top:8px}
+.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.summary-item span{display:block;color:var(--muted);font-size:12px;margin-bottom:4px}
+.summary-item strong{font-size:15px}
+.wide{grid-column:span 2}
+.bar{height:10px;background:#eadfce;border-radius:999px;overflow:hidden;margin-top:8px}
 .bar-fill{height:100%;width:0%;background:var(--accent-dark);border-radius:999px}
 table{width:100%;border-collapse:collapse;font-size:14px}
 td{border-top:1px solid var(--line);padding:9px 4px;vertical-align:top}
 td:first-child{color:var(--muted);width:38%}
 .footer{text-align:center;color:var(--muted);font-size:12px;padding:20px 8px}
 @media(max-width:760px){
-  .row,.summary{grid-template-columns:1fr}.grid4{grid-template-columns:1fr 1fr}.value{font-size:28px}
-  canvas{height:300px}.chart-head{display:block}.chart-now{text-align:left;margin-top:8px}
+  .row{grid-template-columns:1fr}.summary{grid-template-columns:1fr}.wide{grid-column:auto}.grid4{grid-template-columns:1fr 1fr}
+  .value{font-size:28px}canvas{height:300px}.chart-head{display:block}.chart-now{text-align:left;margin-top:8px}
 }
 </style>
 </head>
@@ -46,7 +47,7 @@ td:first-child{color:var(--muted);width:38%}
 <body>
 <header>
   <h1>Salmon Rivers Intelligence</h1>
-  <div class="sub">River Ribble · Henthorn · Build 10207</div>
+  <div class="sub">River Ribble · Henthorn · Build 10208</div>
 </header>
 
 <main>
@@ -81,18 +82,18 @@ td:first-child{color:var(--muted);width:38%}
 <section class="card">
   <div class="section-title">Ribble Intelligence Summary</div>
   <div class="summary">
-    <div><span>Current verified level</span><strong id="sumCurrent">Checking…</strong></div>
-    <div><span>Current movement</span><strong id="sumMovement">Checking…</strong></div>
-    <div><span>Latest reading age</span><strong id="sumAge">Checking…</strong></div>
-    <div><span>24-hour change</span><strong id="sum24h">Checking…</strong></div>
-    <div><span>7-day high</span><strong id="sumHighTime">Checking…</strong></div>
-    <div><span>7-day low</span><strong id="sumLowTime">Checking…</strong></div>
-    <div><span>7-day context</span><strong id="sumContext">Checking…</strong></div>
-    <div>
+    <div class="summary-item"><span>Current</span><strong id="sumCurrent">Checking…</strong></div>
+    <div class="summary-item"><span>Movement</span><strong id="sumMovement">Checking…</strong></div>
+    <div class="summary-item"><span>Reading age</span><strong id="sumAge">Checking…</strong></div>
+    <div class="summary-item"><span>24-hour change</span><strong id="sum24h">Checking…</strong></div>
+    <div class="summary-item"><span>Below weekly high</span><strong id="sumBelowHigh">Checking…</strong></div>
+    <div class="summary-item"><span>Against weekly average</span><strong id="sumVsAvg">Checking…</strong></div>
+    <div class="summary-item wide">
       <span>Position within 7-day range</span>
       <strong id="sumPosition">Checking…</strong>
       <div class="bar"><div class="bar-fill" id="positionBar"></div></div>
     </div>
+    <div class="summary-item"><span>7-day range</span><strong id="sumContext">Checking…</strong></div>
   </div>
   <div class="small" style="margin-top:10px">
     Summary uses verified EA Henthorn level telemetry only. No fishability score and no invented interpretation.
@@ -102,8 +103,8 @@ td:first-child{color:var(--muted);width:38%}
 <section class="card">
   <div class="section-title">Weekly Statistics</div>
   <div class="grid4">
-    <div class="mini"><div class="label">7-day high</div><div class="value" id="statHigh">—</div></div>
-    <div class="mini"><div class="label">7-day low</div><div class="value" id="statLow">—</div></div>
+    <div class="mini"><div class="label">7-day high</div><div class="value" id="statHigh">—</div><div class="small" id="statHighTime"></div></div>
+    <div class="mini"><div class="label">7-day low</div><div class="value" id="statLow">—</div><div class="small" id="statLowTime"></div></div>
     <div class="mini"><div class="label">7-day average</div><div class="value" id="statAvg">—</div></div>
     <div class="mini"><div class="label">Readings</div><div class="value" id="statCount">—</div></div>
   </div>
@@ -126,10 +127,10 @@ td:first-child{color:var(--muted);width:38%}
 
 </main>
 
-<div class="footer">Salmon Rivers Intelligence · Build 10207 · GitHub Pages static build</div>
+<div class="footer">Salmon Rivers Intelligence · Build 10208 · GitHub Pages static build</div>
 
 <script>
-const BUILD="10207";
+const BUILD="10208";
 const STATION_ID="710305";
 const READINGS_URL=`https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?parameter=level&_sorted`;
 const CHART=document.getElementById("chart");
@@ -230,17 +231,13 @@ function drawChart(readings){
   CTX.strokeStyle="#6f4725";CTX.lineWidth=3;CTX.lineJoin="round";CTX.lineCap="round";CTX.stroke();
 
   const latest=readings[readings.length-1];
-
   function marker(r,label){
     const x=xFor(r.time),y=yFor(r.value);
     CTX.beginPath();CTX.arc(x,y,5,0,Math.PI*2);CTX.fillStyle="#241b14";CTX.fill();
     CTX.fillStyle="#241b14";CTX.font="11px system-ui,-apple-system,Segoe UI,sans-serif";CTX.textAlign="center";
     CTX.fillText(label,x,y<padT+18?y+18:y-10);
   }
-
-  marker(st.highReading,"High");
-  marker(st.lowReading,"Low");
-  marker(latest,"Latest");
+  marker(st.highReading,"High");marker(st.lowReading,"Low");marker(latest,"Latest");
 
   CTX.fillStyle="#6b6258";CTX.font="11px system-ui,-apple-system,Segoe UI,sans-serif";CTX.textAlign="center";
   for(let i=0;i<7;i++){
@@ -264,20 +261,8 @@ async function refreshData(){
     const readings=validReadings(data.items);
 
     if(readings.length===0){
-      ["level","sumCurrent"].forEach(id=>$(id).textContent="Unavailable");
-      $("levelTime").textContent="No verified EA readings returned.";
-      $("movement").textContent="Unknown";
-      $("movementDetail").textContent="No readings available for movement comparison.";
-      $("sumMovement").textContent="Unknown";
-      $("sumAge").textContent="Unavailable";
-      $("sum24h").textContent="Unavailable";
-      $("sumHighTime").textContent="Unavailable";
-      $("sumLowTime").textContent="Unavailable";
-      $("sumContext").textContent="Unavailable";
-      $("sumPosition").textContent="Unavailable";
-      $("chartLatest").textContent="—";
-      drawChart([]);
       setStatus("EA source returned no usable readings.");
+      drawChart([]);
       return;
     }
 
@@ -286,6 +271,8 @@ async function refreshData(){
     const st=statsFrom(readings);
     const c24=changeOverHours(readings,24);
     const position=st.range>0?((latest.value-st.low)/st.range)*100:0;
+    const belowHigh=st.high-latest.value;
+    const vsAvg=latest.value-st.avg;
 
     $("level").textContent=`${latest.value.toFixed(3)} m`;
     $("levelTime").textContent=`Verified EA reading: ${fmtFullDateTime(latest.iso)}`;
@@ -298,17 +285,19 @@ async function refreshData(){
     $("sumCurrent").textContent=`${latest.value.toFixed(3)} m`;
     $("sumMovement").textContent=mv.label;
     $("sumAge").textContent=readingAgeText(latest.iso);
-    $("sum24h").textContent=c24?`${c24.diff>=0?"+":""}${c24.diff.toFixed(3)} m since ${fmtDateTime(c24.from.iso)}`:"Unavailable";
-    $("sumHighTime").textContent=`${st.high.toFixed(3)} m · ${fmtDateTime(st.highReading.iso)}`;
-    $("sumLowTime").textContent=`${st.low.toFixed(3)} m · ${fmtDateTime(st.lowReading.iso)}`;
-    $("sumContext").textContent=`Range ${st.range.toFixed(3)} m · Average ${st.avg.toFixed(3)} m`;
+    $("sum24h").textContent=c24?`${c24.diff>=0?"+":""}${c24.diff.toFixed(3)} m`:"Unavailable";
+    $("sumBelowHigh").textContent=`${belowHigh.toFixed(3)} m below high`;
+    $("sumVsAvg").textContent=`${vsAvg>=0?"+":""}${vsAvg.toFixed(3)} m vs average`;
     $("sumPosition").textContent=`${Math.round(position)}% of weekly range`;
     $("positionBar").style.width=`${Math.max(0,Math.min(100,position))}%`;
+    $("sumContext").textContent=`${st.low.toFixed(3)}–${st.high.toFixed(3)} m`;
 
     $("statHigh").textContent=`${st.high.toFixed(3)} m`;
     $("statLow").textContent=`${st.low.toFixed(3)} m`;
     $("statAvg").textContent=`${st.avg.toFixed(3)} m`;
     $("statCount").textContent=String(st.count);
+    $("statHighTime").textContent=fmtDateTime(st.highReading.iso);
+    $("statLowTime").textContent=fmtDateTime(st.lowReading.iso);
 
     drawChart(readings);
     setStatus(`Updated successfully · Build ${BUILD} · ${new Date().toLocaleString("en-GB")}`);
@@ -317,14 +306,6 @@ async function refreshData(){
     $("levelTime").textContent="EA telemetry could not be reached.";
     $("movement").textContent="Unknown";
     $("movementDetail").textContent="Movement withheld because source data is unavailable.";
-    $("sumCurrent").textContent="Unavailable";
-    $("sumMovement").textContent="Unknown";
-    $("sumAge").textContent="Unavailable";
-    $("sum24h").textContent="Unavailable";
-    $("sumHighTime").textContent="Unavailable";
-    $("sumLowTime").textContent="Unavailable";
-    $("sumContext").textContent="Unavailable";
-    $("sumPosition").textContent="Unavailable";
     $("chartLatest").textContent="—";
     drawChart([]);
     setStatus(`EA fetch failed: ${err.message}`);
