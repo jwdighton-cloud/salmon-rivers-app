@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence · Build 10209</title>
+<title>Salmon Rivers Intelligence · Build 10210</title>
 <style>
 :root{
   --bg:#f4f1ea;--panel:#fffaf0;--panel2:#fffdf7;--ink:#1c1c1c;--muted:#6b6258;
@@ -48,7 +48,7 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
 <body>
 <header>
   <h1>Salmon Rivers Intelligence</h1>
-  <div class="sub">River Ribble · Henthorn · Build 10209</div>
+  <div class="sub">River Ribble · Henthorn · Build 10210</div>
 </header>
 
 <main>
@@ -104,6 +104,43 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
 </section>
 
 <section class="card">
+  <div class="section-title">Intelligence Sources</div>
+  <table class="analysis-table">
+    <tr>
+      <td>EA Henthorn Level</td>
+      <td><strong>Live</strong><br><span class="small">Primary verified river-level telemetry source.</span></td>
+    </tr>
+    <tr>
+      <td>EA Trend Analysis</td>
+      <td><strong>Live</strong><br><span class="small">Derived from verified EA Henthorn readings.</span></td>
+    </tr>
+    <tr>
+      <td>Great Mitton Rainfall</td>
+      <td><strong>Investigation</strong><br><span class="small">Candidate catchment and rainfall intelligence source. No rainfall value displayed until verified.</span></td>
+    </tr>
+    <tr>
+      <td>RFCA Water Temperature</td>
+      <td><strong>Investigation</strong><br><span class="small">No temperature value displayed until a stable, current and traceable source is verified.</span></td>
+    </tr>
+    <tr>
+      <td>Current Season Catch Intelligence</td>
+      <td><strong>Investigation</strong><br><span class="small">Current-season salmon and catch information only. No historic or unsourced catch claims.</span></td>
+    </tr>
+    <tr>
+      <td>Fish Counter Intelligence</td>
+      <td><strong>Investigation</strong><br><span class="small">No fish-counter values displayed until verified and source-traceable.</span></td>
+    </tr>
+    <tr>
+      <td>Beat Intelligence</td>
+      <td><strong>Planned</strong><br><span class="small">Mitton Bridge to Edisford Bridge beat context.</span></td>
+    </tr>
+  </table>
+  <div class="small" style="margin-top:10px">
+    Source rule: no source = no number. Investigation means the source is useful but not yet approved for live display.
+  </div>
+</section>
+
+<section class="card">
   <div class="section-title">Weekly Statistics</div>
   <div class="grid4">
     <div class="mini"><div class="label">7-day high</div><div class="value" id="statHigh">—</div><div class="small" id="statHighTime"></div></div>
@@ -130,10 +167,10 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
 
 </main>
 
-<div class="footer">Salmon Rivers Intelligence · Build 10209 · GitHub Pages static build</div>
+<div class="footer">Salmon Rivers Intelligence · Build 10210 · GitHub Pages static build</div>
 
 <script>
-const BUILD="10209";
+const BUILD="10210";
 const STATION_ID="710305";
 const READINGS_URL=`https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?parameter=level&_sorted`;
 const CHART=document.getElementById("chart");
