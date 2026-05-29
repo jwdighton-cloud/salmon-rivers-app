@@ -3,845 +3,411 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon & Sea Trout Rivers Intelligence — Build 10204</title>
-
+<title>Salmon Rivers Intelligence · Build 10203</title>
 <style>
 :root{
---bg:#eef2f3;
---card:#ffffff;
---ink:#102018;
---muted:#5b6b63;
---good:#0f7b3f;
---warn:#a15c00;
---bad:#9b1c1c;
---line:#d7dfdc;
---deep:#082d1b;
---soft:#eef8f1;
---blue:#eef6fb;
+  --bg:#f4f1ea;
+  --panel:#fffaf0;
+  --ink:#1c1c1c;
+  --muted:#6b6258;
+  --line:#d8cbb9;
+  --accent:#9b6b38;
+  --good:#1f7a4d;
+  --warn:#b7791f;
+  --bad:#b83232;
 }
-
 *{box-sizing:border-box}
-
 body{
-margin:0;
-font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-background:var(--bg);
-color:var(--ink);
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--ink);
 }
-
 header{
-background:var(--deep);
-color:white;
-text-align:center;
-padding:22px 14px;
+  padding:18px 16px 12px;
+  background:#241b14;
+  color:#fff;
 }
-
 h1{
-margin:0;
-font-size:30px;
-line-height:1.2;
+  margin:0;
+  font-size:24px;
+  letter-spacing:.2px;
 }
-
-header p{
-margin:8px 0 0;
-font-size:14px;
-color:#d2e3da;
+.sub{
+  margin-top:6px;
+  font-size:14px;
+  color:#d9c8b3;
 }
-
 main{
-max-width:760px;
-margin:0 auto;
-padding:14px;
+  max-width:980px;
+  margin:0 auto;
+  padding:14px;
 }
-
 .card{
-background:var(--card);
-border:1px solid var(--line);
-border-radius:16px;
-padding:16px;
-margin:14px 0;
-box-shadow:0 2px 8px rgba(0,0,0,.05);
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:14px;
+  margin-bottom:14px;
+  box-shadow:0 2px 10px rgba(0,0,0,.04);
 }
-
 .row{
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:12px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
 }
-
-.grid{
-display:grid;
-grid-template-columns:1fr 1fr 1fr;
-gap:12px;
+.metric{
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:12px;
+  background:#fffdf7;
 }
-
 .label{
-font-size:14px;
-color:var(--muted);
+  font-size:13px;
+  color:var(--muted);
+  margin-bottom:5px;
 }
-
-.big{
-font-size:52px;
-font-weight:900;
-margin:8px 0 2px;
+.value{
+  font-size:30px;
+  font-weight:700;
 }
-
-.stat{
-border:1px solid var(--line);
-border-radius:14px;
-padding:12px;
-background:white;
+.small{
+  font-size:13px;
+  color:var(--muted);
+  line-height:1.45;
 }
-
-.stat strong{
-display:block;
-margin-top:5px;
-font-size:21px;
-}
-
 .badge{
-display:inline-block;
-padding:7px 11px;
-border-radius:999px;
-font-size:13px;
-font-weight:800;
-background:#e8f3ec;
-color:var(--good);
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:999px;
+  font-size:13px;
+  font-weight:650;
+  background:#eee;
 }
-
-.badge.warn{
-background:#fff4df;
-color:var(--warn);
-}
-
-.badge.bad{
-background:#fde8e8;
-color:var(--bad);
-}
-
-.panel{
-border-radius:12px;
-padding:15px;
-line-height:1.7;
-font-size:17px;
-}
-
-.green{
-background:var(--soft);
-border-left:5px solid var(--good);
-}
-
-.blue{
-background:var(--blue);
-border-left:5px solid #0b5f8a;
-}
-
-.gold{
-background:#fff9ed;
-border-left:5px solid var(--warn);
-}
-
+.good{color:#fff;background:var(--good)}
+.warn{color:#fff;background:var(--warn)}
+.bad{color:#fff;background:var(--bad)}
+.neutral{color:#fff;background:#666}
 button{
-width:100%;
-border:0;
-border-radius:14px;
-padding:15px;
-background:var(--deep);
-color:white;
-font-size:16px;
-font-weight:900;
-cursor:pointer;
+  width:100%;
+  border:0;
+  border-radius:14px;
+  padding:13px 14px;
+  background:var(--accent);
+  color:#fff;
+  font-size:16px;
+  font-weight:700;
 }
-
-button:disabled{
-opacity:.6;
-cursor:not-allowed;
+button:active{transform:scale(.99)}
+canvas{
+  width:100%;
+  height:310px;
+  display:block;
+  background:#fffdf7;
+  border-radius:12px;
+  border:1px solid var(--line);
 }
-
-.event{
-padding:12px 0;
-border-bottom:1px solid var(--line);
+.section-title{
+  font-size:18px;
+  font-weight:750;
+  margin:0 0 10px;
 }
-
-.event:last-child{
-border-bottom:0;
-}
-
-.event-title{
-font-size:18px;
-font-weight:900;
-margin-bottom:6px;
-}
-
-.event-text{
-line-height:1.65;
-color:#24322b;
-}
-
-.source{
-font-size:13px;
-line-height:1.45;
-color:var(--muted);
-}
-
-.ok{
-color:var(--good);
-font-weight:800;
-}
-
-.badtext{
-color:var(--bad);
-font-weight:800;
-}
-
-.warntext{
-color:var(--warn);
-font-weight:800;
-}
-
-.notice{
-background:#fff9ed;
-border-left:5px solid var(--warn);
-padding:12px;
-border-radius:10px;
-line-height:1.6;
-color:#4b3515;
-}
-
-.chart-wrap{
-width:100%;
-overflow:hidden;
-}
-
-#levelChart{
-width:100%;
-height:320px;
-display:block;
-border:1px solid var(--line);
-border-radius:14px;
-background:#fbfdfc;
-}
-
-.chart-note{
-font-size:13px;
-color:var(--muted);
-line-height:1.45;
-margin-top:8px;
-}
-
 table{
-width:100%;
-border-collapse:collapse;
-font-size:14px;
+  width:100%;
+  border-collapse:collapse;
+  font-size:14px;
 }
-
-th,td{
-padding:10px 6px;
-border-bottom:1px solid var(--line);
-text-align:left;
+td{
+  border-top:1px solid var(--line);
+  padding:9px 4px;
+  vertical-align:top;
 }
-
-th{
-font-size:12px;
-text-transform:uppercase;
-letter-spacing:.5px;
-color:var(--muted);
+td:first-child{
+  color:var(--muted);
+  width:38%;
 }
-
-.trend-up{
-color:var(--good);
-font-weight:800;
+.footer{
+  text-align:center;
+  color:var(--muted);
+  font-size:12px;
+  padding:20px 8px;
 }
-
-.trend-down{
-color:var(--bad);
-font-weight:800;
-}
-
-.trend-flat{
-color:var(--warn);
-font-weight:800;
-}
-
-footer{
-text-align:center;
-padding:20px;
-font-size:12px;
-color:var(--muted);
-}
-
-@media(max-width:620px){
-
-.grid{
-grid-template-columns:1fr;
-}
-
-.big{
-font-size:42px;
-}
-
-h1{
-font-size:26px;
-}
-
-#levelChart{
-height:300px;
-}
-
+@media(max-width:650px){
+  .row{grid-template-columns:1fr}
+  .value{font-size:28px}
+  canvas{height:280px}
 }
 </style>
 </head>
 
 <body>
-
 <header>
-<h1>Salmon & Sea Trout Rivers Intelligence</h1>
-<p>Build 10204 · Corrected 7-day river chart</p>
+  <h1>Salmon Rivers Intelligence</h1>
+  <div class="sub">River Ribble · Henthorn · Build 10203</div>
 </header>
 
 <main>
 
 <section class="card">
-<div class="row">
-<div>
-<div class="label">Live river reading</div>
-<strong>River Ribble @ Henthorn</strong>
-</div>
-<span id="statusBadge" class="badge warn">Checking</span>
-</div>
-<div id="levelValue" class="big">—</div>
-<div class="label">Mid-beat reference gauge between Mitton Bridge and Edisford Bridge</div>
+  <div class="section-title">Today’s Reading</div>
+  <div class="row">
+    <div class="metric">
+      <div class="label">EA river level</div>
+      <div class="value" id="level">Checking…</div>
+      <div class="small" id="levelTime">Fetching verified EA telemetry.</div>
+    </div>
+    <div class="metric">
+      <div class="label">Movement</div>
+      <div class="value" id="movement">Checking…</div>
+      <div class="small" id="movementDetail">Comparing latest readings only.</div>
+    </div>
+  </div>
 </section>
 
 <section class="card">
-<div class="grid">
-<div class="stat"><div class="label">River movement</div><strong id="movementValue">Checking</strong></div>
-<div class="stat"><div class="label">Reading time</div><strong id="readingTime">—</strong></div>
-<div class="stat"><div class="label">Reading age</div><strong id="ageValue">—</strong></div>
-</div>
+  <div class="section-title">7-Day Level Context</div>
+  <canvas id="chart" width="900" height="310"></canvas>
+  <div class="small" id="chartNote" style="margin-top:8px">
+    Chart uses real EA timestamped readings from the last 7 days. Y-axis fixed at 0–2 metres.
+  </div>
 </section>
 
 <section class="card">
-<h2>River level chart</h2>
-<div class="chart-wrap">
-<svg id="levelChart" viewBox="0 0 720 320" preserveAspectRatio="none" role="img" aria-label="Seven day river level chart"></svg>
-</div>
-<p class="chart-note" id="chartNote">Chart loading from 7 days of Environment Agency readings.</p>
+  <button onclick="refreshData()">Refresh live data</button>
+  <div class="small" id="status" style="margin-top:10px">Ready.</div>
 </section>
 
 <section class="card">
-<h2>Current river picture</h2>
-<div class="panel green" id="currentPicture">Checking live conditions...</div>
-</section>
-
-<section class="card">
-<h2>Recent movement</h2>
-<div class="panel blue" id="recentMovement">Checking recent movement...</div>
-</section>
-
-<section class="card">
-<h2>Fresh water signs</h2>
-<div class="panel gold" id="freshWater">Checking for signs of fresh water...</div>
-</section>
-
-<section class="card">
-<h2>River continuity</h2>
-<div class="panel blue" id="continuityPanel">Checking how things compare with earlier...</div>
-</section>
-
-<section class="card">
-<h2>Recent river behaviour</h2>
-<div id="behaviourEvents">
-<div class="event">
-<div class="event-title">Loading recent behaviour</div>
-<div class="event-text">Checking recent movement from live readings.</div>
-</div>
-</div>
-</section>
-
-<section class="card">
-<button id="refreshBtn" onclick="loadHenthorn()">Refresh live data</button>
-<p class="source" id="lastChecked">Last checked: —</p>
-</section>
-
-<section class="card">
-<h2>Recent readings</h2>
-<table>
-<thead><tr><th>Time</th><th>Level</th><th>Change</th></tr></thead>
-<tbody id="trendTable"><tr><td colspan="3">Loading live readings...</td></tr></tbody>
-</table>
-</section>
-
-<section class="card">
-<h2>Source</h2>
-<p class="source"><strong>River level source:</strong> Environment Agency live telemetry</p>
-<p class="source"><strong>Gauge:</strong> Henthorn, station 710305</p>
-<p class="source" id="sourceResult">Checking telemetry...</p>
-</section>
-
-<section class="card">
-<div class="notice">
-This platform only uses verified live telemetry and careful river interpretation. It does not invent catches, fish movement or fishing conditions.
-</div>
+  <div class="section-title">Beat Context</div>
+  <table>
+    <tr><td>Fishing beat</td><td>Mitton Bridge to Edisford Bridge</td></tr>
+    <tr><td>Reference station</td><td>EA Henthorn station 710305</td></tr>
+    <tr><td>Position</td><td>Henthorn sits in the middle of the beat and is the primary live conditions reference.</td></tr>
+    <tr><td>Governance</td><td>No source = no number. No invented catches, temperatures, or fish-counter values.</td></tr>
+  </table>
 </section>
 
 </main>
 
-<footer>Build 10204 · Salmon & Sea Trout Rivers Intelligence</footer>
+<div class="footer">
+  Salmon Rivers Intelligence · Build 10203 · GitHub Pages static build
+</div>
 
 <script>
-const STATION_ID="710305";
-const MEMORY_KEY="sstri_henthorn_memory_v5";
+const BUILD = "10203";
+const STATION_ID = "710305";
+const READINGS_URL = `https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?parameter=level&_sorted`;
+const CHART = document.getElementById("chart");
+const CTX = CHART.getContext("2d");
 
-const BASE_URL=`https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings`;
+function $(id){return document.getElementById(id);}
 
-const latestUrl=`${BASE_URL}?latest`;
-const recentUrl=`${BASE_URL}?_sorted&_limit=32`;
-
-function sevenDayUrl(){
-const end=new Date();
-const start=new Date(end.getTime()-(7*24*60*60*1000));
-return `${BASE_URL}?since=${encodeURIComponent(start.toISOString())}&_sorted&_limit=1200`;
+function fmtDateTime(iso){
+  const d = new Date(iso);
+  return d.toLocaleString("en-GB", {
+    weekday:"short",
+    day:"2-digit",
+    month:"short",
+    hour:"2-digit",
+    minute:"2-digit"
+  });
 }
 
-function $(id){
-return document.getElementById(id);
+function fmtFullDateTime(iso){
+  const d = new Date(iso);
+  return d.toLocaleString("en-GB", {
+    weekday:"long",
+    day:"2-digit",
+    month:"long",
+    year:"numeric",
+    hour:"2-digit",
+    minute:"2-digit"
+  });
 }
 
-function setStatus(text,type){
-const b=$("statusBadge");
-b.textContent=text;
-b.className="badge";
-if(type==="warn")b.classList.add("warn");
-if(type==="bad")b.classList.add("bad");
+function setStatus(msg){ $("status").textContent = msg; }
+
+function validReadings(items){
+  return (items || [])
+    .filter(r => r && r.dateTime && Number.isFinite(Number(r.value)))
+    .map(r => ({ time:new Date(r.dateTime), iso:r.dateTime, value:Number(r.value) }))
+    .sort((a,b) => a.time - b.time);
 }
 
-function asDate(iso){
-const d=new Date(iso);
-return isNaN(d)?null:d;
+function movementFrom(readings){
+  if(readings.length < 2) return {label:"Unknown", detail:"Not enough verified EA readings.", cls:"neutral"};
+  const latest = readings[readings.length - 1];
+  let previous = readings[readings.length - 2];
+
+  for(let i = readings.length - 2; i >= 0; i--){
+    if(readings[i].iso !== latest.iso){
+      previous = readings[i];
+      break;
+    }
+  }
+
+  const diff = latest.value - previous.value;
+  const abs = Math.abs(diff);
+
+  if(abs < 0.005){
+    return {
+      label:"Steady",
+      detail:`Change ${diff.toFixed(3)} m since previous reading.`,
+      cls:"good"
+    };
+  }
+
+  if(diff > 0){
+    return {
+      label:"Rising",
+      detail:`Up ${diff.toFixed(3)} m since previous reading.`,
+      cls:"warn"
+    };
+  }
+
+  return {
+    label:"Falling",
+    detail:`Down ${Math.abs(diff).toFixed(3)} m since previous reading.`,
+    cls:"good"
+  };
 }
 
-function formatDate(iso){
-const d=asDate(iso);
-if(!d)return"Unavailable";
-return d.toLocaleString("en-GB",{weekday:"short",day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"});
+function drawChart(readings){
+  const w = CHART.width;
+  const h = CHART.height;
+  CTX.clearRect(0,0,w,h);
+
+  const padL = 48, padR = 18, padT = 20, padB = 58;
+  const plotW = w - padL - padR;
+  const plotH = h - padT - padB;
+
+  CTX.fillStyle = "#fffdf7";
+  CTX.fillRect(0,0,w,h);
+
+  CTX.strokeStyle = "#d8cbb9";
+  CTX.lineWidth = 1;
+  CTX.fillStyle = "#6b6258";
+  CTX.font = "12px system-ui, -apple-system, Segoe UI, sans-serif";
+
+  for(let y = 0; y <= 2; y += 0.5){
+    const py = padT + plotH - (y / 2) * plotH;
+    CTX.beginPath();
+    CTX.moveTo(padL, py);
+    CTX.lineTo(w - padR, py);
+    CTX.stroke();
+    CTX.fillText(y.toFixed(1) + "m", 8, py + 4);
+  }
+
+  if(readings.length < 2){
+    CTX.fillStyle = "#6b6258";
+    CTX.font = "16px system-ui, -apple-system, Segoe UI, sans-serif";
+    CTX.fillText("Not enough verified EA chart data.", padL, h / 2);
+    return;
+  }
+
+  const minT = readings[0].time.getTime();
+  const maxT = readings[readings.length - 1].time.getTime();
+  const span = Math.max(1, maxT - minT);
+
+  function xFor(t){ return padL + ((t.getTime() - minT) / span) * plotW; }
+  function yFor(v){ return padT + plotH - (Math.max(0, Math.min(2, v)) / 2) * plotH; }
+
+  const baseY = padT + plotH;
+
+  CTX.beginPath();
+  readings.forEach((r,i)=>{
+    const x = xFor(r.time), y = yFor(r.value);
+    if(i === 0) CTX.moveTo(x,y); else CTX.lineTo(x,y);
+  });
+  CTX.lineTo(xFor(readings[readings.length - 1].time), baseY);
+  CTX.lineTo(xFor(readings[0].time), baseY);
+  CTX.closePath();
+  const grad = CTX.createLinearGradient(0,padT,0,baseY);
+  grad.addColorStop(0,"rgba(155,107,56,0.32)");
+  grad.addColorStop(1,"rgba(155,107,56,0.04)");
+  CTX.fillStyle = grad;
+  CTX.fill();
+
+  CTX.beginPath();
+  readings.forEach((r,i)=>{
+    const x = xFor(r.time), y = yFor(r.value);
+    if(i === 0) CTX.moveTo(x,y); else CTX.lineTo(x,y);
+  });
+  CTX.strokeStyle = "#9b6b38";
+  CTX.lineWidth = 2.5;
+  CTX.stroke();
+
+  const tickCount = 7;
+  CTX.fillStyle = "#6b6258";
+  CTX.font = "11px system-ui, -apple-system, Segoe UI, sans-serif";
+  CTX.textAlign = "center";
+
+  for(let i=0;i<tickCount;i++){
+    const t = minT + (span * i / (tickCount - 1));
+    const d = new Date(t);
+    const x = padL + (plotW * i / (tickCount - 1));
+    const label = d.toLocaleString("en-GB", {
+      weekday:"short",
+      day:"2-digit",
+      month:"short",
+      hour:"2-digit"
+    });
+    CTX.fillText(label, x, h - 34);
+  }
+
+  CTX.textAlign = "left";
+  CTX.fillStyle = "#1c1c1c";
+  CTX.font = "12px system-ui, -apple-system, Segoe UI, sans-serif";
+  const latest = readings[readings.length - 1];
+  CTX.fillText(`Latest: ${latest.value.toFixed(3)}m · ${fmtDateTime(latest.iso)}`, padL, h - 12);
 }
 
-function shortTime(iso){
-const d=asDate(iso);
-if(!d)return"—";
-return d.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"});
+async function refreshData(){
+  setStatus("Fetching EA Henthorn readings…");
+
+  const since = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+  const url = `${READINGS_URL}&since=${encodeURIComponent(since)}&_limit=2000`;
+
+  try{
+    const res = await fetch(url, { cache:"no-store" });
+    if(!res.ok) throw new Error(`EA HTTP ${res.status}`);
+
+    const data = await res.json();
+    const readings = validReadings(data.items);
+
+    if(readings.length === 0){
+      $("level").textContent = "Unavailable";
+      $("levelTime").textContent = "No verified EA readings returned.";
+      $("movement").textContent = "Unknown";
+      $("movementDetail").textContent = "No readings available for movement comparison.";
+      drawChart([]);
+      setStatus("EA source returned no usable readings.");
+      return;
+    }
+
+    const latest = readings[readings.length - 1];
+    $("level").textContent = `${latest.value.toFixed(3)} m`;
+    $("levelTime").textContent = `Verified EA reading: ${fmtFullDateTime(latest.iso)}`;
+
+    const mv = movementFrom(readings);
+    $("movement").textContent = mv.label;
+    $("movementDetail").textContent = mv.detail;
+
+    drawChart(readings);
+    $("chartNote").textContent = `Showing ${readings.length} verified EA readings from ${fmtDateTime(readings[0].iso)} to ${fmtDateTime(latest.iso)}. Y-axis fixed 0–2 metres.`;
+    setStatus(`Updated successfully · Build ${BUILD} · ${new Date().toLocaleString("en-GB")}`);
+
+  }catch(err){
+    $("level").textContent = "Unavailable";
+    $("levelTime").textContent = "EA telemetry could not be reached.";
+    $("movement").textContent = "Unknown";
+    $("movementDetail").textContent = "Movement withheld because source data is unavailable.";
+    drawChart([]);
+    setStatus(`EA fetch failed: ${err.message}`);
+  }
 }
 
-function chartLabel(iso){
-const d=asDate(iso);
-if(!d)return"—";
-return d.toLocaleString("en-GB",{weekday:"short",day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"});
-}
-
-function ageMinutes(iso){
-const d=asDate(iso);
-if(!d)return null;
-return Math.max(0,Math.round((Date.now()-d.getTime())/60000));
-}
-
-function ageText(iso){
-const m=ageMinutes(iso);
-if(m===null)return"Unavailable";
-if(m<60)return m+" min";
-return Math.floor(m/60)+"h "+(m%60)+"m";
-}
-
-function cleanReadings(items){
-if(!Array.isArray(items))return[];
-return items
-.filter(x=>x&&typeof x.value==="number"&&x.dateTime&&asDate(x.dateTime))
-.sort((a,b)=>asDate(b.dateTime)-asDate(a.dateTime));
-}
-
-function movement(items){
-if(items.length<2)return"Unavailable";
-const d=items[0].value-items[1].value;
-if(Math.abs(d)<0.005)return"Steady";
-return d>0?"Rising":"Falling";
-}
-
-function delta(items){
-if(items.length<2)return null;
-return items[0].value-items[items.length-1].value;
-}
-
-function currentPictureText(items){
-if(!items.length)return"Live information is currently unavailable.";
-const latest=items[0].value;
-
-if(latest<0.35)return"Low at Henthorn. Not much water showing at the mid-beat gauge.";
-if(latest<0.55)return"Holding a reasonable middle level at Henthorn. Not especially low, but not carrying a strong push of water either.";
-if(latest<0.85)return"Carrying a fair amount of water at Henthorn, above the quieter low-water picture.";
-return"High at Henthorn with a strong volume of water moving through the beat.";
-}
-
-function recentMovementText(items){
-if(items.length<4)return"Not enough recent history yet to judge movement properly.";
-const d=delta(items);
-if(d===null)return"Recent movement is unclear.";
-if(Math.abs(d)<0.008)return"Very little has changed. The river is broadly holding its level.";
-if(d>0&&d<0.03)return"Levels are lifting gradually. Some extra water is moving through, but it is not a strong rise yet.";
-if(d>=0.03)return"Levels have risen noticeably. A stronger push of water is moving through.";
-if(d<0&&d>-0.03)return"Levels are easing back gently from earlier water.";
-return"Levels are dropping back steadily after higher water.";
-}
-
-function freshWaterText(items){
-if(items.length<6)return"Not enough recent history yet to judge fresh water properly.";
-
-const changes=[];
-for(let i=0;i<items.length-1;i++){
-changes.push(items[i].value-items[i+1].value);
-}
-
-const recent=changes.slice(0,4);
-const avg=recent.reduce((a,b)=>a+b,0)/recent.length;
-
-if(avg>0.007)return"A clearer lift is now showing. This may be the first useful sign of fresh water entering the system.";
-if(avg>0.003)return"A small lift is beginning to show. Worth watching, but still modest.";
-if(avg<-0.007)return"No clear fresh water yet. Levels are still easing back from earlier water.";
-if(avg<0)return"No clear fresh water yet. Earlier water still appears to be fading.";
-return"No obvious fresh push showing at present.";
-}
-
-function loadMemory(){
-try{
-const raw=localStorage.getItem(MEMORY_KEY);
-if(!raw)return[];
-const parsed=JSON.parse(raw);
-return Array.isArray(parsed)?parsed:[];
-}catch(e){
-return[];
-}
-}
-
-function saveMemory(latest){
-const memory=loadMemory();
-const exists=memory.some(x=>x.dateTime===latest.dateTime);
-if(!exists){
-memory.unshift({value:latest.value,dateTime:latest.dateTime});
-}
-localStorage.setItem(MEMORY_KEY,JSON.stringify(memory.slice(0,120)));
-}
-
-function continuityText(latest){
-const memory=loadMemory();
-
-if(memory.length<2)return"Local river memory is starting on this device. Future checks will allow stronger comparisons.";
-
-const older=memory.find(x=>x.dateTime!==latest.dateTime);
-if(!older)return"Still building enough local history for comparison.";
-
-const diff=latest.value-older.value;
-const previousTime=formatDate(older.dateTime);
-
-if(Math.abs(diff)<0.005)return"Practically unchanged since your previous saved check at "+previousTime+".";
-if(diff>0&&diff<0.02)return"A little higher than your previous saved check at "+previousTime+".";
-if(diff>=0.02)return"Noticeably higher than your previous saved check at "+previousTime+". A more meaningful lift has developed.";
-if(diff<0&&diff>-0.02)return"A little lower than your previous saved check at "+previousTime+".";
-return"Noticeably lower than your previous saved check at "+previousTime+". Earlier water has continued to fall away.";
-}
-
-function behaviourEvents(items){
-const out=[];
-
-if(items.length<4){
-out.push({title:"Limited recent history",text:"More recent readings are needed before behaviour can be judged properly."});
-return out;
-}
-
-const d=delta(items);
-
-if(Math.abs(d)<0.008){
-out.push({title:"Broadly unchanged",text:"The river has not moved enough to treat it as a meaningful rise or fall."});
-}else if(d>0){
-out.push({title:"Water building",text:"Extra water is moving into the system."});
-}else{
-out.push({title:"Water easing back",text:"The river is dropping back from earlier water."});
-}
-
-const changes=[];
-for(let i=0;i<items.length-1;i++){
-changes.push(items[i].value-items[i+1].value);
-}
-
-const recent=changes.slice(0,4);
-const older=changes.slice(4,10);
-const recentAvg=recent.reduce((a,b)=>a+b,0)/Math.max(1,recent.length);
-const olderAvg=older.reduce((a,b)=>a+b,0)/Math.max(1,older.length);
-
-if(recentAvg>0.007&&olderAvg<0.002){
-out.push({title:"Possible fresh lift",text:"The latest readings are rising more clearly than earlier."});
-}
-
-if(recentAvg<0&&olderAvg<0&&Math.abs(recentAvg)<Math.abs(olderAvg)){
-out.push({title:"Drop slowing",text:"Levels are still easing back, but the fall now appears to be slowing."});
-}
-
-return out;
-}
-
-function renderBehaviour(items){
-const events=behaviourEvents(items);
-$("behaviourEvents").innerHTML=events.map(e=>`
-<div class="event">
-<div class="event-title">${e.title}</div>
-<div class="event-text">${e.text}</div>
-</div>
-`).join("");
-}
-
-async function fetchJson(url){
-const res=await fetch(url,{cache:"no-store"});
-if(!res.ok)throw new Error("HTTP "+res.status);
-return await res.json();
-}
-
-function renderTrendTable(items){
-const tbody=$("trendTable");
-
-if(!items.length){
-tbody.innerHTML="<tr><td colspan='3'>No live readings available</td></tr>";
-return;
-}
-
-const tableItems=items.slice(0,12);
-let html="";
-
-for(let i=0;i<tableItems.length;i++){
-const row=tableItems[i];
-const prev=tableItems[i+1];
-let change="—";
-let cls="trend-flat";
-
-if(prev){
-const d=row.value-prev.value;
-if(Math.abs(d)<0.005){change="No major change";cls="trend-flat";}
-else if(d>0){change="+"+d.toFixed(3);cls="trend-up";}
-else{change=d.toFixed(3);cls="trend-down";}
-}
-
-html+=`
-<tr>
-<td>${shortTime(row.dateTime)}</td>
-<td>${row.value.toFixed(3)} m</td>
-<td class="${cls}">${change}</td>
-</tr>
-`;
-}
-
-tbody.innerHTML=html;
-}
-
-function downsample(items,maxPoints){
-if(items.length<=maxPoints)return items;
-const out=[];
-const step=(items.length-1)/(maxPoints-1);
-for(let i=0;i<maxPoints;i++){
-out.push(items[Math.round(i*step)]);
-}
-return out;
-}
-
-function readingSpanDays(items){
-if(!items||items.length<2)return 0;
-const chronological=items.slice().sort((a,b)=>asDate(a.dateTime)-asDate(b.dateTime));
-const first=asDate(chronological[0].dateTime);
-const last=asDate(chronological[chronological.length-1].dateTime);
-if(!first||!last)return 0;
-return (last-first)/(24*60*60*1000);
-}
-
-function renderChart(items){
-const svg=$("levelChart");
-const note=$("chartNote");
-
-if(!items||items.length<2){
-svg.innerHTML="";
-note.innerHTML='<span class="warntext">Not enough 7-day readings returned to draw the chart.</span>';
-return;
-}
-
-const chronological=items.slice().sort((a,b)=>asDate(a.dateTime)-asDate(b.dateTime));
-const sampled=downsample(chronological,90);
-
-const min=0;
-const max=2;
-
-const width=720;
-const height=320;
-const padL=52;
-const padR=18;
-const padT=22;
-const padB=82;
-
-function xPos(i){
-if(sampled.length===1)return padL;
-return padL+(i/(sampled.length-1))*(width-padL-padR);
-}
-
-function yPos(v){
-const clipped=Math.max(min,Math.min(max,v));
-return padT+((max-clipped)/(max-min))*(height-padT-padB);
-}
-
-const points=sampled.map((r,i)=>xPos(i)+","+yPos(r.value)).join(" ");
-
-const first=sampled[0];
-const last=sampled[sampled.length-1];
-
-const y0=yPos(0);
-const y05=yPos(0.5);
-const y1=yPos(1);
-const y15=yPos(1.5);
-const y2=yPos(2);
-
-const firstLabel=chartLabel(first.dateTime);
-const lastLabel=chartLabel(last.dateTime);
-
-svg.innerHTML=`
-<line x1="${padL}" y1="${y2}" x2="${width-padR}" y2="${y2}" stroke="#d7dfdc" stroke-width="1"/>
-<line x1="${padL}" y1="${y15}" x2="${width-padR}" y2="${y15}" stroke="#d7dfdc" stroke-width="1"/>
-<line x1="${padL}" y1="${y1}" x2="${width-padR}" y2="${y1}" stroke="#d7dfdc" stroke-width="1"/>
-<line x1="${padL}" y1="${y05}" x2="${width-padR}" y2="${y05}" stroke="#d7dfdc" stroke-width="1"/>
-<line x1="${padL}" y1="${y0}" x2="${width-padR}" y2="${y0}" stroke="#d7dfdc" stroke-width="1"/>
-
-<text x="10" y="${y2+4}" font-size="12" fill="#5b6b63">2.0m</text>
-<text x="10" y="${y15+4}" font-size="12" fill="#5b6b63">1.5m</text>
-<text x="10" y="${y1+4}" font-size="12" fill="#5b6b63">1.0m</text>
-<text x="10" y="${y05+4}" font-size="12" fill="#5b6b63">0.5m</text>
-<text x="10" y="${y0+4}" font-size="12" fill="#5b6b63">0.0m</text>
-
-<polyline points="${points}" fill="none" stroke="#082d1b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-
-<circle cx="${xPos(0)}" cy="${yPos(first.value)}" r="4" fill="#0f7b3f"/>
-<circle cx="${xPos(sampled.length-1)}" cy="${yPos(last.value)}" r="4" fill="#0f7b3f"/>
-
-<text x="${padL}" y="${height-50}" font-size="12" fill="#5b6b63">${firstLabel}</text>
-<text x="${width-padR-162}" y="${height-50}" font-size="12" fill="#5b6b63">${lastLabel}</text>
-<text x="${padL}" y="${height-24}" font-size="12" fill="#5b6b63">Start</text>
-<text x="${width-padR-42}" y="${height-24}" font-size="12" fill="#5b6b63">Now</text>
-`;
-
-const change=last.value-first.value;
-const span=readingSpanDays(chronological);
-
-let phrase="broadly steady across the returned 7-day readings";
-
-if(change>0.03)phrase="higher than at the start of the returned 7-day readings";
-else if(change>0.008)phrase="slightly higher than at the start of the returned 7-day readings";
-else if(change<-0.03)phrase="lower than at the start of the returned 7-day readings";
-else if(change<-0.008)phrase="slightly lower than at the start of the returned 7-day readings";
-
-let spanText="";
-
-if(span<5){
-spanText=' <span class="warntext">Warning: the EA feed returned less than 5 days of chart data.</span>';
-}
-
-note.innerHTML=
-"Seven-day chart requested using EA since-filter. Displayed span: "+
-span.toFixed(1)+
-" days. Fixed scale: 0m to 2m. Picture: "+
-phrase+
-"."+
-spanText;
-}
-
-async function loadHenthorn(){
-const btn=$("refreshBtn");
-btn.disabled=true;
-btn.textContent="Checking live data...";
-setStatus("Checking","warn");
-
-$("lastChecked").textContent="Last checked: "+new Date().toLocaleString("en-GB");
-
-try{
-const latestData=await fetchJson(latestUrl);
-
-let recentData;
-try{
-recentData=await fetchJson(recentUrl);
-}catch(e){
-recentData={items:[]};
-}
-
-let weekData;
-try{
-weekData=await fetchJson(sevenDayUrl());
-}catch(e){
-weekData={items:[]};
-}
-
-const latestItems=cleanReadings(latestData.items);
-const recentItems=cleanReadings(recentData.items);
-const weekItems=cleanReadings(weekData.items);
-
-const clean=recentItems.length?recentItems:latestItems;
-const latest=latestItems[0]||clean[0];
-
-if(!latest)throw new Error("No live readings returned");
-
-$("levelValue").textContent=latest.value.toFixed(3)+" m";
-$("movementValue").textContent=movement(clean);
-$("readingTime").textContent=formatDate(latest.dateTime);
-$("ageValue").textContent=ageText(latest.dateTime);
-
-$("currentPicture").textContent=currentPictureText(clean);
-$("recentMovement").textContent=recentMovementText(clean);
-$("freshWater").textContent=freshWaterText(clean);
-
-renderChart(weekItems);
-
-saveMemory(latest);
-$("continuityPanel").textContent=continuityText(latest);
-
-renderBehaviour(clean);
-renderTrendTable(clean);
-
-$("sourceResult").innerHTML='<span class="ok">Live Environment Agency telemetry active</span>';
-setStatus("Live data","good");
-
-}catch(err){
-$("levelValue").textContent="Unavailable";
-$("movementValue").textContent="Unavailable";
-$("readingTime").textContent="Unavailable";
-$("ageValue").textContent="Unavailable";
-
-$("currentPicture").textContent="Live information is currently unavailable.";
-$("recentMovement").textContent="Recent movement is currently unavailable.";
-$("freshWater").textContent="Fresh water interpretation is currently unavailable.";
-$("continuityPanel").textContent="River continuity is currently unavailable.";
-
-$("levelChart").innerHTML="";
-$("chartNote").innerHTML='<span class="badtext">Chart unavailable because live readings could not be acquired.</span>';
-
-$("behaviourEvents").innerHTML=`
-<div class="event">
-<div class="event-title">Live data unavailable</div>
-<div class="event-text">The app could not acquire live river readings.</div>
-</div>
-`;
-
-$("trendTable").innerHTML="<tr><td colspan='3'>Live readings unavailable</td></tr>";
-$("sourceResult").innerHTML='<span class="badtext">Live telemetry unavailable: '+err.message+'</span>';
-setStatus("Unavailable","bad");
-}finally{
-btn.disabled=false;
-btn.textContent="Refresh live data";
-}
-}
-
-loadHenthorn();
-setInterval(loadHenthorn,15*60*1000);
+refreshData();
 </script>
-
 </body>
 </html>
