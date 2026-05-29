@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon Rivers Intelligence · Build 10208</title>
+<title>Salmon Rivers Intelligence · Build 10209</title>
 <style>
 :root{
   --bg:#f4f1ea;--panel:#fffaf0;--panel2:#fffdf7;--ink:#1c1c1c;--muted:#6b6258;
@@ -17,7 +17,7 @@ main{max-width:1040px;margin:0 auto;padding:14px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:14px;box-shadow:0 2px 10px rgba(0,0,0,.04)}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.metric,.mini,.summary-item{border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--panel2)}
+.metric,.mini{border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--panel2)}
 .label{font-size:13px;color:var(--muted);margin-bottom:5px}
 .value{font-size:30px;font-weight:750}.mini .value{font-size:21px}
 .small{font-size:13px;color:var(--muted);line-height:1.45}
@@ -27,19 +27,20 @@ button:active{transform:scale(.99)}
 .chart-now{text-align:right;font-size:13px;color:var(--muted)}.chart-now strong{display:block;color:var(--ink);font-size:22px}
 canvas{width:100%;height:330px;display:block;background:var(--panel2);border-radius:12px;border:1px solid var(--line)}
 .section-title{font-size:18px;font-weight:800;margin:0 0 10px}
-.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.summary-item span{display:block;color:var(--muted);font-size:12px;margin-bottom:4px}
-.summary-item strong{font-size:15px}
-.wide{grid-column:span 2}
-.bar{height:10px;background:#eadfce;border-radius:999px;overflow:hidden;margin-top:8px}
-.bar-fill{height:100%;width:0%;background:var(--accent-dark);border-radius:999px}
-table{width:100%;border-collapse:collapse;font-size:14px}
-td{border-top:1px solid var(--line);padding:9px 4px;vertical-align:top}
-td:first-child{color:var(--muted);width:38%}
+.analysis-table{width:100%;border-collapse:collapse;font-size:14px;background:var(--panel2);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.analysis-table td{border-top:1px solid var(--line);padding:10px;vertical-align:top}
+.analysis-table tr:first-child td{border-top:0}
+.analysis-table td:first-child{color:var(--muted);width:38%;font-weight:600}
+.observation{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:12px;margin-top:12px}
+.observation p{margin:0 0 8px;font-size:14px;line-height:1.45}
+.observation p:last-child{margin-bottom:0}
+.context-table{width:100%;border-collapse:collapse;font-size:14px}
+.context-table td{border-top:1px solid var(--line);padding:9px 4px;vertical-align:top}
+.context-table td:first-child{color:var(--muted);width:38%}
 .footer{text-align:center;color:var(--muted);font-size:12px;padding:20px 8px}
 @media(max-width:760px){
-  .row{grid-template-columns:1fr}.summary{grid-template-columns:1fr}.wide{grid-column:auto}.grid4{grid-template-columns:1fr 1fr}
-  .value{font-size:28px}canvas{height:300px}.chart-head{display:block}.chart-now{text-align:left;margin-top:8px}
+  .row{grid-template-columns:1fr}.grid4{grid-template-columns:1fr 1fr}.value{font-size:28px}
+  canvas{height:300px}.chart-head{display:block}.chart-now{text-align:left;margin-top:8px}
 }
 </style>
 </head>
@@ -47,7 +48,7 @@ td:first-child{color:var(--muted);width:38%}
 <body>
 <header>
   <h1>Salmon Rivers Intelligence</h1>
-  <div class="sub">River Ribble · Henthorn · Build 10208</div>
+  <div class="sub">River Ribble · Henthorn · Build 10209</div>
 </header>
 
 <main>
@@ -80,23 +81,25 @@ td:first-child{color:var(--muted);width:38%}
 </section>
 
 <section class="card">
-  <div class="section-title">Ribble Intelligence Summary</div>
-  <div class="summary">
-    <div class="summary-item"><span>Current</span><strong id="sumCurrent">Checking…</strong></div>
-    <div class="summary-item"><span>Movement</span><strong id="sumMovement">Checking…</strong></div>
-    <div class="summary-item"><span>Reading age</span><strong id="sumAge">Checking…</strong></div>
-    <div class="summary-item"><span>24-hour change</span><strong id="sum24h">Checking…</strong></div>
-    <div class="summary-item"><span>Below weekly high</span><strong id="sumBelowHigh">Checking…</strong></div>
-    <div class="summary-item"><span>Against weekly average</span><strong id="sumVsAvg">Checking…</strong></div>
-    <div class="summary-item wide">
-      <span>Position within 7-day range</span>
-      <strong id="sumPosition">Checking…</strong>
-      <div class="bar"><div class="bar-fill" id="positionBar"></div></div>
+  <div class="section-title">River Change Analysis</div>
+  <table class="analysis-table">
+    <tr><td>Current level</td><td id="analysisCurrent">Checking…</td></tr>
+    <tr><td>Weekly high</td><td id="analysisHigh">Checking…</td></tr>
+    <tr><td>Weekly low</td><td id="analysisLow">Checking…</td></tr>
+    <tr><td>24-hour change</td><td id="analysis24h">Checking…</td></tr>
+    <tr><td>Weekly average</td><td id="analysisAvg">Checking…</td></tr>
+    <tr><td>Weekly position</td><td id="analysisPosition">Checking…</td></tr>
+  </table>
+
+  <div class="observation">
+    <div class="label">Telemetry Observation</div>
+    <div id="observationText">
+      <p>Waiting for verified EA readings.</p>
     </div>
-    <div class="summary-item"><span>7-day range</span><strong id="sumContext">Checking…</strong></div>
   </div>
+
   <div class="small" style="margin-top:10px">
-    Summary uses verified EA Henthorn level telemetry only. No fishability score and no invented interpretation.
+    Analysis is derived only from verified EA Henthorn level telemetry. No fishability score, catch claim, temperature value, or unsourced interpretation is displayed.
   </div>
 </section>
 
@@ -117,7 +120,7 @@ td:first-child{color:var(--muted);width:38%}
 
 <section class="card">
   <div class="section-title">Beat Context</div>
-  <table>
+  <table class="context-table">
     <tr><td>Fishing beat</td><td>Mitton Bridge to Edisford Bridge</td></tr>
     <tr><td>Reference station</td><td>EA Henthorn station 710305</td></tr>
     <tr><td>Position</td><td>Henthorn sits in the middle of the beat and is the primary live conditions reference.</td></tr>
@@ -127,10 +130,10 @@ td:first-child{color:var(--muted);width:38%}
 
 </main>
 
-<div class="footer">Salmon Rivers Intelligence · Build 10208 · GitHub Pages static build</div>
+<div class="footer">Salmon Rivers Intelligence · Build 10209 · GitHub Pages static build</div>
 
 <script>
-const BUILD="10208";
+const BUILD="10209";
 const STATION_ID="710305";
 const READINGS_URL=`https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?parameter=level&_sorted`;
 const CHART=document.getElementById("chart");
@@ -181,6 +184,36 @@ function changeOverHours(readings,hours){
     if(Math.abs(r.time.getTime()-target)<Math.abs(best.time.getTime()-target))best=r;
   }
   return{diff:latest.value-best.value,from:best};
+}
+function weeklyPositionText(latest,st){
+  const tolerance=0.001;
+  if(Math.abs(latest.value-st.low)<=tolerance)return"Lowest level of the last 7 days";
+  if(Math.abs(latest.value-st.high)<=tolerance)return"Highest level of the last 7 days";
+  if(st.range<=0)return"No weekly range detected";
+  const pct=((latest.value-st.low)/st.range)*100;
+  if(pct<25)return"Lower quarter of the 7-day range";
+  if(pct<50)return"Lower half of the 7-day range";
+  if(pct<75)return"Upper half of the 7-day range";
+  return"Upper quarter of the 7-day range";
+}
+function makeObservation(latest,st,c24){
+  const belowHigh=st.high-latest.value;
+  const vsAvg=latest.value-st.avg;
+  const position=weeklyPositionText(latest,st);
+  const lines=[];
+
+  lines.push(`Current verified level is ${latest.value.toFixed(3)}m.`);
+  lines.push(`This is classified from telemetry as: ${position}.`);
+  lines.push(`The river is ${belowHigh.toFixed(3)}m below the 7-day high of ${st.high.toFixed(3)}m.`);
+  lines.push(`The river is ${Math.abs(vsAvg).toFixed(3)}m ${vsAvg>=0?"above":"below"} the 7-day average level of ${st.avg.toFixed(3)}m.`);
+
+  if(c24){
+    lines.push(`Over the last 24 hours the level has ${c24.diff>=0?"risen":"fallen"} by ${Math.abs(c24.diff).toFixed(3)}m.`);
+  }else{
+    lines.push("24-hour change is unavailable because there are not enough verified readings.");
+  }
+
+  return lines.map(t=>`<p>${t}</p>`).join("");
 }
 function axisFromStats(st){
   let min=st.low,max=st.high,range=max-min;
@@ -261,8 +294,14 @@ async function refreshData(){
     const readings=validReadings(data.items);
 
     if(readings.length===0){
-      setStatus("EA source returned no usable readings.");
+      $("level").textContent="Unavailable";
+      $("levelTime").textContent="No verified EA readings returned.";
+      $("movement").textContent="Unknown";
+      $("movementDetail").textContent="No readings available for movement comparison.";
+      $("chartLatest").textContent="—";
+      $("observationText").innerHTML="<p>No usable verified EA readings were returned.</p>";
       drawChart([]);
+      setStatus("EA source returned no usable readings.");
       return;
     }
 
@@ -270,9 +309,7 @@ async function refreshData(){
     const mv=movementFrom(readings);
     const st=statsFrom(readings);
     const c24=changeOverHours(readings,24);
-    const position=st.range>0?((latest.value-st.low)/st.range)*100:0;
-    const belowHigh=st.high-latest.value;
-    const vsAvg=latest.value-st.avg;
+    const position=weeklyPositionText(latest,st);
 
     $("level").textContent=`${latest.value.toFixed(3)} m`;
     $("levelTime").textContent=`Verified EA reading: ${fmtFullDateTime(latest.iso)}`;
@@ -282,15 +319,13 @@ async function refreshData(){
     $("chartLatest").textContent=`${latest.value.toFixed(3)} m`;
     $("chartNote").textContent=`Showing ${readings.length} verified EA readings from ${fmtDateTime(readings[0].iso)} to ${fmtDateTime(latest.iso)}. Dynamic scale: ${st.low.toFixed(3)}–${st.high.toFixed(3)} m.`;
 
-    $("sumCurrent").textContent=`${latest.value.toFixed(3)} m`;
-    $("sumMovement").textContent=mv.label;
-    $("sumAge").textContent=readingAgeText(latest.iso);
-    $("sum24h").textContent=c24?`${c24.diff>=0?"+":""}${c24.diff.toFixed(3)} m`:"Unavailable";
-    $("sumBelowHigh").textContent=`${belowHigh.toFixed(3)} m below high`;
-    $("sumVsAvg").textContent=`${vsAvg>=0?"+":""}${vsAvg.toFixed(3)} m vs average`;
-    $("sumPosition").textContent=`${Math.round(position)}% of weekly range`;
-    $("positionBar").style.width=`${Math.max(0,Math.min(100,position))}%`;
-    $("sumContext").textContent=`${st.low.toFixed(3)}–${st.high.toFixed(3)} m`;
+    $("analysisCurrent").textContent=`${latest.value.toFixed(3)} m · ${fmtDateTime(latest.iso)}`;
+    $("analysisHigh").textContent=`${st.high.toFixed(3)} m · ${fmtDateTime(st.highReading.iso)}`;
+    $("analysisLow").textContent=`${st.low.toFixed(3)} m · ${fmtDateTime(st.lowReading.iso)}`;
+    $("analysis24h").textContent=c24?`${c24.diff>=0?"+":""}${c24.diff.toFixed(3)} m since ${fmtDateTime(c24.from.iso)}`:"Unavailable";
+    $("analysisAvg").textContent=`${st.avg.toFixed(3)} m`;
+    $("analysisPosition").textContent=position;
+    $("observationText").innerHTML=makeObservation(latest,st,c24);
 
     $("statHigh").textContent=`${st.high.toFixed(3)} m`;
     $("statLow").textContent=`${st.low.toFixed(3)} m`;
@@ -307,6 +342,7 @@ async function refreshData(){
     $("movement").textContent="Unknown";
     $("movementDetail").textContent="Movement withheld because source data is unavailable.";
     $("chartLatest").textContent="—";
+    $("observationText").innerHTML="<p>EA telemetry could not be reached, so analysis is withheld.</p>";
     drawChart([]);
     setStatus(`EA fetch failed: ${err.message}`);
   }
