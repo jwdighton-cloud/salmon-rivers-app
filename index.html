@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon & Sea Trout Rivers Intelligence · Build 10212</title>
+<title>Salmon & Sea Trout Rivers Intelligence · Build 10213</title>
 <style>
 :root{
   --bg:#f4f1ea;--panel:#fffaf0;--panel2:#fffdf7;--ink:#1c1c1c;--muted:#6b6258;
-  --line:#d8cbb9;--accent:#9b6b38;--accent-dark:#6f4725;
+  --line:#d8cbb9;--accent:#9b6b38;--accent-dark:#6f4725;--dark:#241b14;
 }
 *{box-sizing:border-box}
 body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
-header{padding:18px 16px 12px;background:#241b14;color:#fff}
+header{padding:18px 16px 12px;background:var(--dark);color:#fff}
 h1{margin:0;font-size:24px}.sub{margin-top:6px;font-size:14px;color:#d9c8b3}
 main{max-width:1040px;margin:0 auto;padding:14px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:14px;box-shadow:0 2px 10px rgba(0,0,0,.04)}
@@ -37,10 +37,18 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
 .context-table{width:100%;border-collapse:collapse;font-size:14px}
 .context-table td{border-top:1px solid var(--line);padding:9px 4px;vertical-align:top}
 .context-table td:first-child{color:var(--muted);width:38%}
+.beat-strip{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:8px;align-items:center;text-align:center}
+.beat-box{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:12px}
+.beat-arrow{color:var(--accent-dark);font-weight:900}
+.confidence{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.conf-box{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:10px;min-height:86px}
+.conf-box strong{display:block;margin-bottom:4px}
 .footer{text-align:center;color:var(--muted);font-size:12px;padding:20px 8px}
 @media(max-width:760px){
   .row{grid-template-columns:1fr}.grid4{grid-template-columns:1fr 1fr}.value{font-size:28px}
   canvas{height:300px}.chart-head{display:block}.chart-now{text-align:left;margin-top:8px}
+  .beat-strip{grid-template-columns:1fr}.beat-arrow{transform:rotate(90deg)}
+  .confidence{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -48,7 +56,7 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
 <body>
 <header>
   <h1>Salmon &amp; Sea Trout Rivers Intelligence</h1>
-  <div class="sub">River Ribble · Henthorn · Build 10212</div>
+  <div class="sub">River Ribble · Henthorn · Build 10213</div>
 </header>
 
 <main>
@@ -70,14 +78,53 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
 </section>
 
 <section class="card">
+  <div class="section-title">Beat Context</div>
+  <div class="beat-strip">
+    <div class="beat-box"><strong>Mitton Bridge</strong><br><span class="small">Bottom of beat</span></div>
+    <div class="beat-arrow">→</div>
+    <div class="beat-box"><strong>Henthorn Gauge</strong><br><span class="small">Live reference point</span></div>
+    <div class="beat-arrow">→</div>
+    <div class="beat-box"><strong>Edisford Bridge</strong><br><span class="small">Top of beat</span></div>
+  </div>
+  <div class="small" style="margin-top:10px">
+    Henthorn sits in the middle of the working beat and remains the primary verified live conditions reference.
+  </div>
+</section>
+
+<section class="card">
   <div class="chart-head">
     <div>
       <div class="section-title" style="margin-bottom:2px">7-Day Level Context</div>
-      <div class="small" id="chartNote">Chart uses verified EA timestamped readings from the last 7 days.</div>
+      <div class="small" id="chartNote">Chart uses verified EA timestamped readings from the last 7 days. Scale fixed at 0.00–2.00 m.</div>
     </div>
     <div class="chart-now">Latest<strong id="chartLatest">—</strong></div>
   </div>
   <canvas id="chart" width="980" height="330"></canvas>
+</section>
+
+<section class="card">
+  <div class="section-title">Current Season Intelligence Summary</div>
+  <table class="analysis-table">
+    <tr><td>Salmon intelligence</td><td><strong>Awaiting verified 2026 report</strong></td></tr>
+    <tr><td>Sea trout intelligence</td><td><strong>Awaiting verified 2026 report</strong></td></tr>
+    <tr><td>Fish counter</td><td><strong>Acquisition phase</strong> · no value displayed</td></tr>
+    <tr><td>Water temperature</td><td><strong>Acquisition phase</strong> · no value displayed</td></tr>
+    <tr><td>Rainfall / catchment</td><td><strong>Acquisition phase</strong> · no value displayed</td></tr>
+  </table>
+  <div class="small" style="margin-top:10px">
+    No source = no number. This app may record investigation targets, but it must not display unsupported figures.
+  </div>
+</section>
+
+<section class="card">
+  <div class="section-title">Source Confidence Ladder</div>
+  <div class="confidence">
+    <div class="conf-box"><strong>Level 1</strong><span class="small">Official telemetry / measured data</span></div>
+    <div class="conf-box"><strong>Level 2</strong><span class="small">Verified current-season reports</span></div>
+    <div class="conf-box"><strong>Level 3</strong><span class="small">Trusted editorial intelligence</span></div>
+    <div class="conf-box"><strong>Level 4</strong><span class="small">Operator / beat intelligence</span></div>
+    <div class="conf-box"><strong>Level 5</strong><span class="small">Rumour, clearly marked unverified</span></div>
+  </div>
 </section>
 
 <section class="card">
@@ -132,17 +179,13 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
     </tr>
     <tr>
       <td>Beat Intelligence</td>
-      <td><strong>Planned</strong><br><span class="small">Mitton Bridge to Edisford Bridge beat context.</span></td>
+      <td><strong>Live Context</strong><br><span class="small">Mitton Bridge to Edisford Bridge beat context.</span></td>
     </tr>
   </table>
-  <div class="small" style="margin-top:10px">
-    Source rule: no source = no number. Investigation means the source is useful but not yet approved for live display.
-  </div>
 </section>
 
 <section class="card">
   <div class="section-title">Source Acquisition Roadmap</div>
-
   <table class="analysis-table">
     <tr>
       <td>Catch Intelligence</td>
@@ -150,39 +193,29 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
       RFCA identified as Lead Candidate.<br>
       Ribble Rivers Trust identified as Secondary Candidate.</td>
     </tr>
-
     <tr>
       <td>RFCA Temperature</td>
       <td><strong>Investigation</strong><br>
       Assessing availability, stability and traceability of live water temperature data.</td>
     </tr>
-
     <tr>
       <td>Rainfall Intelligence</td>
       <td><strong>Investigation</strong><br>
       Environment Agency Rainfall API identified as acquisition route.
-      Mearley Hall currently leads as rainfall candidate.</td>
+      Great Mitton remains a local candidate for weather/catchment context. Mearley Hall remains an EA rainfall acquisition candidate.</td>
     </tr>
-
     <tr>
       <td>Fish Counter Intelligence</td>
       <td><strong>Research</strong><br>
       Identifying counter locations, ownership and availability.</td>
     </tr>
-
     <tr>
       <td>Beat Intelligence</td>
-      <td><strong>Planned</strong><br>
-      Future Mitton Bridge ↔ Edisford Bridge intelligence layer.</td>
+      <td><strong>Active Context</strong><br>
+      Mitton Bridge ↔ Henthorn ↔ Edisford Bridge.</td>
     </tr>
   </table>
-
-  <div class="small" style="margin-top:10px">
-    Current objective: acquire and classify useful current-season Ribble salmon and sea trout intelligence.
-  </div>
-
 </section>
-
 
 <section class="card">
   <div class="section-title">Salmon Intelligence</div>
@@ -193,12 +226,9 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
       <span class="small">No confirmed 2026 Ribble salmon catch, sighting or movement record has yet been entered into the Knowledge Base.</span></td>
     </tr>
     <tr><td>First salmon marker</td><td>Awaiting confirmation</td></tr>
-    <tr><td>Primary zones watched</td><td>Lower Ribble · Ribchester · Mitton · Edisford</td></tr>
+    <tr><td>Primary zones watched</td><td>Lower Ribble · Ribchester · Mitton · Henthorn · Edisford</td></tr>
     <tr><td>Source classes watched</td><td>Measured · Official · Fishery / Club · Angler / Community · Rumour</td></tr>
   </table>
-  <div class="small" style="margin-top:10px">
-    No invented salmon reports. Salmon intelligence will only be displayed when a source is identified and the confidence class is clear.
-  </div>
 </section>
 
 <section class="card">
@@ -210,12 +240,9 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
       <span class="small">No confirmed 2026 Ribble sea trout catch, sighting or movement record has yet been entered into the Knowledge Base.</span></td>
     </tr>
     <tr><td>First sea trout marker</td><td>Awaiting confirmation</td></tr>
-    <tr><td>Primary zones watched</td><td>Lower Ribble · Ribchester · Mitton · Edisford</td></tr>
+    <tr><td>Primary zones watched</td><td>Lower Ribble · Ribchester · Mitton · Henthorn · Edisford</td></tr>
     <tr><td>Source classes watched</td><td>Measured · Official · Fishery / Club · Angler / Community · Rumour</td></tr>
   </table>
-  <div class="small" style="margin-top:10px">
-    Sea trout intelligence is equal in priority to salmon intelligence and will be classified by source quality.
-  </div>
 </section>
 
 <section class="card">
@@ -261,22 +288,12 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
   <div class="small" id="status" style="margin-top:10px">Ready.</div>
 </section>
 
-<section class="card">
-  <div class="section-title">Beat Context</div>
-  <table class="context-table">
-    <tr><td>Fishing beat</td><td>Mitton Bridge to Edisford Bridge</td></tr>
-    <tr><td>Reference station</td><td>EA Henthorn station 710305</td></tr>
-    <tr><td>Position</td><td>Henthorn sits in the middle of the beat and is the primary live conditions reference.</td></tr>
-    <tr><td>Governance</td><td>No source = no number. No invented catches, temperatures, or fish-counter values.</td></tr>
-  </table>
-</section>
-
 </main>
 
-<div class="footer">Salmon & Sea Trout Rivers Intelligence · Build 10212 · GitHub Pages static build</div>
+<div class="footer">Salmon & Sea Trout Rivers Intelligence · Build 10213 · GitHub Pages static build</div>
 
 <script>
-const BUILD="10212";
+const BUILD="10213";
 const STATION_ID="710305";
 const READINGS_URL=`https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?parameter=level&_sorted`;
 const CHART=document.getElementById("chart");
@@ -305,11 +322,6 @@ function movementFrom(readings){
   if(abs<0.005)return{label:"Steady",detail:`Change ${diff.toFixed(3)} m since previous reading.`,diff};
   if(diff>0)return{label:"Rising",detail:`Up ${diff.toFixed(3)} m since previous reading.`,diff};
   return{label:"Falling",detail:`Down ${Math.abs(diff).toFixed(3)} m since previous reading.`,diff};
-}
-function readingAgeText(iso){
-  const mins=Math.max(0,Math.round((Date.now()-new Date(iso).getTime())/60000));
-  if(mins<60)return`${mins} min`;
-  return`${Math.floor(mins/60)}h ${mins%60}m`;
 }
 function statsFrom(readings){
   const values=readings.map(r=>r.value);
@@ -358,15 +370,6 @@ function makeObservation(latest,st,c24){
 
   return lines.map(t=>`<p>${t}</p>`).join("");
 }
-function axisFromStats(st){
-  let min=st.low,max=st.high,range=max-min;
-  if(range<0.02){range=0.02;min-=0.01;max+=0.01;}
-  const pad=Math.max(range*0.08,0.01);
-  min=Math.max(0,min-pad);max=max+pad;
-  min=Math.max(0,Math.floor(min*100)/100);max=Math.ceil(max*100)/100;
-  if(max<=min)max=min+0.05;
-  return{min,max};
-}
 function drawChart(readings){
   const w=CHART.width,h=CHART.height;
   CTX.clearRect(0,0,w,h);
@@ -378,7 +381,8 @@ function drawChart(readings){
     CTX.fillText("Not enough verified EA chart data.",padL,h/2);return;
   }
 
-  const st=statsFrom(readings),axis=axisFromStats(st);
+  const axis={min:0,max:2};
+
   CTX.strokeStyle="#e0d4c3";CTX.lineWidth=1;CTX.fillStyle="#6b6258";CTX.font="12px system-ui,-apple-system,Segoe UI,sans-serif";CTX.textAlign="left";
 
   for(let i=0;i<=4;i++){
@@ -389,7 +393,10 @@ function drawChart(readings){
 
   const minT=readings[0].time.getTime(),maxT=readings[readings.length-1].time.getTime(),span=Math.max(1,maxT-minT);
   const xFor=t=>padL+((t.getTime()-minT)/span)*plotW;
-  const yFor=v=>padT+plotH-((v-axis.min)/(axis.max-axis.min))*plotH;
+  const yFor=v=>{
+    const clamped=Math.max(axis.min,Math.min(axis.max,v));
+    return padT+plotH-((clamped-axis.min)/(axis.max-axis.min))*plotH;
+  };
   const baseY=padT+plotH;
 
   CTX.beginPath();
@@ -406,7 +413,9 @@ function drawChart(readings){
   readings.forEach((r,i)=>{const x=xFor(r.time),y=yFor(r.value);if(i===0)CTX.moveTo(x,y);else CTX.lineTo(x,y);});
   CTX.strokeStyle="#6f4725";CTX.lineWidth=3;CTX.lineJoin="round";CTX.lineCap="round";CTX.stroke();
 
+  const st=statsFrom(readings);
   const latest=readings[readings.length-1];
+
   function marker(r,label){
     const x=xFor(r.time),y=yFor(r.value);
     CTX.beginPath();CTX.arc(x,y,5,0,Math.PI*2);CTX.fillStyle="#241b14";CTX.fill();
@@ -460,7 +469,7 @@ async function refreshData(){
     $("movementDetail").textContent=mv.detail;
 
     $("chartLatest").textContent=`${latest.value.toFixed(3)} m`;
-    $("chartNote").textContent=`Showing ${readings.length} verified EA readings from ${fmtDateTime(readings[0].iso)} to ${fmtDateTime(latest.iso)}. Dynamic scale: ${st.low.toFixed(3)}–${st.high.toFixed(3)} m.`;
+    $("chartNote").textContent=`Showing ${readings.length} verified EA readings from ${fmtDateTime(readings[0].iso)} to ${fmtDateTime(latest.iso)}. Scale fixed: 0.00–2.00 m.`;
 
     $("analysisCurrent").textContent=`${latest.value.toFixed(3)} m · ${fmtDateTime(latest.iso)}`;
     $("analysisHigh").textContent=`${st.high.toFixed(3)} m · ${fmtDateTime(st.highReading.iso)}`;
