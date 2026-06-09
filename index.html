@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon & Sea Trout Rivers Intelligence · Build 10216</title>
+<title>Salmon & Sea Trout Rivers Intelligence · Build 10217</title>
 <style>
 :root{
   --bg:#f4f1ea;--panel:#fffaf0;--panel2:#fffdf7;--ink:#1c1c1c;--muted:#6b6258;
@@ -52,7 +52,7 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
 <body>
 <header>
   <h1>Salmon &amp; Sea Trout Rivers Intelligence</h1>
-  <div class="sub">River Ribble · Henthorn conditions · Whole-river intelligence · Build 10216</div>
+  <div class="sub">River Ribble · Henthorn conditions · Whole-river intelligence · Build 10217</div>
 </header>
 
 <main>
@@ -103,11 +103,27 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
 </section>
 
 <section class="card">
+  <div class="section-title">Whole River Ribble Zones</div>
+  <table class="analysis-table">
+    <tr><td>Lower Ribble</td><td>Whole-river catch and fish-movement intelligence zone.</td></tr>
+    <tr><td>Ribchester</td><td>Whole-river catch and fish-movement intelligence zone.</td></tr>
+    <tr><td>Mitton</td><td>Whole-river catch and fish-movement intelligence zone.</td></tr>
+    <tr><td>Henthorn</td><td>Conditions reference area and whole-river intelligence zone.</td></tr>
+    <tr><td>Edisford</td><td>Whole-river catch and fish-movement intelligence zone.</td></tr>
+    <tr><td>Upper Ribble</td><td>Whole-river catch and fish-movement intelligence zone.</td></tr>
+    <tr><td>Tributary / Unknown</td><td>Used only when a report is credible but the exact river area is unclear.</td></tr>
+  </table>
+  <div class="small" style="margin-top:10px">
+    These zones are for future catch and fish-movement reports. They do not create or imply any catch data.
+  </div>
+</section>
+
+<section class="card">
   <div class="section-title">Intelligence Ledger</div>
   <table class="analysis-table">
     <tr>
       <th>Date</th>
-      <th>River Area</th>
+      <th>River Zone</th>
       <th>Type</th>
       <th>Source</th>
       <th>Confidence</th>
@@ -182,10 +198,10 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
 
 </main>
 
-<div class="footer">Salmon & Sea Trout Rivers Intelligence · Build 10216 · GitHub Pages static build</div>
+<div class="footer">Salmon & Sea Trout Rivers Intelligence · Build 10217 · GitHub Pages static build</div>
 
 <script>
-const BUILD="10216";
+const BUILD="10217";
 const STATION_ID="710305";
 const READINGS_URL=`https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?parameter=level&_sorted`;
 const CHART=document.getElementById("chart");
