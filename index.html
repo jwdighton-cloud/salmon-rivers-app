@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon & Sea Trout Rivers Intelligence · Build 10213</title>
+<title>Salmon & Sea Trout Rivers Intelligence · Build 10214</title>
 <style>
 :root{
   --bg:#f4f1ea;--panel:#fffaf0;--panel2:#fffdf7;--ink:#1c1c1c;--muted:#6b6258;
@@ -28,20 +28,18 @@ button:active{transform:scale(.99)}
 canvas{width:100%;height:330px;display:block;background:var(--panel2);border-radius:12px;border:1px solid var(--line)}
 .section-title{font-size:18px;font-weight:800;margin:0 0 10px}
 .analysis-table{width:100%;border-collapse:collapse;font-size:14px;background:var(--panel2);border:1px solid var(--line);border-radius:14px;overflow:hidden}
-.analysis-table td{border-top:1px solid var(--line);padding:10px;vertical-align:top}
-.analysis-table tr:first-child td{border-top:0}
-.analysis-table td:first-child{color:var(--muted);width:38%;font-weight:600}
+.analysis-table td,.analysis-table th{border-top:1px solid var(--line);padding:10px;vertical-align:top;text-align:left}
+.analysis-table tr:first-child td,.analysis-table tr:first-child th{border-top:0}
+.analysis-table td:first-child{color:var(--muted);width:34%;font-weight:600}
+.analysis-table th{color:var(--muted);font-weight:800;background:#fbf3e6}
 .observation{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:12px;margin-top:12px}
 .observation p{margin:0 0 8px;font-size:14px;line-height:1.45}
 .observation p:last-child{margin-bottom:0}
-.context-table{width:100%;border-collapse:collapse;font-size:14px}
-.context-table td{border-top:1px solid var(--line);padding:9px 4px;vertical-align:top}
-.context-table td:first-child{color:var(--muted);width:38%}
 .beat-strip{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:8px;align-items:center;text-align:center}
 .beat-box{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:12px}
 .beat-arrow{color:var(--accent-dark);font-weight:900}
 .confidence{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
-.conf-box{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:10px;min-height:86px}
+.conf-box{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:10px;min-height:78px}
 .conf-box strong{display:block;margin-bottom:4px}
 .footer{text-align:center;color:var(--muted);font-size:12px;padding:20px 8px}
 @media(max-width:760px){
@@ -56,7 +54,7 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
 <body>
 <header>
   <h1>Salmon &amp; Sea Trout Rivers Intelligence</h1>
-  <div class="sub">River Ribble · Henthorn · Build 10213</div>
+  <div class="sub">River Ribble · Henthorn · Build 10214</div>
 </header>
 
 <main>
@@ -86,9 +84,6 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
     <div class="beat-arrow">→</div>
     <div class="beat-box"><strong>Edisford Bridge</strong><br><span class="small">Top of beat</span></div>
   </div>
-  <div class="small" style="margin-top:10px">
-    Henthorn sits in the middle of the working beat and remains the primary verified live conditions reference.
-  </div>
 </section>
 
 <section class="card">
@@ -103,28 +98,47 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
 </section>
 
 <section class="card">
-  <div class="section-title">Current Season Intelligence Summary</div>
-  <table class="analysis-table">
-    <tr><td>Salmon intelligence</td><td><strong>Awaiting verified 2026 report</strong></td></tr>
-    <tr><td>Sea trout intelligence</td><td><strong>Awaiting verified 2026 report</strong></td></tr>
-    <tr><td>Fish counter</td><td><strong>Acquisition phase</strong> · no value displayed</td></tr>
-    <tr><td>Water temperature</td><td><strong>Acquisition phase</strong> · no value displayed</td></tr>
-    <tr><td>Rainfall / catchment</td><td><strong>Acquisition phase</strong> · no value displayed</td></tr>
-  </table>
-  <div class="small" style="margin-top:10px">
-    No source = no number. This app may record investigation targets, but it must not display unsupported figures.
+  <div class="section-title">Weekly Statistics</div>
+  <div class="grid4">
+    <div class="mini"><div class="label">7-day high</div><div class="value" id="statHigh">—</div><div class="small" id="statHighTime"></div></div>
+    <div class="mini"><div class="label">7-day low</div><div class="value" id="statLow">—</div><div class="small" id="statLowTime"></div></div>
+    <div class="mini"><div class="label">7-day average</div><div class="value" id="statAvg">—</div></div>
+    <div class="mini"><div class="label">Readings</div><div class="value" id="statCount">—</div></div>
   </div>
 </section>
 
 <section class="card">
-  <div class="section-title">Source Confidence Ladder</div>
-  <div class="confidence">
-    <div class="conf-box"><strong>Level 1</strong><span class="small">Official telemetry / measured data</span></div>
-    <div class="conf-box"><strong>Level 2</strong><span class="small">Verified current-season reports</span></div>
-    <div class="conf-box"><strong>Level 3</strong><span class="small">Trusted editorial intelligence</span></div>
-    <div class="conf-box"><strong>Level 4</strong><span class="small">Operator / beat intelligence</span></div>
-    <div class="conf-box"><strong>Level 5</strong><span class="small">Rumour, clearly marked unverified</span></div>
+  <div class="section-title">Ribble Intelligence Dashboard</div>
+  <table class="analysis-table">
+    <tr><td>First Salmon 2026</td><td><strong>Awaiting confirmation</strong></td></tr>
+    <tr><td>First Sea Trout 2026</td><td><strong>Awaiting confirmation</strong></td></tr>
+    <tr><td>Latest Verified Catch Report</td><td><strong>Awaiting confirmation</strong></td></tr>
+    <tr><td>Latest Fish Movement Report</td><td><strong>Awaiting confirmation</strong></td></tr>
+    <tr><td>Latest Beat Intelligence</td><td><strong>Awaiting confirmation</strong></td></tr>
+    <tr><td>Fish Counter</td><td><strong>Acquisition phase</strong> · no value displayed</td></tr>
+    <tr><td>Water Temperature</td><td><strong>Acquisition phase</strong> · no value displayed</td></tr>
+    <tr><td>Rainfall / Catchment</td><td><strong>Acquisition phase</strong> · no value displayed</td></tr>
+  </table>
+  <div class="small" style="margin-top:10px">
+    This is the working intelligence picture for the Ribble. Nothing is displayed as a fact unless the source is traceable.
   </div>
+</section>
+
+<section class="card">
+  <div class="section-title">Intelligence Ledger</div>
+  <table class="analysis-table">
+    <tr>
+      <th>Date</th>
+      <th>Type</th>
+      <th>Source</th>
+      <th>Confidence</th>
+      <th>Notes</th>
+    </tr>
+    <tr>
+      <td colspan="5"><strong>No verified 2026 Ribble salmon or sea trout intelligence recorded yet.</strong><br>
+      <span class="small">Future entries will be chronological and source-classified. Rumours may be logged, but only when clearly marked unverified.</span></td>
+    </tr>
+  </table>
 </section>
 
 <section class="card">
@@ -151,136 +165,25 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
 </section>
 
 <section class="card">
-  <div class="section-title">Intelligence Sources</div>
-  <table class="analysis-table">
-    <tr>
-      <td>EA Henthorn Level</td>
-      <td><strong>Live</strong><br><span class="small">Primary verified river-level telemetry source.</span></td>
-    </tr>
-    <tr>
-      <td>EA Trend Analysis</td>
-      <td><strong>Live</strong><br><span class="small">Derived from verified EA Henthorn readings.</span></td>
-    </tr>
-    <tr>
-      <td>Great Mitton Rainfall</td>
-      <td><strong>Investigation</strong><br><span class="small">Candidate catchment and rainfall intelligence source. No rainfall value displayed until verified.</span></td>
-    </tr>
-    <tr>
-      <td>RFCA Water Temperature</td>
-      <td><strong>Investigation</strong><br><span class="small">No temperature value displayed until a stable, current and traceable source is verified.</span></td>
-    </tr>
-    <tr>
-      <td>Current Season Catch Intelligence</td>
-      <td><strong>Investigation</strong><br><span class="small">Current-season salmon and sea trout information only. No historic or unsourced catch claims.</span></td>
-    </tr>
-    <tr>
-      <td>Fish Counter Intelligence</td>
-      <td><strong>Investigation</strong><br><span class="small">No fish-counter values displayed until verified and source-traceable.</span></td>
-    </tr>
-    <tr>
-      <td>Beat Intelligence</td>
-      <td><strong>Live Context</strong><br><span class="small">Mitton Bridge to Edisford Bridge beat context.</span></td>
-    </tr>
-  </table>
+  <div class="section-title">Source Confidence Ladder</div>
+  <div class="confidence">
+    <div class="conf-box"><strong>Level 1</strong><span class="small">Official telemetry / measured data</span></div>
+    <div class="conf-box"><strong>Level 2</strong><span class="small">Verified current-season reports</span></div>
+    <div class="conf-box"><strong>Level 3</strong><span class="small">Trusted editorial intelligence</span></div>
+    <div class="conf-box"><strong>Level 4</strong><span class="small">Operator / beat intelligence</span></div>
+    <div class="conf-box"><strong>Level 5</strong><span class="small">Rumour, clearly marked unverified</span></div>
+  </div>
 </section>
 
 <section class="card">
   <div class="section-title">Source Acquisition Roadmap</div>
   <table class="analysis-table">
-    <tr>
-      <td>Catch Intelligence</td>
-      <td><strong>Primary Focus</strong><br>
-      RFCA identified as Lead Candidate.<br>
-      Ribble Rivers Trust identified as Secondary Candidate.</td>
-    </tr>
-    <tr>
-      <td>RFCA Temperature</td>
-      <td><strong>Investigation</strong><br>
-      Assessing availability, stability and traceability of live water temperature data.</td>
-    </tr>
-    <tr>
-      <td>Rainfall Intelligence</td>
-      <td><strong>Investigation</strong><br>
-      Environment Agency Rainfall API identified as acquisition route.
-      Great Mitton remains a local candidate for weather/catchment context. Mearley Hall remains an EA rainfall acquisition candidate.</td>
-    </tr>
-    <tr>
-      <td>Fish Counter Intelligence</td>
-      <td><strong>Research</strong><br>
-      Identifying counter locations, ownership and availability.</td>
-    </tr>
-    <tr>
-      <td>Beat Intelligence</td>
-      <td><strong>Active Context</strong><br>
-      Mitton Bridge ↔ Henthorn ↔ Edisford Bridge.</td>
-    </tr>
+    <tr><td>Catch Intelligence</td><td><strong>Primary Focus</strong><br>RFCA lead candidate · Ribble Rivers Trust secondary candidate.</td></tr>
+    <tr><td>RFCA Temperature</td><td><strong>Investigation</strong><br>No value displayed until stable, current and traceable.</td></tr>
+    <tr><td>Rainfall Intelligence</td><td><strong>Investigation</strong><br>Great Mitton weather/catchment context · Mearley Hall EA rainfall candidate.</td></tr>
+    <tr><td>Fish Counter Intelligence</td><td><strong>Research</strong><br>Counter location, ownership and availability still to verify.</td></tr>
+    <tr><td>Beat Intelligence</td><td><strong>Active Context</strong><br>Mitton Bridge ↔ Henthorn ↔ Edisford Bridge.</td></tr>
   </table>
-</section>
-
-<section class="card">
-  <div class="section-title">Salmon Intelligence</div>
-  <table class="analysis-table">
-    <tr>
-      <td>2026 season status</td>
-      <td><strong>Awaiting confirmed salmon intelligence</strong><br>
-      <span class="small">No confirmed 2026 Ribble salmon catch, sighting or movement record has yet been entered into the Knowledge Base.</span></td>
-    </tr>
-    <tr><td>First salmon marker</td><td>Awaiting confirmation</td></tr>
-    <tr><td>Primary zones watched</td><td>Lower Ribble · Ribchester · Mitton · Henthorn · Edisford</td></tr>
-    <tr><td>Source classes watched</td><td>Measured · Official · Fishery / Club · Angler / Community · Rumour</td></tr>
-  </table>
-</section>
-
-<section class="card">
-  <div class="section-title">Sea Trout Intelligence</div>
-  <table class="analysis-table">
-    <tr>
-      <td>2026 season status</td>
-      <td><strong>Awaiting confirmed sea trout intelligence</strong><br>
-      <span class="small">No confirmed 2026 Ribble sea trout catch, sighting or movement record has yet been entered into the Knowledge Base.</span></td>
-    </tr>
-    <tr><td>First sea trout marker</td><td>Awaiting confirmation</td></tr>
-    <tr><td>Primary zones watched</td><td>Lower Ribble · Ribchester · Mitton · Henthorn · Edisford</td></tr>
-    <tr><td>Source classes watched</td><td>Measured · Official · Fishery / Club · Angler / Community · Rumour</td></tr>
-  </table>
-</section>
-
-<section class="card">
-  <div class="section-title">River Talk</div>
-  <table class="analysis-table">
-    <tr><td>Official</td><td>RFCA · Ribble Rivers Trust</td></tr>
-    <tr><td>Fishery / Club</td><td>Yorkshire Fly Fishers · Bradford City AA · RDAC · Ribble fisheries and beats</td></tr>
-    <tr><td>Community</td><td>River Ribble Salmon &amp; Sea Trout Facebook Group · River Ribble Catch Reports Group · Salmon Fishing Forum</td></tr>
-    <tr><td>Status</td><td>Monitoring source classes for salmon, sea trout, sightings, movement, local observations and rumours.</td></tr>
-  </table>
-</section>
-
-<section class="card">
-  <div class="section-title">Rumour Mill</div>
-  <table class="analysis-table">
-    <tr><td>Current status</td><td><strong>No active rumours recorded</strong></td></tr>
-    <tr><td>Rule</td><td>Rumours are allowed, useful and retained, but must always be marked <strong>RUMOUR — UNVERIFIED</strong>.</td></tr>
-  </table>
-</section>
-
-<section class="card">
-  <div class="section-title">Knowledge Base Status</div>
-  <table class="analysis-table">
-    <tr><td>Knowledge Base</td><td>Ribble Knowledge Base v1.0 initiated</td></tr>
-    <tr><td>Season markers</td><td>First Salmon · First Sea Trout · First Fresh Fish Report · First Mitton Intelligence · First Ribchester Intelligence — all awaiting confirmation</td></tr>
-    <tr><td>Intelligence zones</td><td>Lower Ribble · Ribchester · Henthorn · Mitton · Edisford</td></tr>
-    <tr><td>Core principle</td><td>Collect everything useful. Classify everything honestly.</td></tr>
-  </table>
-</section>
-
-<section class="card">
-  <div class="section-title">Weekly Statistics</div>
-  <div class="grid4">
-    <div class="mini"><div class="label">7-day high</div><div class="value" id="statHigh">—</div><div class="small" id="statHighTime"></div></div>
-    <div class="mini"><div class="label">7-day low</div><div class="value" id="statLow">—</div><div class="small" id="statLowTime"></div></div>
-    <div class="mini"><div class="label">7-day average</div><div class="value" id="statAvg">—</div></div>
-    <div class="mini"><div class="label">Readings</div><div class="value" id="statCount">—</div></div>
-  </div>
 </section>
 
 <section class="card">
@@ -290,10 +193,10 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
 
 </main>
 
-<div class="footer">Salmon & Sea Trout Rivers Intelligence · Build 10213 · GitHub Pages static build</div>
+<div class="footer">Salmon & Sea Trout Rivers Intelligence · Build 10214 · GitHub Pages static build</div>
 
 <script>
-const BUILD="10213";
+const BUILD="10214";
 const STATION_ID="710305";
 const READINGS_URL=`https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?parameter=level&_sorted`;
 const CHART=document.getElementById("chart");
