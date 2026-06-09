@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon & Sea Trout Rivers Intelligence · Build 10215</title>
+<title>Salmon & Sea Trout Rivers Intelligence · Build 10216</title>
 <style>
 :root{
   --bg:#f4f1ea;--panel:#fffaf0;--panel2:#fffdf7;--ink:#1c1c1c;--muted:#6b6258;
@@ -52,7 +52,7 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
 <body>
 <header>
   <h1>Salmon &amp; Sea Trout Rivers Intelligence</h1>
-  <div class="sub">River Ribble · Henthorn · Build 10215</div>
+  <div class="sub">River Ribble · Henthorn conditions · Whole-river intelligence · Build 10216</div>
 </header>
 
 <main>
@@ -71,7 +71,7 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
       <div class="small" id="movementDetail">Comparing latest readings only.</div>
     </div>
   </div>
-  <div class="beat-line"><strong>Beat:</strong> Mitton Bridge → Henthorn Gauge → Edisford Bridge</div>
+  <div class="beat-line"><strong>Conditions reference:</strong> River Ribble @ Henthorn · <strong>Beat:</strong> Mitton Bridge → Henthorn Gauge → Edisford Bridge</div>
 </section>
 
 <section class="card">
@@ -86,19 +86,19 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
 </section>
 
 <section class="card">
-  <div class="section-title">Ribble Intelligence Dashboard</div>
+  <div class="section-title">Current Season Ribble Intelligence</div>
   <table class="analysis-table">
-    <tr><td>First Salmon 2026</td><td><strong>Awaiting confirmation</strong></td></tr>
-    <tr><td>First Sea Trout 2026</td><td><strong>Awaiting confirmation</strong></td></tr>
-    <tr><td>Latest Verified Catch Report</td><td><strong>Awaiting confirmation</strong></td></tr>
-    <tr><td>Latest Fish Movement Report</td><td><strong>Awaiting confirmation</strong></td></tr>
-    <tr><td>Latest Beat Intelligence</td><td><strong>Awaiting confirmation</strong></td></tr>
+    <tr><td>Coverage</td><td><strong>Whole River Ribble</strong><br><span class="small">Catch and fish-movement intelligence is not limited to the Mitton–Edisford beat.</span></td></tr>
+    <tr><td>Latest Verified Salmon Report</td><td><strong>Awaiting confirmation</strong><br><span class="small">No 2026 Ribble salmon report displayed without a traceable source.</span></td></tr>
+    <tr><td>Latest Verified Sea Trout Report</td><td><strong>Awaiting confirmation</strong><br><span class="small">No 2026 Ribble sea trout report displayed without a traceable source.</span></td></tr>
+    <tr><td>Latest Verified Catch Intelligence</td><td><strong>Awaiting confirmation</strong><br><span class="small">Will show date, location, source and confidence when verified.</span></td></tr>
+    <tr><td>Latest Fish Movement Intelligence</td><td><strong>Awaiting confirmation</strong><br><span class="small">Will include credible sightings, counters or official/club movement reports when verified.</span></td></tr>
     <tr><td>Fish Counter</td><td><strong>Acquisition phase</strong> · no value displayed</td></tr>
     <tr><td>Water Temperature</td><td><strong>Acquisition phase</strong> · no value displayed</td></tr>
     <tr><td>Rainfall / Catchment</td><td><strong>Acquisition phase</strong> · no value displayed</td></tr>
   </table>
   <div class="small" style="margin-top:10px">
-    Working Ribble intelligence picture. Nothing is displayed as a fact unless the source is traceable.
+    Conditions are Henthorn-based. Catch intelligence is whole-river Ribble. No source = no number.
   </div>
 </section>
 
@@ -107,13 +107,14 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
   <table class="analysis-table">
     <tr>
       <th>Date</th>
+      <th>River Area</th>
       <th>Type</th>
       <th>Source</th>
       <th>Confidence</th>
       <th>Notes</th>
     </tr>
     <tr>
-      <td colspan="5"><strong>No verified 2026 Ribble salmon or sea trout intelligence recorded yet.</strong><br>
+      <td colspan="6"><strong>No verified 2026 whole-river Ribble salmon or sea trout intelligence recorded yet.</strong><br>
       <span class="small">Future entries will be chronological and source-classified. Rumours may be logged, but only when clearly marked unverified.</span></td>
     </tr>
   </table>
@@ -166,11 +167,11 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
 <section class="card">
   <div class="section-title">Source Acquisition Roadmap</div>
   <table class="analysis-table">
-    <tr><td>Catch Intelligence</td><td><strong>Primary Focus</strong><br>RFCA lead candidate · Ribble Rivers Trust secondary candidate.</td></tr>
+    <tr><td>Catch Intelligence</td><td><strong>Primary Focus</strong><br>RFCA lead candidate · Ribble Rivers Trust secondary candidate · whole-river Ribble coverage.</td></tr>
     <tr><td>RFCA Temperature</td><td><strong>Investigation</strong><br>No value displayed until stable, current and traceable.</td></tr>
     <tr><td>Rainfall Intelligence</td><td><strong>Investigation</strong><br>Great Mitton weather/catchment context · Mearley Hall EA rainfall candidate.</td></tr>
     <tr><td>Fish Counter Intelligence</td><td><strong>Research</strong><br>Counter location, ownership and availability still to verify.</td></tr>
-    <tr><td>Beat Intelligence</td><td><strong>Active Context</strong><br>Mitton Bridge ↔ Henthorn ↔ Edisford Bridge.</td></tr>
+    <tr><td>Beat Conditions</td><td><strong>Active Context</strong><br>Mitton Bridge ↔ Henthorn ↔ Edisford Bridge, using Henthorn as the live conditions reference.</td></tr>
   </table>
 </section>
 
@@ -181,10 +182,10 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
 
 </main>
 
-<div class="footer">Salmon & Sea Trout Rivers Intelligence · Build 10215 · GitHub Pages static build</div>
+<div class="footer">Salmon & Sea Trout Rivers Intelligence · Build 10216 · GitHub Pages static build</div>
 
 <script>
-const BUILD="10215";
+const BUILD="10216";
 const STATION_ID="710305";
 const READINGS_URL=`https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?parameter=level&_sorted`;
 const CHART=document.getElementById("chart");
