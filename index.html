@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon & Sea Trout Rivers Intelligence · Build 10218</title>
+<title>Salmon & Sea Trout Rivers Intelligence · Build 10219</title>
 <style>
 :root{
   --bg:#f4f1ea;--panel:#fffaf0;--panel2:#fffdf7;--ink:#1c1c1c;--muted:#6b6258;
@@ -52,7 +52,7 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
 <body>
 <header>
   <h1>Salmon &amp; Sea Trout Rivers Intelligence</h1>
-  <div class="sub">River Ribble · Henthorn conditions · Whole-river intelligence · Build 10218</div>
+  <div class="sub">River Ribble · Henthorn conditions · Whole-river intelligence · Build 10219</div>
 </header>
 
 <main>
@@ -90,9 +90,10 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
   <table class="analysis-table">
     <tr><td>Coverage</td><td><strong>Whole River Ribble</strong><br><span class="small">Catch and fish-movement intelligence is not limited to the Mitton–Edisford beat.</span></td></tr>
     <tr><td>Species tracked</td><td><strong>Salmon · Sea Trout</strong><br><span class="small">Reports will be classified by species before being entered into the ledger.</span></td></tr>
+    <tr><td>Report types tracked</td><td><strong>Catch · Sighting · Fish movement · Counter · Temperature · Rainfall / catchment · Pollution / water quality · Rumour</strong></td></tr>
     <tr><td>Latest Verified Salmon Report</td><td><strong>Awaiting confirmation</strong><br><span class="small">No 2026 Ribble salmon report displayed without a traceable source.</span></td></tr>
     <tr><td>Latest Verified Sea Trout Report</td><td><strong>Awaiting confirmation</strong><br><span class="small">No 2026 Ribble sea trout report displayed without a traceable source.</span></td></tr>
-    <tr><td>Latest Verified Catch Intelligence</td><td><strong>Awaiting confirmation</strong><br><span class="small">Will show date, river zone, species, source and confidence when verified.</span></td></tr>
+    <tr><td>Latest Verified Catch Intelligence</td><td><strong>Awaiting confirmation</strong><br><span class="small">Will show date, river zone, species, report type, source and confidence when verified.</span></td></tr>
     <tr><td>Latest Fish Movement Intelligence</td><td><strong>Awaiting confirmation</strong><br><span class="small">Will include credible sightings, counters or official/club movement reports when verified.</span></td></tr>
     <tr><td>Fish Counter</td><td><strong>Acquisition phase</strong> · no value displayed</td></tr>
     <tr><td>Water Temperature</td><td><strong>Acquisition phase</strong> · no value displayed</td></tr>
@@ -100,6 +101,23 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
   </table>
   <div class="small" style="margin-top:10px">
     Conditions are Henthorn-based. Catch intelligence is whole-river Ribble. No source = no number.
+  </div>
+</section>
+
+<section class="card">
+  <div class="section-title">Report Type Classification</div>
+  <table class="analysis-table">
+    <tr><td>Catch</td><td>Confirmed or credible salmon / sea trout catch report.</td></tr>
+    <tr><td>Sighting</td><td>Credible fish sighting without confirmed capture.</td></tr>
+    <tr><td>Fish movement</td><td>Movement intelligence from credible observation, official report, club report, counter, or operator intelligence.</td></tr>
+    <tr><td>Counter</td><td>Fish counter intelligence only when source, location and date are traceable.</td></tr>
+    <tr><td>Temperature</td><td>Water temperature intelligence only when source and timestamp are traceable.</td></tr>
+    <tr><td>Rainfall / catchment</td><td>Rainfall or catchment context linked to Ribble conditions.</td></tr>
+    <tr><td>Pollution / water quality</td><td>Pollution, bathing-water, sewage, water quality or river-health intelligence.</td></tr>
+    <tr><td>Rumour</td><td>Useful but unverified information. Must always be clearly marked as rumour.</td></tr>
+  </table>
+  <div class="small" style="margin-top:10px">
+    Report type classification prevents catch reports, sightings, counters and environmental intelligence being mixed together.
   </div>
 </section>
 
@@ -139,7 +157,7 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
       <th>Date</th>
       <th>River Zone</th>
       <th>Species</th>
-      <th>Type</th>
+      <th>Report Type</th>
       <th>Source</th>
       <th>Confidence</th>
       <th>Notes</th>
@@ -213,10 +231,10 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
 
 </main>
 
-<div class="footer">Salmon & Sea Trout Rivers Intelligence · Build 10218 · GitHub Pages static build</div>
+<div class="footer">Salmon & Sea Trout Rivers Intelligence · Build 10219 · GitHub Pages static build</div>
 
 <script>
-const BUILD="10218";
+const BUILD="10219";
 const STATION_ID="710305";
 const READINGS_URL=`https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?parameter=level&_sorted`;
 const CHART=document.getElementById("chart");
