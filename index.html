@@ -91,25 +91,25 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
   <table class="analysis-table" style="margin-bottom:12px">
     <tr><td>Salmon 2026</td><td><strong>No verified evidence acquired</strong><br><span class="small">No current-season Ribble salmon report is displayed without a traceable source.</span></td></tr>
     <tr><td>Sea Trout 2026</td><td><strong>No verified evidence acquired</strong><br><span class="small">No current-season Ribble sea trout report is displayed without a traceable source.</span></td></tr>
-    <tr><td>Movement 2026</td><td><strong>Early Waddow activity recorded</strong><br><span class="small">Early-year counter activity exists, but no full-season conclusion is drawn.</span></td></tr>
+    <tr><td>Fish Movement 2026</td><td><strong>Early Waddow fish movement activity recorded</strong><br><span class="small">Species attribution is not assumed. The app records movement evidence only.</span></td></tr>
     <tr><td>River Conditions</td><td><strong>High confidence</strong><br><span class="small">EA Henthorn telemetry remains the live conditions reference.</span></td></tr>
-    <tr><td>Fish Intelligence</td><td><strong>Low confidence</strong><br><span class="small">Current-season fish evidence remains the main acquisition gap.</span></td></tr>
+    <tr><td>Fish Intelligence</td><td><strong>Low confidence</strong><br><span class="small">Current-season salmon and sea trout evidence remains the main acquisition gap.</span></td></tr>
   </table>
 
   <table class="analysis-table">
     <tr><td>Coverage</td><td><strong>Whole River Ribble</strong><br><span class="small">Catch and fish-movement intelligence is not limited to the Mitton–Edisford beat.</span></td></tr>
-    <tr><td>Species tracked</td><td><strong>Salmon · Sea Trout</strong><br><span class="small">Reports will be classified by species before being entered into the ledger.</span></td></tr>
+    <tr><td>Species tracked</td><td><strong>Salmon · Sea Trout</strong><br><span class="small">Reports will be classified by species only when the source supports that classification.</span></td></tr>
     <tr><td>Report types tracked</td><td><strong>Catch · Sighting · Fish movement · Counter · Temperature · Rainfall / catchment · Pollution / water quality · Rumour</strong></td></tr>
     <tr><td>Latest Verified Salmon Report</td><td><strong>Awaiting confirmation</strong><br><span class="small">No 2026 Ribble salmon report displayed without a traceable source.</span></td></tr>
     <tr><td>Latest Verified Sea Trout Report</td><td><strong>Awaiting confirmation</strong><br><span class="small">No 2026 Ribble sea trout report displayed without a traceable source.</span></td></tr>
     <tr><td>Latest Verified Catch Intelligence</td><td><strong>Awaiting confirmation</strong><br><span class="small">Will show date, river zone, species, report type, source and confidence when verified.</span></td></tr>
-    <tr><td>Latest Fish Movement Intelligence</td><td><strong>Awaiting confirmation</strong><br><span class="small">Will include credible sightings, counters or official/club movement reports when verified.</span></td></tr>
-    <tr><td>Fish Counter</td><td><strong>Acquisition phase</strong> · no value displayed</td></tr>
+    <tr><td>Latest Fish Movement Intelligence</td><td><strong>Awaiting confirmation</strong><br><span class="small">Counter data is treated as fish movement unless the source provides species attribution.</span></td></tr>
+    <tr><td>Fish Counter</td><td><strong>Acquisition phase</strong> · movement data only unless species is verified by source</td></tr>
     <tr><td>Water Temperature</td><td><strong>Acquisition phase</strong> · no value displayed</td></tr>
     <tr><td>Rainfall / Catchment</td><td><strong>Acquisition phase</strong> · no value displayed</td></tr>
   </table>
   <div class="small" style="margin-top:10px">
-    Conditions are Henthorn-based. Catch intelligence is whole-river Ribble. No source = no number.
+    Conditions are Henthorn-based. Catch intelligence is whole-river Ribble. Counter data shows fish movement unless the source explicitly separates salmon and sea trout. No source = no number.
   </div>
 </section>
 
@@ -122,14 +122,14 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
       <th>Source</th>
     </tr>
     <tr><td>2023</td><td>146 salmon · 418 sea trout · 100% salmon release</td><td>RFCA</td></tr>
-    <tr><td>2023</td><td>989 salmon recorded at Waddow</td><td>RFCA</td></tr>
-    <tr><td>2024</td><td>Waddow net upstream movements: 1,710</td><td>RFCA Waddow Counter</td></tr>
-    <tr><td>2025</td><td>Waddow net upstream movements: 1,587</td><td>RFCA Waddow Counter</td></tr>
-    <tr><td>2025</td><td>June movement approximately 63% above June 2024</td><td>RFCA Waddow Counter</td></tr>
+    <tr><td>2023</td><td>RFCA reported 989 salmon recorded at Waddow</td><td>RFCA</td></tr>
+    <tr><td>2024</td><td>Waddow net upstream fish movements: 1,710 · species mix not assumed</td><td>RFCA Waddow Counter</td></tr>
+    <tr><td>2025</td><td>Waddow net upstream fish movements: 1,587 · species mix not assumed</td><td>RFCA Waddow Counter</td></tr>
+    <tr><td>2025</td><td>June fish movement approximately 63% above June 2024 · species mix not assumed</td><td>RFCA Waddow Counter</td></tr>
     <tr><td>2025</td><td>Sea trout catches reported more than 50% above 2024</td><td>RFCA</td></tr>
   </table>
   <div class="small" style="margin-top:10px">
-    <strong>Archive Rule:</strong> Only verified, traceable intelligence is stored. No source = no number.
+    <strong>Archive Rule:</strong> Only verified, traceable intelligence is stored. Counter totals are shown as fish movements unless the source explicitly identifies species. No source = no number.
   </div>
 </section>
 
@@ -139,7 +139,7 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
     <tr><td>Catch</td><td>Confirmed or credible salmon / sea trout catch report.</td></tr>
     <tr><td>Sighting</td><td>Credible fish sighting without confirmed capture.</td></tr>
     <tr><td>Fish movement</td><td>Movement intelligence from credible observation, official report, club report, counter, or operator intelligence.</td></tr>
-    <tr><td>Counter</td><td>Fish counter intelligence only when source, location and date are traceable.</td></tr>
+    <tr><td>Counter</td><td>Fish counter intelligence only when source, location and date are traceable. Species is not inferred unless source evidence supports it.</td></tr>
     <tr><td>Temperature</td><td>Water temperature intelligence only when source and timestamp are traceable.</td></tr>
     <tr><td>Rainfall / catchment</td><td>Rainfall or catchment context linked to Ribble conditions.</td></tr>
     <tr><td>Pollution / water quality</td><td>Pollution, bathing-water, sewage, water quality or river-health intelligence.</td></tr>
@@ -153,13 +153,14 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
 <section class="card">
   <div class="section-title">Species Classification</div>
   <table class="analysis-table">
-    <tr><td>Salmon</td><td>Confirmed or credible Ribble salmon report.</td></tr>
-    <tr><td>Sea Trout</td><td>Confirmed or credible Ribble sea trout report.</td></tr>
+    <tr><td>Salmon</td><td>Confirmed or credible Ribble salmon report where the source identifies salmon.</td></tr>
+    <tr><td>Sea Trout</td><td>Confirmed or credible Ribble sea trout report where the source identifies sea trout.</td></tr>
+    <tr><td>Fish Movement</td><td>Used for counter or movement records where species mix is not confirmed.</td></tr>
     <tr><td>Mixed / Unclear</td><td>Used when the report is useful but species detail is not clear enough.</td></tr>
     <tr><td>Other / Irrelevant</td><td>Logged only if useful for context; not treated as salmon or sea trout intelligence.</td></tr>
   </table>
   <div class="small" style="margin-top:10px">
-    Species classification prevents salmon and sea trout intelligence being mixed together.
+    Species classification prevents salmon, sea trout and general fish-movement intelligence being mixed together.
   </div>
 </section>
 
@@ -185,7 +186,7 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
     <tr>
       <th>Date</th>
       <th>River Zone</th>
-      <th>Species</th>
+      <th>Species / Class</th>
       <th>Report Type</th>
       <th>Source</th>
       <th>Confidence</th>
@@ -193,7 +194,7 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
     </tr>
     <tr>
       <td colspan="7"><strong>No verified 2026 whole-river Ribble salmon or sea trout intelligence recorded yet.</strong><br>
-      <span class="small">Future entries will be chronological and source-classified. Rumours may be logged, but only when clearly marked unverified.</span></td>
+      <span class="small">Counter data may be recorded as fish movement, but salmon or sea trout attribution is only used when supported by the source.</span></td>
     </tr>
   </table>
 </section>
@@ -246,9 +247,10 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
   <div class="section-title">Source Acquisition Roadmap</div>
   <table class="analysis-table">
     <tr><td>Catch Intelligence</td><td><strong>Primary Focus</strong><br>RFCA lead candidate · Ribble Rivers Trust secondary candidate · whole-river Ribble coverage.</td></tr>
+    <tr><td>Fish Movement Intelligence</td><td><strong>Active Acquisition</strong><br>Waddow counter data is treated as fish movement unless species attribution is provided by the source.</td></tr>
+    <tr><td>Waddow Species Attribution</td><td><strong>Investigation</strong><br>Determine whether Waddow records count only, count plus size, count plus image, or source-verified species classification.</td></tr>
     <tr><td>RFCA Temperature</td><td><strong>Investigation</strong><br>No value displayed until stable, current and traceable.</td></tr>
     <tr><td>Rainfall Intelligence</td><td><strong>Investigation</strong><br>Great Mitton weather/catchment context · Mearley Hall EA rainfall candidate.</td></tr>
-    <tr><td>Fish Counter Intelligence</td><td><strong>Research</strong><br>Counter location, ownership and availability still to verify.</td></tr>
     <tr><td>Beat Conditions</td><td><strong>Active Context</strong><br>Mitton Bridge ↔ Henthorn ↔ Edisford Bridge, using Henthorn as the live conditions reference.</td></tr>
   </table>
 </section>
