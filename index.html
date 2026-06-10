@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Salmon & Sea Trout Rivers Intelligence · Build 10219</title>
+<title>Salmon & Sea Trout Rivers Intelligence · Build 10220</title>
 <style>
 :root{
   --bg:#f4f1ea;--panel:#fffaf0;--panel2:#fffdf7;--ink:#1c1c1c;--muted:#6b6258;
@@ -52,7 +52,7 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
 <body>
 <header>
   <h1>Salmon &amp; Sea Trout Rivers Intelligence</h1>
-  <div class="sub">River Ribble · Henthorn conditions · Whole-river intelligence · Build 10219</div>
+  <div class="sub">River Ribble · Henthorn conditions · Whole-river intelligence · Build 10220</div>
 </header>
 
 <main>
@@ -87,6 +87,15 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
 
 <section class="card">
   <div class="section-title">Current Season Ribble Intelligence</div>
+
+  <table class="analysis-table" style="margin-bottom:12px">
+    <tr><td>Salmon 2026</td><td><strong>No verified evidence acquired</strong><br><span class="small">No current-season Ribble salmon report is displayed without a traceable source.</span></td></tr>
+    <tr><td>Sea Trout 2026</td><td><strong>No verified evidence acquired</strong><br><span class="small">No current-season Ribble sea trout report is displayed without a traceable source.</span></td></tr>
+    <tr><td>Movement 2026</td><td><strong>Early Waddow activity recorded</strong><br><span class="small">Early-year counter activity exists, but no full-season conclusion is drawn.</span></td></tr>
+    <tr><td>River Conditions</td><td><strong>High confidence</strong><br><span class="small">EA Henthorn telemetry remains the live conditions reference.</span></td></tr>
+    <tr><td>Fish Intelligence</td><td><strong>Low confidence</strong><br><span class="small">Current-season fish evidence remains the main acquisition gap.</span></td></tr>
+  </table>
+
   <table class="analysis-table">
     <tr><td>Coverage</td><td><strong>Whole River Ribble</strong><br><span class="small">Catch and fish-movement intelligence is not limited to the Mitton–Edisford beat.</span></td></tr>
     <tr><td>Species tracked</td><td><strong>Salmon · Sea Trout</strong><br><span class="small">Reports will be classified by species before being entered into the ledger.</span></td></tr>
@@ -101,6 +110,26 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
   </table>
   <div class="small" style="margin-top:10px">
     Conditions are Henthorn-based. Catch intelligence is whole-river Ribble. No source = no number.
+  </div>
+</section>
+
+<section class="card">
+  <div class="section-title">Verified Intelligence Archive</div>
+  <table class="analysis-table">
+    <tr>
+      <th>Year</th>
+      <th>Verified Finding</th>
+      <th>Source</th>
+    </tr>
+    <tr><td>2023</td><td>146 salmon · 418 sea trout · 100% salmon release</td><td>RFCA</td></tr>
+    <tr><td>2023</td><td>989 salmon recorded at Waddow</td><td>RFCA</td></tr>
+    <tr><td>2024</td><td>Waddow net upstream movements: 1,710</td><td>RFCA Waddow Counter</td></tr>
+    <tr><td>2025</td><td>Waddow net upstream movements: 1,587</td><td>RFCA Waddow Counter</td></tr>
+    <tr><td>2025</td><td>June movement approximately 63% above June 2024</td><td>RFCA Waddow Counter</td></tr>
+    <tr><td>2025</td><td>Sea trout catches reported more than 50% above 2024</td><td>RFCA</td></tr>
+  </table>
+  <div class="small" style="margin-top:10px">
+    <strong>Archive Rule:</strong> Only verified, traceable intelligence is stored. No source = no number.
   </div>
 </section>
 
@@ -231,10 +260,10 @@ canvas{width:100%;height:330px;display:block;background:var(--panel2);border-rad
 
 </main>
 
-<div class="footer">Salmon & Sea Trout Rivers Intelligence · Build 10219 · GitHub Pages static build</div>
+<div class="footer">Salmon & Sea Trout Rivers Intelligence · Build 10220 · GitHub Pages static build</div>
 
 <script>
-const BUILD="10219";
+const BUILD="10220";
 const STATION_ID="710305";
 const READINGS_URL=`https://environment.data.gov.uk/flood-monitoring/id/stations/${STATION_ID}/readings?parameter=level&_sorted`;
 const CHART=document.getElementById("chart");
